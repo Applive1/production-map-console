@@ -1,0 +1,81 @@
+<style shim-shadowdom>
+    :host {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+    }
+
+    .tree-branch {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+
+        -webkit-transition: max-height 250ms ease-in-out;
+    }
+
+    .tree-leaf {
+        position: relative;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        cursor: pointer;
+        line-height: 21px;
+        padding-left: 16px;
+    }
+
+    .tree-leaf .chevron::before {
+        content: "\00a0";
+        display: inline-block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 0.1em;
+        top: 50%;
+        margin-top: -5px;
+
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 8px solid #888;
+        border-right: none;
+
+        -webkit-transition: all 250ms ease-in-out;
+    }
+
+    .tree-node[expanded] > .tree-leaf .chevron::before {
+        margin-top: -4px;
+        -webkit-transform: rotate(90deg);
+    }
+
+    .tree-node[empty] > .tree-leaf .chevron::before {
+        display: none;
+    }
+
+    .tree-leaf img {
+        vertical-align: middle;
+        margin-right: 0.5em;
+    }
+
+    .tree-leaf .name {
+        vertical-align: middle;
+        font-size: 12px;
+        padding: 0.1em 0.25em;
+        border-radius: 0.25em;
+        -webkit-transition: all 150ms ease-in-out;
+    }
+
+    .tree-branch {
+        margin-left: 16px;
+    }
+
+    .tree-node[active] > .tree-leaf .name {
+        background: dodgerblue;
+        color: white;
+    }
+</style>
+<div class="tree-node" expanded={{ expanded }} empty={{ empty }} active={{ active }}>
+    <div class="tree-leaf"><div class="chevron"></div> <img src={{ icon }} /><span class="name">{{ name }}</span></div>
+    <div class="tree-branch"><content select="production-map-tree-node"></content></div>
+</div>

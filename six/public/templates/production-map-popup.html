@@ -1,0 +1,23 @@
+<style>
+    :host {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2147483647;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    :host([background]) {
+        background: rgba(0,0,0,0.8);
+    }
+</style>
+<six-panel vertical class="container" align="center" justify="center">
+    <div class="popup"><content></content></div>
+</six-panel>

@@ -1,0 +1,66 @@
+
+@import "reset";
+
+html {
+  width: 100%;
+  height: 100%;
+  font: 300 15px "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  > six-panel {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+six-panel.sidebar {
+  background: #4b79ff;
+  color: white;
+  -webkit-flex: 0 0 auto;
+  -moz-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  -o-flex: 0 0 auto;
+  flex: 0 0 auto;
+  line-height: 125%;
+  height: 100%;
+  z-index: 100;
+
+  .logo {
+    padding: 0.5em;
+  }
+  production-map-main-menu {
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    -o-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  .project-tree {
+    margin: 0.5em;
+    background: white;
+    -webkit-flex: 1 1 100% !important;
+    -moz-flex: 1 1 100% !important;
+    -ms-flex: 1 1 100% !important;
+    -o-flex: 1 1 100% !important;
+    flex: 1 1 100% !important;
+    padding: 0.5em;
+    color: black;
+  }
+}
+
+production-map-designer {
+  /deep/ .buttons {
+
+  }
+}
+
+.CodeMirror-hints {
+  z-index: 100000;
+  position: absolute;
+}

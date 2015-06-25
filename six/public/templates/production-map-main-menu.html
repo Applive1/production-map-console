@@ -1,0 +1,82 @@
+<style shim-shadowdom>
+    .profile {
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        -o-flex: 0 0 auto;
+        flex: 0 0 auto;
+        cursor: pointer;
+        padding-right: 1.7em;
+        margin-bottom: 0.5em;
+
+        font: inherit;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        background: none;
+    }
+
+    .profile:active {
+        box-shadow: none;
+    }
+
+    .profile:active:after {
+        margin-top: calc(-0.5em + 1px);
+    }
+
+    .profile img {
+        width: 32px;
+        height: 32px;
+        background: white;
+        padding: 2px;
+        margin-right: 0.5em;
+    }
+
+    .profile .name {
+        font-weight: 500;
+    }
+    .profile .email {
+        font-size: 0.8em;
+    }
+
+
+
+    .profile:after {
+         content: '\00a0';
+         display: inline-block;
+         width: 0;
+         height: 0;
+         position: absolute;
+         right: 0.5em;
+         top: 50%;
+         margin-top: -0.5em;
+         border-right: 0.3em solid transparent;
+         border-left: 0.3em solid transparent;
+         border-bottom: none;
+         border-top: 0.4em solid white;
+     }
+
+    .profile:hover {
+         background: #4f86ff;
+     }
+</style>
+<six-button class="profile" onclick={{ showPopup }}>
+    <img src="/assets/mystery-man.png" />
+    <six-panel vertical align="start">
+        <div class="name">Tim Behrsin</div>
+        <div class="email">tim.behrsin@grexie.com</div>
+    </six-panel>
+</six-button>
+<production-map-popup class="main-menu">
+    <production-map-menu>
+        <six-button>Menu Item 1</six-button>
+        <six-button>Menu Item 2</six-button>
+        <six-button>Menu Item 3</six-button>
+        <six-separator></six-separator>
+        <six-button>Menu Item 4</six-button>
+        <six-button>Menu Item 5</six-button>
+        <six-button>Menu Item 6</six-button>
+        <six-separator></six-separator>
+        <six-button>Menu Item 7</six-button>
+    </production-map-menu>
+</production-map-popup>

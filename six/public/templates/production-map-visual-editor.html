@@ -1,0 +1,79 @@
+<style shim-shadowdom>
+    :host {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .container {
+        height: 100%;
+    }
+
+    canvas {
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+    }
+
+    .toolbox {
+        box-shadow: inset 6px 0 6px -6px rgba(0,0,0,0.25), inset 0 -6px 6px -6px rgba(0,0,0,0.25), 1px 0 3px 1px rgba(0,0,0,0.25);
+        background: #4b79ff;
+        padding: 0.5em;
+        -webkit-flex: 0 0 auto;
+        -webkit-flex-wrap: wrap;
+        overflow-y: auto;
+    }
+
+    .toolbox /deep/ .container {
+        background: none !important;
+
+    }
+
+
+    .toolbox six-button {
+        width: 48px;
+        height: 48px;
+        border: none;
+        background: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .toolbox six-button:hover {
+        background: #80a7ff;
+    }
+
+    .toolbox six-button[active] {
+        background: #80a7ff;
+    }
+
+    .toolbox six-button + six-button {
+        margin-top: 0.5em !important;
+    }
+</style>
+<six-panel horizontal class="container" align="stretch">
+    <six-panel class="toolbox" vertical align="start" justify="start">
+        <six-button active><img src="/assets/controls/pointer.svg" /></six-button>
+        <six-button><img src="/assets/controls/pointer.svg" /></six-button>
+        <six-button><img src="/assets/controls/pointer.svg" /></six-button>
+        <six-button><img src="/assets/controls/pointer.svg" /></six-button>
+        <six-button><img src="/assets/controls/pointer.svg" /></six-button>
+    </six-panel>
+    <canvas></canvas>
+</six-panel>
+<production-map-popup class="context-menu">
+    <production-map-menu>
+        <six-button>Menu Item 1</six-button>
+        <six-button>Menu Item 2</six-button>
+        <six-button>Menu Item 3</six-button>
+        <six-separator></six-separator>
+        <six-button>Menu Item 4</six-button>
+        <six-button>Menu Item 5</six-button>
+        <six-button>Menu Item 6</six-button>
+        <six-separator></six-separator>
+        <six-button>Menu Item 7</six-button>
+    </production-map-menu>
+</production-map-popup>

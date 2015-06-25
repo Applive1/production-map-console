@@ -1,0 +1,53 @@
+doctype html
+
+html
+    head
+        title Production Map Console
+        link(rel="stylesheet", href="/assets/console.css", shim-shadowdom)
+        script(src="/assets/console.js")
+    body
+        six-panel(horizontal, align="stretch")
+            six-panel.sidebar(vertical, align="stretch")
+                img.logo(src="/assets/logo-white.svg", height=30)
+                production-map-main-menu
+                production-map-tree.project-tree(vertical)
+                    production-map-tree-node(name="References", icon="/assets/references-folder.svg")
+                        production-map-tree-node(name="Production Map Core", icon="/assets/reference.svg")
+                        production-map-tree-node(name="Another Reference", icon="/assets/reference.svg")
+                        production-map-tree-node(name="Another Reference", icon="/assets/reference.svg")
+                    production-map-tree-node(name="Folder1", icon="/assets/folder.svg")
+                        production-map-tree-node(name="Map1.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map1.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map2.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map2.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map3.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map3.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map4.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map4.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Folder2", icon="/assets/folder.svg")
+                            production-map-tree-node(name="Map5.xml", icon="/assets/markup-file.svg")
+                                production-map-tree-node(name="Map5.xml.js", icon="/assets/js-file.svg")
+                            production-map-tree-node(name="Map6.xml", icon="/assets/markup-file.svg")
+                                production-map-tree-node(name="Map6.xml.js", icon="/assets/js-file.svg")
+                            production-map-tree-node(name="Map7.xml", icon="/assets/markup-file.svg")
+                                production-map-tree-node(name="Map7.xml.js", icon="/assets/js-file.svg")
+                            production-map-tree-node(name="Map8.xml", icon="/assets/markup-file.svg")
+                                production-map-tree-node(name="Map8.xml.js", icon="/assets/js-file.svg")
+                    production-map-tree-node(name="Map9.xml", icon="/assets/markup-file.svg")
+                        production-map-tree-node(name="Map9.xml.js", icon="/assets/js-file.svg")
+                    production-map-tree-node(name="Map10.xml", icon="/assets/markup-file.svg")
+                        production-map-tree-node(name="Map10.xml.js", icon="/assets/js-file.svg")
+                    production-map-tree-node(name="Folder3", icon="/assets/folder.svg")
+                        production-map-tree-node(name="Map11.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map11.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map12.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map12.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map13.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map13.xml.js", icon="/assets/js-file.svg")
+                        production-map-tree-node(name="Map14.xml", icon="/assets/markup-file.svg")
+                            production-map-tree-node(name="Map14.xml.js", icon="/assets/js-file.svg")
+
+
+            six-panel(vertical, align="stretch")
+
+            production-map-designer
