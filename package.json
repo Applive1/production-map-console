@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/production-map/production-map-console#readme",
   "dependencies": {
-    "@grexie/six-client": "^0.1.7",
+    "@grexie/six-client": "^0.1.10",
     "codemirror": "^5.3.0"
   }
 }
