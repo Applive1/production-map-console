@@ -8,7 +8,7 @@
         z-index: 2147483647;
     }
 
-    .container {
+    :host > .container {
         position: relative;
         width: 100%;
         height: 100%;
@@ -17,6 +17,11 @@
     :host([background]) {
         background: rgba(0,0,0,0.8);
     }
+
+    .popup {
+        -webkit-align-self: center;
+    }
+
 </style>
 <six-panel vertical class="container" align="center" justify="center">
     <div class="popup"><content></content></div>

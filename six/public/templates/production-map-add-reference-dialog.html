@@ -1,0 +1,52 @@
+<style>
+
+    h2 {
+        text-align: left;
+        font: inherit;
+    }
+
+    .workspace-references, .references {
+        height: 150px;
+        width: 400px;
+    }
+
+    six-button {
+        float: left;
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    six-button /deep/ six-panel /deep/ .container {
+        -webkit-flex-direction: column;
+    }
+
+    six-button img {
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+    }
+
+    six-button span {
+        display: inline-block;
+        min-width: 24px;
+        max-width: 64px;
+        line-height: 130%;
+    }
+</style>
+<production-map-dialog>
+    <header>
+        <h1>Add Reference</h1>
+    </header>
+
+    <h2>This Workspace</h2>
+    <six-panel spaces class="workspace-references" frame="inset">
+
+    </six-panel>
+
+    <h2>Other Workspaces</h2>
+    <six-panel spaces class="references" frame="inset">
+
+    </six-panel>
+
+</production-map-dialog>

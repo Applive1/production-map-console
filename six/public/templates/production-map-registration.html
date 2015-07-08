@@ -1,0 +1,15 @@
+<production-map-popup background>
+    <production-map-dialog>
+        <header>
+            <h1>Registration</h1>
+        </header>
+
+        <six-input placeholder="Email" type="email" value={{ user.email }} />
+        <six-input placeholder="Password" type="password" value={{ user.password }} />
+
+        <footer>
+            <six-button onclick={{ onClickBack }}>Back</six-button>
+            <six-button onclick={{ onClickRegister }}>Register</six-button>
+        </footer>
+    </production-map-dialog>
+</production-map-popup>

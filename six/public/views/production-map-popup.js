@@ -8,6 +8,7 @@ export default Six.View.extend({
         this.style.setProperty('display', 'none');
         this.addEventListener('click', function(evt) {
             this.closePopup();
+            if(this.onClose) this.onClose();
         }.bind(this), false);
         this.shadowRoot.querySelector('.popup').addEventListener('click', function(evt) {
             evt.stopPropagation();

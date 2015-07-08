@@ -38,11 +38,9 @@ export default Six.View.extend({
         toolbox.style.removeProperty('min-width');
         var i = 1;
         while(toolbox.offsetHeight < toolbox.scrollHeight) {
-
             toolbox.style.setProperty('min-width', (48 * i + 12 * (i - 1)) + 'px');
             i++;
         }
-        console.info(toolbox.style.minWidth);
 
         var canvas = this.shadowRoot.querySelector('canvas');
         canvas.width = this.offsetWidth;

@@ -1,0 +1,70 @@
+<style>
+    :host {
+        display: inline-block;
+        border-radius: 0.5em;
+        overflow: hidden;
+    }
+
+    .header {
+        background: -webkit-linear-gradient(#ddd, #ccc);
+        padding: 1.5em;
+        border-bottom: 1px solid #aaa;
+    }
+
+    .header content::content h1 {
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .footer {
+        background: -webkit-linear-gradient(#ddd, #ccc);
+        padding: 0.75em 1.5em;
+        border-top: 1px solid #ccc;
+    }
+
+    .c content::content > .container > *:not(style) + * {
+        margin-top: 0.5em;
+    }
+    .c content::content six-panel[horizontal] .container > *:not(style) + * {
+        margin-left: 0.5em;
+    }
+
+    .c {
+        padding: 1.5em;
+        background: #f5f5f5;
+    }
+
+    .footer content::content footer {
+        display: -webkit-flex;
+        -webkit-flex-flow: row nowrap;
+        -webkit-justify-content: flex-end;
+        -webkit-align-items: center;
+    }
+
+    .header content::content header {
+        display: -webkit-flex;
+        -webkit-flex-flow: row nowrap;
+        -webkit-justify-content: center;
+        -webkit-align-items: center;
+    }
+
+    .header content::content header *:not(style) + * {
+        margin-left: 0.5em;
+    }
+
+    .footer content::content footer *:not(style) + * {
+        margin-left: 0.5em;
+    }
+
+</style>
+<six-panel vertical justify="center" align="stretch">
+    <six-panel class="header" vertical justify="center" align="center">
+        <content select="header"></content>
+    </six-panel>
+    <six-panel class="c" vertical justify="start" align="stretch">
+        <content select=":not(header):not(footer)"></content>
+    </six-panel>
+    <six-panel class="footer" vertical justify="end" align="center">
+        <content select="footer"></content>
+    </six-panel>
+</six-panel>

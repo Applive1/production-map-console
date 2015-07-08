@@ -59,24 +59,25 @@
     .profile:hover {
          background: #4f86ff;
      }
+
+    .profile /deep/ .container {
+        text-align: left;
+    }
 </style>
 <six-button class="profile" onclick={{ showPopup }}>
     <img src="/assets/mystery-man.png" />
-    <six-panel vertical align="start">
-        <div class="name">Tim Behrsin</div>
-        <div class="email">tim.behrsin@grexie.com</div>
+    <six-panel vertical align="start" justify="center">
+        <div class="name">{{ user.name.first }} {{ user.name.last }}</div>
+        <div class="email">{{ user.email }}</div>
     </six-panel>
 </six-button>
 <production-map-popup class="main-menu">
     <production-map-menu>
-        <six-button>Menu Item 1</six-button>
-        <six-button>Menu Item 2</six-button>
-        <six-button>Menu Item 3</six-button>
+        <six-button onclick={{ onClickSettings }}>Settings...</six-button>
         <six-separator></six-separator>
-        <six-button>Menu Item 4</six-button>
-        <six-button>Menu Item 5</six-button>
-        <six-button>Menu Item 6</six-button>
-        <six-separator></six-separator>
-        <six-button>Menu Item 7</six-button>
+        <six-button onclick={{ onClickLogout }}>Log out</six-button>
     </production-map-menu>
+</production-map-popup>
+<production-map-popup class="settings" background>
+    <production-map-settings user={{ user }}/>
 </production-map-popup>

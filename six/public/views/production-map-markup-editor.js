@@ -49,11 +49,23 @@ export default Six.View.extend({
                 "Ctrl-Space": "autocomplete"
             },
             hintOptions: {schemaInfo: tags},
-            indentUnit: 2
+            indentUnit: 2,
         });
+
+        this.editor.on('change', this.onChange.bind(this));
 
         window.addEventListener('resize', function(evt) {
             this.editor.refresh();
         }.bind(this), false);
+
+        this.bind('file').observe(function(oldValue, newValue) {
+            if(newValue) {
+                this.editor.setValue(newValue.content || '');
+            }
+        }.bind(this));
+    },
+
+    onChange: function(cm, change) {
+        this.set('file.content', cm.getValue());
     }
 });

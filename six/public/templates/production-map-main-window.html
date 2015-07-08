@@ -1,0 +1,70 @@
+<style>
+    :host {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    :host > six-panel {
+        width: 100%;
+        height: 100%;
+    }
+
+    six-panel.sidebar {
+        background: #4b79ff;
+        color: white;
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        -o-flex: 0 0 auto;
+        flex: 0 0 auto;
+        line-height: 125%;
+        height: 100%;
+        z-index: 100;
+    }
+
+    six-panel.sidebar .logo {
+        padding: 0.5em;
+    }
+    six-panel.sidebar production-map-main-menu {
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        -o-flex: 0 0 auto;
+        flex: 0 0 auto;
+    }
+
+    six-panel.sidebar .project-tree {
+        margin: 0.5em;
+        background: white;
+        -webkit-flex: 1 1 100% !important;
+        -moz-flex: 1 1 100% !important;
+        -ms-flex: 1 1 100% !important;
+        -o-flex: 1 1 100% !important;
+        flex: 1 1 100% !important;
+        padding: 0.5em;
+        color: black;
+    }
+
+    production-map-designer {
+        -webkit-flex: 1 1 100%;
+    }
+
+    production-map-designer /deep/ .buttons {
+
+    }
+</style>
+<six-panel horizontal align="stretch">
+    <six-panel class="sidebar" vertical align="stretch">
+        <img class="logo" src="/assets/logo-white.svg" height="30" />
+        <production-map-main-menu user={{ user }} />
+        <production-map-tree class="project-tree" vertical />
+    </six-panel>
+
+    <production-map-designer save={{ save }} files={{ files }} folders={{ folders }} projects={{ projects }} references={{ references }}></production-map-designer>
+
+</six-panel>
