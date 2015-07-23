@@ -58,10 +58,10 @@ export default Six.View.extend({
             this.editor.refresh();
         }.bind(this), false);
 
-        this.bind('file').observe(function(oldValue, newValue) {
-            if(newValue) {
-                this.editor.setValue(newValue.content || '');
-            }
+        this.bind('file.content').observe(function(oldValue, newValue) {
+            if(this.editor.getValue() === newValue) return;
+
+            this.editor.setValue(newValue || '');
         }.bind(this));
     },
 

@@ -71,6 +71,7 @@
         position: relative;
         font-weight: 400;
         font-size: 0.7em;
+        -webkit-flex: 0 0 auto;
     }
 
     six-button:hover, six-buton:active {
@@ -118,16 +119,25 @@
         width: 100%;
         height: 100%;
     }
+
+    six-button[hidden] {
+        display: none !important;
+    }
 </style>
 <six-panel class="container" vertical>
     <six-panel class="tabs" vertical>
         <production-map-visual-editor save={{ save }} file={{ markupFile }} state={{ state.visualEditor }} files={{ files }} folders={{ folders }} projects={{ projects }} references={{ references }}></production-map-visual-editor>
         <production-map-markup-editor save={{ save }} file={{ markupFile }} state={{ state.markupEditor }} files={{ files }} folders={{ folders }} projects={{ projects }} references={{ references }}></production-map-markup-editor>
-        <production-map-code-editor save={{ save }} file={{ codeFile }} state={{ state.codeEditor }} files={{ files }} folders={{ folders }} projects={{ projects }} references={{ references }}></production-map-code-editor>
+        <production-map-code-editor save={{ save }} file={{ codeFile }} markupFile={{ markupFile }} state={{ state.codeEditor }} files={{ files }} folders={{ folders }} projects={{ projects }} references={{ references }}></production-map-code-editor>
     </six-panel>
     <six-panel class="buttons" horizontal>
         <six-button onclick={{ activateVisualEditor }} active={{ visualEditorActive }}>Design</six-button>
         <six-button onclick={{ activateMarkupEditor }} active={{ markupEditorActive }}>Markup</six-button>
         <six-button onclick={{ activateCodeEditor }} active={{ codeEditorActive }}>Code</six-button>
+        <six-spacer></six-spacer>
+        <six-button onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</six-button>
+        <six-button onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</six-button>
+        <six-button onclick={{ runMap }} hidden={{ hideRunButton }}>Run</six-button>
+        <six-button onclick={{ resumeMap }} hidden={{ hideResumeButton }}>Resume</six-button>
     </six-panel>
 </six-panel>

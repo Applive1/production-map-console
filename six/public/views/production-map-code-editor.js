@@ -73,6 +73,7 @@ import getIndex from '../parser/indexer';
         var index = getIndex(editor, editor.editor.indexFromPos(editor.editor.getCursor()));
 
         var found = [], start = token.string, global = index.globals;
+
         function maybeAdd(str) {
             if (str.lastIndexOf(start, 0) == 0 && !arrayContains(found, str)) found.push(str);
         }
@@ -89,7 +90,15 @@ import getIndex from '../parser/indexer';
 
             var obj = context.pop(), base;
             if(index.thisObject && obj.type === 'keyword' && obj.string === 'this') {
-                base = index.thisObject;
+                base = Object.create({}, index.thisObject);
+                var children = editor.markupDoc.documentElement.getElementsByTagName('*');
+                for(var i = 0; i < children.length; i++) {
+                    if(children[i].hasAttribute('id')) {
+                        base[Six.decapitalize(Six.camelize(children[i].getAttribute('id')))] = {
+                            processes: []
+                        };
+                    }
+                }
             } else if (obj.type && obj.type.indexOf("variable") === 0) {
                 if (options && options.additionalContext)
                     base = options.additionalContext[obj.string];
@@ -157,6 +166,14 @@ export default Six.View.extend({
             if(newValue) {
                 this.editor.setValue(newValue.content || '');
             }
+        }.bind(this));
+
+        this.bind('markupFile.content').observe(function(oldValue, newValue) {
+            var parser = new DOMParser();
+            parser.preserveWhiteSpace = true;
+
+            if(!newValue) newValue = '<?xml version="1.0" encoding="utf-8"?>\n<map>\n</map>';
+            this.markupDoc = parser.parseFromString(newValue, 'text/xml');
         }.bind(this));
     },
 
