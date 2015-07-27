@@ -32,7 +32,6 @@ export default Six.View.extend({
                     var ctx = canvas.getContext('2d');
 
                     ctx.save();
-                    ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
                     this.draw(ctx, {width: canvas.width, height: canvas.height});
                     ctx.restore();
                 }
@@ -101,7 +100,6 @@ export default Six.View.extend({
             var ctx = canvas.getContext('2d');
 
             ctx.save();
-            ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
             this.draw(ctx, {width: canvas.width, height: canvas.height});
             ctx.restore();
         }.bind(this), false);
@@ -146,11 +144,14 @@ export default Six.View.extend({
                 var ctx = canvas.getContext('2d');
 
                 ctx.save();
-                ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
                 this.draw(ctx, {width: canvas.width, height: canvas.height});
                 ctx.restore();
-                control.drawFocusRectangle(ctx);
                 ctx.save();
+                ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+                control.drawFocusRectangle(ctx);
+                ctx.restore();
+                ctx.save();
+                ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
                 control.draw(ctx);
                 ctx.restore();
 
@@ -175,11 +176,14 @@ export default Six.View.extend({
                     var ctx = canvas.getContext('2d');
 
                     ctx.save();
-                    ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
                     this.draw(ctx, {width: canvas.width, height: canvas.height});
                     ctx.restore();
-                    control.drawFocusRectangle(ctx);
                     ctx.save();
+                    ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+                    control.drawFocusRectangle(ctx);
+                    ctx.restore();
+                    ctx.save();
+                    ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
                     control.draw(ctx);
                     ctx.restore();
                 }.bind(this), false);
@@ -229,7 +233,6 @@ export default Six.View.extend({
 
                     var ctx = canvas.getContext('2d');
                     ctx.save();
-                    ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
                     this.draw(ctx, {width: canvas.width, height: canvas.height});
                     ctx.restore();
 
@@ -266,7 +269,6 @@ export default Six.View.extend({
                     var ctx = canvas.getContext('2d');
 
                     ctx.save();
-                    ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
                     this.draw(ctx, {width: canvas.width, height: canvas.height});
                     ctx.restore();
                 }.bind(this), false);
@@ -348,11 +350,21 @@ export default Six.View.extend({
 
         for(var i = 0; i < this.controls.length; i++) {
             ctx.save();
+            ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+            size.width /= window.devicePixelRatio || 1;
+            size.height /= window.devicePixelRatio || 1;
             this.controls[i].draw(ctx);
             ctx.restore();
         }
 
-        if(this.selectedControl) this.selectedControl.drawFocusRectangle(ctx);
+        if(this.selectedControl) {
+            ctx.save();
+            ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+            size.width /= window.devicePixelRatio || 1;
+            size.height /= window.devicePixelRatio || 1;
+            this.selectedControl.drawFocusRectangle(ctx);
+            ctx.restore();
+        }
     },
 
     layout: function() {
@@ -368,13 +380,10 @@ export default Six.View.extend({
 
         var canvas = this.shadowRoot.querySelector('canvas');
         var clientRect = canvas.getBoundingClientRect();
-        canvas.width = clientRect.width;
-        canvas.height = clientRect.height;
+        canvas.width = clientRect.width * (window.devicePixelRatio || 1);
+        canvas.height = clientRect.height * (window.devicePixelRatio || 1);
         var ctx = canvas.getContext('2d');
 
-        ctx.save();
-        ctx.scale(1 / (window.devicePixelRatio || 1), 1 / (window.devicePixelRatio || 1));
         this.draw(ctx, {width: canvas.width, height: canvas.height});
-        ctx.restore();
     }
 });
