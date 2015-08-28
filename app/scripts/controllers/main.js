@@ -9,7 +9,7 @@
  */
 angular.module('productionMapConsoleApp')
   .controller('MainCtrl', function ($scope, $http, $timeout) {
-  	var URL = "http://localhost:3100";
+  	var URL = "http://localhost:1337/";
   	$scope.map = {
   		name: '',
   		data: ''
