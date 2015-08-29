@@ -9,27 +9,28 @@
  */
 angular.module('productionMapConsoleApp')
   .controller('MainCtrl', function ($scope, $http, $timeout) {
-  	var URL = "http://localhost:1337/";
+  	var URL = "http://localhost:1337/sysfile/execute";
   	$scope.map = {
   		name: '',
-  		data: ''
+  		content: ''
   	}
   	$scope.button_text = 'execute';
   	$scope.btn_disabled = false;
-  	$scope.execute_map = function(my_button, map){
+  	$scope.execute_map = function(map){
     	$scope.button_text = 'executing...';
     	$scope.btn_disabled = true;
+      console.log(map);
     	// business logic...
-    	$timeout(function(){
-    		$scope.button_text = 'execute';
-    		$scope.btn_disabled = false;
-    	},5000);
   		$http.post(URL, map)
 			.success(function(result){
-
+        $scope.button_text = 'execute';
+        $scope.btn_disabled = false;
+        console.log(result);
 			})
 			.error(function(err){
-
+        console.log(err);
+        $scope.button_text = 'execute';
+        $scope.btn_disabled = false;
 			});
   	}
   });
