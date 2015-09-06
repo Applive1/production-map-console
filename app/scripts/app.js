@@ -15,7 +15,11 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'nvd3ChartDirectives',
+    'ui.bootstrap',
+    'ui.codemirror',
+    'jsTree.directive'
   ])
   .config(function ($routeProvider) {
     $routeProvider

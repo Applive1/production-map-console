@@ -1,0 +1,142 @@
+<style>
+    :host {
+        display: block;
+        position: relative;
+        -webkit-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    div.container {
+        width: 100%;
+        height: 100%;
+    }
+
+    div.buttons {
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        -o-flex: 0 0 auto;
+        flex: 0 0 auto;
+        padding: 0 0.5em 0.5em 72px;
+        background: #4b79ff;
+        box-shadow: 0 -2px 6px rgba(0,0,0,0.25);
+    }
+
+    div.tabs {
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+
+        -webkit-flex-flow: column nowrap;
+        -moz-flex-flow: column nowrap;
+        -ms-flex-flow: column nowrap;
+        -o-flex-flow: column nowrap;
+        flex-flow: column nowrap;
+
+    }
+
+    div.tabs /deep/ .container {
+        box-sizing: border-box;
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+
+        width: 100%;
+        height: 100%;
+
+        background: white;
+    }
+
+    button {
+        background: none;
+        border-radius: 0 0 0.3em 0.3em;
+        border: none;
+        box-shadow: none;
+        color: rgba(255,255,255,0.5);
+        position: relative;
+        font-weight: 400;
+        font-size: 0.7em;
+        -webkit-flex: 0 0 auto;
+    }
+
+    button:hover, buton:active {
+        background: none;
+        color: rgba(255,255,255,0.8);
+        box-shadow: none;
+    }
+    button[active] {
+        background: white;
+        border-top: 1px solid #ffffff;
+        box-shadow: none;
+        color: black;
+        z-index: 1;
+    }
+
+    pm-visual-editor {
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    pm-code-editor {
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    pm-xml-editor {
+        -webkit-flex: 1 1 100%;
+        -moz-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        -o-flex: 1 1 100%;
+        flex: 1 1 100%;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    button[hidden] {
+        display: none !important;
+    }
+</style>
+<div class="container" vertical>
+    <div class="tabs" vertical>
+        <pm-visual-editor ng-show="designer_active"></pm-visual-editor>
+        <pm-xml-editor ng-show="xml_editor_active"></pm-xml-editor>
+        <pm-code-editor ng-show="code_editor_active" ></pm-code-editor>
+    </div>
+    <div class="buttons" horizontal>
+        <button ng-click="show_designer()" active="{{designer_active}}">Design</button>
+        <button ng-click="show_xml_editor()" active="{{xml_editor_active}}">Markup</button>
+        <button ng-click="show_code_editor()" active="{{code_editor_active}}">Code</button>
+        <button onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
+        <button onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
+        <button onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>
+        <button onclick={{ resumeMap }} hidden={{ hideResumeButton }}>Resume</button>
+    </div>
+</div>
