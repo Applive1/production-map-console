@@ -8,15 +8,16 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
-    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/jointjs/dist/joint.css" />
     <link rel="stylesheet" href="bower_components/jstree/dist/themes/default/style.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
     <!-- endbuild -->
   </head>
   <body ng-app="productionMapConsoleApp">
@@ -27,26 +28,53 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">Production Map</a>
+          <a class="navbar-brand" href="#/">Production Map</a>
+          <style type="text/css">
+            .btn-group {
+              margin-top: 1.2%;
+            }
+          </style>
+          <!-- Single button with keyboard nav -->
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
+                 Map <span class="caret"> </span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                  <li role="menuitem"><a href="#">Action</a></li>
+              </ul>
           </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
+                 View <span class="caret"> </span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                  <li role="menuitem"><a href="#">Action</a></li>
+              </ul>
+          </div>
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
+                 Reports <span class="caret"> </span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                  <li role="menuitem"><a href="#">Action</a></li>
+              </ul>
+          </div>
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
+                 Administration <span class="caret"> </span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                  <li role="menuitem"><a href="#">Action</a></li>
+              </ul>
+          </div>
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
+                 Help <span class="caret"> </span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                  <li role="menuitem"><a href="#">Action</a></li>
+              </ul>
           </div>
         </div>
       </div>
@@ -75,7 +103,7 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -87,9 +115,17 @@
     <script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
     <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/nvd3/build/nv.d3.js"></script>
+    <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+    <script src="bower_components/graphlib/dist/graphlib.core.min.js"></script>
+    <script src="bower_components/dagre/dist/dagre.core.js"></script>
+    <script src="bower_components/dagre/dist/dagre.core.min.js"></script>
+    <script src="bower_components/jointjs/dist/joint.js"></script>
     <script src="bower_components/jstree/dist/jstree.js"></script>
     <script src="bower_components/jsTree-directive/jsTree.directive.js"></script>
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
@@ -98,12 +134,13 @@
 
     <!-- user libs -->
     <script src="bower_components/angular-ui-bootstrap/ui-bootstrap-tpls-0.13.3.min.js"></script>
+    <script type="text/javascript" src="../bower_components/jointjs/dist/joint.shapes.devs.js"></script>
     <!-- end user libs -->
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/directives/dac_creator.js"></script>
+        <script src="scripts/directives/dac-creator.js"></script>
         <script src="scripts/directives/pm-code-editor.js"></script>
         <script src="scripts/directives/pm-xml-editor.js"></script>
         <script src="scripts/directives/pm-visual-editor.js"></script>

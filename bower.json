@@ -14,10 +14,9 @@
     "angular-ui-tree": "~2.9.0",
     "angularjs-nvd3-directives": "~0.0.7",
     "bootstrap": "^3.2.0",
-    "d3": "~3.5.6",
+    "jointjs": "joint#~0.9.4",
     "jstree": "~3.2.1",
     "jsTree-directive": "jstree-directive#~0.1.5",
-    "nvd3": "~1.8.1",
     "polymer": "Polymer/polymer#^1.0.0"
   },
   "devDependencies": {

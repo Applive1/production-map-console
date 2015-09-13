@@ -22,7 +22,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/jquery/dist/jquery.js',
+      'bower_components/jquery/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
@@ -34,9 +34,17 @@ module.exports = function(config) {
       'bower_components/angular-ui-codemirror/ui-codemirror.js',
       'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
       'bower_components/d3/d3.js',
-      'bower_components/nvd3/build/nv.d3.js',
+      'bower_components/nvd3/nv.d3.js',
       'bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
       'bower_components/bootstrap/dist/js/bootstrap.js',
+      'bower_components/lodash/dist/lodash.compat.js',
+      'bower_components/underscore/underscore.js',
+      'bower_components/backbone/backbone.js',
+      'bower_components/graphlib/dist/graphlib.core.js',
+      'bower_components/graphlib/dist/graphlib.core.min.js',
+      'bower_components/dagre/dist/dagre.core.js',
+      'bower_components/dagre/dist/dagre.core.min.js',
+      'bower_components/jointjs/dist/joint.js',
       'bower_components/jstree/dist/jstree.js',
       'bower_components/jsTree-directive/jsTree.directive.js',
       'bower_components/webcomponentsjs/webcomponents.js',
