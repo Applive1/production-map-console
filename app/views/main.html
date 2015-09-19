@@ -1,6 +1,16 @@
 <div class="container-fluid row">
     <div class="col-md-2">
-    	<js-tree tree-plugins="dnd,sort,search" tree-data="json" tree-src="scripts/data/tree-json.json"></js-tree>
+	    <accordion close-others="False">
+		    <accordion-group heading="Maps">
+		    	<js-tree tree-plugins="dnd,sort,search" tree-data="json" tree-src="scripts/data/tree-json.json"></js-tree>
+		    </accordion-group>
+		    <accordion-group heading="Controls">
+			    <div style="background-color: #93cede;border-style: solid;border-width: 1px;margin-top:2%" data-ng-repeat="block in pm_blocks">
+	    			<img data-ng-src="{{block.img_url}}" />
+	    			<span>{{block.text}}</span>
+	    		</div>
+		    </accordion-group>
+		</accordion>
     </div>
     <div class="col-md-8">
 		<pm-map-designer></pm-map-designer>

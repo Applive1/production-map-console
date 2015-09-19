@@ -22,15 +22,12 @@
 
 			joint.shapes.devs.DecoratedRect = joint.shapes.devs.Model.extend({
 
-			    markup: '<g class="rotatable"><g class="scalable"><rect/></g><image/><text/><g class="inPorts"/><g class="outPorts"/></g>',
-        		portMarkup: '<g class="port<%= id %>"><circle/></g>',
+			    markup: '<g class="rotatable"><g class="scalable"><rect/></g><image/><text/></g>',
 
 			    defaults: joint.util.deepSupplement({
 
 			        type: 'devs.DecoratedRect',
 			        size: { width: 160, height: 50 },
-			        inPorts: [],
-		            outPorts: [],
 		            attrs: {
 		                '.': { magnet: false },
 		                circle: {
@@ -48,8 +45,6 @@
 
 			var map_block  = new joint.shapes.devs.DecoratedRect({
 			    position: { x: 50, y: 50 },
-			    inPorts: ['in'],
-    			outPorts: ['out'],
 			    attrs: {
 			    	text: {
 				        text: 'Obstacle',
@@ -57,9 +52,7 @@
 				    },
 				    rect: {
 				        fill: '#93cede'
-				    },
-				    '.inPorts circle': { fill: '#16A085' },
-        			'.outPorts circle': { fill: '#E74C3C' }
+				    }
 			    }
 			});
 			var pm_blocks = [];
@@ -75,11 +68,7 @@
 				    text: {
 				        text: node.text,
 				        fill: '#2e2e2e'
-					},
-					inPorts: ['in'],
-    				outPorts: ['out'],
-				    '.inPorts circle': { fill: '#16A085' },
-        			'.outPorts circle': { fill: '#E74C3C' }
+					}
 				});
 				this.push(current_block);
 				translate_block.x = translate_block.x + 165;
