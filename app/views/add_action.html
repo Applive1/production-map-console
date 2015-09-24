@@ -1,1 +1,82 @@
-<p>This is the add_action view.</p>
+<div class="modal-header">
+    <h3 class="modal-title">Add Action</h3>
+</div>
+<div class="modal-body">
+    <div class="row"style="margin:2%">
+        <div class="col-md-6">
+             <span>Server:</span>
+             <select>
+              <option value="p1">server 1</option>
+              <option value="p2">server 2</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <span>Timeout:</span>
+        </div>
+        <div class="col-md-3">
+            <input type="number" name="quantity" min="1" max="5">
+        </div>
+    </div>
+    <div class="row"style="margin:2%">
+        <div class="col-md-6">
+             <span>Method:</span>
+             <select>
+              <option value="p1">Method 1</option>
+              <option value="p2">Method 2</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <span>Timeunit:</span>
+       		<select>
+              <option value="p1">unit 1</option>
+              <option value="p2">unit 2</option>
+            </select>
+        </div>
+    </div>
+    <div class="row"style="margin:2%">
+        <div class="col-md-3">
+            <span>Action name:</span>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Text input">
+        </div>
+        <div class="col-md-3">
+            <span>Retries:</span>
+        </div>
+        <div class="col-md-3">
+            <input type="number" name="quantity" min="1" max="5">
+        </div>
+    </div>
+    <div class="row"style="margin:2%">
+        <div class="col-md-6">
+            <input type="checkbox" name="your-group" value="unit-in-group" />  Mandatory Action
+        </div>
+        <div class="col-md-6">
+            <input type="checkbox" name="your-group" value="unit-in-group" />  Suspend Action
+        </div>
+    </div>
+    <div class="table-responsive">
+      <span>Parameters</span>
+      <table class="table table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>param 1</td>
+        <td>value 1</td>
+      </tr>
+      <tr>
+        <td>param 2</td>
+        <td>value 2</td>
+      </tr>
+      <tr>
+        <td>param 3</td>
+        <td>value 3</td>
+      </tr>
+      </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+</div>

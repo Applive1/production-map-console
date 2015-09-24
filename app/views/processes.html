@@ -1,1 +1,66 @@
-<p>This is the processes view.</p>
+<div class="modal-header">
+    <h3 class="modal-title">Processes</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+             <span>Process:</span>
+             <select>
+              <option value="p1">process 1</option>
+              <option value="p2">process 2</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary">new process</button>
+            <button type="button" class="btn btn-primary">delete process</button>
+        </div>
+    </div>
+    <div class="container" style=";border-style: solid;border-width: 1px;margin-top:5%;margin-buttom:5%;padding:3%">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="checkbox" name="your-group" value="unit-in-group" />  Default execution process
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <span>Name:</span>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Text input">
+            </div>
+            <div class="col-md-3">
+                <span>internal order:</span>
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="quantity" min="1" max="5">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <span>Description:</span>
+            </div>
+            <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="Text input">
+            </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+          <tr>
+            <th>Action owner</th>
+            <th>Order</th>
+            <th>Name</th>
+            <th>last update</th>
+          </tr>
+          <tr>
+            <td>yoni</td>
+            <td>1</td>
+            <td>action 1</td>
+            <td>16/9/15</td>
+          </tr>
+          </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+</div>

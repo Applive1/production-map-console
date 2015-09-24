@@ -81,3 +81,10 @@ body {
     border-bottom: 0;
   }
 }
+
+.pm_block {
+  background-color: #93cede;
+  border-style: solid;
+  border-width: 1px;
+  margin-top:2%;
+}

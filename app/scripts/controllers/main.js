@@ -8,7 +8,15 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', function ($scope, $http, $timeout) {
+  .controller('MainCtrl', function ($scope, $http, $timeout, $modal) {
+      $scope.connector = {
+          img_url: 'images/controls/connectorSmall.png',
+          text: 'connectorSmall',
+          on_click: function(){
+            console.log("Hello there My friend");
+          },
+          on: false
+        };
       $scope.pm_blocks = [
         {
           img_url: 'images/controls/Builder.png',
@@ -71,10 +79,6 @@ angular.module('productionMapConsoleApp')
           text: 'aws'
         },
         {
-          img_url: 'images/controls/connectorSmall.png',
-          text: 'connectorSmall'
-        },
-        {
           img_url: 'images/controls/farm.png',
           text: 'farm'
         },
@@ -121,4 +125,15 @@ angular.module('productionMapConsoleApp')
         $scope.btn_disabled = false;
 			});
   	}
+
+    $scope.animationsEnabled = true;
+
+    $scope.open = function (url, controller, size) {
+      var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: url,
+        controller: controller,
+        size: size
+      });
+    }
   });
