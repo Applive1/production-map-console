@@ -101,7 +101,10 @@
 			}, pm_blocks);
 
 			graph.addCells(pm_blocks);
-
+			$scope.graph = graph;
+			paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+				alert('cell view ' + cellView.model.attributes.attrs.text.text + ' was clicked');
+			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 
 	    		// Find the first element below that is not a link nor the dragged element itself.
@@ -109,13 +112,14 @@
 			        if (cell instanceof joint.dia.Link) return false; // Not interested in links.
 			        if (cell.id === cellView.model.id) return false; // The same element as the dropped one.
 			        if (cell.getBBox().containsPoint(g.point(x, y))) {
+			        	$scope.on_connection();
 			            return true;
 			        }
 			        return false;
 			    });
 
 			    // If the two elements are connected already, don't
-			    // connect them again (this is application specific though).
+			    // connect them again
 			    if (elementBelow && !_.contains(graph.getNeighbors(elementBelow), cellView.model)) {
 			        graph.addCell(new joint.dia.Link({
 			            source: { id: cellView.model.id }, target: { id: elementBelow.id },
@@ -125,7 +129,6 @@
 			        cellView.model.translate(-200, 0);
 			    }
 			});
-			$scope.graph = graph;
 		}
 
 
@@ -137,7 +140,8 @@ return {
 	scope: {
 		nodes: '=nodes',
 		height:'=height',
-		width: '=width'
+		width: '=width',
+		on_connection: '=onconnection'
 	},
 	templateUrl: 'scripts/directives/templates/dac-creator.html',
 	restrict: 'E',

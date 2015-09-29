@@ -8,37 +8,40 @@
  */
 angular.module('productionMapConsoleApp')
   .directive('pmVisualEditor', function () {
-    var controller = ['$scope', function ($scope) {
+  var controller = ['$scope', '$modal', function ($scope, $modal) {
+
+    $scope.animationsEnabled = true;
+
+    function open(url, controller, size) {
+      var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: url,
+        controller: controller,
+        size: size
+      });
+    }
+
+    $scope.open_process = function(){
+      open('views/processes.html', 'ProcessesCtrl');
+    }
 
 		function init() {
       $scope.user_map = [
           {
             img_url: 'images/controls/Builder.png',
-            text: 'Builder',
-            on_dbclick: function(){
-              console.log("clicked")
-            }
+            text: 'Builder'
           },
           {
             img_url: 'images/controls/Cloud.png',
-            text: 'Cloud',
-            on_dbclick: function(){
-              console.log("clicked")
-            }
+            text: 'Cloud'
           },
           {
             img_url: 'images/controls/farm.png',
-            text: 'farm',
-            on_dbclick: function(){
-              console.log("clicked")
-            }
+            text: 'farm'
           },
           {
             img_url: 'images/controls/pmAgent.png',
-            text: 'pmAgent',
-            on_dbclick: function(){
-              console.log("clicked")
-            }
+            text: 'pmAgent'
           }
         ];
 		}
@@ -48,7 +51,6 @@ angular.module('productionMapConsoleApp')
     }];
     return {
       scope: {
-        connector_mode: '=connectorMode'
       },
       templateUrl: 'scripts/directives/templates/pm-visual-designer.html',
       restrict: 'E',

@@ -19,7 +19,8 @@ angular
     'nvd3ChartDirectives',
     'ui.bootstrap',
     'ui.codemirror',
-    'jsTree.directive'
+    'jsTree.directive',
+    'xeditable'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -36,4 +37,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme
   });

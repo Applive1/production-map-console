@@ -6,19 +6,18 @@
         <div class="col-md-6">
              <span>Process:</span>
              <select>
-              <option value="p1">process 1</option>
-              <option value="p2">process 2</option>
+              <option data-ng-repeat="process in processes" value="{{ process.id }}">{{process.name}}</option>
             </select>
         </div>
         <div class="col-md-6">
-            <button type="button" class="btn btn-primary">new process</button>
-            <button type="button" class="btn btn-primary">delete process</button>
+            <button type="button" class="btn btn-primary" data-ng-click="add_process(process)">new process</button>
+            <button type="button" class="btn btn-primary" data-ng-click="delete_process(process)">delete process</button>
         </div>
     </div>
     <div class="container" style=";border-style: solid;border-width: 1px;margin-top:5%;margin-buttom:5%;padding:3%">
         <div class="row">
             <div class="col-md-12">
-                <input type="checkbox" name="your-group" value="unit-in-group" />  Default execution process
+                <input data-ng-model="process.default_execution" type="checkbox" name="your-group" value="unit-in-group" />  Default execution process
             </div>
         </div>
         <div class="row">
@@ -26,13 +25,13 @@
                 <span>Name:</span>
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Text input">
+                <input data-ng-model="process.name" type="text" class="form-control" placeholder="Text input">
             </div>
             <div class="col-md-3">
                 <span>internal order:</span>
             </div>
             <div class="col-md-3">
-                <input type="number" name="quantity" min="1" max="5">
+                <input data-ng-model="process.order" type="number" name="quantity" min="1" max="5">
             </div>
         </div>
         <div class="row">
@@ -40,7 +39,7 @@
                 <span>Description:</span>
             </div>
             <div class="col-md-10">
-                <input type="text" class="form-control" placeholder="Text input">
+                <input data-ng-model="process.description" type="text" class="form-control" placeholder="Text input">
             </div>
         </div>
         <div class="table-responsive">
@@ -51,11 +50,7 @@
             <th>Name</th>
             <th>last update</th>
           </tr>
-          <tr>
-            <td>yoni</td>
-            <td>1</td>
-            <td>action 1</td>
-            <td>16/9/15</td>
+          <tr data-ng-repeat="action in process_actions">
           </tr>
           </table>
         </div>

@@ -126,14 +126,4 @@ angular.module('productionMapConsoleApp')
 			});
   	}
 
-    $scope.animationsEnabled = true;
-
-    $scope.open = function (url, controller, size) {
-      var modalInstance = $modal.open({
-        animation: true,
-        templateUrl: url,
-        controller: controller,
-        size: size
-      });
-    }
   });
