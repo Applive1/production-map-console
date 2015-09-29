@@ -4,8 +4,8 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-6">
-             <span>Process:</span>
-             <select ng-options="proc as proc.name for proc in processes" data-ng-model="process">
+            <span>Process:</span>
+            <select ng-options="proc as proc.name for proc in processes" data-ng-model="process">
             </select>
         </div>
         <div class="col-md-6">
@@ -42,16 +42,16 @@
             </div>
         </div>
         <div class="table-responsive">
-          <table class="table table-hover">
-          <tr>
-            <th>Action owner</th>
-            <th>Order</th>
-            <th>Name</th>
-            <th>last update</th>
-          </tr>
-          <tr data-ng-repeat="action in process_actions">
-          </tr>
-          </table>
+            <table class="table table-hover">
+                <tr>
+                    <th>Action owner</th>
+                    <th>Order</th>
+                    <th>Name</th>
+                    <th>last update</th>
+                </tr>
+                <tr data-ng-repeat="action in process_actions">
+                </tr>
+            </table>
         </div>
     </div>
 </div>
