@@ -14,7 +14,7 @@ angular.module('productionMapConsoleApp')
 
 		function init() {
 			console.log("init controller");
-			$scope.show_designer = true;
+			$scope.designer_active = true;
 			$scope.show_designer = function(){
 				$scope.code_editor_active = false;
 				$scope.xml_editor_active = false;

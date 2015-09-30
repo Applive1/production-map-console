@@ -31,12 +31,11 @@ angular.module('productionMapConsoleApp')
           description: "bla bla",
           id: 3
         }],
-        size: 3
+        size: 4
       }
     };
-    // Public API here
-    return {
-      get: function (link_id, process_id) {
+
+    function getProcess (link_id, process_id) {
         var p_list = processes[link_id];
         var selected_process = {};
         angular.forEach(function(process){
@@ -46,7 +45,10 @@ angular.module('productionMapConsoleApp')
           }
         });
         return selected_process;
-      },
+    }
+    // Public API here
+    return {
+      get: getProcess,
       all: function(link_id) {
         return processes[link_id].p_list;
       },

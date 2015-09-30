@@ -5,8 +5,7 @@
     <div class="row">
         <div class="col-md-6">
              <span>Process:</span>
-             <select>
-              <option data-ng-repeat="process in processes" value="{{ process.id }}">{{process.name}}</option>
+             <select ng-options="proc as proc.name for proc in processes" data-ng-model="process">
             </select>
         </div>
         <div class="col-md-6">

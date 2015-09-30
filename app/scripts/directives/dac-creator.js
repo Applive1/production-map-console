@@ -39,7 +39,7 @@
  		function init() {
 			var graph = new joint.dia.Graph;
 			var paper = new joint.dia.Paper({
-			    el: $('#paper'),
+			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.width,
 			    height: $scope.height,
 			    gridSize: 10,
