@@ -14,26 +14,9 @@ angular.module('productionMapConsoleApp')
 
 		function init() {
 			console.log("init controller");
-			$scope.designer_active = true;
-			$scope.show_designer = function(){
-				$scope.code_editor_active = false;
-				$scope.xml_editor_active = false;
-				$scope.designer_active = true;
-			}
-			$scope.show_xml_editor = function(){
-				$scope.designer_active = false;
-				$scope.code_editor_active = false;
-				$scope.xml_editor_active = true;
-			}
-			$scope.show_code_editor = function(){
-				$scope.designer_active = false;
-				$scope.xml_editor_active = false;
-				$scope.code_editor_active = true;
-			}
+			$scope.viewMode = 1; //Set to designer
 		}
-
 		init();
-
     }];
 
     return {

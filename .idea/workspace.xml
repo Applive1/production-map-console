@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d25bfe5a-6948-462d-9f94-06d6b05d3479" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/processes.html" afterPath="$PROJECT_DIR$/app/views/processes.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/processes.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/processes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/processes.js" afterPath="$PROJECT_DIR$/app/scripts/services/processes.js" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/directives/dac-creator.js" afterPath="$PROJECT_DIR$/app/scripts/directives/dac-creator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/karma.conf.js" afterPath="$PROJECT_DIR$/test/karma.conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/directives/templates/pm-map-designer.html" afterPath="$PROJECT_DIR$/app/scripts/directives/templates/pm-map-designer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/directives/pm-map-designer.js" afterPath="$PROJECT_DIR$/app/scripts/directives/pm-map-designer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/directives/templates/pm-visual-designer.html" afterPath="$PROJECT_DIR$/app/scripts/directives/templates/pm-visual-designer.html" />
+>>>>>>> fixing some UI errors
     </list>
     <ignored path="production-map-console.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,6 +35,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD
       <file leaf-file-name="dac-creator.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/directives/dac-creator.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -42,26 +51,49 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="527">
               <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+=======
+      <file leaf-file-name="tree-json.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/scripts/data/tree-json.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="459">
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+>>>>>>> fixing some UI errors
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="processes.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/processes.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="2.5984457" vertical-offset="0" max-vertical-offset="1105">
               <caret line="59" column="6" selection-start-line="59" selection-start-column="6" selection-end-line="59" selection-end-column="6" />
+=======
+      <file leaf-file-name="dac-creator.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/scripts/directives/dac-creator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6616541" vertical-offset="2303" max-vertical-offset="3213">
+              <caret line="151" column="92" selection-start-line="151" selection-start-column="92" selection-end-line="151" selection-end-column="92" />
+>>>>>>> fixing some UI errors
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="processes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/services/processes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="965" max-vertical-offset="1377">
               <caret line="75" column="7" selection-start-line="75" selection-start-column="7" selection-end-line="75" selection-end-column="7" />
+=======
+      <file leaf-file-name="pm-code-editor.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/scripts/directives/pm-code-editor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> fixing some UI errors
               <folding />
             </state>
           </provider>
@@ -70,8 +102,13 @@
       <file leaf-file-name="pm-map-designer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/directives/pm-map-designer.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1224">
               <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="888">
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+>>>>>>> fixing some UI errors
               <folding />
             </state>
           </provider>
@@ -90,8 +127,13 @@
       <file leaf-file-name="pm-map-designer.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/directives/templates/pm-map-designer.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="-37.588234" vertical-offset="1897" max-vertical-offset="3700">
               <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
+=======
+            <state vertical-scroll-proportion="-37.588234" vertical-offset="1872" max-vertical-offset="3675">
+              <caret line="126" column="32" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+>>>>>>> fixing some UI errors
               <folding />
             </state>
           </provider>
@@ -127,6 +169,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+      <file leaf-file-name="processes.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/scripts/services/processes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+>>>>>>> fixing some UI errors
     </leaf>
   </component>
   <component name="FindManager">
@@ -146,9 +201,12 @@
         <option value="$PROJECT_DIR$/app/scripts/directives/templates/pm-map-designer.html" />
         <option value="$PROJECT_DIR$/app/scripts/directives/templates/pm-visual-designer.html" />
         <option value="$PROJECT_DIR$/app/scripts/directives/dac-creator.js" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/scripts/services/processes.js" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/processes.js" />
         <option value="$PROJECT_DIR$/app/views/processes.html" />
+=======
+>>>>>>> fixing some UI errors
       </list>
     </option>
   </component>
@@ -216,6 +274,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+<<<<<<< HEAD
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="production-map-console" />
@@ -296,6 +355,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+=======
+>>>>>>> fixing some UI errors
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -363,13 +424,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+<<<<<<< HEAD
     <editor active="true" />
+=======
+    <editor active="false" />
+>>>>>>> fixing some UI errors
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35605007" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24968314" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24968314" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24968314" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> fixing some UI errors
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -428,6 +497,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/scripts/services/processes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> fixing some UI errors
     <entry file="file://$PROJECT_DIR$/app/scripts/data/tree-json.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="459">
@@ -446,8 +526,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/directives/pm-map-designer.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1224">
           <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="116" max-vertical-offset="888">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+>>>>>>> fixing some UI errors
           <folding />
         </state>
       </provider>
@@ -470,8 +555,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/directives/templates/pm-map-designer.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="-37.588234" vertical-offset="1897" max-vertical-offset="3700">
           <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
+=======
+        <state vertical-scroll-proportion="-37.588234" vertical-offset="1872" max-vertical-offset="3675">
+          <caret line="126" column="32" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+>>>>>>> fixing some UI errors
           <folding />
         </state>
       </provider>
@@ -494,6 +584,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/directives/dac-creator.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="1742" max-vertical-offset="2652">
           <caret line="118" column="19" selection-start-line="118" selection-start-column="19" selection-end-line="118" selection-end-column="19" />
           <folding />
@@ -520,6 +611,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.5984457" vertical-offset="0" max-vertical-offset="1105">
           <caret line="59" column="6" selection-start-line="59" selection-start-column="6" selection-end-line="59" selection-end-column="6" />
+=======
+        <state vertical-scroll-proportion="0.6616541" vertical-offset="2303" max-vertical-offset="3213">
+          <caret line="151" column="92" selection-start-line="151" selection-start-column="92" selection-end-line="151" selection-end-column="92" />
+>>>>>>> fixing some UI errors
           <folding />
         </state>
       </provider>

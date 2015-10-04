@@ -124,17 +124,16 @@
         display: none !important;
     }
 </style>
-<dac-creator height="0" width="0" nodes="{}"></dac-creator>
 <div class="container" vertical>
     <div class="tabs" vertical>
-        <pm-visual-editor ng-show="designer_active"></pm-visual-editor>
-        <pm-xml-editor ng-show="xml_editor_active"></pm-xml-editor>
-        <pm-code-editor ng-show="code_editor_active" ></pm-code-editor>
+        <pm-visual-editor ng-show="viewMode==1"></pm-visual-editor>
+        <pm-xml-editor ng-show="viewMode==2"></pm-xml-editor>
+        <pm-code-editor ng-show="viewMode==3" ></pm-code-editor>
     </div>
     <div class="buttons" horizontal>
-        <button ng-click="show_designer()" active="{{designer_active}}">Design</button>
-        <button ng-click="show_xml_editor()" active="{{xml_editor_active}}">Markup</button>
-        <button ng-click="show_code_editor()" active="{{code_editor_active}}">Code</button>
+        <button ng-click="viewMode=1" active="{{designer_active}}">Design</button>
+        <button ng-click="viewMode=2" active="{{xml_editor_active}}">Markup</button>
+        <button ng-click="viewMode=3" active="{{code_editor_active}}">Code</button>
         <button onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
         <button onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
         <button onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>

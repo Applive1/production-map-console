@@ -36,13 +36,33 @@
 		function connector_on_click(source){
 
 		}
+
+        function calcCellPosition(cellView, x, y){
+            var position = {}
+
+            var bbox = cellView.getBBox();
+            position.constrained = false;
+
+            position.constrainedX = x;
+
+            if (bbox.x <= 0) { position.constrainedX = x + $scope.gridSize; position.constrained = true }
+            if (bbox.x + bbox.width >= $scope.width) { position.constrainedX = x - $scope.gridSize; position.constrained = true }
+
+            position.constrainedY = y;
+
+            if (bbox.y <= 0) {  position.constrainedY = y + $scope.gridSize; position.constrained = true }
+            if (bbox.y + bbox.height >= $scope.height) { position.constrainedY = y - $scope.gridSize; position.constrained = true }
+
+            return position;
+        }
+
  		function init() {
 			var graph = new joint.dia.Graph;
 			var paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.width,
 			    height: $scope.height,
-			    gridSize: 10,
+			    gridSize: $scope.gridSize,
 			    model: graph
 			});
 
@@ -126,9 +146,21 @@
 			            attrs: { '.marker-source': { d: 'M 10 0 L 0 5 L 10 10 z' } }
 			        }));
 			        // Move the element a bit to the side.
-			        cellView.model.translate(-200, 0);
-			    }
+                    cellView.model.translate(0, 100);
+                    /*var bbox = cellView.getBBox();
+                    var position = calcCellPosition(cellView, bbox.x, bbox.y)
+                    cellView.model.position(position.constrainedX, position.constrainedY);*/
+
+                }
 			});
+
+            paper.on('cell:pointermove', function (cellView, evt, x, y) {
+
+                var position = calcCellPosition(cellView, x, y)
+
+                //if you fire the event all the time you get a stack overflow
+                if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY) }
+            });
 		}
 
 
@@ -141,7 +173,8 @@ return {
 		nodes: '=nodes',
 		height:'=height',
 		width: '=width',
-		on_connection: '=onconnection'
+		on_connection: '=onconnection',
+        gridSize : '='
 	},
 	templateUrl: 'scripts/directives/templates/dac-creator.html',
 	restrict: 'E',
