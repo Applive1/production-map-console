@@ -17,6 +17,11 @@
 		</accordion>
     </div>
     <div class="col-md-8">
-		<pm-map-designer></pm-map-designer>
+		<tabset>
+		    <tab heading="{{map.name}}">
+		      <pm-map-designer map="map.content"></pm-map-designer>
+		      <button type="button" class="btn btn-default" data-ng-click="execute_map(map)"> execute map </button>
+		    </tab>
+		  </tabset>
     </div>
 </div>

@@ -23,6 +23,7 @@ angular.module('productionMapConsoleApp')
 
     $scope.open_process = function(){
       open('views/processes.html', 'ProcessesCtrl');
+      console.log($scope.mapModel);
     }
 
 		function init() {
@@ -51,6 +52,7 @@ angular.module('productionMapConsoleApp')
     }];
     return {
       scope: {
+        mapModel: '=mapModel'
       },
       templateUrl: 'scripts/directives/templates/pm-visual-designer.html',
       restrict: 'E',

@@ -9,6 +9,11 @@
  */
 angular.module('productionMapConsoleApp')
   .controller('MainCtrl', function ($scope, $http, $timeout, $modal) {
+      $scope.map = {
+        name: "example_map.xml",
+        active: true,
+        disabled: false
+      };
       $scope.connector = {
           img_url: 'images/controls/connectorSmall.png',
           text: 'connectorSmall',
@@ -88,10 +93,6 @@ angular.module('productionMapConsoleApp')
         }
       ];
   	var URL = "http://localhost:1337/sysfile/execute";
-  	$scope.map = {
-  		name: '',
-  		content: ''
-  	}
     $scope.cmOption = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -99,13 +100,6 @@ angular.module('productionMapConsoleApp')
     }
 
     // Initial code content...
-    $scope.cmModel = '<!-- map xml scheme -->\n' +
-      '(define (double x)\n\t(* x x))\n\n\n' +
-      '<!-- XML code in here. -->\n' +
-      '<root>\n\t<foo>\n\t</foo>\n\t<bar/>\n</root>\n\n\n' +
-      '// Javascript code in here.\n' +
-      'function foo(msg) {\n\tvar r = Math.random();\n\treturn "" + r + " : " + msg;\n}';
-
     $scope.button_text = 'execute';
   	$scope.btn_disabled = false;
   	$scope.execute_map = function(map){

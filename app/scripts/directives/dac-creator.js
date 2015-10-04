@@ -12,8 +12,6 @@
  		$scope.graph = [];
 
  		function link_blocks(source_block, target_block){
-			console.log(source_block.id);
-			console.log(target_block.id);
 			var link = new joint.dia.Link({
 			    source: { id: source_block.id },
 			    target: { id: target_block.id },
@@ -31,6 +29,8 @@
 			    }
 			});
 			$scope.graph.addCell(link);
+			$scope.graphModel = JSON.stringify($scope.graph);
+			console.log($scope.graphModel);
 		}
 
 		function connector_on_click(source){
@@ -57,13 +57,13 @@
         }
 
  		function init() {
-			var graph = new joint.dia.Graph;
+			$scope.graph = new joint.dia.Graph;
 			var paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.width,
 			    height: $scope.height,
 			    gridSize: $scope.gridSize,
-			    model: graph
+			    model: $scope.graph
 			});
 
 			joint.shapes.basic.DecoratedRect = joint.shapes.basic.Generic.extend({
@@ -96,7 +96,7 @@
 				    }
 			    }
 			});
-			var pm_blocks = [];
+			$scope.pm_blocks = [];
 			var translate_block = {
 				x: 0,
 				y: 0
@@ -118,17 +118,16 @@
 					translate_block.x = 0;
 					translate_block.y = translate_block.y + 60;
 				}
-			}, pm_blocks);
+			}, $scope.pm_blocks);
 
-			graph.addCells(pm_blocks);
-			$scope.graph = graph;
+			$scope.graph.addCells($scope.pm_blocks);
 			paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
 				alert('cell view ' + cellView.model.attributes.attrs.text.text + ' was clicked');
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 
 	    		// Find the first element below that is not a link nor the dragged element itself.
-			    var elementBelow = graph.get('cells').find(function(cell) {
+			    var elementBelow = $scope.graph.get('cells').find(function(cell) {
 			        if (cell instanceof joint.dia.Link) return false; // Not interested in links.
 			        if (cell.id === cellView.model.id) return false; // The same element as the dropped one.
 			        if (cell.getBBox().containsPoint(g.point(x, y))) {
@@ -140,11 +139,8 @@
 
 			    // If the two elements are connected already, don't
 			    // connect them again
-			    if (elementBelow && !_.contains(graph.getNeighbors(elementBelow), cellView.model)) {
-			        graph.addCell(new joint.dia.Link({
-			            source: { id: cellView.model.id }, target: { id: elementBelow.id },
-			            attrs: { '.marker-source': { d: 'M 10 0 L 0 5 L 10 10 z' } }
-			        }));
+			    if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
+			        link_blocks(cellView.model, elementBelow);
 			        // Move the element a bit to the side.
                     cellView.model.translate(0, 100);
                     /*var bbox = cellView.getBBox();
@@ -161,11 +157,9 @@
                 //if you fire the event all the time you get a stack overflow
                 if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY) }
             });
+
 		}
-
-
 	init();
-
 }];
 
 return {
@@ -174,7 +168,8 @@ return {
 		height:'=height',
 		width: '=width',
 		on_connection: '=onconnection',
-        gridSize : '='
+        gridSize : '=',
+		graphModel: '=graphModel'
 	},
 	templateUrl: 'scripts/directives/templates/dac-creator.html',
 	restrict: 'E',

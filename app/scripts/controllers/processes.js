@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes) {
 
     var link_id = 1;
