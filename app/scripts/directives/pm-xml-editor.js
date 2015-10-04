@@ -17,7 +17,9 @@ angular.module('productionMapConsoleApp')
 
     }];
     return {
-      scope: {},
+      scope: {
+        content: '=content'
+      },
       templateUrl: 'scripts/directives/templates/pm-xml-editor.html',
       restrict: 'E',
       controller: controller

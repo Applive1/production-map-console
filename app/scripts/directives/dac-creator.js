@@ -30,7 +30,6 @@
 			});
 			$scope.graph.addCell(link);
 			$scope.graphModel = JSON.stringify($scope.graph);
-			console.log($scope.graphModel);
 		}
 
 		function connector_on_click(source){

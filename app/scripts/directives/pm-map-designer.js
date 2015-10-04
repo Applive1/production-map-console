@@ -20,7 +20,9 @@ angular.module('productionMapConsoleApp')
     }];
 
     return {
-      scope: {},
+      scope: {
+      	map: "=map"
+      },
       templateUrl: 'scripts/directives/templates/pm-map-designer.html',
       restrict: 'E',
       controller: controller

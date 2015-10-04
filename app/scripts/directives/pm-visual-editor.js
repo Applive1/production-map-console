@@ -29,20 +29,12 @@ angular.module('productionMapConsoleApp')
 		function init() {
       $scope.user_map = [
           {
-            img_url: 'images/controls/Builder.png',
-            text: 'Builder'
+            img_url: 'images/controls/CommandLine.png',
+            text: 'CommandLine'
           },
           {
-            img_url: 'images/controls/Cloud.png',
-            text: 'Cloud'
-          },
-          {
-            img_url: 'images/controls/farm.png',
-            text: 'farm'
-          },
-          {
-            img_url: 'images/controls/pmAgent.png',
-            text: 'pmAgent'
+            img_url: 'images/controls/FileServer.png',
+            text: 'FileServer'
           }
         ];
 		}
