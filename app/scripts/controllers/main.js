@@ -12,7 +12,8 @@ angular.module('productionMapConsoleApp')
       $scope.map = {
         name: "example_map.xml",
         active: true,
-        disabled: false
+        disabled: false,
+        content: ''
       };
       $scope.connector = {
           img_url: 'images/controls/connectorSmall.png',

@@ -156,7 +156,7 @@
                 //if you fire the event all the time you get a stack overflow
                 if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY) }
             });
-
+            $scope.graphModel = JSON.stringify($scope.graph);
 		}
 	init();
 }];

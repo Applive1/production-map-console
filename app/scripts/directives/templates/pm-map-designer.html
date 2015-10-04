@@ -126,8 +126,8 @@
 </style>
 <div class="container" vertical>
     <div class="tabs" vertical>
-        <pm-visual-editor ng-show="viewMode==1"></pm-visual-editor>
-        <pm-xml-editor ng-show="viewMode==2"></pm-xml-editor>
+        <pm-visual-editor ng-show="viewMode==1" map-model="map.content"></pm-visual-editor>
+        <pm-xml-editor ng-show="viewMode==2" content="map.content"></pm-xml-editor>
         <pm-code-editor ng-show="viewMode==3" ></pm-code-editor>
     </div>
     <div class="buttons" horizontal>

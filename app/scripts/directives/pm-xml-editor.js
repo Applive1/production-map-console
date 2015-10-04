@@ -11,6 +11,9 @@ angular.module('productionMapConsoleApp')
   	var controller = ['$scope', function ($scope) {
 
 		function init() {
+      console.log("------------");
+      console.log($scope.content);
+      console.log("------------");
 		}
 
 		init();
