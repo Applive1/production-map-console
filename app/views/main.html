@@ -9,7 +9,7 @@
 			    	<img data-ng-src="{{connector.img_url}}" />
 	    			<span>{{connector.text}}</span>
 			    </div>
-			    <div class="pm_block" data-ng-repeat="block in pm_blocks">
+			    <div class="pm_block" data-ng-repeat="block in pm_blocks" data-ng-click="changeMode(block.text)">
 	    			<img data-ng-src="{{block.img_url}}" />
 	    			<span>{{block.text}}</span>
 	    		</div>
@@ -19,9 +19,10 @@
     <div class="col-md-8">
 		<tabset>
 		    <tab heading="{{map.name}}">
-		      <pm-map-designer map="map"></pm-map-designer>
-		      <button type="button" class="btn btn-default" data-ng-click="execute_map(map)"> execute map </button>
+		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
+		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
 		    </tab>
 		  </tabset>
+		  Result: <br/><span>{{ mapResult }}</span>
     </div>
 </div>

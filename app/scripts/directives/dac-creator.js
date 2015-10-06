@@ -95,6 +95,7 @@
 				    }
 			    }
 			});
+			$scope.map_base_block = map_block;
 			$scope.pm_blocks = [];
 			var translate_block = {
 				x: 0,
@@ -122,11 +123,30 @@
 			$scope.graph.addCells($scope.pm_blocks);
 
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
-                Popups.open(
-                        'views/CellsEditView/'+cellView.model.attributes.attrs.text.text+'.html',
-                        cellView.model.attributes.attrs.text.text+'Ctrl',
-                        {node: $scope.nodes[$scope.pm_blocks.indexOf(cellView.model)]}
-                );
+                if(cellView.model.isLink()){
+                	Popups.open(
+	                        'views/processes.html',
+	                        'ProcessesCtrl'
+	                );
+                }
+                else{
+                	var block = {};
+                	for(var i=0; i < $scope.nodes.length; i++){
+                		block = $scope.nodes[i];
+                		if(cellView.model.id == block.id){
+                			break;
+                		}
+                	}
+                	if(block === {}){
+                		console.log("Error: can't find block");
+                		return;
+                	}
+                	Popups.open(
+	                        'views/CellsEditView/'+cellView.model.attributes.attrs.text.text+'.html',
+	                        cellView.model.attributes.attrs.text.text+'Ctrl',
+	                        {node: block}
+	                );
+                }
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 
@@ -140,7 +160,6 @@
 			        }
 			        return false;
 			    });
-
 			    // If the two elements are connected already, don't
 			    // connect them again
 			    if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
@@ -151,6 +170,34 @@
                     var position = calcCellPosition(cellView, bbox.x, bbox.y)
                     cellView.model.position(position.constrainedX, position.constrainedY);*/
 
+                }
+			});
+
+			paper.on('blank:pointerclick', function(evt, x, y){
+				console.log($scope.clickMode);
+				if($scope.clickMode == '')
+				{
+
+				}
+				else{
+                	console.log("--- no element clicked---");
+                	console.log($scope.clickMode);
+                	var block = $scope.map_base_block.clone().translate(x, y).attr({
+				    image: {
+				    	'xlink:href': 'images/controls/'+$scope.clickMode+'.png'
+				    },
+				    text: {
+				        text: $scope.clickMode,
+				        fill: '#2e2e2e'
+					}
+					});
+					$scope.graph.addCell(block);
+					$scope.nodes.push({
+						id: block.id,
+						text: $scope.clickMode,
+						img_url: 'images/controls/'+$scope.clickMode+'.png'
+					});
+					$scope.graphModel = JSON.stringify($scope.graph);
                 }
 			});
 
@@ -173,7 +220,8 @@ return {
 		width: '=width',
 		on_connection: '=onconnection',
         gridSize : '=',
-		graphModel: '=graphModel'
+		graphModel: '=graphModel',
+		clickMode: '='
 	},
 	templateUrl: 'scripts/directives/templates/dac-creator.html',
 	restrict: 'E',

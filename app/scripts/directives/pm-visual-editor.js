@@ -30,7 +30,8 @@ angular.module('productionMapConsoleApp')
     return {
       scope: {
         mapModel: '=mapModel',
-        map: '='
+        map: '=',
+        clickMode: '='
       },
       templateUrl: 'scripts/directives/templates/pm-visual-designer.html',
       restrict: 'E',

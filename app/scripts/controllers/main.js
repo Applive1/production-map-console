@@ -14,16 +14,7 @@ angular.module('productionMapConsoleApp')
             active: true,
             disabled: false,
             content: '',
-            user_map: [
-                {
-                    img_url: 'images/controls/CommandLine.png',
-                    text: 'CommandLine'
-                },
-                {
-                    img_url: 'images/controls/FileServer.png',
-                    text: 'FileServer'
-                }
-            ]
+            user_map: []
         };
         $scope.connector = {
             img_url: 'images/controls/connectorSmall.png',
@@ -33,6 +24,7 @@ angular.module('productionMapConsoleApp')
             },
             on: false
         };
+        $scope.block_mode = '';
         $scope.pm_blocks = [
             {
                 img_url: 'images/controls/Builder.png',
@@ -113,6 +105,7 @@ angular.module('productionMapConsoleApp')
         // Initial code content...
         $scope.button_text = 'execute';
         $scope.btn_disabled = false;
+        $scope.mapResult = 'waiting for result';
         $scope.execute_map = function (map) {
             $scope.button_text = 'executing...';
             $scope.btn_disabled = true;
@@ -123,6 +116,7 @@ angular.module('productionMapConsoleApp')
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                     console.log(result);
+                    $scope.mapResult = result;
                 })
                 .error(function (err) {
                     console.log(err);
@@ -130,5 +124,7 @@ angular.module('productionMapConsoleApp')
                     $scope.btn_disabled = false;
                 });
         }
-
+        $scope.changeMode = function(mode){
+            $scope.block_mode = mode;
+        }
     });
