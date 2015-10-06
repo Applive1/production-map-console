@@ -26,21 +26,6 @@ angular.module('productionMapConsoleApp')
       console.log($scope.mapModel);
     }
 
-		/*function init() {
-            $scope.user_map = [
-          {
-            img_url: 'images/controls/CommandLine.png',
-            text: 'CommandLine'
-          },
-          {
-            img_url: 'images/controls/FileServer.png',
-            text: 'FileServer'
-          }
-        ];
-		}
-
-		init();*/
-
     }];
     return {
       scope: {

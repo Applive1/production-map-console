@@ -127,14 +127,6 @@
                         cellView.model.attributes.attrs.text.text+'Ctrl',
                         {node: $scope.nodes[$scope.pm_blocks.indexOf(cellView.model)]}
                 );
-                /*$modal.open({
-                    animation: true,
-                    templateUrl: 'views/CellsEditView/commandLine.html',
-                    controller: 'commaneLineCtrl',
-                    size: undefined,
-                    resolve: {node: $scope.nodes[$scope.pm_blocks.indexOf(cellView.model)]}
-                });*/
-                //alert('cell view ' + cellView.model.attributes.attrs.text.text + ' was clicked');
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 
