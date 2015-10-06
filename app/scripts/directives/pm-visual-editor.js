@@ -26,8 +26,8 @@ angular.module('productionMapConsoleApp')
       console.log($scope.mapModel);
     }
 
-		function init() {
-      $scope.user_map = [
+		/*function init() {
+            $scope.user_map = [
           {
             img_url: 'images/controls/CommandLine.png',
             text: 'CommandLine'
@@ -39,12 +39,13 @@ angular.module('productionMapConsoleApp')
         ];
 		}
 
-		init();
+		init();*/
 
     }];
     return {
       scope: {
-        mapModel: '=mapModel'
+        mapModel: '=mapModel',
+        map: '='
       },
       templateUrl: 'scripts/directives/templates/pm-visual-designer.html',
       restrict: 'E',

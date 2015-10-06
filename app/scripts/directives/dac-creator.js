@@ -8,7 +8,7 @@
  */
  angular.module('productionMapConsoleApp')
  .directive('dacCreator', function () {
- 	var controller = ['$scope', function ($scope) {
+ 	var controller = ['$scope','Popups', function ($scope,Popups) {
  		$scope.graph = [];
 
  		function link_blocks(source_block, target_block){
@@ -120,8 +120,21 @@
 			}, $scope.pm_blocks);
 
 			$scope.graph.addCells($scope.pm_blocks);
-			paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
-				alert('cell view ' + cellView.model.attributes.attrs.text.text + ' was clicked');
+
+            paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+                Popups.open(
+                        'views/CellsEditView/'+cellView.model.attributes.attrs.text.text+'.html',
+                        cellView.model.attributes.attrs.text.text+'Ctrl',
+                        {node: $scope.nodes[$scope.pm_blocks.indexOf(cellView.model)]}
+                );
+                /*$modal.open({
+                    animation: true,
+                    templateUrl: 'views/CellsEditView/commandLine.html',
+                    controller: 'commaneLineCtrl',
+                    size: undefined,
+                    resolve: {node: $scope.nodes[$scope.pm_blocks.indexOf(cellView.model)]}
+                });*/
+                //alert('cell view ' + cellView.model.attributes.attrs.text.text + ' was clicked');
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 

@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title">Command Line</h3>
+</div>
+<div class="modal-body">
+    <input type="file" onchange="angular.element(this).scope().fileChanged(this)" style="margin-bottom: 10px;"/>
+    <textarea ng-model="node.data.input" class="form-control"></textarea>
+    Commands separated by lines
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+</div>
