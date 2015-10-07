@@ -16,14 +16,6 @@ angular.module('productionMapConsoleApp')
             content: '',
             user_map: []
         };
-        $scope.connector = {
-            img_url: 'images/controls/connectorSmall.png',
-            text: 'connectorSmall',
-            on_click: function () {
-                console.log("Hello there My friend");
-            },
-            on: false
-        };
         $scope.block_mode = '';
         $scope.pm_blocks = [
             {
@@ -49,10 +41,6 @@ angular.module('productionMapConsoleApp')
             {
                 img_url: 'images/controls/FileServer.png',
                 text: 'FileServer'
-            },
-            {
-                img_url: 'images/controls/Hosting.png',
-                text: 'Hosting'
             },
             {
                 img_url: 'images/controls/Hosting1.png',

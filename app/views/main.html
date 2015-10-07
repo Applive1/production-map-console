@@ -5,10 +5,6 @@
 		    	<js-tree tree-plugins="dnd,sort,search" tree-data="json" tree-src="scripts/data/tree-json.json"></js-tree>
 		    </accordion-group>
 		    <accordion-group heading="Map Items">
-			    <div class="pm_block" data-ng-click="connector.on_click()">
-			    	<img data-ng-src="{{connector.img_url}}" />
-	    			<span>{{connector.text}}</span>
-			    </div>
 			    <div class="pm_block" data-ng-repeat="block in pm_blocks" data-ng-click="changeMode(block.text)">
 	    			<img data-ng-src="{{block.img_url}}" />
 	    			<span>{{block.text}}</span>

@@ -10,7 +10,20 @@
  .directive('dacCreator', function () {
  	var controller = ['$scope','Popups', function ($scope,Popups) {
  		$scope.graph = [];
-
+		function clone(a) {
+		   return JSON.parse(JSON.stringify(a));
+		}
+		function getNode(blockId){
+	 		var res = {};
+	 		for(var i=0; i < $scope.nodes.length; i++){
+	    		var block = $scope.nodes[i];
+	    		if(blockId == block.id){
+	    			res = block;
+	    			break;
+	    		}
+	    	}
+	    	return res;
+	 	}
  		function link_blocks(source_block, target_block){
 			var link = new joint.dia.Link({
 			    source: { id: source_block.id },
@@ -28,6 +41,13 @@
 			        }
 			    }
 			});
+			var block1 = getNode(source_block.id);
+			var block2 = getNode(target_block.id);
+			block1.next.push(clone(block2));
+			block2.execute = false;
+			console.log("*** nodes ***");
+			console.log($scope.nodes);
+			console.log("*** nodes ***");
 			$scope.graph.addCell(link);
 			$scope.graphModel = JSON.stringify($scope.graph);
 		}
@@ -130,13 +150,7 @@
 	                );
                 }
                 else{
-                	var block = {};
-                	for(var i=0; i < $scope.nodes.length; i++){
-                		block = $scope.nodes[i];
-                		if(cellView.model.id == block.id){
-                			break;
-                		}
-                	}
+                	var block = getNode(cellView.model.id);
                 	if(block === {}){
                 		console.log("Error: can't find block");
                 		return;
@@ -182,7 +196,7 @@
 				else{
                 	console.log("--- no element clicked---");
                 	console.log($scope.clickMode);
-                	var block = $scope.map_base_block.clone().translate(x, y).attr({
+                	var block = $scope.map_base_block.clone().position(x, y).attr({
 				    image: {
 				    	'xlink:href': 'images/controls/'+$scope.clickMode+'.png'
 				    },
@@ -195,7 +209,9 @@
 					$scope.nodes.push({
 						id: block.id,
 						text: $scope.clickMode,
-						img_url: 'images/controls/'+$scope.clickMode+'.png'
+						img_url: 'images/controls/'+$scope.clickMode+'.png',
+						next: [],
+						execute: true
 					});
 					$scope.graphModel = JSON.stringify($scope.graph);
                 }
