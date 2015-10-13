@@ -103,6 +103,27 @@
 			    model: $scope.graph
 			});
 
+			var graphScale = 1;
+
+			var paperScale = function(sx, sy) {
+			    paper.scale(sx, sy);
+			};
+
+			$scope.zoomIn = function() {
+			    graphScale += 0.1;
+			    paperScale(graphScale, graphScale);
+			};
+
+			$scope.zoomOut = function() {
+			    graphScale -= 0.1;
+			    paperScale(graphScale, graphScale);
+			};
+
+			$scope.resetZoom = function() {
+			    graphScale = 1;
+			    paperScale(graphScale, graphScale);
+			};
+
 			joint.shapes.basic.DecoratedRect = joint.shapes.basic.Generic.extend({
 
 			    markup: '<g class="rotatable"><g class="scalable"><rect/></g><image/><text/></g>',
