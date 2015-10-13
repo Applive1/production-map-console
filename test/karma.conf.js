@@ -52,6 +52,7 @@ module.exports = function(config) {
       'bower_components/jstree/dist/jstree.js',
       'bower_components/jsTree-directive/jsTree.directive.js',
       'bower_components/webcomponentsjs/webcomponents.js',
+      'bower_components/ngDraggable/ngDraggable.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

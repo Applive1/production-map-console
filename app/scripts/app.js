@@ -20,7 +20,8 @@ angular
     'ui.bootstrap',
     'ui.codemirror',
     'jsTree.directive',
-    'xeditable'
+    'xeditable',
+    'ngDraggable'
   ])
   .config(function ($routeProvider) {
     $routeProvider

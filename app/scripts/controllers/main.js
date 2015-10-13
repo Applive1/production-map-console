@@ -114,6 +114,7 @@ angular.module('productionMapConsoleApp')
                 });
         };
         $scope.changeMode = function(mode){
-            $scope.block_mode = mode;
+            $scope.block_mode = {mode: mode};
+            console.log($scope.block_mode);
         };
     });

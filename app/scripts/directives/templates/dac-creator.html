@@ -1,4 +1,6 @@
-<div id="paper" ></div>
+<div ng-style="{'width': width + 'px', 'height': height + 'px', 'overflow': 'scroll'}" ng-mouseup="dropBlock($event)">
+	<div id="paper"></div>
+</div>
 <div>
 	<button type="button" class="btn btn-primary" data-ng-click="zoomIn()">zoom in</button>
 	<button type="button" class="btn btn-primary" data-ng-click="zoomOut()">zoom out</button>

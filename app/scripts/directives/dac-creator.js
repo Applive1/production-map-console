@@ -82,29 +82,40 @@
 
             position.constrainedX = x;
 
-            if (bbox.x <= 0) { position.constrainedX = x + $scope.gridSize; position.constrained = true; }
-            if (bbox.x + bbox.width >= $scope.width) { position.constrainedX = x - $scope.gridSize; position.constrained = true; }
+            if (bbox.x <= 0) {
+            	position.constrainedX = x + $scope.gridSize; position.constrained = true;
+            }
+            if (bbox.x + bbox.width >= $scope.width) {
+            	//position.constrainedX = x - $scope.gridSize;
+            	$scope.width += $scope.gridSize;
+            	position.constrained = true;
+            }
 
             position.constrainedY = y;
 
             if (bbox.y <= 0) {  position.constrainedY = y + $scope.gridSize; position.constrained = true; }
-            if (bbox.y + bbox.height >= $scope.height) { position.constrainedY = y - $scope.gridSize; position.constrained = true; }
+            if (bbox.y + bbox.height >= $scope.height) {
+            	//position.constrainedY = y - $scope.gridSize;
+            	$scope.height += $scope.gridSize;
+            	position.constrained = true;
+            }
 
             return position;
         }
 
  		function init() {
 			$scope.graph = new joint.dia.Graph();
+			$scope.innerWidth = $scope.width;
+			$scope.innerHeight = $scope.height;
 			var paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
-			    width: $scope.width,
-			    height: $scope.height,
+			    width: $scope.innerWidth,
+			    height: $scope.innerHeight,
 			    gridSize: $scope.gridSize,
 			    model: $scope.graph
 			});
 
 			var graphScale = 1;
-
 			var paperScale = function(sx, sy) {
 			    paper.scale(sx, sy);
 			};
@@ -112,10 +123,14 @@
 			$scope.zoomIn = function() {
 			    graphScale += 0.1;
 			    paperScale(graphScale, graphScale);
+			    $scope.innerWidth += $scope.gridSize;
+			    $scope.innerHeight += $scope.gridSize;
 			};
 
 			$scope.zoomOut = function() {
 			    graphScale -= 0.1;
+			    $scope.innerWidth -= $scope.gridSize;
+			    $scope.innerHeight -= $scope.gridSize;
 			    paperScale(graphScale, graphScale);
 			};
 
@@ -172,7 +187,7 @@
 				});
 				this.push(current_block);
 				translate_block.x = translate_block.x + 165;
-				if(translate_block.x >= $scope.width - 600){
+				if(translate_block.x >= $scope.width){
 					//TODO: YB: fix the width if
 					translate_block.x = 0;
 					translate_block.y = translate_block.y + 60;
@@ -201,6 +216,25 @@
 
 			$scope.graph.addCells($scope.pm_blocks);
 
+			paper.on('cell:mouseover', function(cellView, evt){
+				if(cellView.model.isLink()){
+				}
+				else{
+					var bbox = cellView.getBBox();
+					var pos_width = bbox.width/2; // if the cursor is on the right side
+					var relative = evt.offsetX - bbox.x;
+					if(relative > 0 && relative > pos_width && !$scope.connectorMode){
+						console.log("yay");
+						console.log(relative);
+						V(paper.findViewByModel(cellView.model).el).addClass('pm_connector');
+						$scope.connectorMode = true;
+					}
+					else{
+						V(paper.findViewByModel(cellView.model).el).removeClass('pm_connector')
+						$scope.connectorMode = false;
+					}
+				}
+			});
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
                 if(cellView.model.isLink()){
                 	var mapLink = getLink(cellView.model.id);
@@ -267,26 +301,56 @@
                 }
 			});
 
-			paper.on('blank:pointerclick', function(evt, x, y){
-				if($scope.clickMode === '')
+			$scope.dropBlock = function(event){
+				console.log('clickmode --->' + $scope.clickMode);
+				if($scope.clickMode.mode === '')
 				{
 
 				}
 				else{
+					var x = event.offsetX;
+					var y = event.offsetY;
+					var block = $scope.map_base_block.clone().position(x, y).attr({
+					    image: {
+					    	'xlink:href': 'images/controls/'+$scope.clickMode.mode+'.png'
+					    },
+					    text: {
+					        text: $scope.clickMode.mode,
+					        fill: '#2e2e2e'
+						}
+					});
+					$scope.graph.addCell(block);
+					$scope.graphContent.nodes.push({
+						id: block.id,
+						type: $scope.clickMode.mode,
+						name: $scope.clickMode.mode,
+						serverUrl: "localhost:8100" //Default address
+					});
+					$scope.clickMode.mode = '';
+					$scope.graphModel = JSON.stringify($scope.graph);
+				}
+			}
+			paper.on('blank:pointerclick', function(evt, x, y){
+				if($scope.clickMode.mode === '')
+				{
+
+				}
+				else{
+					return;
                 	var block = $scope.map_base_block.clone().position(x, y).attr({
 				    image: {
-				    	'xlink:href': 'images/controls/'+$scope.clickMode+'.png'
+				    	'xlink:href': 'images/controls/'+$scope.clickMode.mode+'.png'
 				    },
 				    text: {
-				        text: $scope.clickMode,
+				        text: $scope.clickMode.mode,
 				        fill: '#2e2e2e'
 					}
 					});
 					$scope.graph.addCell(block);
 					$scope.graphContent.nodes.push({
 						id: block.id,
-						type: $scope.clickMode,
-						name: $scope.clickMode,
+						type: $scope.clickMode.mode,
+						name: $scope.clickMode.mode,
 						serverUrl: "localhost:8100" //Default address
 					});
 					$scope.graphModel = JSON.stringify($scope.graph);
