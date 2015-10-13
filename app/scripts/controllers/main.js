@@ -8,13 +8,14 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, $timeout, $modal) {
+    .controller('MainCtrl', function ($scope, $http) {
         $scope.map = {
             name: "example_map.xml",
             active: true,
             disabled: false,
             content: '',
-            user_map: []
+            nodes: [],
+            links: []
         };
         $scope.block_mode = '';
         $scope.pm_blocks = [
@@ -88,7 +89,7 @@ angular.module('productionMapConsoleApp')
             lineNumbers: true,
             indentWithTabs: true,
             mode: 'xml'
-        }
+        };
 
         // Initial code content...
         $scope.button_text = 'execute';
@@ -111,8 +112,8 @@ angular.module('productionMapConsoleApp')
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                 });
-        }
+        };
         $scope.changeMode = function(mode){
             $scope.block_mode = mode;
-        }
+        };
     });

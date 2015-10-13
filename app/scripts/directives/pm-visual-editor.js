@@ -22,8 +22,6 @@ angular.module('productionMapConsoleApp')
     }
 
     $scope.open_process = function(){
-      open('views/processes.html', 'ProcessesCtrl');
-      console.log($scope.mapModel);
     }
 
     }];

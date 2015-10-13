@@ -11,45 +11,53 @@ angular.module('productionMapConsoleApp')
     .factory('Processes', function () {
         // Service Logic
 
-        var processes = {
-            '1': {
-                p_list: [{
-                    name: 'p1',
-                    order: 1,
-                    description: "bla bla",
-                    id: 1
-                },
-                    {
-                        name: 'p2',
-                        order: 2,
-                        description: "bla bla",
-                        id: 2
-                    },
-                    {
-                        name: 'p3',
-                        order: 3,
-                        description: "bla bla",
-                        id: 3
-                    }],
-                size: 4
-            }
-        };
+        var processes = {};
 
         function getProcess (link_id, process_id) {
-            var p_list = processes[link_id];
-            var selected_process = {};
-            angular.forEach(function(process){
+            if(!processes.hasOwnProperty(link_id)){
+                return -1;
+            }
+            var p_list = processes[link_id].p_list;
+            var selected_process = -1;
+            console.log(p_list);
+            for(var i = 0;i<p_list.length;i++){
+                var process = p_list[i];
                 if(process.id === process_id){
                     selected_process = process;
-                    return;
+                    return process;
                 }
-            });
+            }
+            console.log(process_id);
+            console.log(selected_process);
             return selected_process;
         }
+        function getAction (link_id, process_id, action_id) {
+            if(!processes.hasOwnProperty(link_id)){
+                return;
+            }
+            var process = getProcess(link_id, process_id);
+            if(process === -1){
+                return;
+            }
+            for(var i=0;i<process.actions.length;i++){
+                var action = processes.actions[i];
+                if(action.id === action_id){
+                    return action;
+                }
+            }
+            return {};
+        }
+
         // Public API here
         return {
             get: getProcess,
             all: function(link_id) {
+                if(!processes.hasOwnProperty(link_id)){
+                    processes[link_id] = {
+                        p_list: [],
+                        size: 0
+                    };
+                }
                 return processes[link_id].p_list;
             },
             add: function(link_id, process){
@@ -66,11 +74,43 @@ angular.module('productionMapConsoleApp')
                     link_id_processes.size++;
                     link_id_processes.p_list.push(process);
                 }
+                return process;
             },
             remove: function(link_id, process){
+                if(!processes.hasOwnProperty(link_id)){
+                    processes[link_id] = {
+                        p_list: [],
+                        size: 0
+                    };
+                }
                 var p_list = processes[link_id].p_list;
                 var index = p_list.indexOf(process);
                 p_list.splice(index, 1);
+            },
+            addAction: function(link_id, process_id, action){
+                if(!processes.hasOwnProperty(link_id)){
+                    return;
+                }
+                var process = getProcess(link_id, process_id);
+                if(process === -1){
+                    return;
+                }
+                action.id = process.actions.length;
+                action.order = process.actions.length;
+                action.lastUpdate = new Date();
+                process.actions.push(action);
+                return angular.copy(action);
+            },
+            removeAction: function(link_id, process_id, action){
+                if(!processes.hasOwnProperty(link_id)){
+                    return;
+                }
+                var process = getProcess(link_id, process_id);
+                if(process === -1){
+                    return;
+                }
+                var index = process.actions.indexOf(action);
+                process.actions.splice(index, 1);
             }
         };
     });

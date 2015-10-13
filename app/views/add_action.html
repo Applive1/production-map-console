@@ -3,33 +3,35 @@
 </div>
 <div class="modal-body">
     <div class="row"style="margin:2%">
-        <div class="col-md-6">
+        <div class="col-md-3">
              <span>Server:</span>
-             <select>
-              <option value="p1">server 1</option>
-              <option value="p2">server 2</option>
+        </div>
+        <div class="col-md-3">
+          <select ng-options="server as server.name for server in processServers" data-ng-model="action.server">
             </select>
         </div>
         <div class="col-md-3">
             <span>Timeout:</span>
         </div>
         <div class="col-md-3">
-            <input type="number" name="quantity" min="1" max="5">
+            <input type="number" name="quantity" min="1" max="5" data-ng-model="action.timeout">
         </div>
     </div>
-    <div class="row"style="margin:2%">
-        <div class="col-md-6">
+    <div class="row" style="margin:2%">
+        <div class="col-md-3">
              <span>Method:</span>
-             <select>
-              <option value="p1">Method 1</option>
-              <option value="p2">Method 2</option>
+        </div>
+        <div class="col-md-3">
+             <select ng-options="method as method.name for method in action.server.methods" data-ng-model="action.method">
             </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <span>Timeunit:</span>
-       		<select>
-              <option value="p1">unit 1</option>
-              <option value="p2">unit 2</option>
+        </div>
+        <div class="col-md-3">
+       		<select data-ng-model="action.timeunit">
+              <option value="1">seconds</option>
+              <option value="2">minutes</option>
             </select>
         </div>
     </div>
@@ -38,21 +40,25 @@
             <span>Action name:</span>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Text input">
+            <input type="text" class="form-control" placeholder="name" data-ng-model="action.name">
         </div>
         <div class="col-md-3">
             <span>Retries:</span>
         </div>
         <div class="col-md-3">
-            <input type="number" name="quantity" min="1" max="5">
+            <input type="number" name="quantity" min="1" max="5" data-ng-model="action.retries">
         </div>
     </div>
     <div class="row"style="margin:2%">
-        <div class="col-md-6">
-            <input type="checkbox" name="your-group" value="unit-in-group" />  Mandatory Action
+        <div class="col-md-2">
         </div>
-        <div class="col-md-6">
-            <input type="checkbox" name="your-group" value="unit-in-group" />  Suspend Action
+        <div class="col-md-4">
+            <input type="checkbox" name="your-group" value="unit-in-group" data-ng-model="action.mandatory" />  Mandatory Action
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <input type="checkbox" name="your-group" value="unit-in-group" data-ng-model="action.suspend" />  Suspend Action
         </div>
     </div>
     <div class="table-responsive">
@@ -62,21 +68,16 @@
         <th>Name</th>
         <th>Value</th>
       </tr>
-      <tr>
-        <td>param 1</td>
-        <td>value 1</td>
-      </tr>
-      <tr>
-        <td>param 2</td>
-        <td>value 2</td>
-      </tr>
-      <tr>
-        <td>param 3</td>
-        <td>value 3</td>
+      <tr data-ng-repeat="param in action.method.params">
+        <td>{{param.name}}</td>
+        <td editable-text="action.params[param.name]">{{ action.params[param.name] || '' }}
+        </td>
       </tr>
       </table>
     </div>
+    <button class="btn btn-primary" type="button" ng-click="testAction(action)">Test Action</button>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+    <button class="btn btn-primary" type="button" ng-click="addAction(action)">save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">cancel</button>
 </div>

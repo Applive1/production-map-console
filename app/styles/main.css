@@ -88,3 +88,7 @@ body {
   border-width: 1px;
   margin-top:2%;
 }
+
+.selected-action {
+  background-color: #93cede;
+}

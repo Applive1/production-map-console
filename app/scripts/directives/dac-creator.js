@@ -15,10 +15,21 @@
 		}
 		function getNode(blockId){
 	 		var res = {};
-	 		for(var i=0; i < $scope.nodes.length; i++){
-	    		var block = $scope.nodes[i];
-	    		if(blockId == block.id){
+	 		for(var i=0; i < $scope.graphContent.nodes.length; i++){
+	    		var block = $scope.graphContent.nodes[i];
+	    		if(blockId === block.id){
 	    			res = block;
+	    			break;
+	    		}
+	    	}
+	    	return res;
+	 	}
+	 	function getLink(linkId){
+	 		var res = {};
+	 		for(var i=0; i < $scope.graphContent.links.length; i++){
+	    		var link = $scope.graphContent.links[i];
+	    		if(linkId === link.id){
+	    			res = link;
 	    			break;
 	    		}
 	    	}
@@ -41,15 +52,22 @@
 			        }
 			    }
 			});
-			var block1 = getNode(source_block.id);
-			var block2 = getNode(target_block.id);
-			block1.next.push(clone(block2));
-			block2.execute = false;
-			console.log("*** nodes ***");
-			console.log($scope.nodes);
-			console.log("*** nodes ***");
 			$scope.graph.addCell(link);
+			var p_link = {
+				id: link.id,
+				sourceId: source_block.id,
+				targetId: target_block.id
+			};
+			$scope.graphContent.links.push(p_link);
 			$scope.graphModel = JSON.stringify($scope.graph);
+        	var sourceBlock = getNode(p_link.sourceId);
+        	var targetBlock = getNode(p_link.targetId);
+        	var res = {
+        		id: p_link.id,
+        		source: sourceBlock,
+        		target: targetBlock
+        	}
+        	return res;
 		}
 
 		function connector_on_click(source){
@@ -57,26 +75,26 @@
 		}
 
         function calcCellPosition(cellView, x, y){
-            var position = {}
+            var position = {};
 
             var bbox = cellView.getBBox();
             position.constrained = false;
 
             position.constrainedX = x;
 
-            if (bbox.x <= 0) { position.constrainedX = x + $scope.gridSize; position.constrained = true }
-            if (bbox.x + bbox.width >= $scope.width) { position.constrainedX = x - $scope.gridSize; position.constrained = true }
+            if (bbox.x <= 0) { position.constrainedX = x + $scope.gridSize; position.constrained = true; }
+            if (bbox.x + bbox.width >= $scope.width) { position.constrainedX = x - $scope.gridSize; position.constrained = true; }
 
             position.constrainedY = y;
 
-            if (bbox.y <= 0) {  position.constrainedY = y + $scope.gridSize; position.constrained = true }
-            if (bbox.y + bbox.height >= $scope.height) { position.constrainedY = y - $scope.gridSize; position.constrained = true }
+            if (bbox.y <= 0) {  position.constrainedY = y + $scope.gridSize; position.constrained = true; }
+            if (bbox.y + bbox.height >= $scope.height) { position.constrainedY = y - $scope.gridSize; position.constrained = true; }
 
             return position;
         }
 
  		function init() {
-			$scope.graph = new joint.dia.Graph;
+			$scope.graph = new joint.dia.Graph();
 			var paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.width,
@@ -96,7 +114,7 @@
 		            attrs: {
 		            	'.': { magnet: false },
 			            'rect': { fill: '#FFFFFF', stroke: 'black', width: 100, height: 50 },
-			            'text': { 'font-size': 14, text: '', 'ref-x': .6, 'ref-y': .5, ref: 'rect', 'y-alignment': 'middle', 'x-alignment': 'middle', fill: 'black'},
+			            'text': { 'font-size': 14, text: '', 'ref-x': 0.6, 'ref-y': 0.5, ref: 'rect', 'y-alignment': 'middle', 'x-alignment': 'middle', fill: 'black'},
 			            'image': { 'ref-x': 2, 'ref-y': 0, ref: 'rect', width: 60, height: 50 }
 			        }
 
@@ -120,8 +138,8 @@
 			var translate_block = {
 				x: 0,
 				y: 0
-			}
-			angular.forEach($scope.nodes, function(node, key) {
+			};
+			angular.forEach($scope.graphContent.nodes, function(node, key) {
 				var current_block = map_block.clone().translate(translate_block.x, translate_block.y).attr({
 				    image: {
 				    	'xlink:href': node.img_url
@@ -140,13 +158,42 @@
 				}
 			}, $scope.pm_blocks);
 
+			angular.forEach($scope.graphContent.links, function(link, key) {
+				var link = new joint.dia.Link({
+				    source: { id: link.sourceId },
+				    target: { id: link.targetId },
+				    router: { name: 'manhattan' },
+				    connector: { name: 'rounded' },
+				    attrs: {
+				        '.connection': {
+				            stroke: '#333333',
+				            'stroke-width': 3
+				        },
+				        '.marker-target': {
+				            fill: '#333333',
+				            d: 'M 10 0 L 0 5 L 10 10 z'
+				        }
+				    }
+				});
+				this.push(link);
+			}, $scope.pm_blocks);
+
 			$scope.graph.addCells($scope.pm_blocks);
 
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
                 if(cellView.model.isLink()){
+                	var mapLink = getLink(cellView.model.id);
+                	var sourceBlock = getNode(mapLink.sourceId);
+                	var targetBlock = getNode(mapLink.targetId);
+                	var link = {
+                		id: mapLink.id,
+                		source: sourceBlock,
+                		target: targetBlock
+                	}
                 	Popups.open(
 	                        'views/processes.html',
-	                        'ProcessesCtrl'
+	                        'ProcessesCtrl',
+	                        { link: link }
 	                );
                 }
                 else{
@@ -166,10 +213,13 @@
 
 	    		// Find the first element below that is not a link nor the dragged element itself.
 			    var elementBelow = $scope.graph.get('cells').find(function(cell) {
-			        if (cell instanceof joint.dia.Link) return false; // Not interested in links.
-			        if (cell.id === cellView.model.id) return false; // The same element as the dropped one.
+			        if (cell instanceof joint.dia.Link){
+			        	return false; // Not interested in links.
+			        }
+			        if (cell.id === cellView.model.id) {
+			         return false; // The same element as the dropped one.
+			     	}
 			        if (cell.getBBox().containsPoint(g.point(x, y))) {
-			        	$scope.on_connection();
 			            return true;
 			        }
 			        return false;
@@ -177,9 +227,18 @@
 			    // If the two elements are connected already, don't
 			    // connect them again
 			    if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
-			        link_blocks(cellView.model, elementBelow);
-			        // Move the element a bit to the side.
-                    cellView.model.translate(0, 100);
+			    	if(cellView.model.isLink()){
+			    		//TODO: link the end of the link onlly
+			        }
+			        else{
+			        	var link = link_blocks(cellView.model, elementBelow);
+			        	Popups.open(
+		                        'views/processes.html',
+		                        'ProcessesCtrl',
+		                        { link: link }
+		                );
+			        	cellView.model.translate(0, 100);
+			        }
                     /*var bbox = cellView.getBBox();
                     var position = calcCellPosition(cellView, bbox.x, bbox.y)
                     cellView.model.position(position.constrainedX, position.constrainedY);*/
@@ -188,14 +247,11 @@
 			});
 
 			paper.on('blank:pointerclick', function(evt, x, y){
-				console.log($scope.clickMode);
-				if($scope.clickMode == '')
+				if($scope.clickMode === '')
 				{
 
 				}
 				else{
-                	console.log("--- no element clicked---");
-                	console.log($scope.clickMode);
                 	var block = $scope.map_base_block.clone().position(x, y).attr({
 				    image: {
 				    	'xlink:href': 'images/controls/'+$scope.clickMode+'.png'
@@ -206,12 +262,11 @@
 					}
 					});
 					$scope.graph.addCell(block);
-					$scope.nodes.push({
+					$scope.graphContent.nodes.push({
 						id: block.id,
-						text: $scope.clickMode,
-						img_url: 'images/controls/'+$scope.clickMode+'.png',
-						next: [],
-						execute: true
+						type: $scope.clickMode,
+						name: $scope.clickMode,
+						serverUrl: "localhost:8100" //Default address
 					});
 					$scope.graphModel = JSON.stringify($scope.graph);
                 }
@@ -219,10 +274,10 @@
 
             paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
-                var position = calcCellPosition(cellView, x, y)
+                var position = calcCellPosition(cellView, x, y);
 
                 //if you fire the event all the time you get a stack overflow
-                if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY) }
+                if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
             });
             $scope.graphModel = JSON.stringify($scope.graph);
 		}
@@ -231,7 +286,7 @@
 
 return {
 	scope: {
-		nodes: '=nodes',
+		graphContent: '=',
 		height:'=height',
 		width: '=width',
 		on_connection: '=onconnection',
