@@ -245,8 +245,7 @@
 					var bbox = cellView.getBBox();
 					var pos_width = bbox.width/2; // if the cursor is on the right side
 					var relative = evt.offsetX - bbox.x;
-					if(relative > 0 && relative > pos_width && !$scope.connectorMode){
-						console.log("yay");
+					if(relative >= 0 && relative >= pos_width){
 						console.log(relative);
 						V(paper.findViewByModel(cellView.model).el).addClass('pm_connector');
 						$scope.connectorMode = true;
@@ -257,6 +256,7 @@
 					}
 				}
 			});
+
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
                 if(cellView.model.isLink()){
                 	var mapLink = getLink(cellView.model.id);
@@ -296,6 +296,13 @@
 	                );
                 }
 			});
+
+			paper.on('cell:pointerdown', function(cellView, evt, x, y){
+				if($scope.connectorMode){
+					cellView.options.interactive = false;
+					$scope.source_element = cellView;
+				}
+			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
 	    		// Find the first element below that is not a link nor the dragged element itself.
 			    var elementBelow = $scope.graph.get('cells').find(function(cell) {
@@ -329,8 +336,8 @@
                     /*var bbox = cellView.getBBox();
                     var position = calcCellPosition(cellView, bbox.x, bbox.y)
                     cellView.model.position(position.constrainedX, position.constrainedY);*/
-
                 }
+                cellView.options.interactive = true;
 			});
 
 			$scope.dropBlock = function(event){
@@ -348,8 +355,7 @@
 					    },
 					    text: {
 					        text: $scope.clickMode.mode,
-					        fill: '#2e2e2e',
-					        magnet: true
+					        fill: '#2e2e2e'
 						}
 					});
 					$scope.graph.addCell(block);
