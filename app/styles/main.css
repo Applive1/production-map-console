@@ -82,6 +82,10 @@ body {
   }
 }
 
+.pm_connector {
+  cursor: url(/images/controls/connectorSmall.png), auto;
+}
+
 .pm_block {
   background-color: #93cede;
   border-style: solid;
