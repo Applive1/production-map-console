@@ -8,7 +8,8 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups) {
+        $scope.messages = Messages.all();
         $scope.map = {
             name: "example_map.xml",
             active: true,
@@ -105,7 +106,7 @@ angular.module('productionMapConsoleApp')
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                     console.log(result);
-                    $scope.mapResult = result;
+                    Messages.add(result);
                 })
                 .error(function (err) {
                     console.log(err);
@@ -117,4 +118,12 @@ angular.module('productionMapConsoleApp')
             $scope.block_mode = {mode: mode};
             console.log($scope.block_mode);
         };
+
+        $scope.showMessage = function(msg){
+            Popups.open(
+                    'views/message.html',
+                    'MessagesCtrl',
+                    { message: msg }
+            );
+        }
     });

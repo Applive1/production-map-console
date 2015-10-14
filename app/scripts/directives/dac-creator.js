@@ -10,7 +10,12 @@
  .directive('dacCreator', function () {
  	var controller = ['$scope','Popups', function ($scope,Popups) {
  		$scope.graph = [];
+
+		function updateModel(){
+			$scope.graphModel = JSON.stringify($scope.graph, null, 2);
+		}
 		function clone(a) {
+			console.log(a);
 		   return JSON.parse(JSON.stringify(a));
 		}
 		function getNode(blockId){
@@ -35,6 +40,21 @@
 	    	}
 	    	return res;
 	 	}
+	 	function updateLink(result){
+	 		var linkId = result.linkId;
+	 		var process = result.process;
+			var user_link = getLink(linkId);
+			console.log("user Process");
+			console.log(user_link);
+			for(var i = 0; i < user_link.processes.length; i++){
+				var pro = user_link.processes[i];
+				if(pro.id == process.id){
+					user_link.processes[i] = process;
+					return;
+				}
+			}
+			user_link.processes.push(process);
+		}
  		function link_blocks(source_block, target_block){
 			var link = new joint.dia.Link({
 			    source: { id: source_block.id },
@@ -56,10 +76,12 @@
 			var p_link = {
 				id: link.id,
 				sourceId: source_block.id,
-				targetId: target_block.id
+				targetId: target_block.id,
+				processes: []
 			};
 			$scope.graphContent.links.push(p_link);
-			$scope.graphModel = JSON.stringify($scope.graph);
+
+			updateModel();
         	var sourceBlock = getNode(p_link.sourceId);
         	var targetBlock = getNode(p_link.targetId);
         	var res = {
@@ -248,7 +270,8 @@
                 	Popups.open(
 	                        'views/processes.html',
 	                        'ProcessesCtrl',
-	                        { link: link }
+	                        { link: link },
+	                        updateLink
 	                );
                 }
                 else{
@@ -257,15 +280,23 @@
                 		console.log("Error: can't find block");
                 		return;
                 	}
+                	console.log(block);
                 	Popups.open(
-	                        'views/CellsEditView/'+cellView.model.attributes.attrs.text.text+'.html',
-	                        cellView.model.attributes.attrs.text.text+'Ctrl',
-	                        {node: block}
+	                        'views/CellsEditView/blockDetails.html',
+	                        'PmblocksCtrl',
+	                        {
+	                        	server: block,
+	                         	graphContent: $scope.graphContent
+	                     	},
+	                     	function(server){
+	                     		console.log(cellView.model);
+	                     		cellView.model.attr('text/text', server.name);
+	                     		console.log(cellView.model);
+	                     	}
 	                );
                 }
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
-
 	    		// Find the first element below that is not a link nor the dragged element itself.
 			    var elementBelow = $scope.graph.get('cells').find(function(cell) {
 			        if (cell instanceof joint.dia.Link){
@@ -290,7 +321,8 @@
 			        	Popups.open(
 		                        'views/processes.html',
 		                        'ProcessesCtrl',
-		                        { link: link }
+		                        { link: link },
+		                        updateLink
 		                );
 			        	cellView.model.translate(0, 100);
 			        }
@@ -316,7 +348,8 @@
 					    },
 					    text: {
 					        text: $scope.clickMode.mode,
-					        fill: '#2e2e2e'
+					        fill: '#2e2e2e',
+					        magnet: true
 						}
 					});
 					$scope.graph.addCell(block);
@@ -327,44 +360,18 @@
 						serverUrl: "localhost:8100" //Default address
 					});
 					$scope.clickMode.mode = '';
-					$scope.graphModel = JSON.stringify($scope.graph);
+					updateModel();
 				}
 			}
-			paper.on('blank:pointerclick', function(evt, x, y){
-				if($scope.clickMode.mode === '')
-				{
 
-				}
-				else{
-					return;
-                	var block = $scope.map_base_block.clone().position(x, y).attr({
-				    image: {
-				    	'xlink:href': 'images/controls/'+$scope.clickMode.mode+'.png'
-				    },
-				    text: {
-				        text: $scope.clickMode.mode,
-				        fill: '#2e2e2e'
-					}
-					});
-					$scope.graph.addCell(block);
-					$scope.graphContent.nodes.push({
-						id: block.id,
-						type: $scope.clickMode.mode,
-						name: $scope.clickMode.mode,
-						serverUrl: "localhost:8100" //Default address
-					});
-					$scope.graphModel = JSON.stringify($scope.graph);
-                }
-			});
-
-            paper.on('cell:pointermove', function (cellView, evt, x, y) {
+            /*paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
                 var position = calcCellPosition(cellView, x, y);
 
                 //if you fire the event all the time you get a stack overflow
                 if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
-            });
-            $scope.graphModel = JSON.stringify($scope.graph);
+            });*/
+            updateModel();
 		}
 	init();
 }];

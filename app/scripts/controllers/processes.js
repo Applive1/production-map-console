@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link) {
+angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link, Messages) {
 
     $scope.process = {
         id: 0,
@@ -65,7 +65,27 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         $scope.selectedAction = action;
     }
 
+    $scope.testProcess = function(){
+        Processes.testProcess($scope.process).success(function (result) {
+                console.log(result);
+                Messages.add(result);
+                $modalInstance.close({
+                                        linkId: link.id,
+                                        process: angular.copy($scope.process)
+                                      });
+            })
+            .error(function (err) {
+                console.log('****** FAILD *******');
+                console.log(err);
+                console.log('********************');
+            });
+    }
+
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        var result = {
+            linkId: link.id,
+            process: angular.copy($scope.process)
+        };
+        $modalInstance.close(result);
     };
 });

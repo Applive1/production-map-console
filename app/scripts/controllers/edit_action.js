@@ -33,5 +33,17 @@ angular.module('productionMapConsoleApp')
     $scope.addAction = function(action){
     	$modalInstance.dismiss('sucess');
     }
+    $scope.testAction =function(){
+        Processes.testAction($scope.action).success(function (result) {
+                console.log(result);
+                Messages.add(result);
+                $modalInstance.close({message: result});
+            })
+            .error(function (err) {
+                console.log('****** FAILD *******');
+                console.log(err);
+                console.log('********************');
+            });
+    }
     init();
   });

@@ -8,11 +8,12 @@
  * Factory in the productionMapConsoleApp.
  */
 angular.module('productionMapConsoleApp')
-    .factory('Processes', function () {
+    .factory('Processes', function ($http, $q) {
         // Service Logic
 
         var processes = {};
-
+        var TEST_PROCESS_URL = "http://localhost:1337/sysfile/testprocess";
+        var TEST_ACTION_URL = "http://localhost:1337/sysfile/testaction";
         function getProcess (link_id, process_id) {
             if(!processes.hasOwnProperty(link_id)){
                 return -1;
@@ -111,6 +112,12 @@ angular.module('productionMapConsoleApp')
                 }
                 var index = process.actions.indexOf(action);
                 process.actions.splice(index, 1);
+            },
+            testProcess: function(process){
+                return $http.post(TEST_PROCESS_URL, process);
+            },
+            testAction: function(action){
+                return $http.post(TEST_ACTION_URL, action);
             }
         };
     });
