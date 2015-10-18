@@ -11,7 +11,7 @@ angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups) {
         $scope.messages = Messages.all();
         $scope.map = {
-            name: "example_map.xml",
+            name: "example_map",
             active: true,
             disabled: false,
             content: '',

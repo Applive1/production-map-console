@@ -1,8 +1,17 @@
 <section>
   <textarea ui-codemirror="{
-      lineNumbers: true,
+  	  lineNumbers: true,
       lineWrapping : true,
-      mode: 'javascript'
+      mode: 'javascript',
+      extraKeys: {'Ctrl-Space': 'autocomplete'},
+      keyMap: 'sublime',
+      autoCloseBrackets: true,
+      matchBrackets: true,
+      showCursorWhenSelecting: true,
+      theme: 'monokai',
+      tabSize: 2,
+      gutters: ['CodeMirror-lint-markers'],
+      lint: true
     }" >
 function foo(x){
 	return x;
