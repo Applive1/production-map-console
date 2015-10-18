@@ -19,7 +19,12 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" type="text/css" href="styles/main.css"/>
-    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/twilight.css"
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/addon/hint/show-hint.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/addon/lint/lint.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/addon/fold/foldgutter.css">
+    <link rel="stylesheet" href="bower_components/codemirror/addon/dialog/dialog.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/monokai.css" />
+
     <!-- endbuild -->
 </head>
 <body ng-app="productionMapConsoleApp">
@@ -143,7 +148,24 @@
 <!-- endbuild -->
 
 <!-- user libs -->
+<script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
+<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>
+<script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
+<script src="bower_components/codemirror/addon/hint/javascript-hint.js"></script>
+<script src="bower_components/codemirror/addon/lint/lint.js"></script>
+<script src="bower_components/codemirror/addon/lint/javascript-lint.js"></script>
+<script src="bower_components/codemirror/addon/lint/json-lint.js"></script>
+<script src="bower_components/codemirror/addon/search/searchcursor.js"></script>
+<script src="bower_components/codemirror/addon/search/search.js"></script>
+<script src="bower_components/codemirror/addon/dialog/dialog.js"></script>
+<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
+<script src="bower_components/codemirror/addon/comment/comment.js"></script>
+<script src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
+<script src="bower_components/codemirror/addon/fold/foldcode.js"></script>
+<script src="bower_components/codemirror/addon/fold/brace-fold.js"></script>
 <script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script src="bower_components/codemirror/keymap/sublime.js"></script>
 <!-- end user libs -->
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
