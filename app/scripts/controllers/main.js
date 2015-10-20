@@ -16,7 +16,8 @@ angular.module('productionMapConsoleApp')
             disabled: false,
             content: '',
             nodes: [],
-            links: []
+            links: [],
+            code: ""
         };
         $scope.block_mode = '';
         $scope.pm_blocks = [
