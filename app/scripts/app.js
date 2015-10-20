@@ -21,7 +21,8 @@ angular
     'ui.codemirror',
     'jsTree.directive',
     'xeditable',
-    'ngDraggable'
+    'ngDraggable',
+    'ng.codemirror.dictionary.hint'
   ])
   .config(function ($routeProvider) {
     $routeProvider
