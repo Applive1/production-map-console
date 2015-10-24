@@ -111,12 +111,22 @@ angular.module('productionMapConsoleApp')
       }
     };
     // Public API here
+
+    var blocks_names = {};
     return {
       getMethods: function (type) {
         return blocks[type].methods;
       },
       newBlock: function(type){
-        return "emphty";
+        if(blocks_names.hasOwnProperty(type)){
+            var res = blocks_names[type];
+            blocks_names[type] = res + 1;
+            return type + '' + res;
+        }
+        else{
+            blocks_names[type] = 1;
+            return type;
+        }
       }
     };
   });

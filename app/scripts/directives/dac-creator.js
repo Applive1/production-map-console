@@ -8,7 +8,7 @@
  */
  angular.module('productionMapConsoleApp')
  .directive('dacCreator', function () {
- 	var controller = ['$scope','Popups', function ($scope,Popups) {
+ 	var controller = ['$scope','Popups', 'blockFactory', function ($scope,Popups, blockFactory) {
  		$scope.graph = [];
 
 		function updateModel(){
@@ -20,13 +20,11 @@
 		}
 		function getNode(blockId){
 	 		var res = {};
-	 		for(var i=0; i < $scope.graphContent.nodes.length; i++){
-	    		var block = $scope.graphContent.nodes[i];
+	 		angular.forEach($scope.graphContent.nodes, function(block, key) {
 	    		if(blockId === block.id){
 	    			res = block;
-	    			break;
 	    		}
-	    	}
+	    	});
 	    	return res;
 	 	}
 	 	function getLink(linkId){
@@ -289,9 +287,14 @@
 	                         	graphContent: $scope.graphContent
 	                     	},
 	                     	function(server){
-	                     		console.log(cellView.model);
-	                     		cellView.model.attr('text/text', server.name);
-	                     		console.log(cellView.model);
+	                     		var oldname = cellView.model.attr('text/text');
+	                     		if(oldname !== server.name){
+									cellView.model.attr('text/text', server.name);
+									$scope.graphContent.nodes[oldname].name = server.name;
+									$scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
+									$scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
+									delete $scope.graphContent.nodes[oldname];
+	                     		}
 	                     	}
 	                );
                 }
@@ -349,22 +352,23 @@
 				else{
 					var x = event.offsetX;
 					var y = event.offsetY;
+					var name = blockFactory.newBlock($scope.clickMode.mode);
 					var block = $scope.map_base_block.clone().position(x, y).attr({
 					    image: {
 					    	'xlink:href': 'images/controls/'+$scope.clickMode.mode+'.png'
 					    },
 					    text: {
-					        text: $scope.clickMode.mode,
+					        text: name,
 					        fill: '#2e2e2e'
 						}
 					});
 					$scope.graph.addCell(block);
-					$scope.graphContent.nodes.push({
+					$scope.graphContent.nodes[name] = {
 						id: block.id,
 						type: $scope.clickMode.mode,
-						name: $scope.clickMode.mode,
+						name: name,
 						serverUrl: "localhost:8100" //Default address
-					});
+					};
 					$scope.clickMode.mode = '';
 					updateModel();
 				}

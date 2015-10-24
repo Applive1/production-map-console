@@ -15,6 +15,9 @@ angular.module('productionMapConsoleApp')
 		function init() {
 			console.log("init controller");
 			$scope.viewMode = 1; //Set to designer
+      $scope.markup = {
+        cm: ''
+      };
 		}
 		init();
     }];

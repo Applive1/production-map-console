@@ -15,9 +15,9 @@ angular.module('productionMapConsoleApp')
             active: true,
             disabled: false,
             content: '',
-            nodes: [],
+            nodes: {},
             links: [],
-            code: ""
+            code: ''
         };
         $scope.block_mode = '';
         $scope.pm_blocks = [
@@ -87,11 +87,6 @@ angular.module('productionMapConsoleApp')
             }
         ];
         var URL = "http://localhost:1337/sysfile/execute";
-        $scope.cmOption = {
-            lineNumbers: true,
-            indentWithTabs: true,
-            mode: 'xml'
-        };
 
         // Initial code content...
         $scope.button_text = 'execute';
