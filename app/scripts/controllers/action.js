@@ -24,14 +24,14 @@ angular.module('productionMapConsoleApp')
 	    $scope.processServers = [];
 	    var servers = [link.source, link.target];
 	    console.log(link);
-	    for(var i=0; i< servers.length; i++){
-	    	var server = servers[i];
-	    	$scope.processServers.push({
-	    		type: server.type,
-	    		methods: $scope.getServerMethods(server),
-	    		name: server.name
-	    	});
-	    }
+	    angular.forEach(servers, function(server, name){
+            $scope.processServers.push({
+                type: server.type,
+                methods: $scope.getServerMethods(server),
+                name: server.name,
+                id: server.id
+            });
+        });
     }
 
     $scope.cancel = function () {
