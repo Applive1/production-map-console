@@ -268,7 +268,9 @@
                 	Popups.open(
 	                        'views/processes.html',
 	                        'ProcessesCtrl',
-	                        { link: link },
+	                        { link: link,
+	                          map: $scope.graphContent
+	                        },
 	                        updateLink
 	                );
                 }
@@ -331,7 +333,10 @@
 			        	Popups.open(
 		                        'views/processes.html',
 		                        'ProcessesCtrl',
-		                        { link: link },
+		                        {
+		                          link: link,
+		                          map: $scope.graphContent
+		                        },
 		                        updateLink
 		                );
 			        	cellView.model.translate(0, 100);
