@@ -50,7 +50,7 @@ angular.module('productionMapConsoleApp', [
     .config(function ($httpProvider) {
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function (editableOptions, $location, AuthService, $rootScope) {
+    /*.run(function (editableOptions, $location, AuthService, $rootScope) {
         editableOptions.theme = 'bs3'; // bootstrap3 theme
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')
@@ -59,4 +59,4 @@ angular.module('productionMapConsoleApp', [
                         $location.path('/login');
                 })
         });
-    });
+    })*/;
