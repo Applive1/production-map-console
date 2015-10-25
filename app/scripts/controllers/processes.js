@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link, Messages) {
+angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link, Messages, map) {
 
     $scope.process = {
         id: 0,
@@ -14,6 +14,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
 
     $scope.processes = Processes.all(link.id);
 
+    console.log(map);
     /* Processes operations */
     $scope.add_process = function(process){
         $scope.process = angular.copy(process);
@@ -26,7 +27,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
 
     /* Actions operations */
     $scope.addAction = function(){
-        Popups.open('views/add_action.html','ActionCtrl', {link: link, process: $scope.process});
+        Popups.open('views/add_action.html','ActionCtrl', {link: link, process: $scope.process, map: map});
     };
 
     $scope.removeAction = function(){
@@ -34,7 +35,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     };
 
     $scope.editAction = function(){
-        Popups.open('views/add_action.html','EditActionCtrl', {link: link, action: $scope.selectedAction});
+        Popups.open('views/add_action.html','EditActionCtrl', {link: link, action: $scope.selectedAction, map: map});
     }
 
     /* change action order up */

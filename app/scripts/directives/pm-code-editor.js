@@ -69,9 +69,8 @@ angular.module('productionMapConsoleApp')
 			      $scope.editorChanged = true;
 			      var newValue = instance.getValue();
 			      if (newValue !== $scope.code) {
-			        $scope.$evalAsync(function() {
 			          $scope.code = newValue;
-			        });
+			          $scope.map.code = newValue;
 			      }
 			    });
 			  $scope.$watch('code', function(newVal, oldVal){
