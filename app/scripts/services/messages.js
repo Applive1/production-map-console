@@ -13,7 +13,7 @@ angular.module('productionMapConsoleApp')
 
     return {
       add: function (msg) {
-        var now = new Date().toDateString();
+        var now = new Date().toString();
         messages.push({id:messages.length, date: now, content: msg});
       },
       clear: function(){
