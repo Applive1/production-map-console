@@ -54,8 +54,7 @@ angular.module('productionMapConsoleApp', [
         editableOptions.theme = 'bs3'; // bootstrap3 theme
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')
-                AuthService.isLoggedIn().then(function (response) {
-                    if (!response.data)
+                AuthService.isLoggedIn().error(function (response) {
                         $location.path('/login');
                 })
         });

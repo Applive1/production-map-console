@@ -122,4 +122,11 @@ angular.module('productionMapConsoleApp')
                     { message: msg }
             );
         }
+
+        $scope.createProject = function(){
+            Popups.open(
+                'views/Popups/CreateProject.html',
+                'ProjectsCtrl'
+            );
+        }
     });
