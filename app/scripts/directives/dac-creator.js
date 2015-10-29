@@ -54,7 +54,7 @@
 			user_link.processes.push(process);
 		}
  		function link_blocks(source_block, target_block){
-			var link = new joint.dia.Link({
+			/*var link = new joint.dia.Link({
 			    source: { id: source_block.id },
 			    target: { id: target_block.id },
 			    router: { name: 'manhattan' },
@@ -69,8 +69,10 @@
 			            d: 'M 10 0 L 0 5 L 10 10 z'
 			        }
 			    }
-			});
-			$scope.graph.addCell(link);
+			});*/
+			$scope.connection_link.set('target', target_block);
+			$scope.tmp_obj.remove();
+			var link = $scope.connection_link;
 			var p_link = {
 				id: link.id,
 				sourceId: source_block.id,
@@ -79,7 +81,6 @@
 			};
 			$scope.graphContent.links.push(p_link);
 
-			updateModel();
         	var sourceBlock = getNode(p_link.sourceId);
         	var targetBlock = getNode(p_link.targetId);
         	var res = {
@@ -127,6 +128,7 @@
 			$scope.graph = new joint.dia.Graph();
 			$scope.innerWidth = $scope.width;
 			$scope.innerHeight = $scope.height;
+			$scope.connecting = false;
 			var paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.innerWidth,
@@ -303,9 +305,33 @@
 			});
 
 			paper.on('cell:pointerdown', function(cellView, evt, x, y){
-				if($scope.connectorMode){
+				if($scope.connectorMode && !$scope.connecting){
 					cellView.options.interactive = false;
+					$scope.connecting = true;
 					$scope.source_element = cellView;
+					$scope.tmp_obj = new joint.shapes.basic.Rect({
+			            position: { x: x, y: y },
+			            size: { width: 0.1, height: 0.1 }
+			        });
+			        console.log($scope.tmp_obj);
+			        $scope.graph.addCell($scope.tmp_obj);
+					$scope.connection_link = new joint.dia.Link({
+					    source: { id: cellView.model.id },
+					    target: { id: $scope.tmp_obj.id},
+					    router: { name: 'manhattan' },
+					    connector: { name: 'rounded' },
+					    attrs: {
+					        '.connection': {
+					            stroke: '#333333',
+					            'stroke-width': 3
+					        },
+					        '.marker-target': {
+					            fill: '#333333',
+					            d: 'M 10 0 L 0 5 L 10 10 z'
+					        }
+					    }
+					});
+					$scope.graph.addCell($scope.connection_link);
 				}
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
@@ -329,7 +355,10 @@
 			    		//TODO: link the end of the link onlly
 			        }
 			        else{
+			        	console.log(cellView.model);
+			        	console.log(elementBelow);
 			        	var link = link_blocks(cellView.model, elementBelow);
+			        	updateModel();
 			        	Popups.open(
 		                        'views/processes.html',
 		                        'ProcessesCtrl',
@@ -346,6 +375,7 @@
                     cellView.model.position(position.constrainedX, position.constrainedY);*/
                 }
                 cellView.options.interactive = true;
+                $scope.connecting = false;
 			});
 
 			$scope.dropBlock = function(event){
@@ -379,13 +409,16 @@
 				}
 			}
 
-            /*paper.on('cell:pointermove', function (cellView, evt, x, y) {
+            paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
-                var position = calcCellPosition(cellView, x, y);
+            	if($scope.connecting){
+            		$scope.tmp_obj.position(x,y);
+            	}
+                /*var position = calcCellPosition(cellView, x, y);
 
                 //if you fire the event all the time you get a stack overflow
-                if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
-            });*/
+                if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }*/
+            });
             updateModel();
 		}
 	init();

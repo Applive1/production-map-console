@@ -31,6 +31,7 @@ angular.module('productionMapConsoleApp')
         lint: true,
         autofocus: true
         });
+      editor.setSize($scope.width, $scope.height);
       $scope.markup.cm = editor;
       $scope.$watch('content', function(newVal, oldVal){
         if($scope.jsonChange){
@@ -73,7 +74,9 @@ angular.module('productionMapConsoleApp')
     return {
       scope: {
         content: '=content',
-        markup: '='
+        markup: '=',
+        width: '=',
+        height: '='
       },
       templateUrl: 'scripts/directives/templates/pm-xml-editor.html',
       restrict: 'E',
