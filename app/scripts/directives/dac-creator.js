@@ -353,6 +353,7 @@
 			    if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
 			    	if(cellView.model.isLink()){
 			    		//TODO: link the end of the link onlly
+			    		cellView.model.set('target', elementBelow.id);
 			        }
 			        else{
 			        	console.log(cellView.model);
