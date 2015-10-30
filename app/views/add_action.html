@@ -22,7 +22,7 @@
              <span>Method:</span>
         </div>
         <div class="col-md-3">
-             <select ng-options="method as method.name for method in action.server.methods" data-ng-model="action.method">
+             <select data-ng-disabled="action.server === ''" ng-options="method as method.name for method in action.server.methods" data-ng-model="action.method">
             </select>
         </div>
         <div class="col-md-3">

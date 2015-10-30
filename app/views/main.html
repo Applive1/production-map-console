@@ -23,23 +23,21 @@
 		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
 		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
 		    </tab>
-		  </tabset>
+		</tabset>
+		<div style="border-style: solid;border-width: 1px;">
+			  	Messages:
+			  	<div class="table-responsive">
+		            <table class="table table-hover" style="border-style: solid;border-width: 1px;">
+		                <tr>
+		                    <th>Date</th>
+		                    <th>Message</th>
+		                </tr>
+		                <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
+		                    <td>{{message.date}}</td>
+		                    <td>{{message.content |  cut:true:20:' ...'}}</td>
+		                </tr>
+		            </table>
+		        </div>
+			</div>
     </div>
-</div>
-<div class="container-fluid row" style="margin:2%">
-	<div class="col-md-12" style="border-style: solid;border-width: 1px;">
-	  	Messages:
-	  	<div class="table-responsive">
-            <table class="table table-hover" style="border-style: solid;border-width: 1px;">
-                <tr>
-                    <th>Date</th>
-                    <th>Message</th>
-                </tr>
-                <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
-                    <td>{{message.date}}</td>
-                    <td>{{message.content |  cut:true:20:' ...'}}</td>
-                </tr>
-            </table>
-        </div>
-	  </div>
 </div>
