@@ -12,6 +12,7 @@
  		$scope.graph = [];
 
 		function updateModel(){
+			console.log($scope.graph);
 			$scope.graphModel = JSON.stringify($scope.graph, null, 2);
 		}
 		function clone(a) {
@@ -70,8 +71,9 @@
 			        }
 			    }
 			});*/
-			$scope.connection_link.set('target', target_block);
+			$scope.connection_link.set('target', { id: target_block.id });
 			$scope.tmp_obj.remove();
+			console.log(target_block);
 			var link = $scope.connection_link;
 			var p_link = {
 				id: link.id,
@@ -315,6 +317,7 @@
 			        });
 			        console.log($scope.tmp_obj);
 			        $scope.graph.addCell($scope.tmp_obj);
+			        console.log(cellView.model.id);
 					$scope.connection_link = new joint.dia.Link({
 					    source: { id: cellView.model.id },
 					    target: { id: $scope.tmp_obj.id},
@@ -353,12 +356,12 @@
 			    if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
 			    	if(cellView.model.isLink()){
 			    		//TODO: link the end of the link onlly
-			    		cellView.model.set('target', elementBelow.id);
+			    		cellView.model.set('target', { id: elementBelow.id });
 			        }
 			        else{
 			        	console.log(cellView.model);
-			        	console.log(elementBelow);
-			        	var link = link_blocks(cellView.model, elementBelow);
+			        	console.log($scope.connection_link.get('source'));
+			        	var link = link_blocks($scope.connection_link.get('source'), elementBelow);
 			        	updateModel();
 			        	Popups.open(
 		                        'views/processes.html',
