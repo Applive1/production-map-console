@@ -8,8 +8,9 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService) {
         $scope.messages = Messages.all();
+        $scope.projects = [];
         $scope.map = {
             name: "example_map",
             active: true,
@@ -88,6 +89,10 @@ angular.module('productionMapConsoleApp')
         ];
         var URL = "http://localhost:1337/sysfile/execute";
 
+        ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
+            $scope.projects = result.data;
+        });
+
         // Initial code content...
         $scope.button_text = 'execute';
         $scope.btn_disabled = false;
@@ -110,23 +115,43 @@ angular.module('productionMapConsoleApp')
                     $scope.btn_disabled = false;
                 });
         };
-        $scope.changeMode = function(mode){
+        $scope.changeMode = function (mode) {
             $scope.block_mode = {mode: mode};
             console.log($scope.block_mode);
         };
 
-        $scope.showMessage = function(msg){
-            Popups.open(
-                    'views/message.html',
-                    'MessagesCtrl',
-                    { message: msg }
-            );
+        $scope.showMessage = function (msg) {
+            Popups.open({
+                templateUrl: 'views/message.html',
+                controller: 'MessagesCtrl',
+                resolve: { message: msg }
+            });
         }
 
-        $scope.createProject = function(){
-            Popups.open(
-                'views/Popups/CreateProject.html',
-                'ProjectsCtrl'
-            );
+        $scope.createProject = function () {
+            Popups.open({
+                templateUrl: 'views/Popups/CreateProject.html',
+                controller: 'ProjectsCtrl'
+            }, function(project){
+                $scope.projects.push(project);
+            });
         }
+
+        $scope.jsTreeContextMenu = {
+            DeleteProject: {
+                "label": "Delete Project",
+                "action": function (obj) {
+                }
+            },
+            RenameProject: {
+                "label": "Rename Project",
+                "action": function (obj) {
+                }
+            },
+            AddMap: {
+                "label": "Add Map",
+                "action": function (obj) {
+                }
+            }
+        };
     });

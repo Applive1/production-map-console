@@ -27,7 +27,11 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
 
     /* Actions operations */
     $scope.addAction = function(){
-        Popups.open('views/add_action.html','ActionCtrl', {link: link, process: $scope.process, map: map});
+        Popups.open({
+            templateUrl: 'views/add_action.html',
+            controller: 'ActionCtrl',
+            resolve : {link: link, process: $scope.process, map: map}
+        });
     };
 
     $scope.removeAction = function(){
@@ -35,7 +39,11 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     };
 
     $scope.editAction = function(){
-        Popups.open('views/add_action.html','EditActionCtrl', {link: link, action: $scope.selectedAction, map: map});
+        Popups.open({
+            templateUrl: 'views/add_action.html',
+            controller: 'EditActionCtrl',
+            resolve : {link: link, action: $scope.selectedAction, map: map}
+        });
     }
 
     /* change action order up */
