@@ -16,8 +16,11 @@ angular.module('productionMapConsoleApp').factory('ProjectsService', ['$http', '
         getProjectById: function (projectId) {
             return $http.get(consts.serverUel + 'project/getProjectById/'+projectId);
         },
-        getProjectByUser: function (userId) {
+        getProjectsByUser: function (userId) {
             return $http.get(consts.serverUel + 'project/getProjectByUser/'+userId);
+        },
+        getJstreeProjectsByUser: function (userId) {
+            return $http.get(consts.serverUel + 'project/getJstreeProjectsByUser/'+userId);
         },
         createProject: function (projectName) {
             return $http.post(consts.serverUel + 'project/createProject', {name : projectName});

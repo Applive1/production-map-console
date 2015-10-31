@@ -3,7 +3,11 @@
     <div class="col-md-2">
 	    <accordion close-others="False">
 		    <accordion-group heading="Maps">
-		    	<js-tree tree-plugins="dnd,sort,search" tree-data="json" tree-src="scripts/data/tree-json.json"></js-tree>
+		    	<js-tree tree-plugins="dnd,sort,search,contextmenu"
+                         tree-contextmenu="jsTreeContextMenu"
+                         tree-data="scope"
+                         tree-model="projects"
+                         context-menu data-target="menu-tree"></js-tree>
 		    </accordion-group>
 		    <accordion-group heading="Map Items">
 			    <div class="pm_block" ng-drag="true" ng-drag-data="block" data-ng-repeat="block in pm_blocks" data-ng-mousedown="changeMode(block.text)">
@@ -40,7 +44,11 @@
             </div>
 		  </div>
     </div>
-    <div class="col-md-2">
-        <button ng-click="createProject()" class="btn btn-primary">Create a new Project</button>
-    </div>
+</div>
+<div class="dropdown" id="menu-tree" style="position: fixed">
+    <ul class="dropdown-menu" role="menu">
+        <li>
+            <a ng-click="createProject()">Add Project</a>
+        </li>
+    </ul>
 </div>

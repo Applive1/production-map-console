@@ -18,12 +18,12 @@ angular.module('productionMapConsoleApp', [
     'nvd3ChartDirectives',
     'ui.bootstrap',
     'ui.codemirror',
-    'jsTree.directive',
     'xeditable',
     'ngDraggable',
+    'LocalStorageModule',
     'ng.codemirror.dictionary.hint'
-  ])
-  .config(function ($routeProvider) {
+])
+    .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -50,12 +50,13 @@ angular.module('productionMapConsoleApp', [
     .config(function ($httpProvider) {
         $httpProvider.defaults.withCredentials = true;
     })
-    /*.run(function (editableOptions, $location, AuthService, $rootScope) {
+    .run(function (editableOptions, $location, AuthService, $rootScope) {
+        AuthService.fillAuthData();
         editableOptions.theme = 'bs3'; // bootstrap3 theme
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')
                 AuthService.isLoggedIn().error(function (response) {
-                        $location.path('/login');
+                    $location.path('/login');
                 })
         });
-    })*/;
+    });
