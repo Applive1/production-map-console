@@ -131,27 +131,38 @@ angular.module('productionMapConsoleApp')
         $scope.createProject = function () {
             Popups.open({
                 templateUrl: 'views/Popups/CreateProject.html',
-                controller: 'ProjectsCtrl'
-            }, function(project){
+                controller: 'ProjectsAndMapsCtrl',
+                resolve: { data: {isMap: false}}
+            }, function (project) {
                 $scope.projects.push(project);
             });
         }
 
-        $scope.jsTreeContextMenu = {
-            DeleteProject: {
-                "label": "Delete Project",
-                "action": function (obj) {
-                }
-            },
-            RenameProject: {
-                "label": "Rename Project",
-                "action": function (obj) {
-                }
-            },
-            AddMap: {
-                "label": "Add Map",
-                "action": function (obj) {
+        $scope.jsTreeContextMenu = function (node) {
+            var items = {
+                DeleteProject: {
+                    "label": "Delete Project",
+                    "action": function (obj) {
+                    }
+                },
+                RenameProject: {
+                    "label": "Rename Project",
+                    "action": function (obj) {
+                    }
+                },
+                AddMap: {
+                    "label": "Add Map",
+                    "action": function () {
+                        Popups.open({
+                            templateUrl: 'views/Popups/CreateProject.html',
+                            controller: 'ProjectsAndMapsCtrl',
+                            resolve: { data: {
+                                isMap: true,
+                                projectId: node.id}
+                            }});
+                    }
                 }
             }
+            return items;
         };
     });
