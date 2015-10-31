@@ -50,10 +50,11 @@ module.exports = function(config) {
       'bower_components/dagre/dist/dagre.core.min.js',
       'bower_components/jointjs/dist/joint.js',
       'bower_components/jstree/dist/jstree.js',
-      'bower_components/jsTree-directive/jsTree.directive.js',
       'bower_components/webcomponentsjs/webcomponents.js',
       'bower_components/ngDraggable/ngDraggable.js',
       'bower_components/ng-codemirror-dictionary-hint/lib/ng-codemirror-dictionary-hint.js',
+      'bower_components/fast-json-patch/src/json-patch-duplex.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

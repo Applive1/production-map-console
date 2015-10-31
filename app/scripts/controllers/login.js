@@ -7,13 +7,14 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AuthCtrl', ['$scope', 'AuthService','$location', function ($scope, AuthService, $location) {
+angular.module('productionMapConsoleApp').controller('AuthCtrl', ['$scope', 'AuthService','$location',
+    function ($scope, AuthService, $location) {
     $scope.userModel = {};
 
     $scope.login = function () {
-        AuthService.login($scope.userModel.username, $scope.userModel.password).success(function (response) {
+        AuthService.login($scope.userModel.username, $scope.userModel.password).then(function (response) {
             $location.path('/');
-        }).error(function (response) {
+        },function (response) {
             console.log(response);
         });
     }

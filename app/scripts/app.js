@@ -18,9 +18,9 @@ angular.module('productionMapConsoleApp', [
     'nvd3ChartDirectives',
     'ui.bootstrap',
     'ui.codemirror',
-    'jsTree.directive',
     'xeditable',
     'ngDraggable',
+    'LocalStorageModule',
     'ng.codemirror.dictionary.hint'
   ])
   .config(function ($routeProvider) {
@@ -51,6 +51,7 @@ angular.module('productionMapConsoleApp', [
         $httpProvider.defaults.withCredentials = true;
     })
     .run(function (editableOptions, $location, AuthService, $rootScope) {
+        AuthService.fillAuthData();
         editableOptions.theme = 'bs3'; // bootstrap3 theme
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')

@@ -5,12 +5,11 @@ angular.module('productionMapConsoleApp').controller('ProjectsCtrl', function ($
     $scope.model = {};
 
     $scope.cancel = function () {
-        $modalInstance.close(result);
+        $modalInstance.close(false);
     };
 
     $scope.saveNew = function () {
         ProjectsService.createProject($scope.model.name).then(function(result){
-            alert('saved');
             $modalInstance.close(result.data);
         });
 

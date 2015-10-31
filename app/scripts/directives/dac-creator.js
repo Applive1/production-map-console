@@ -265,12 +265,10 @@
                 		source: sourceBlock,
                 		target: targetBlock
                 	}
-                	Popups.open(
-	                        'views/processes.html',
-	                        'ProcessesCtrl',
-	                        { link: link },
-	                        updateLink
-	                );
+                	Popups.open({
+                        templateUrl: 'views/processes.html',
+                        controller: 'ProcessesCtrl'
+                    },updateLink);
                 }
                 else{
                 	var block = getNode(cellView.model.id);
@@ -279,24 +277,23 @@
                 		return;
                 	}
                 	console.log(block);
-                	Popups.open(
-	                        'views/CellsEditView/blockDetails.html',
-	                        'PmblocksCtrl',
-	                        {
-	                        	server: block,
-	                         	graphContent: $scope.graphContent
-	                     	},
-	                     	function(server){
-	                     		var oldname = cellView.model.attr('text/text');
-	                     		if(oldname !== server.name){
-									cellView.model.attr('text/text', server.name);
-									$scope.graphContent.nodes[oldname].name = server.name;
-									$scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
-									$scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
-									delete $scope.graphContent.nodes[oldname];
-	                     		}
-	                     	}
-	                );
+                	Popups.open({
+                        templateUrl: 'views/CellsEditView/blockDetails.html',
+                        controller: 'PmblocksCtrl',
+                        resolve : {
+                            server: block,
+                            graphContent: $scope.graphContent
+                        }
+                    },function(server){
+                        var oldname = cellView.model.attr('text/text');
+                        if(oldname !== server.name){
+                            cellView.model.attr('text/text', server.name);
+                            $scope.graphContent.nodes[oldname].name = server.name;
+                            $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
+                            $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
+                            delete $scope.graphContent.nodes[oldname];
+                        }
+                    });
                 }
 			});
 
@@ -328,12 +325,12 @@
 			        }
 			        else{
 			        	var link = link_blocks(cellView.model, elementBelow);
-			        	Popups.open(
-		                        'views/processes.html',
-		                        'ProcessesCtrl',
-		                        { link: link },
-		                        updateLink
-		                );
+			        	Popups.open({
+                            templateUrl: 'views/processes.html',
+                            controller: 'ProcessesCtrl',
+                            resolve : { link: link }
+                        },updateLink);
+
 			        	cellView.model.translate(0, 100);
 			        }
                     /*var bbox = cellView.getBBox();
