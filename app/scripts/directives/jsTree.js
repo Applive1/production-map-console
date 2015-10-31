@@ -57,8 +57,9 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
                 return s.$eval(a.treeContextmenuaction)(e);
               }
             } else {
-              config.contextmenu.items = function() {
-                return s[a.treeContextmenu];
+              config.contextmenu.items = function(node) {
+                var nodeId = node.id;
+                return s[a.treeContextmenu](node);
               }
             }
           }
