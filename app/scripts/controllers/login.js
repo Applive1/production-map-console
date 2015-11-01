@@ -20,7 +20,11 @@ angular.module('productionMapConsoleApp').controller('AuthCtrl', ['$scope', 'Aut
     }
 
     $scope.register = function () {
-        AuthService.register($scope.userModel).then();
+        AuthService.register($scope.userModel).then(function(result){
+            $location.path('/');
+        },function(err){
+            $scope.errors = err.data;
+        });
     }
 }]);
 
