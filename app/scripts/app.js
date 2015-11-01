@@ -52,6 +52,7 @@ angular.module('productionMapConsoleApp', [
     })
     .run(function (editableOptions, $location, AuthService, $rootScope) {
         AuthService.fillAuthData();
+        $rootScope.logout = AuthService.logout;
         editableOptions.theme = 'bs3'; // bootstrap3 theme
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')
