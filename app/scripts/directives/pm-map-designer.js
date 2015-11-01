@@ -8,27 +8,27 @@
  */
 
 angular.module('productionMapConsoleApp')
-  .directive('pmMapDesigner', function () {
+    .directive('pmMapDesigner', function () {
 
-  	var controller = ['$scope', function ($scope) {
+        var controller = ['$scope', function ($scope) {
+            function init() {
+                console.log("init controller");
+                $scope.viewMode = 1; //Set to designer
+                $scope.markup = {
+                    cm: ''
+                };
+            }
 
-		function init() {
-			console.log("init controller");
-			$scope.viewMode = 1; //Set to designer
-      $scope.markup = {
-        cm: ''
-      };
-		}
-		init();
-    }];
+            init();
+        }];
 
-    return {
-      scope: {
-      	map: "=map",
-        clickMode: '='
-      },
-      templateUrl: 'scripts/directives/templates/pm-map-designer.html',
-      restrict: 'E',
-      controller: controller
-    };
-  });
+        return {
+            scope: {
+                map: "=map",
+                clickMode: '='
+            },
+            templateUrl: 'scripts/directives/templates/pm-map-designer.html',
+            restrict: 'E',
+            controller: controller
+        };
+    });
