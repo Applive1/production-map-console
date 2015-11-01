@@ -22,7 +22,10 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
             });
         },
         register: function (user) {
-            return $http.post(consts.serverUel + 'auth/local/register', user);
+            return $http.post(consts.serverUel + 'auth/local/register', user).then(function(result){
+                authService.currentUser = result.data;
+                localStorageService.set('loggedUser', result.data);
+            });
         },
         fillAuthData: function(){
             authService.currentUser=localStorageService.get('loggedUser');
