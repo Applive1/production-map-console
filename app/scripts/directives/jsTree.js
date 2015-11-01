@@ -58,7 +58,6 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
               }
             } else {
               config.contextmenu.items = function(node) {
-                var nodeId = node.id;
                 return s[a.treeContextmenu](node);
               }
             }
@@ -68,14 +67,12 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
         if (config.plugins.indexOf('types') >= 0) {
           if (a.treeTypes) {
             config.types = s[a.treeTypes];
-            console.log(config);
           }
         }
 
         if (config.plugins.indexOf('dnd') >= 0) {
           if (a.treeDnd) {
             config.dnd = s[a.treeDnd];
-            console.log(config);
           }
         }
       }

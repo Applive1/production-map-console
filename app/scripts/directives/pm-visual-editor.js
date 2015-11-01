@@ -13,7 +13,7 @@ angular.module('productionMapConsoleApp')
     $scope.animationsEnabled = true;
 
     function open(url, controller, size) {
-      var modalInstance = $modal.open({
+        var modalInstance = $modal.open({
         animation: true,
         templateUrl: url,
         controller: controller,
