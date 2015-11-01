@@ -21,7 +21,7 @@ angular.module('productionMapConsoleApp', [
     'jsTree.directive',
     'xeditable',
     'ngDraggable',
-    'ng.codemirror.dictionary.hint'
+    'ng-context-menu'
   ])
   .config(function ($routeProvider) {
         $routeProvider

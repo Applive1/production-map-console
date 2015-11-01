@@ -54,6 +54,11 @@ module.exports = function(config) {
       'bower_components/webcomponentsjs/webcomponents.js',
       'bower_components/ngDraggable/ngDraggable.js',
       'bower_components/ng-codemirror-dictionary-hint/lib/ng-codemirror-dictionary-hint.js',
+      'bower_components/ng-context-menu/dist/ng-context-menu.js',
+      'bower_components/jQuery-contextMenu/dist/jquery.contextMenu.js',
+      'bower_components/jQuery-contextMenu/dist/jquery.contextMenu.min.js',
+      'bower_components/jQuery-contextMenu/dist/jquery.ui.position.js',
+      'bower_components/jQuery-contextMenu/dist/jquery.ui.position.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

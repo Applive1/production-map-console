@@ -55,22 +55,6 @@
 			user_link.processes.push(process);
 		}
  		function link_blocks(source_block, target_block){
-			/*var link = new joint.dia.Link({
-			    source: { id: source_block.id },
-			    target: { id: target_block.id },
-			    router: { name: 'manhattan' },
-			    connector: { name: 'rounded' },
-			    attrs: {
-			        '.connection': {
-			            stroke: '#333333',
-			            'stroke-width': 3
-			        },
-			        '.marker-target': {
-			            fill: '#333333',
-			            d: 'M 10 0 L 0 5 L 10 10 z'
-			        }
-			    }
-			});*/
 			$scope.connection_link.set('target', { id: target_block.id });
 			$scope.tmp_obj.remove();
 			console.log(target_block);
@@ -126,12 +110,66 @@
             return position;
         }
 
+        function editBlock(cellView){
+        	var block = getNode(cellView.id);
+        	var oldname = angular.copy(block.name);
+        	Popups.open(
+                    'views/CellsEditView/blockDetails.html',
+                    'PmblocksCtrl',
+                    {
+                    	server: block,
+                     	graphContent: $scope.graphContent
+                 	},
+                 	function(server){
+                 		if(oldname !== server.name){
+							cellView.attr('text/text', server.name);
+							$scope.graphContent.nodes[oldname].name = server.name;
+							$scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
+							$scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
+							delete $scope.graphContent.nodes[oldname];
+                 		}
+                 	}
+            );
+        }
+        var paper;
+        function createMenu(cellView){
+        	$(function() {
+		        $.contextMenu({
+		            selector: '.context-menu-'+cellView.id,
+		            callback: function(key, options) {
+		                if(key === "edit"){
+		                	//open popup
+		                	editBlock(cellView);
+		                }
+		                else if (key === "delete"){
+		                	cellView.remove();
+		                }
+		                else if (key === "quit"){
+		                	//do nothing
+		                }
+		            },
+		            trigger: 'none',
+		            items: {
+		                "edit": {name: "Edit", icon: "edit"},
+		                "delete": {name: "Delete", icon: "delete"},
+		                "sep1": "---------",
+		                "quit": {name: "Quit", icon: function(){
+		                    return 'context-menu-icon context-menu-icon-quit';
+		                }}
+		            }
+		        });
+		    });
+		    var view = paper.findViewByModel(cellView);
+		    console.log(view);
+		    view.$el.addClass("context-menu-"+cellView.id);
+        }
+
  		function init() {
 			$scope.graph = new joint.dia.Graph();
 			$scope.innerWidth = $scope.width;
 			$scope.innerHeight = $scope.height;
 			$scope.connecting = false;
-			var paper = new joint.dia.Paper({
+			paper = new joint.dia.Paper({
 			    el: $('#paper'),//TODO-YB: myabe get as a parameter
 			    width: $scope.innerWidth,
 			    height: $scope.innerHeight,
@@ -240,6 +278,19 @@
 
 			$scope.graph.addCells($scope.pm_blocks);
 
+
+			paper.$el.on('contextmenu', function(evt) {
+			    evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
+			    evt.preventDefault();  // Prevent displaying default browser context menu.
+			    var cellView = paper.findView(evt.target);
+			    if (cellView) {
+			       // The context menu was brought up when clicking a cell view in the paper.
+			       console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
+			       cellView.remove();
+			       updateModel();
+			       // ... display custom context menu, ...
+			    }
+			});
 			paper.on('cell:mouseover', function(cellView, evt){
 				if(cellView.model.isLink()){
 				}
@@ -285,26 +336,10 @@
                 		return;
                 	}
                 	console.log(block);
-                	Popups.open(
-	                        'views/CellsEditView/blockDetails.html',
-	                        'PmblocksCtrl',
-	                        {
-	                        	server: block,
-	                         	graphContent: $scope.graphContent
-	                     	},
-	                     	function(server){
-	                     		var oldname = cellView.model.attr('text/text');
-	                     		if(oldname !== server.name){
-									cellView.model.attr('text/text', server.name);
-									$scope.graphContent.nodes[oldname].name = server.name;
-									$scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
-									$scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
-									delete $scope.graphContent.nodes[oldname];
-	                     		}
-	                     	}
-	                );
+                	editBlock(cellView.model);
                 }
 			});
+
 
 			paper.on('cell:pointerdown', function(cellView, evt, x, y){
 				if($scope.connectorMode && !$scope.connecting){
@@ -338,6 +373,10 @@
 				}
 			});
 			paper.on('cell:pointerup', function(cellView, evt, x, y) {
+	    		if(!$scope.connecting){
+	    			console.log(evt);
+	    			return;
+	    		}
 	    		// Find the first element below that is not a link nor the dragged element itself.
 			    var elementBelow = $scope.graph.get('cells').find(function(cell) {
 			        if (cell instanceof joint.dia.Link){
@@ -402,6 +441,7 @@
 						}
 					});
 					$scope.graph.addCell(block);
+					createMenu(block);
 					$scope.graphContent.nodes[name] = {
 						id: block.id,
 						type: $scope.clickMode.mode,

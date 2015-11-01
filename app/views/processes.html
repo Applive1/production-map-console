@@ -57,7 +57,7 @@
                             <th>Name</th>
                             <th>last update</th>
                         </tr>
-                        <tr data-ng-repeat="action in process.actions | orderBy:'order'" data-ng-class="{selected-action: action.id === selectedAction.id}" data-ng-click="selectAction(action)" data-ng-dblclick="editAction(action)" >
+                        <tr data-ng-repeat="action in process.actions | orderBy:'order'" data-ng-class="{selected_action: action.id === selectedAction.id}" data-ng-click="selectAction(action)" data-ng-dblclick="editAction(action)" >
                             <td>{{action.server.name}}</td>
                             <td>{{action.order}}</td>
                             <td>{{action.name}}</td>
