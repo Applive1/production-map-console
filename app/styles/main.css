@@ -109,3 +109,8 @@ body {
 .position-fixed {
   position: fixed;
 }
+
+select:focus {
+    width: auto;
+    position: relative;
+}

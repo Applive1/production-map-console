@@ -3,11 +3,12 @@
 </div>
 <div class="modal-body">
     <div class="row"style="margin:2%">
-        <div class="col-md-3">
+        <div class="col-md-2">
              <span>Server:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <select ng-options="server as server.name for server in processServers" data-ng-model="action.server">
+            <option value="" selected="selected">-- select server --</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -18,28 +19,30 @@
         </div>
     </div>
     <div class="row" style="margin:2%">
-        <div class="col-md-3">
+        <div class="col-md-2">
              <span>Method:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
              <select data-ng-disabled="action.server === ''" ng-options="method as method.name for method in action.server.methods" data-ng-model="action.method">
+             <option value="" selected="selected">-- select method --</option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <span>Timeunit:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
        		<select data-ng-model="action.timeunit">
+              <option value="" selected="selected">-- select unit --</option>
               <option value="1">seconds</option>
               <option value="2">minutes</option>
             </select>
         </div>
     </div>
     <div class="row"style="margin:2%">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <span>Action name:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <input type="text" class="form-control" placeholder="name" data-ng-model="action.name">
         </div>
         <div class="col-md-3">
@@ -66,11 +69,13 @@
       <table class="table table-hover">
       <tr>
         <th>Name</th>
+        <th>Code?</th>
         <th>Value</th>
       </tr>
       <tr data-ng-repeat="param in action.method.params">
         <td>{{param.name}}</td>
-        <td editable-text="action.params[param.name]">{{ action.params[param.name] || '' }}
+        <td editable-checkbox="action.params[param.name].code"> {{ action.params[param.name].code && "Code!" || "Not Code..." }}</td>
+        <td editable-text="action.params[param.name].text">{{ action.params[param.name].text || '' }}
         </td>
       </tr>
       </table>
@@ -78,6 +83,6 @@
     <button class="btn btn-primary" type="button" ng-click="testAction()">Test Action</button>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="addAction(action)">save</button>
+    <button data-ng-disabled="!action.server" class="btn btn-primary" type="button" ng-click="addAction(action)">save</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">cancel</button>
 </div>

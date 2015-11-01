@@ -81,15 +81,6 @@ angular.module('productionMapConsoleApp')
 				      $scope.codeChanged = true;
 			    	editor.setValue($scope.code);
 			   });
-			// CodeMirror.hint.javascript = function(cm) {
-			// 	var inner = orig(cm) || {from: cm.getCursor(), to: cm.getCursor(), list: []};
-			//  	console.log(inner);
-			//  	angular.forEach($scope.map.nodes, function(node) {
-			// 		inner.list.push(node.name);
-			// 	});
-			// 	console.log(inner);
-			//   	return inner;
-			// };
 		}
 
 		init();

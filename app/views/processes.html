@@ -6,11 +6,12 @@
         <div class="col-md-6">
             <span>Process:</span>
             <select ng-options="proc as proc.name for proc in processes" data-ng-model="process">
+            <option value="" selected="selected">-- select process --</option>
             </select>
         </div>
         <div class="col-md-6">
             <button type="button" class="btn btn-primary" data-ng-click="add_process(process)" data-ng-disabled="process.name === ''">new process</button>
-            <button type="button" class="btn btn-primary" data-ng-click="delete_process(process)">delete process</button>
+            <button type="button" class="btn btn-primary" data-ng-click="delete_process(process)" data-ng-disabled="!process.name" >delete process</button>
         </div>
     </div>
     <div class="container" style=";border-style: solid;border-width: 1px;margin-top:5%;margin-buttom:5%;padding:3%">
@@ -66,19 +67,19 @@
                     </table>
                 </div>
             </div>
-            <div class="row" style="margin:2%">
+            <div class="row"  style="margin:2%">
                 <div class="col-md-1"></div>
                 <div class="col-md-11">
-                    <button data-ng-click="addAction()" class="btn btn-default" >add</button>
-                    <button class="btn btn-default" data-ng-click="editAction(selectedAction)">edit</button>
-                    <button class="btn btn-default" data-ng-click="removeAction()" >delete</button>
-                    <button class="btn btn-default" data-ng-click="moveActionUp()">move up</button>
-                    <button class="btn btn-default" data-ng-click="moveActionDown()">move down</button>
+                    <button  data-ng-disabled="!process.name" data-ng-click="addAction()" class="btn btn-default" >add</button>
+                    <button data-ng-disabled="!process.name" class="btn btn-default" data-ng-click="editAction(selectedAction)">edit</button>
+                    <button data-ng-disabled="!process.name" class="btn btn-default" data-ng-click="removeAction()" >delete</button>
+                    <button data-ng-disabled="!process.name" class="btn btn-default" data-ng-click="moveActionUp()">move up</button>
+                    <button data-ng-disabled="!process.name" class="btn btn-default" data-ng-click="moveActionDown()">move down</button>
                 </div>
             </div>
         </div>
         <div style="margin-top:2%;">
-            <button class="btn btn-default" data-ng-click="testProcess()">Test Process</button>
+            <button class="btn btn-default" data-ng-click="testProcess()" data-ng-disabled="!process.name">Test Process</button>
         </div>
     </div>
 </div>

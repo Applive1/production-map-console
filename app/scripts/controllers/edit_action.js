@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('EditActionCtrl', function ($scope, $modalInstance, blockFactory, Processes, link, action) {
+  .controller('EditActionCtrl', function ($scope, $modalInstance, blockFactory, Processes, Messages, link, action, map) {
     function init(){
 	    $scope.processServers = [];
 	    var servers = [link.source, link.target];
@@ -35,7 +35,10 @@ angular.module('productionMapConsoleApp')
     	$modalInstance.dismiss('sucess');
     }
     $scope.testAction =function(){
-        Processes.testAction($scope.action).success(function (result) {
+        Processes.testAction({
+            action: $scope.action,
+            map: map
+        }).success(function (result) {
                 console.log(result);
                 Messages.add(result);
                 $modalInstance.close({message: result});
