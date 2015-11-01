@@ -11,7 +11,7 @@ angular.module('productionMapConsoleApp').controller('ProjectsAndMapsCtrl', func
 
     $scope.saveNew = function () {
         if (data.isMap)
-            MapsService.createMap($scope.model.name, data.projectId).then(function (result) {
+            MapsService.createMap($scope.model.name, data.project.id).then(function (result) {
                 $modalInstance.close(result.data);
             });
         else

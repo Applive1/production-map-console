@@ -3,10 +3,13 @@
     <div class="col-md-2">
 	    <accordion close-others="False">
 		    <accordion-group heading="Maps">
-		    	<js-tree tree-plugins="dnd,sort,search,contextmenu"
+		    	<js-tree tree-plugins="dnd,sort,search,contextmenu,types"
                          tree-contextmenu="jsTreeContextMenu"
                          tree-data="scope"
                          tree-model="projects"
+                         tree-dnd="jsTreeDragConfig"
+                         tree-types="jsTreeTypes"
+                         tree-events="changed:onTreeItemClick"
                          context-menu data-target="menu-tree"></js-tree>
 		    </accordion-group>
 		    <accordion-group heading="Map Items">
@@ -22,9 +25,9 @@
 		</accordion>
     </div>
     <div class="col-md-8">
-		<tabset>
+		<tabset ng-if="map">
 		    <tab heading="{{map.name}}">
-		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
+		      <pm-map-designer map="map.structure" click-mode="block_mode"></pm-map-designer>
 		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
 		    </tab>
 		  </tabset>

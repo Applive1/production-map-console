@@ -8,10 +8,10 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService) {
         $scope.messages = Messages.all();
         $scope.projects = [];
-        $scope.map = {
+        /*$scope.map = {
             name: "example_map",
             active: true,
             disabled: false,
@@ -19,7 +19,7 @@ angular.module('productionMapConsoleApp')
             nodes: {},
             links: [],
             code: ''
-        };
+        };*/
         $scope.block_mode = '';
         $scope.pm_blocks = [
             {
@@ -87,7 +87,6 @@ angular.module('productionMapConsoleApp')
                 text: 'pmAgent'
             }
         ];
-        var URL = "http://localhost:1337/sysfile/execute";
 
         ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
             $scope.projects = result.data;
@@ -102,7 +101,7 @@ angular.module('productionMapConsoleApp')
             $scope.btn_disabled = true;
             console.log(map);
             // business logic...
-            $http.post(URL, map)
+            MapsService.executeMap(map)
                 .success(function (result) {
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
@@ -114,6 +113,9 @@ angular.module('productionMapConsoleApp')
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                 });
+            MapsService.saveMap(map).then(function(result){
+                $scope.map.versions.push(result.data);
+            });
         };
         $scope.changeMode = function (mode) {
             $scope.block_mode = {mode: mode};
@@ -140,17 +142,25 @@ angular.module('productionMapConsoleApp')
 
         $scope.jsTreeContextMenu = function (node) {
             var items = {
+                ShowMapVersions: {
+                    type: "map",
+                    "label": "Show Versions",
+                    "action": function (obj) {
+                        Popups.open({
+                            templateUrl: 'views/Popups/ShowMapVersions.html',
+                            controller: 'MapVersionsCtrl',
+                            resolve: { map: node.original}
+                        });
+                    }
+                },
                 DeleteProject: {
+                    type: "default",
                     "label": "Delete Project",
                     "action": function (obj) {
                     }
                 },
-                RenameProject: {
-                    "label": "Rename Project",
-                    "action": function (obj) {
-                    }
-                },
                 AddMap: {
+                    type: "default",
                     "label": "Add Map",
                     "action": function () {
                         Popups.open({
@@ -158,11 +168,48 @@ angular.module('productionMapConsoleApp')
                             controller: 'ProjectsAndMapsCtrl',
                             resolve: { data: {
                                 isMap: true,
-                                projectId: node.id}
-                            }});
+                                project: node}
+                            }}, function (map) {
+                            for (var i = 0, length = $scope.projects.length; i < length; i++) {
+                                if (node.id == $scope.projects[i].id) {
+                                    $scope.projects[i].maps.push(map);
+                                    $scope.projects[i].children.push(map);
+                                    break;
+                                }
+                            }
+                        });
                     }
                 }
             }
+
+            for (var key in items) {
+                if (items[key].type != node.type)
+                    delete items[key];
+            }
+
             return items;
         };
-    });
+        $scope.jsTreeDragConfig = {
+            is_draggable: function (obj) {
+                if (obj[0].parents.length < 2)
+                    return false;
+            }
+        }
+        $scope.jsTreeTypes = {
+            map: {
+                "icon": "fa fa-map"
+            }
+        }
+        $scope.onTreeItemClick = function(e, data){
+            if (data.node.type == 'default')
+                return;
+
+            $scope.map = data.node.original;
+            $scope.map.versions.forEach(function(version){
+                jsonpatch.apply($scope.map.structure, version.patches );
+            })
+
+            $scope.$digest();
+        }
+    })
+;
