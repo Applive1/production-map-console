@@ -7,7 +7,7 @@
  * # popups
  * Factory in the productionMapConsoleApp.
  */
-angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'consts','localStorageService' , function ($http, consts,localStorageService) {
+angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'consts','localStorageService','$location','$cookies' , function ($http, consts,localStorageService,$location,$cookies) {
     var authService = {
         isLoggedIn: function () {
             return $http.get(consts.serverUel + 'isLoggedIn')
@@ -21,6 +21,15 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
                 localStorageService.set('loggedUser', result.data);
             });
         },
+        logout : function(){
+            authService.currentUser = {};
+            localStorageService.remove('loggedUser');
+            var cookies = $cookies.getAll();
+            angular.forEach(cookies, function (v, k) {
+                $cookies.remove(k);
+            });
+            $location.path('/login');
+        },
         register: function (user) {
             return $http.post(consts.serverUel + 'auth/local/register', user).then(function(result){
                 authService.currentUser = result.data;
@@ -28,7 +37,11 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
             });
         },
         fillAuthData: function(){
-            authService.currentUser=localStorageService.get('loggedUser');
+            var userData=localStorageService.get('loggedUser');
+            if (userData)
+                authService.currentUser = userData;
+            else
+                $location.path('/login');
         },
         currentUser : {}
     };

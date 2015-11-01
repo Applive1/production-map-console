@@ -12,14 +12,14 @@ angular.module('productionMapConsoleApp')
         $scope.messages = Messages.all();
         $scope.projects = [];
         /*$scope.map = {
-            name: "example_map",
-            active: true,
-            disabled: false,
-            content: '',
-            nodes: {},
-            links: [],
-            code: ''
-        };*/
+         name: "example_map",
+         active: true,
+         disabled: false,
+         content: '',
+         nodes: {},
+         links: [],
+         code: ''
+         };*/
         $scope.block_mode = '';
         $scope.pm_blocks = [
             {
@@ -88,9 +88,10 @@ angular.module('productionMapConsoleApp')
             }
         ];
 
-        ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
-            $scope.projects = result.data;
-        });
+        if (AuthService.currentUser)
+            ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
+                $scope.projects = result.data;
+            });
 
         // Initial code content...
         $scope.button_text = 'execute';
@@ -113,7 +114,7 @@ angular.module('productionMapConsoleApp')
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                 });
-            MapsService.saveMap(map).then(function(result){
+            MapsService.saveMap(map).then(function (result) {
                 $scope.map.versions.push(result.data);
             });
         };
@@ -200,13 +201,13 @@ angular.module('productionMapConsoleApp')
                 "icon": "fa fa-map"
             }
         }
-        $scope.onTreeItemClick = function(e, data){
+        $scope.onTreeItemClick = function (e, data) {
             if (data.node.type == 'default')
                 return;
 
             $scope.map = data.node.original;
-            $scope.map.versions.forEach(function(version){
-                jsonpatch.apply($scope.map.structure, version.patches );
+            $scope.map.versions.forEach(function (version) {
+                jsonpatch.apply($scope.map.structure, version.patches);
             })
 
             $scope.$digest();
