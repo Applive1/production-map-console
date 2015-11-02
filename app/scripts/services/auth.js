@@ -7,7 +7,8 @@
  * # popups
  * Factory in the productionMapConsoleApp.
  */
-angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'consts','localStorageService','$location','$cookies' , function ($http, consts,localStorageService,$location,$cookies) {
+angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'consts','localStorageService','$location','$cookies','$rootScope' ,
+    function ($http, consts,localStorageService,$location,$cookies,$rootScope) {
     var authService = {
         isLoggedIn: function () {
             return $http.get(consts.serverUel + 'isLoggedIn')
@@ -17,13 +18,14 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
                 identifier: username,
                 password: password
             }).then(function(result){
-                authService.currentUser = result.data;
                 localStorageService.set('loggedUser', result.data);
+                authService.fillAuthData();
             });
         },
         logout : function(){
             authService.currentUser = {};
             localStorageService.remove('loggedUser');
+            delete $rootScope.currentUser;
             var cookies = $cookies.getAll();
             angular.forEach(cookies, function (v, k) {
                 $cookies.remove(k);
@@ -32,14 +34,16 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
         },
         register: function (user) {
             return $http.post(consts.serverUel + 'auth/local/register', user).then(function(result){
-                authService.currentUser = result.data;
                 localStorageService.set('loggedUser', result.data);
+                authService.fillAuthData();
             });
         },
         fillAuthData: function(){
             var userData=localStorageService.get('loggedUser');
-            if (userData)
+            if (userData){
+                $rootScope.currentUser = userData;
                 authService.currentUser = userData;
+            }
             else
                 $location.path('/login');
         },

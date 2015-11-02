@@ -154,10 +154,43 @@ angular.module('productionMapConsoleApp')
                         });
                     }
                 },
+                DeleteMap: {
+                    type: "map",
+                    "label": "Delete Map",
+                    "action": function (obj) {
+                        if (confirm("Are you sure you want to delete that map?")) {
+                            MapsService.deleteMap(node.original.id).then(function(result){
+                                for (var i = 0, length = $scope.projects.length; i < length; i++) {
+                                    if ($scope.projects[i].id == node.original.Project) {
+                                        for (var y = 0, mapsLength = $scope.projects[i].maps.length; y < mapsLength; y++) {
+                                            if ($scope.projects[i].maps[y].id = node.id) {
+                                                $scope.projects[i].maps.splice(y, 1);
+                                                $scope.projects[i].children.splice(y, 1);
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                },
                 DeleteProject: {
                     type: "default",
                     "label": "Delete Project",
                     "action": function (obj) {
+                        if (!confirm('Are you sure you want to delete that project?'))
+                            return;
+
+                        ProjectsService.deleteProject(node.original.id).then(function(result){
+                            for (var i = 0, length = $scope.projects.length; i < length; i++) {
+                                if ($scope.projects[i].id == node.original.id) {
+                                    $scope.projects.splice(i,1);
+                                    break;
+                                }
+                            }
+                        });
                     }
                 },
                 AddMap: {

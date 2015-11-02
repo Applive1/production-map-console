@@ -1,9 +1,8 @@
-
 <div class="container-fluid row">
     <div class="col-md-2">
-	    <accordion close-others="False">
-		    <accordion-group heading="Maps">
-		    	<js-tree tree-plugins="dnd,sort,search,contextmenu,types"
+        <accordion close-others="False">
+            <accordion-group heading="Maps">
+                <js-tree tree-plugins="dnd,sort,search,contextmenu,types"
                          tree-contextmenu="jsTreeContextMenu"
                          tree-data="scope"
                          tree-model="projects"
@@ -11,29 +10,32 @@
                          tree-types="jsTreeTypes"
                          tree-events="changed:onTreeItemClick"
                          context-menu data-target="menu-tree"></js-tree>
-		    </accordion-group>
-		    <accordion-group heading="Map Items">
-			    <div class="pm_block" ng-drag="true" ng-drag-data="block" data-ng-repeat="block in pm_blocks" data-ng-mousedown="changeMode(block.text)">
-				    <img data-ng-src="{{block.img_url}}" />
-	    			<span>{{block.text}}</span>
-	    		</div>
-	    		<!-- <div ng-drag-clone="">
-			      <img data-ng-src="{{clonedData.img_url}}" />
-	    		  <span>{{clonedData.text}}</span>
-			  	</div> -->
-		    </accordion-group>
-		</accordion>
+            </accordion-group>
+            <accordion-group heading="Map Items">
+                <div class="pm_block" ng-drag="true" ng-drag-data="block" data-ng-repeat="block in pm_blocks"
+                     data-ng-mousedown="changeMode(block.text)">
+                    <img data-ng-src="{{block.img_url}}"/>
+                    <span>{{block.text}}</span>
+                </div>
+                <!-- <div ng-drag-clone="">
+                  <img data-ng-src="{{clonedData.img_url}}" />
+                  <span>{{clonedData.text}}</span>
+                  </div> -->
+            </accordion-group>
+        </accordion>
     </div>
     <div class="col-md-8">
-		<tabset ng-if="map">
-		    <tab heading="{{map.name}}">
-		      <pm-map-designer map="map.structure" click-mode="block_mode"></pm-map-designer>
-		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
-		    </tab>
-		  </tabset>
-		  <div style="border-style: solid;border-width: 1px;">
-		  	Messages:
-		  	<div class="table-responsive">
+        <tabset ng-if="map">
+            <tab heading="{{map.name}}">
+                <pm-map-designer map="map.structure" click-mode="block_mode"></pm-map-designer>
+                <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
+                        data-ng-click="execute_map(map)"> {{ button_text }}
+                </button>
+            </tab>
+        </tabset>
+        <div style="border-style: solid;border-width: 1px;" ng-show="map" class="ng-hide">
+            Messages:
+            <div class="table-responsive">
                 <table class="table table-hover" style="border-style: solid;border-width: 1px;">
                     <tr>
                         <th>Date</th>
@@ -41,11 +43,15 @@
                     </tr>
                     <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
                         <td>{{message.date}}</td>
-                        <td>{{message.content |  cut:true:20:' ...'}}</td>
+                        <td>{{message.content | cut:true:20:' ...'}}</td>
                     </tr>
                 </table>
             </div>
-		  </div>
+        </div>
+        <div ng-hide="map" class="ng-hide" style="font-size: xx-large;">
+            <i class="glyphicon glyphicon-arrow-left" style="margin-right: 15px;"></i>
+            <span>To Start : Select A Map from the Maps list</span>
+        </div>
     </div>
 </div>
 <div class="dropdown" id="menu-tree" style="position: fixed">
