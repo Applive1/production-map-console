@@ -3,11 +3,12 @@
 </div>
 <div class="modal-body">
     <div class="row"style="margin:2%">
-        <div class="col-md-3">
+        <div class="col-md-2">
              <span>Server:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <select ng-options="server as server.name for server in processServers" data-ng-model="action.server">
+            <option value=""> ---select server ---</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -18,11 +19,12 @@
         </div>
     </div>
     <div class="row" style="margin:2%">
-        <div class="col-md-3">
+        <div class="col-md-2">
              <span>Method:</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
              <select data-ng-disabled="action.server === ''" ng-options="method as method.name for method in action.server.methods" data-ng-model="action.method">
+             <option value=""> ---select method ---</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -30,6 +32,7 @@
         </div>
         <div class="col-md-3">
        		<select data-ng-model="action.timeunit">
+              <option value=""> ---select unit ---</option>
               <option value="1">seconds</option>
               <option value="2">minutes</option>
             </select>
