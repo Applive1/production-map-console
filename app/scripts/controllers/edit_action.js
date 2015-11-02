@@ -35,7 +35,7 @@ angular.module('productionMapConsoleApp')
     	$modalInstance.dismiss('sucess');
     }
     $scope.testAction =function(){
-        Processes.testAction($scope.action).success(function (result) {
+        Processes.testAction({ action: $scope.action, map: map}).success(function (result) {
                 console.log(result);
                 Messages.add(result);
                 $modalInstance.close({message: result});
