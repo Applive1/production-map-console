@@ -103,7 +103,7 @@ angular.module('productionMapConsoleApp')
             ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
                 $scope.projects = result.data;
                 if($scope.projects.length === 0){
-                    createProject();
+                    $scope.createProject();
                 }
             });
 
