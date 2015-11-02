@@ -98,7 +98,7 @@ angular.module('productionMapConsoleApp')
                 }
                 action.id = process.actions.length;
                 action.order = process.actions.length;
-                action.lastUpdate = new Date();
+                action.lastUpdate = new Date().toString();
                 process.actions.push(action);
                 return angular.copy(action);
             },

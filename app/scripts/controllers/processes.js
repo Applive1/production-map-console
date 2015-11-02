@@ -8,6 +8,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         description: "",
         order: 0,
         default_execution: false,
+        mandatory: false,
         actions: []
     };
     $scope.selectedAction = {};
@@ -38,12 +39,8 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         Processes.removeAction(link.id, $scope.process.id, $scope.selectedAction);
     };
 
-    $scope.editAction = function(){
-        Popups.open({
-            templateUrl: 'views/add_action.html',
-            controller: 'EditActionCtrl',
-            resolve : {link: link, action: $scope.selectedAction, map: map}
-        });
+    $scope.editAction = function(action){
+        Popups.open('views/add_action.html','EditActionCtrl', {link: link, action: action, map: map});
     }
 
     /* change action order up */

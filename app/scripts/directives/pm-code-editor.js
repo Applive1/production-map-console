@@ -74,6 +74,8 @@ angular.module('productionMapConsoleApp')
                     lint: true
                 });
 
+
+                editor.setSize($scope.width, $scope.height);
                 $scope.editorChanged = false;
                 $scope.codeChanged = false;
                 editor.on('change', function (instance) {
@@ -113,7 +115,9 @@ angular.module('productionMapConsoleApp')
         return {
             scope: {
                 map: '=',
-                markup: '='
+                markup: '=',
+                width: '=',
+                height: '='
             },
             templateUrl: 'scripts/directives/templates/pm-code-editor.html',
             restrict: 'E',
