@@ -91,6 +91,9 @@ angular.module('productionMapConsoleApp')
         if (AuthService.currentUser)
             ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
                 $scope.projects = result.data;
+                if($scope.projects.length === 0){
+                    createProject();
+                }
             });
 
         // Initial code content...
