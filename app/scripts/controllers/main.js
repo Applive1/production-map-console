@@ -88,6 +88,17 @@ angular.module('productionMapConsoleApp')
             }
         ];
 
+
+        $scope.createProject = function () {
+            Popups.open({
+                templateUrl: 'views/Popups/CreateProject.html',
+                controller: 'ProjectsAndMapsCtrl',
+                resolve: { data: {isMap: false}}
+            }, function (project) {
+                $scope.projects.push(project);
+            });
+        }
+
         if (AuthService.currentUser)
             ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
                 $scope.projects = result.data;
@@ -131,16 +142,6 @@ angular.module('productionMapConsoleApp')
                 templateUrl: 'views/message.html',
                 controller: 'MessagesCtrl',
                 resolve: { message: msg }
-            });
-        }
-
-        $scope.createProject = function () {
-            Popups.open({
-                templateUrl: 'views/Popups/CreateProject.html',
-                controller: 'ProjectsAndMapsCtrl',
-                resolve: { data: {isMap: false}}
-            }, function (project) {
-                $scope.projects.push(project);
             });
         }
 
