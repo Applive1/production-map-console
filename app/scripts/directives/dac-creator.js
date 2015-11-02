@@ -58,24 +58,33 @@ angular.module('productionMapConsoleApp')
                 user_link.processes.push(process);
             }
 
-            function link_blocks(source_block, target_block) {
-                var link = new joint.dia.Link({
-                    source: { id: source_block.id },
-                    target: { id: target_block.id },
-                    router: { name: 'manhattan' },
-                    connector: { name: 'rounded' },
-                    attrs: {
-                        '.connection': {
-                            stroke: '#333333',
-                            'stroke-width': 3
+            function editBlock(cellView){
+                var block = getNode(cellView.id);
+                var oldname = angular.copy(block.name);
+                Popups.open(
+                         'views/CellsEditView/blockDetails.html',
+                         'PmblocksCtrl',
+                         {
+                            server: block,
+                            graphContent: $scope.graphContent
                         },
-                        '.marker-target': {
-                            fill: '#333333',
-                            d: 'M 10 0 L 0 5 L 10 10 z'
+                        function(server){
+                            if(oldname !== server.name){
+                                cellView.attr('text/text', server.name);
+                                $scope.graphContent.nodes[oldname].name = server.name;
+                                $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
+                                $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
+                                delete $scope.graphContent.nodes[oldname];
+                            }
                         }
-                    }
-                });
-                $scope.graph.addCell(link);
+                 );
+             }
+
+            function link_blocks(source_block, target_block) {
+                $scope.connection_link.set('target', { id: target_block.id });
+                $scope.tmp_obj.remove();
+                console.log(target_block);
+                var link = $scope.connection_link;
                 var p_link = {
                     id: link.id,
                     sourceId: source_block.id,
@@ -136,6 +145,7 @@ angular.module('productionMapConsoleApp')
                 $scope.graph = new joint.dia.Graph();
                 $scope.innerWidth = $scope.width;
                 $scope.innerHeight = $scope.height;
+                $scope.connecting = false;
                 var paper = new joint.dia.Paper({
                     el: $('#paper'),//TODO-YB: myabe get as a parameter
                     width: $scope.innerWidth,
@@ -245,6 +255,19 @@ angular.module('productionMapConsoleApp')
 
                 $scope.graph.addCells($scope.pm_blocks);
 
+                paper.$el.on('contextmenu', function(evt) {
+                    evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
+                    evt.preventDefault();  // Prevent displaying default browser context menu.
+                    var cellView = paper.findView(evt.target);
+                    if (cellView) {
+                       // The context menu was brought up when clicking a cell view in the paper.
+                       console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
+                       cellView.remove();
+                       updateModel();
+                       // ... display custom context menu, ...
+                    }
+                });
+
                 paper.on('cell:mouseover', function (cellView, evt) {
                     if (cellView.model.isLink()) {
                     }
@@ -287,33 +310,47 @@ angular.module('productionMapConsoleApp')
                             return;
                         }
                         console.log(block);
-                        Popups.open({
-                            templateUrl: 'views/CellsEditView/blockDetails.html',
-                            controller: 'PmblocksCtrl',
-                            resolve: {
-                                server: block,
-                                graphContent: $scope.graphContent
-                            }
-                        }, function (server) {
-                            var oldname = cellView.model.attr('text/text');
-                            if (oldname !== server.name) {
-                                cellView.model.attr('text/text', server.name);
-                                $scope.graphContent.nodes[oldname].name = server.name;
-                                $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
-                                $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
-                                delete $scope.graphContent.nodes[oldname];
-                            }
-                        });
+                        editBlock(cellView.model);
                     }
                 });
 
                 paper.on('cell:pointerdown', function (cellView, evt, x, y) {
-                    if ($scope.connectorMode) {
+                    if($scope.connectorMode && !$scope.connecting){
                         cellView.options.interactive = false;
+                        $scope.connecting = true;
                         $scope.source_element = cellView;
+                        $scope.tmp_obj = new joint.shapes.basic.Rect({
+                           position: { x: x, y: y },
+                           size: { width: 0.1, height: 0.1 }
+                       });
+                       console.log($scope.tmp_obj);
+                       $scope.graph.addCell($scope.tmp_obj);
+                       console.log(cellView.model.id);
+                       $scope.connection_link = new joint.dia.Link({
+                           source: { id: cellView.model.id },
+                           target: { id: $scope.tmp_obj.id},
+                           router: { name: 'manhattan' },
+                           connector: { name: 'rounded' },
+                            attrs: {
+                                '.connection': {
+                                    stroke: '#333333',
+                                    'stroke-width': 3
+                                },
+                                '.marker-target': {
+                                    fill: '#333333',
+                                    d: 'M 10 0 L 0 5 L 10 10 z'
+                                }
+                            }
+                        });
+                        $scope.graph.addCell($scope.connection_link);
                     }
                 });
                 paper.on('cell:pointerup', function (cellView, evt, x, y) {
+                    if(!$scope.connecting){
+                        console.log(evt);
+                        return;
+                    }
+
                     // Find the first element below that is not a link nor the dragged element itself.
                     var elementBelow = $scope.graph.get('cells').find(function (cell) {
                         if (cell instanceof joint.dia.Link) {
@@ -331,10 +368,13 @@ angular.module('productionMapConsoleApp')
                     // connect them again
                     if (elementBelow && !_.contains($scope.graph.getNeighbors(elementBelow), cellView.model)) {
                         if (cellView.model.isLink()) {
-                            //TODO: link the end of the link onlly
+                            cellView.model.set('target', { id: elementBelow.id });
                         }
                         else {
-                            var link = link_blocks(cellView.model, elementBelow);
+                            console.log(cellView.model);
+                            console.log($scope.connection_link.get('source'));
+                            var link = link_blocks($scope.connection_link.get('source'), elementBelow);
+                            updateModel();
                             Popups.open({
                                 templateUrl: 'views/processes.html',
                                 controller: 'ProcessesCtrl',
@@ -347,6 +387,7 @@ angular.module('productionMapConsoleApp')
                          cellView.model.position(position.constrainedX, position.constrainedY);*/
                     }
                     cellView.options.interactive = true;
+                    $scope.connecting = false;
                 });
 
                 $scope.dropBlock = function (event) {
@@ -379,14 +420,21 @@ angular.module('productionMapConsoleApp')
                     }
                 }
 
-                /*paper.on('cell:pointermove', function (cellView, evt, x, y) {
+                paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
-                 var position = calcCellPosition(cellView, x, y);
+                    if($scope.connecting){
+                        $scope.tmp_obj.position(x,y);
+                    }
+                    //if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }*/
+                    //   });
 
-                 //if you fire the event all the time you get a stack overflow
-                 if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
-                 });*/
+                 // var position = calcCellPosition(cellView, x, y);
+
+                 // //if you fire the event all the time you get a stack overflow
+                 // if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
+                 // });
                 updateModel();
+            });
             }
 
             init();

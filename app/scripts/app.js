@@ -20,8 +20,7 @@ angular.module('productionMapConsoleApp', [
     'ui.codemirror',
     'xeditable',
     'ngDraggable',
-    'LocalStorageModule',
-    'ng.codemirror.dictionary.hint'
+    'LocalStorageModule'
 ])
     .config(function ($routeProvider) {
         $routeProvider

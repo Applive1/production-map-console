@@ -10,7 +10,6 @@
 angular.module('productionMapConsoleApp')
   .controller('EditActionCtrl', function ($scope, $modalInstance, blockFactory, Processes, link, action) {
     function init(){
-    	$scope.action = action;
 	    $scope.processServers = [];
 	    var servers = [link.source, link.target];
 	    console.log(link);
@@ -22,6 +21,8 @@ angular.module('productionMapConsoleApp')
 	    		name: server.name
 	    	});
 	    }
+        console.log(action);
+        $scope.action = action;
     }
 
     $scope.cancel = function () {

@@ -126,9 +126,9 @@
 </style>
 <div class="container" vertical>
     <div class="tabs" vertical>
-        <pm-visual-editor ng-show="viewMode==1" map="map" map-model="map.content" click-mode="clickMode"></pm-visual-editor>
-        <pm-xml-editor ng-show="viewMode==2" content="map" markup="markup"></pm-xml-editor>
-        <pm-code-editor ng-show="viewMode==3" map="map" markup="markup"></pm-code-editor>
+        <pm-visual-editor id="designer" ng-show="viewMode==1" map="map" map-model="map.content" click-mode="clickMode"></pm-visual-editor>
+        <pm-xml-editor ng-show="viewMode==2" content="map" markup="markup" width="800" height="535"></pm-xml-editor>
+        <pm-code-editor ng-show="viewMode==3" map="map" markup="markup" width="800" height="535"></pm-code-editor>
     </div>
     <div class="buttons" horizontal>
         <button ng-click="viewMode=1" active="{{designer_active}}">Design</button>
