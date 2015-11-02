@@ -72,7 +72,10 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     }
 
     $scope.testProcess = function(){
-        Processes.testProcess($scope.process).success(function (result) {
+        Processes.testProcess({
+            process: $scope.process,
+            map: map
+        }).success(function (result) {
                 console.log(result);
                 Messages.add(result);
                 $modalInstance.close({

@@ -75,11 +75,11 @@
       <tr data-ng-repeat="param in action.method.params">
         <td>{{param.name}}</td>
         <td>
-            <a href="#" editable-checkbox="action.code" e-title="Code?">
+            <a href="#" editable-checkbox="action.params[param.name].code" e-title="Code?">
                 {{ action.code && "Code!" || "Not Code" }}
             </a>
         </td>
-        <td editable-text="action.params[param.name]">{{ action.params[param.name] || '' }}
+        <td editable-text="action.params[param.name].text">{{ action.params[param.name].text || '' }}
         </td>
       </tr>
       </table>
