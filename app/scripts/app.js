@@ -21,7 +21,8 @@ angular.module('productionMapConsoleApp', [
     'xeditable',
     'ngDraggable',
     'LocalStorageModule',
-    'ng.codemirror.dictionary.hint'
+    'ng.codemirror.dictionary.hint',
+    'btford.socket-io'
 ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -57,7 +58,7 @@ angular.module('productionMapConsoleApp', [
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             if (next.$$route.originalPath != '/register')
                 AuthService.isLoggedIn().error(function (response) {
-                    $location.path('/login');
+                    AuthService.logout();
                 })
         });
     });
