@@ -14,6 +14,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     $scope.selectedAction = {};
 
     $scope.processes = Processes.all(link.id);
+    console.log($scope.processes);
 
     console.log(map);
     /* Processes operations */
@@ -40,7 +41,11 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     };
 
     $scope.editAction = function(action){
-        Popups.open('views/add_action.html','EditActionCtrl', {link: link, action: action, map: map});
+        Popups.open({
+            templateUrl: 'views/add_action.html',
+            controller: 'EditActionCtrl',
+            resolve: {link: link, action: action, map: map}
+        });
     }
 
     /* change action order up */

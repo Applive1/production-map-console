@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes) {
         $scope.messages = Messages.all();
         $scope.projects = [];
         /*$scope.map = {
@@ -112,6 +112,7 @@ angular.module('productionMapConsoleApp')
         $scope.btn_disabled = false;
         $scope.mapResult = 'waiting for result';
         $scope.execute_map = function (map) {
+            map = map.structure;
             $scope.button_text = 'executing...';
             $scope.btn_disabled = true;
             console.log(map);
@@ -210,11 +211,19 @@ angular.module('productionMapConsoleApp')
                 return;
 
             $scope.map = data.node.original;
+            console.log($scope.map);
             $scope.map.versions.forEach(function (version) {
                 jsonpatch.apply($scope.map.structure, version.patches);
             })
 
+            Processes.set($scope.map.structure);
             $scope.$digest();
+        }
+
+        $scope.saveMap = function(map){
+            MapsService.saveMap(map).then(function (result) {
+                console.log(result);
+            });
         }
     })
 ;

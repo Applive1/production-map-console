@@ -12,12 +12,65 @@ angular.module('productionMapConsoleApp')
             $scope.graph = [];
 
             function updateModel() {
-                $scope.graphModel = JSON.stringify($scope.graph, null, 2);
+                // Save the cells in arrays
+                var elementos = $scope.graph.getElements();
+                var links = $scope.graph.getLinks();
+
+                var expElementos = [];
+                var expLinks = [];
+
+                for (var i = 0; i < elementos.length; i++) {
+                  expElementos.push(elementos[i]);
+                };
+
+                for (var i = 0; i < links.length; i++) {
+                  expLinks.push(links[i]);
+                };
+                $scope.graphModel = JSON.stringify({
+                    nodes: expElementos,
+                    links: expLinks
+                });
+            }
+
+            function loadMap(mapModel){
+                try{
+                    // Clear the graph (Genius .__.)
+                    var model = JSON.parse(mapModel);
+                    $scope.graph.clear();
+
+                    // Wait 1s and add the cells
+                    setTimeout(function () {
+                      for (var i = 0; i < model.nodes.length; i++) {
+                        $scope.graph.addCell(model.nodes[i]);
+                      };
+
+                      for (var i = 0; i < model.links.length; i++) {
+                        $scope.graph.addCell(model.links[i]);
+                      };
+                    }, 100);
+                }catch(e){
+                    console.log(e);
+                }
             }
 
             function clone(a) {
                 console.log(a);
                 return JSON.parse(JSON.stringify(a));
+            }
+
+            function removeNode(blockName){
+                delete $scope.graphContent.nodes[blockName];
+            }
+
+            function removeLink(linkId){
+                var res = {};
+                for (var i = 0; i < $scope.graphContent.links.length; i++) {
+                    var link = $scope.graphContent.links[i];
+                    if (linkId === link.id) {
+                        $scope.graphContent.links.splice(i, 1);
+                        break;
+                    }
+                }
             }
 
             function getNode(blockId) {
@@ -62,11 +115,13 @@ angular.module('productionMapConsoleApp')
                 var block = getNode(cellView.id);
                 var oldname = angular.copy(block.name);
                 Popups.open(
-                         'views/CellsEditView/blockDetails.html',
-                         'PmblocksCtrl',
                          {
-                            server: block,
-                            graphContent: $scope.graphContent
+                            templateUrl: 'views/CellsEditView/blockDetails.html',
+                            controller: 'PmblocksCtrl',
+                            resolve:{
+                                server: block,
+                                graphContent: $scope.graphContent
+                            }
                         },
                         function(server){
                             if(oldname !== server.name){
@@ -146,6 +201,7 @@ angular.module('productionMapConsoleApp')
                 $scope.innerWidth = $scope.width;
                 $scope.innerHeight = $scope.height;
                 $scope.connecting = false;
+                $scope.connectorMode = false;
                 var paper = new joint.dia.Paper({
                     el: $('#paper'),//TODO-YB: myabe get as a parameter
                     width: $scope.innerWidth,
@@ -209,51 +265,7 @@ angular.module('productionMapConsoleApp')
                     }
                 });
                 $scope.map_base_block = map_block;
-                $scope.pm_blocks = [];
-                var translate_block = {
-                    x: 0,
-                    y: 0
-                };
-                angular.forEach($scope.graphContent.nodes, function (node, key) {
-                    var current_block = map_block.clone().translate(translate_block.x, translate_block.y).attr({
-                        image: {
-                            'xlink:href': node.img_url
-                        },
-                        text: {
-                            text: node.text,
-                            fill: '#2e2e2e'
-                        }
-                    });
-                    this.push(current_block);
-                    translate_block.x = translate_block.x + 165;
-                    if (translate_block.x >= $scope.width) {
-                        //TODO: YB: fix the width if
-                        translate_block.x = 0;
-                        translate_block.y = translate_block.y + 60;
-                    }
-                }, $scope.pm_blocks);
-
-                angular.forEach($scope.graphContent.links, function (link, key) {
-                    var link = new joint.dia.Link({
-                        source: { id: link.sourceId },
-                        target: { id: link.targetId },
-                        router: { name: 'manhattan' },
-                        connector: { name: 'rounded' },
-                        attrs: {
-                            '.connection': {
-                                stroke: '#333333',
-                                'stroke-width': 3
-                            },
-                            '.marker-target': {
-                                fill: '#333333',
-                                d: 'M 10 0 L 0 5 L 10 10 z'
-                            }
-                        }
-                    });
-                    this.push(link);
-                }, $scope.pm_blocks);
-
-                $scope.graph.addCells($scope.pm_blocks);
+                console.log()
 
                 paper.$el.on('contextmenu', function(evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
@@ -262,6 +274,12 @@ angular.module('productionMapConsoleApp')
                     if (cellView) {
                        // The context menu was brought up when clicking a cell view in the paper.
                        console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
+                       if(cellView.model.isLink()){
+                           removeLink(cellView.model.id);
+                       }
+                       else{
+                           removeNode(cellView.model.attr('text/text'));
+                       }
                        cellView.remove();
                        updateModel();
                        // ... display custom context menu, ...
@@ -315,6 +333,9 @@ angular.module('productionMapConsoleApp')
                 });
 
                 paper.on('cell:pointerdown', function (cellView, evt, x, y) {
+                    if(cellView.model.isLink()){
+                        return;
+                    }
                     if($scope.connectorMode && !$scope.connecting){
                         cellView.options.interactive = false;
                         $scope.connecting = true;
@@ -392,7 +413,7 @@ angular.module('productionMapConsoleApp')
 
                 $scope.dropBlock = function (event) {
                     console.log('clickmode --->' + $scope.clickMode);
-                    if ($scope.clickMode.mode === '') {
+                    if ($scope.clickMode === '' || $scope.clickMode.mode === '') {
 
                     }
                     else {
@@ -420,6 +441,11 @@ angular.module('productionMapConsoleApp')
                     }
                 }
 
+                $scope.graph.on('change', function(cell) {
+                    console.log('New cell with id ' + cell.id + ' added to the graph.');
+                    updateModel();
+                });
+
                 paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
                     if($scope.connecting){
@@ -435,9 +461,10 @@ angular.module('productionMapConsoleApp')
                  // });
                 updateModel();
             });
-            }
 
+            }
             init();
+            loadMap($scope.graphContent.content);
         }];
 
         return {

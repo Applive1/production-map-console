@@ -29,6 +29,7 @@
 		    <tab heading="{{map.name}}">
 		      <pm-map-designer map="map.structure" click-mode="block_mode"></pm-map-designer>
 		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
+              <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
 		    </tab>
 		  </tabset>
 		  <div style="border-style: solid;border-width: 1px;">
