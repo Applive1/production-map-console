@@ -70,8 +70,8 @@ angular.module('productionMapConsoleApp')
                     showCursorWhenSelecting: true,
                     theme: 'monokai',
                     tabSize: 2,
-                    gutters: ['CodeMirror-lint-markers'],
-                    lint: true
+                    // gutters: ['CodeMirror-lint-markers'],
+                    lint: true,
                 });
 
                 editor.setSize($scope.width, $scope.height);
@@ -96,6 +96,9 @@ angular.module('productionMapConsoleApp')
                     }
                     $scope.codeChanged = true;
                     editor.setValue($scope.code);
+                });
+                $scope.$watch('map.name', function (newVal, oldVal) {
+                    console.log($scope.map);
                 });
             }
 
