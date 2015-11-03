@@ -178,7 +178,13 @@ angular.module('productionMapConsoleApp')
                             }}, function (map) {
                             for (var i = 0, length = $scope.projects.length; i < length; i++) {
                                 if (node.id == $scope.projects[i].id) {
+                                    if(!$scope.projects[i].maps){
+                                        $scope.projects[i].maps = [];
+                                    }
                                     $scope.projects[i].maps.push(map);
+                                    if(!$scope.projects[i].children){
+                                        $scope.projects[i].children = [];
+                                    }
                                     $scope.projects[i].children.push(map);
                                     break;
                                 }
