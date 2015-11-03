@@ -33,10 +33,10 @@ angular.module('productionMapConsoleApp')
             }
 
             function loadMap(mapModel){
+                // Clear the graph (Genius .__.)
+                $scope.graph.clear();
                 try{
-                    // Clear the graph (Genius .__.)
                     var model = JSON.parse(mapModel);
-                    $scope.graph.clear();
 
                     // Wait 1s and add the cells
                     setTimeout(function () {
@@ -464,7 +464,10 @@ angular.module('productionMapConsoleApp')
 
             }
             init();
-            loadMap($scope.graphContent.content);
+            $scope.$watch('graphContent', function (newVal, oldVal) {
+                console.log($scope.graphContent.content);
+                loadMap($scope.graphContent.content);
+            });
         }];
 
         return {
