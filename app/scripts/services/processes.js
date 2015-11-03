@@ -52,6 +52,21 @@ angular.module('productionMapConsoleApp')
         // Public API here
         return {
             get: getProcess,
+            set: function(map){
+                console.log(map);
+                console.log(map.nodes);
+                console.log(map.links);
+                processes = {};
+                for(var i=0; i < map.links.length; i++){
+                    var link = map.links[i];
+                    console.log(link);
+                    processes[link.id] = {
+                        p_list: link.processes,
+                        size: link.processes.length
+                    };
+                }
+                console.log(processes);
+            },
             all: function(link_id) {
                 if(!processes.hasOwnProperty(link_id)){
                     processes[link_id] = {

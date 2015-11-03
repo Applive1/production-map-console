@@ -12,7 +12,6 @@ angular.module('productionMapConsoleApp')
         // Service Logic
         return {
             open: function(options, success){
-                options.animation= true;
                 var modalInstance = $modal.open(options);
 
                 if(!angular.isFunction(success)){
