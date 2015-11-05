@@ -77,6 +77,7 @@ angular.module('productionMapConsoleApp')
                 editor.setSize($scope.width, $scope.height);
                 $scope.editorChanged = false;
                 $scope.codeChanged = false;
+                $scope.cmeditor = editor;
                 editor.on('change', function (instance) {
                     if ($scope.codeChanged) {
                         $scope.codeChanged = false;
@@ -103,7 +104,9 @@ angular.module('productionMapConsoleApp')
             }
 
             init();
-
+            $scope.$on('refreshCM', function(e){
+                $scope.cmeditor.refresh();
+            });
         }];
         return {
             scope: {

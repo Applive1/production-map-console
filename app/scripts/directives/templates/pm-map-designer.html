@@ -128,12 +128,12 @@
     <div class="tabs" vertical>
         <pm-visual-editor id="designer" ng-show="viewMode==1" map="map" map-model="map.content" click-mode="clickMode"></pm-visual-editor>
         <pm-xml-editor ng-show="viewMode==2" content="map" markup="markup" width="800" height="535"></pm-xml-editor>
-        <pm-code-editor ng-show="viewMode==3" map="map" markup="markup" width="800" height="535"></pm-code-editor>
+        <pm-code-editor ng-show="viewMode==3" map="map" markup="markup" code="code" width="800" height="535"></pm-code-editor>
     </div>
     <div class="buttons" horizontal>
         <button ng-click="viewMode=1" active="{{designer_active}}">Design</button>
-        <button ng-click="viewMode=2" active="{{xml_editor_active}}">Markup</button>
-        <button ng-click="viewMode=3" active="{{code_editor_active}}">Code</button>
+        <button ng-click="setMarkup()" active="{{xml_editor_active}}">Markup</button>
+        <button ng-click="setCode()" active="{{code_editor_active}}">Code</button>
         <button onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
         <button onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
         <button onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>

@@ -212,6 +212,7 @@ angular.module('productionMapConsoleApp')
                 "icon": "fa fa-map"
             }
         }
+
         $scope.onTreeItemClick = function (e, data) {
             if (data.node.type == 'default')
                 return;

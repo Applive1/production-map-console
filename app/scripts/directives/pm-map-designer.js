@@ -17,7 +17,19 @@ angular.module('productionMapConsoleApp')
                 $scope.markup = {
                     cm: ''
                 };
+                $scope.code = {
+                    cm: ''
+                };
             }
+
+            $scope.setCode = function(){
+                $scope.viewMode = 3;
+                $scope.$broadcast('refreshCM');
+            };
+            $scope.setMarkup = function(){
+                $scope.viewMode = 2;
+                $scope.$broadcast('refreshCM');
+            };
 
             init();
         }];
