@@ -45,6 +45,7 @@ angular.module('productionMapConsoleApp')
                     };
                     $scope.map_json = JSON.stringify(map, null, 2);
                     editor.setValue($scope.map_json);
+                    editor.refresh();
                 }, true);
                 $scope.$watch('map_json', function (newVal, oldVal) {
                     if ($scope.contentChange) {
@@ -56,6 +57,7 @@ angular.module('productionMapConsoleApp')
                         var map = JSON.parse(newVal);
                         $scope.content.nodes = map.nodes;
                         $scope.content.links = map.links;
+                        editor.refresh();
                     } catch (e) {
                         console.log(e);
                     }
@@ -64,12 +66,16 @@ angular.module('productionMapConsoleApp')
                     var newValue = instance.getValue();
                     if (newValue !== $scope.map_json) {
                         $scope.map_json = newValue;
+                        editor.refresh();
                     }
                 });
+                $scope.cmeditor = editor;
             }
 
             init();
-
+            $scope.$on('refreshCM', function(e){
+                $scope.cmeditor.refresh();
+            });
         }];
         return {
             scope: {
