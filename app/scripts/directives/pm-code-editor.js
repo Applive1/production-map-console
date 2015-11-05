@@ -105,7 +105,9 @@ angular.module('productionMapConsoleApp')
 
             init();
             $scope.$on('refreshCM', function(e){
-                $scope.cmeditor.refresh();
+                setTimeout(function(){
+                    $scope.cmeditor.refresh();
+                }, 100);
             });
         }];
         return {
