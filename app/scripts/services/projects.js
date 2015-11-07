@@ -11,19 +11,19 @@ angular.module('productionMapConsoleApp').factory('ProjectsService', ['$http', '
     // Service Logic
     return {
         deleteProject: function (projectId) {
-            return $http.get(consts.serverUel + 'project/deleteProject/'+projectId);
+            return $http.get(consts.serverUrl + 'project/deleteProject/'+projectId);
         },
         getProjectById: function (projectId) {
-            return $http.get(consts.serverUel + 'project/getProjectById/'+projectId);
+            return $http.get(consts.serverUrl + 'project/getProjectById/'+projectId);
         },
         getProjectsByUser: function (userId) {
-            return $http.get(consts.serverUel + 'project/getProjectByUser/'+userId);
+            return $http.get(consts.serverUrl + 'project/getProjectByUser/'+userId);
         },
         getJstreeProjectsByUser: function (userId) {
-            return $http.get(consts.serverUel + 'project/getJstreeProjectsByUser/'+userId);
+            return $http.get(consts.serverUrl + 'project/getJstreeProjectsByUser/'+userId);
         },
         createProject: function (projectName) {
-            return $http.post(consts.serverUel + 'project/createProject', {name : projectName});
+            return $http.post(consts.serverUrl + 'project/createProject', {name : projectName});
         }
     };
 }]);

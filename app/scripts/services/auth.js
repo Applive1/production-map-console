@@ -10,10 +10,10 @@
 angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'consts','localStorageService','$location','$cookies' , function ($http, consts,localStorageService,$location,$cookies) {
     var authService = {
         isLoggedIn: function () {
-            return $http.get(consts.serverUel + 'isLoggedIn')
+            return $http.get(consts.serverUrl + 'isLoggedIn')
         },
         login: function (username, password) {
-            return $http.post(consts.serverUel + 'auth/local', {
+            return $http.post(consts.serverUrl + 'auth/local', {
                 identifier: username,
                 password: password
             }).then(function(result){
@@ -31,7 +31,7 @@ angular.module('productionMapConsoleApp').factory('AuthService', ['$http', 'cons
             $location.path('/login');
         },
         register: function (user) {
-            return $http.post(consts.serverUel + 'auth/local/register', user).then(function(result){
+            return $http.post(consts.serverUrl + 'auth/local/register', user).then(function(result){
                 authService.currentUser = result.data;
                 localStorageService.set('loggedUser', result.data);
             });
