@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('productionMapConsoleApp').constant("consts", {
-    serverUel: "http://localhost:1337/"
+    serverUrl: "http://localhost:8080/"
 });

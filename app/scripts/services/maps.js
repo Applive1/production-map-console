@@ -11,23 +11,23 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
     // Service Logic
     return {
         deleteMap: function (mapId) {
-            return $http.get(consts.serverUel + 'map/deleteMap/'+mapId);
+            return $http.get(consts.serverUrl + 'map/deleteMap/'+mapId);
         },
         getMapById: function (mapId) {
-            return $http.get(consts.serverUel + 'map/getMapById/'+mapId);
+            return $http.get(consts.serverUrl + 'map/getMapById/'+mapId);
         },
         saveMap: function (map) {
-            return $http.post(consts.serverUel + 'map/addMapVersion',map);
+            return $http.post(consts.serverUrl + 'map/addMapVersion',map);
         },
         createMap: function (mapName, projectId) {
-            return $http.post(consts.serverUel + 'map/createMap', {name : mapName, Project:projectId, versions:[], structure:{
+            return $http.post(consts.serverUrl + 'map/createMap', {name : mapName, Project:projectId, versions:[], structure:{
                 content: '',
                 nodes: {},
                 links: [],
                 code: ''}});
         },
         executeMap: function (map) {
-            return $http.post(consts.serverUel + 'sysfile/execute', map);
+            return $http.post(consts.serverUrl + 'sysfile/execute', map);
         }
     };
 }]);

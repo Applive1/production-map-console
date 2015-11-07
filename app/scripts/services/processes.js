@@ -8,12 +8,12 @@
  * Factory in the productionMapConsoleApp.
  */
 angular.module('productionMapConsoleApp')
-    .factory('Processes', function ($http, $q) {
+    .factory('Processes', function ($http, $q, consts) {
         // Service Logic
 
         var processes = {};
-        var TEST_PROCESS_URL = "http://localhost:1337/sysfile/testprocess";
-        var TEST_ACTION_URL = "http://localhost:1337/sysfile/testaction";
+        var TEST_PROCESS_URL = consts.serverUrl + "sysfile/testprocess";
+        var TEST_ACTION_URL = consts.serverUrl + "sysfile/testaction";
         function getProcess (link_id, process_id) {
             if(!processes.hasOwnProperty(link_id)){
                 return -1;
