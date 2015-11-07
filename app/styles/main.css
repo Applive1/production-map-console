@@ -88,7 +88,7 @@ body {
 }
 
 .pm_connector {
-  cursor: url(/images/controls/connectorSmall.png), auto;
+  cursor: url(../images/controls/connectorSmall.png), auto;
 }
 
 .pm_block {
