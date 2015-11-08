@@ -112,7 +112,6 @@ angular.module('productionMapConsoleApp')
         $scope.btn_disabled = false;
         $scope.mapResult = 'waiting for result';
         $scope.execute_map = function (map) {
-            map = map.structure;
             $scope.button_text = 'executing...';
             $scope.btn_disabled = true;
             console.log(map);
