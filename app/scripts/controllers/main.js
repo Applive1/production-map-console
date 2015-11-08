@@ -232,5 +232,12 @@ angular.module('productionMapConsoleApp')
                 console.log(result);
             });
         }
+
+        io.socket.on('update', function (msg){
+            Messages.add(msg);
+            console.log("***** got push *****");
+            console.log(msg);
+            console.log("***** got push *****");
+        });
     })
 ;
