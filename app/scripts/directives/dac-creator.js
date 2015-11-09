@@ -202,7 +202,7 @@ angular.module('productionMapConsoleApp')
                 $scope.innerHeight = $scope.height;
                 $scope.connecting = false;
                 $scope.connectorMode = false;
-                var paper = new joint.dia.Paper({
+                $scope.paper = new joint.dia.Paper({
                     el: $('#paper'),//TODO-YB: myabe get as a parameter
                     width: $scope.innerWidth,
                     height: $scope.innerHeight,
@@ -212,7 +212,7 @@ angular.module('productionMapConsoleApp')
 
                 var graphScale = 1;
                 var paperScale = function (sx, sy) {
-                    paper.scale(sx, sy);
+                    $scope.paper.scale(sx, sy);
                 };
 
                 $scope.zoomIn = function () {
@@ -228,6 +228,17 @@ angular.module('productionMapConsoleApp')
                     $scope.innerHeight -= $scope.gridSize;
                     paperScale(graphScale, graphScale);
                 };
+
+                $scope.sealMap = function(){
+                    var innerElements = $scope.paper.$el.find('g');
+                    for (var i= 0, length = innerElements.length; i<length; i++){
+                        var view = $scope.paper.findView(innerElements[i])
+                        if (view)
+                            view.options.interactive=false;
+                    }
+
+                    //$scope.paper.options.interactive=false;
+                }
 
                 $scope.resetZoom = function () {
                     graphScale = 1;
@@ -267,10 +278,10 @@ angular.module('productionMapConsoleApp')
                 $scope.map_base_block = map_block;
                 console.log()
 
-                paper.$el.on('contextmenu', function(evt) {
+                $scope.paper.$el.on('contextmenu', function(evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
                     evt.preventDefault();  // Prevent displaying default browser context menu.
-                    var cellView = paper.findView(evt.target);
+                    var cellView = $scope.paper.findView(evt.target);
                     if (cellView) {
                        // The context menu was brought up when clicking a cell view in the paper.
                        console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
@@ -286,7 +297,7 @@ angular.module('productionMapConsoleApp')
                     }
                 });
 
-                paper.on('cell:mouseover', function (cellView, evt) {
+                $scope.paper.on('cell:mouseover', function (cellView, evt) {
                     if (cellView.model.isLink()) {
                     }
                     else {
@@ -295,17 +306,17 @@ angular.module('productionMapConsoleApp')
                         var relative = evt.offsetX - bbox.x;
                         if (relative >= 0 && relative >= pos_width) {
                             console.log(relative);
-                            V(paper.findViewByModel(cellView.model).el).addClass('pm_connector');
+                            V($scope.paper.findViewByModel(cellView.model).el).addClass('pm_connector');
                             $scope.connectorMode = true;
                         }
                         else {
-                            V(paper.findViewByModel(cellView.model).el).removeClass('pm_connector')
+                            V($scope.paper.findViewByModel(cellView.model).el).removeClass('pm_connector')
                             $scope.connectorMode = false;
                         }
                     }
                 });
 
-                paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
+                $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
                     if (cellView.model.isLink()) {
                         var mapLink = getLink(cellView.model.id);
                         var sourceBlock = getNode(mapLink.sourceId);
@@ -332,7 +343,7 @@ angular.module('productionMapConsoleApp')
                     }
                 });
 
-                paper.on('cell:pointerdown', function (cellView, evt, x, y) {
+                $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
                     if(cellView.model.isLink()){
                         return;
                     }
@@ -366,7 +377,7 @@ angular.module('productionMapConsoleApp')
                         $scope.graph.addCell($scope.connection_link);
                     }
                 });
-                paper.on('cell:pointerup', function (cellView, evt, x, y) {
+                $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
                     if(!$scope.connecting){
                         console.log(evt);
                         return;
@@ -446,7 +457,7 @@ angular.module('productionMapConsoleApp')
                     updateModel();
                 });
 
-                paper.on('cell:pointermove', function (cellView, evt, x, y) {
+                $scope.paper.on('cell:pointermove', function (cellView, evt, x, y) {
 
                     if($scope.connecting){
                         $scope.tmp_obj.position(x,y);
