@@ -29,6 +29,7 @@ angular.module('productionMapConsoleApp')
       scope: {
         mapModel: '=mapModel',
         map: '=',
+        mapLocked : '=',
         clickMode: '='
       },
       templateUrl: 'scripts/directives/templates/pm-visual-designer.html',
