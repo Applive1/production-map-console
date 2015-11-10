@@ -36,7 +36,8 @@ angular.module('productionMapConsoleApp')
 
         return {
             scope: {
-                map: "=map",
+                mapStructure: '=',
+                mapLocked : '=',
                 clickMode: '='
             },
             templateUrl: 'scripts/directives/templates/pm-map-designer.html',

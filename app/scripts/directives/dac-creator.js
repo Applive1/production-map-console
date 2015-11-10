@@ -10,7 +10,6 @@ angular.module('productionMapConsoleApp')
     .directive('dacCreator', function () {
         var controller = ['$scope', 'Popups', 'blockFactory', function ($scope, Popups, blockFactory) {
             $scope.graph = [];
-
             function updateModel() {
                 // Save the cells in arrays
                 var elementos = $scope.graph.getElements();
@@ -20,35 +19,39 @@ angular.module('productionMapConsoleApp')
                 var expLinks = [];
 
                 for (var i = 0; i < elementos.length; i++) {
-                  expElementos.push(elementos[i]);
-                };
+                    expElementos.push(elementos[i]);
+                }
+                ;
 
                 for (var i = 0; i < links.length; i++) {
-                  expLinks.push(links[i]);
-                };
+                    expLinks.push(links[i]);
+                }
+                ;
                 $scope.graphModel = JSON.stringify({
                     nodes: expElementos,
                     links: expLinks
                 });
             }
 
-            function loadMap(mapModel){
+            function loadMap(mapModel) {
                 // Clear the graph (Genius .__.)
                 $scope.graph.clear();
-                try{
+                try {
                     var model = JSON.parse(mapModel);
 
                     // Wait 1s and add the cells
                     setTimeout(function () {
-                      for (var i = 0; i < model.nodes.length; i++) {
-                        $scope.graph.addCell(model.nodes[i]);
-                      };
+                        for (var i = 0; i < model.nodes.length; i++) {
+                            $scope.graph.addCell(model.nodes[i]);
+                        }
+                        ;
 
-                      for (var i = 0; i < model.links.length; i++) {
-                        $scope.graph.addCell(model.links[i]);
-                      };
+                        for (var i = 0; i < model.links.length; i++) {
+                            $scope.graph.addCell(model.links[i]);
+                        }
+                        ;
                     }, 100);
-                }catch(e){
+                } catch (e) {
                     console.log(e);
                 }
             }
@@ -58,11 +61,11 @@ angular.module('productionMapConsoleApp')
                 return JSON.parse(JSON.stringify(a));
             }
 
-            function removeNode(blockName){
+            function removeNode(blockName) {
                 delete $scope.graphContent.nodes[blockName];
             }
 
-            function removeLink(linkId){
+            function removeLink(linkId) {
                 var res = {};
                 for (var i = 0; i < $scope.graphContent.links.length; i++) {
                     var link = $scope.graphContent.links[i];
@@ -111,29 +114,29 @@ angular.module('productionMapConsoleApp')
                 user_link.processes.push(process);
             }
 
-            function editBlock(cellView){
+            function editBlock(cellView) {
                 var block = getNode(cellView.id);
                 var oldname = angular.copy(block.name);
                 Popups.open(
-                         {
-                            templateUrl: 'views/CellsEditView/blockDetails.html',
-                            controller: 'PmblocksCtrl',
-                            resolve:{
-                                server: block,
-                                graphContent: $scope.graphContent
-                            }
-                        },
-                        function(server){
-                            if(oldname !== server.name){
-                                cellView.attr('text/text', server.name);
-                                $scope.graphContent.nodes[oldname].name = server.name;
-                                $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
-                                $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
-                                delete $scope.graphContent.nodes[oldname];
-                            }
+                    {
+                        templateUrl: 'views/CellsEditView/blockDetails.html',
+                        controller: 'PmblocksCtrl',
+                        resolve: {
+                            server: block,
+                            graphContent: $scope.graphContent
                         }
-                 );
-             }
+                    },
+                    function (server) {
+                        if (oldname !== server.name) {
+                            cellView.attr('text/text', server.name);
+                            $scope.graphContent.nodes[oldname].name = server.name;
+                            $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
+                            $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
+                            delete $scope.graphContent.nodes[oldname];
+                        }
+                    }
+                );
+            }
 
             function link_blocks(source_block, target_block) {
                 $scope.connection_link.set('target', { id: target_block.id });
@@ -229,16 +232,24 @@ angular.module('productionMapConsoleApp')
                     paperScale(graphScale, graphScale);
                 };
 
-                $scope.sealMap = function(){
+                /*$scope.toggleSealMap = function () {
+                    $scope.mapLocked = !$scope.mapLocked;
                     var innerElements = $scope.paper.$el.find('g');
-                    for (var i= 0, length = innerElements.length; i<length; i++){
+                    for (var i = 0, length = innerElements.length; i < length; i++) {
                         var view = $scope.paper.findView(innerElements[i])
                         if (view)
-                            view.options.interactive=false;
+                            view.options.interactive = !$scope.mapLocked;
                     }
+                }*/
 
-                    //$scope.paper.options.interactive=false;
-                }
+                $scope.$watch('mapLocked', function (newVal, oldVal) {
+                    var innerElements = $scope.paper.$el.find('g');
+                    for (var i = 0, length = innerElements.length; i < length; i++) {
+                        var view = $scope.paper.findView(innerElements[i])
+                        if (view)
+                            view.options.interactive = !$scope.mapLocked;
+                    }
+                });
 
                 $scope.resetZoom = function () {
                     graphScale = 1;
@@ -275,32 +286,30 @@ angular.module('productionMapConsoleApp')
                         }
                     }
                 });
-                $scope.map_base_block = map_block;
+                $scope.graphContent_base_block = map_block;
                 console.log()
 
-                $scope.paper.$el.on('contextmenu', function(evt) {
+                $scope.paper.$el.on('contextmenu', function (evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
                     evt.preventDefault();  // Prevent displaying default browser context menu.
                     var cellView = $scope.paper.findView(evt.target);
                     if (cellView) {
-                       // The context menu was brought up when clicking a cell view in the paper.
-                       console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
-                       if(cellView.model.isLink()){
-                           removeLink(cellView.model.id);
-                       }
-                       else{
-                           removeNode(cellView.model.attr('text/text'));
-                       }
-                       cellView.remove();
-                       updateModel();
-                       // ... display custom context menu, ...
+                        // The context menu was brought up when clicking a cell view in the paper.
+                        console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
+                        if (cellView.model.isLink()) {
+                            removeLink(cellView.model.id);
+                        }
+                        else {
+                            removeNode(cellView.model.attr('text/text'));
+                        }
+                        cellView.remove();
+                        updateModel();
+                        // ... display custom context menu, ...
                     }
                 });
 
                 $scope.paper.on('cell:mouseover', function (cellView, evt) {
-                    if (cellView.model.isLink()) {
-                    }
-                    else {
+                    if (!cellView.model.isLink() && !$scope.mapLocked) {
                         var bbox = cellView.getBBox();
                         var pos_width = bbox.width / 2; // if the cursor is on the right side
                         var relative = evt.offsetX - bbox.x;
@@ -317,52 +326,54 @@ angular.module('productionMapConsoleApp')
                 });
 
                 $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
-                    if (cellView.model.isLink()) {
-                        var mapLink = getLink(cellView.model.id);
-                        var sourceBlock = getNode(mapLink.sourceId);
-                        var targetBlock = getNode(mapLink.targetId);
-                        var link = {
-                            id: mapLink.id,
-                            source: sourceBlock,
-                            target: targetBlock
+                    if (!$scope.mapLocked) {
+                        if (cellView.model.isLink()) {
+                            var mapLink = getLink(cellView.model.id);
+                            var sourceBlock = getNode(mapLink.sourceId);
+                            var targetBlock = getNode(mapLink.targetId);
+                            var link = {
+                                id: mapLink.id,
+                                source: sourceBlock,
+                                target: targetBlock
+                            }
+                            Popups.open({
+                                templateUrl: 'views/processes.html',
+                                controller: 'ProcessesCtrl',
+                                resolve: { link: link, map: $scope.graphContent}
+                            }, updateLink);
                         }
-                        Popups.open({
-                            templateUrl: 'views/processes.html',
-                            controller: 'ProcessesCtrl',
-                            resolve: { link: link, map: $scope.graphContent}
-                        }, updateLink);
-                    }
-                    else {
-                        var block = getNode(cellView.model.id);
-                        if (block === {}) {
-                            console.log("Error: can't find block");
-                            return;
+                        else {
+                            var block = getNode(cellView.model.id);
+                            if (block === {}) {
+                                console.log("Error: can't find block");
+                                return;
+                            }
+                            console.log(block);
+                            editBlock(cellView.model);
                         }
-                        console.log(block);
-                        editBlock(cellView.model);
                     }
                 });
 
                 $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
-                    if(cellView.model.isLink()){
+                    if (cellView.model.isLink() || $scope.mapLocked) {
                         return;
                     }
-                    if($scope.connectorMode && !$scope.connecting){
+                    if ($scope.connectorMode && !$scope.connecting) {
                         cellView.options.interactive = false;
                         $scope.connecting = true;
                         $scope.source_element = cellView;
                         $scope.tmp_obj = new joint.shapes.basic.Rect({
-                           position: { x: x, y: y },
-                           size: { width: 0.1, height: 0.1 }
-                       });
-                       console.log($scope.tmp_obj);
-                       $scope.graph.addCell($scope.tmp_obj);
-                       console.log(cellView.model.id);
-                       $scope.connection_link = new joint.dia.Link({
-                           source: { id: cellView.model.id },
-                           target: { id: $scope.tmp_obj.id},
-                           router: { name: 'manhattan' },
-                           connector: { name: 'rounded' },
+                            position: { x: x, y: y },
+                            size: { width: 0.1, height: 0.1 }
+                        });
+                        console.log($scope.tmp_obj);
+                        $scope.graph.addCell($scope.tmp_obj);
+                        console.log(cellView.model.id);
+                        $scope.connection_link = new joint.dia.Link({
+                            source: { id: cellView.model.id },
+                            target: { id: $scope.tmp_obj.id},
+                            router: { name: 'manhattan' },
+                            connector: { name: 'rounded' },
                             attrs: {
                                 '.connection': {
                                     stroke: '#333333',
@@ -378,7 +389,9 @@ angular.module('productionMapConsoleApp')
                     }
                 });
                 $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
-                    if(!$scope.connecting){
+                    if ($scope.mapLocked)
+                        return;
+                    if (!$scope.connecting) {
                         console.log(evt);
                         return;
                     }
@@ -424,14 +437,11 @@ angular.module('productionMapConsoleApp')
 
                 $scope.dropBlock = function (event) {
                     console.log('clickmode --->' + $scope.clickMode);
-                    if ($scope.clickMode === '' || $scope.clickMode.mode === '') {
-
-                    }
-                    else {
+                    if ($scope.clickMode !== '' && $scope.clickMode.mode !== '' && !$scope.mapLocked)  {
                         var x = event.offsetX;
                         var y = event.offsetY;
                         var name = blockFactory.newBlock($scope.clickMode.mode);
-                        var block = $scope.map_base_block.clone().position(x, y).attr({
+                        var block = $scope.graphContent_base_block.clone().position(x, y).attr({
                             image: {
                                 'xlink:href': 'images/controls/' + $scope.clickMode.mode + '.png'
                             },
@@ -449,31 +459,36 @@ angular.module('productionMapConsoleApp')
                         };
                         $scope.clickMode.mode = '';
                         updateModel();
+                    }else{
+                        $scope.clickMode = '';
                     }
                 }
 
-                $scope.graph.on('change', function(cell) {
+                $scope.graph.on('change', function (cell) {
                     console.log('New cell with id ' + cell.id + ' added to the graph.');
                     updateModel();
                 });
 
                 $scope.paper.on('cell:pointermove', function (cellView, evt, x, y) {
+                    if($scope.mapLocked)
+                        return;
 
-                    if($scope.connecting){
-                        $scope.tmp_obj.position(x,y);
+                    if ($scope.connecting) {
+                        $scope.tmp_obj.position(x, y);
                     }
                     //if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }*/
                     //   });
 
-                 // var position = calcCellPosition(cellView, x, y);
+                    // var position = calcCellPosition(cellView, x, y);
 
-                 // //if you fire the event all the time you get a stack overflow
-                 // if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
-                 // });
-                updateModel();
-            });
+                    // //if you fire the event all the time you get a stack overflow
+                    // if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
+                    // });
+                    updateModel();
+                });
 
             }
+
             init();
             $scope.$watch('graphContent', function (newVal, oldVal) {
                 console.log($scope.graphContent.content);
@@ -489,7 +504,8 @@ angular.module('productionMapConsoleApp')
                 on_connection: '=onconnection',
                 gridSize: '=',
                 graphModel: '=graphModel',
-                clickMode: '='
+                clickMode: '=',
+                mapLocked:'='
             },
             templateUrl: 'scripts/directives/templates/dac-creator.html',
             restrict: 'E',

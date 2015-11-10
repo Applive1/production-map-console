@@ -122,15 +122,18 @@ angular.module('productionMapConsoleApp')
                     $scope.btn_disabled = false;
                     console.log(result);
                     Messages.add(result);
+                    map.isLocked = false;
                 })
                 .error(function (err) {
                     console.log(err);
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
+                    map.isLocked = true;
                 });
             MapsService.saveMap(map).then(function (result) {
                 $scope.map.versions.push(result.data);
             });
+            map.isLocked = true;
         };
         $scope.changeMode = function (mode) {
             $scope.block_mode = {mode: mode};
