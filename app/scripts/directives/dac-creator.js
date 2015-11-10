@@ -231,17 +231,7 @@ angular.module('productionMapConsoleApp')
                     $scope.innerHeight -= $scope.gridSize;
                     paperScale(graphScale, graphScale);
                 };
-
-                /*$scope.toggleSealMap = function () {
-                    $scope.mapLocked = !$scope.mapLocked;
-                    var innerElements = $scope.paper.$el.find('g');
-                    for (var i = 0, length = innerElements.length; i < length; i++) {
-                        var view = $scope.paper.findView(innerElements[i])
-                        if (view)
-                            view.options.interactive = !$scope.mapLocked;
-                    }
-                }*/
-
+                
                 $scope.$watch('mapLocked', function (newVal, oldVal) {
                     var innerElements = $scope.paper.$el.find('g');
                     for (var i = 0, length = innerElements.length; i < length; i++) {
