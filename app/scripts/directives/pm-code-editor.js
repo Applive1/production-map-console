@@ -58,6 +58,11 @@ angular.module('productionMapConsoleApp')
                     })
                     editor.on("cursorActivity", function (cm) {
                         server.updateArgHints(cm);
+                        var wordRange = editor.findWordAt(editor.getCursor());
+                        var word = editor.getRange(wordRange.anchor, wordRange.head);
+                        if(word === "."){
+                            server.complete(cm);
+                        }
                     });
                 });
                 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
