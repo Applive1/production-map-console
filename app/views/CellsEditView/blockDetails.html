@@ -18,6 +18,46 @@
 			<input data-ng-model="server.serverUrl" type="url" class="form-control" placeholder="url...">
 		</div>
 	</div>
+	<div class="table-responsive">
+      <span>Attributes</span>
+      <table class="table table-hover">
+      <tr style="font-weight: bold">
+	      <td style="width:35%">Name</td>
+	      <td style="width:35%">Value</td>
+	      <td style="width:30%"></td>
+	  </tr>
+      <tr data-ng-repeat="attribute in attributes track by attribute.name">
+              <td>
+        <!-- editable name (text with validation) -->
+        <span editable-text="attribute.name" e-name="name" e-form="rowform" e-required>
+          {{ attribute.name || 'empty' }}
+        </span>
+      </td>
+      <td>
+        <!-- editable status (select-local) -->
+        <span editable-text="attribute.value" e-name="value" e-form="rowform" e-required>
+          {{ attribute.value || 'empty' }}
+        </span>
+      </td>
+      <td style="white-space: nowrap">
+        <!-- form -->
+        <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == attribute">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+            cancel
+          </button>
+        </form>
+        <div ng-show="!rowform.$visible">
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+        </div>
+      </td>
+      </tr>
+      </table>
+    </div>
+    <button class="btn btn-default" ng-click="addAttribute()">Add Attribute</button>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="save()">save</button>

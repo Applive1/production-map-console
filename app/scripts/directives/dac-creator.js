@@ -447,7 +447,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                             id: block.id,
                             type: $scope.clickMode.mode,
                             name: name,
-                            serverUrl: "localhost:8100" //Default address
+                            serverUrl: "localhost:8100", /* Default address */
+                            attributes: []
                         };
                         $scope.clickMode.mode = '';
                         updateModel();
