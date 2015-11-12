@@ -41,7 +41,8 @@ angular.module('productionMapConsoleApp')
                     $scope.contentChange = true;
                     var map = {
                         nodes: newVal.nodes,
-                        links: newVal.links
+                        links: newVal.links,
+                        attributes: newVal.attributes
                     };
                     $scope.map_json = JSON.stringify(map, null, 2);
                     editor.setValue($scope.map_json);
@@ -57,6 +58,7 @@ angular.module('productionMapConsoleApp')
                         var map = JSON.parse(newVal);
                         $scope.content.nodes = map.nodes;
                         $scope.content.links = map.links;
+                        $scope.content.attributes = map.attributes;
                         editor.refresh();
                     } catch (e) {
                         console.log(e);
