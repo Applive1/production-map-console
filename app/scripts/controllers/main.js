@@ -11,15 +11,6 @@ angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout) {
         $scope.messages = Messages.all();
         $scope.projects = [];
-        /*$scope.map = {
-         name: "example_map",
-         active: true,
-         disabled: false,
-         content: '',
-         nodes: {},
-         links: [],
-         code: ''
-         };*/
         $scope.block_mode = '';
         $scope.pm_blocks = [
             {
