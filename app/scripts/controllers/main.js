@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout) {
         $scope.messages = Messages.all();
         $scope.projects = [];
         /*$scope.map = {
@@ -130,9 +130,11 @@ angular.module('productionMapConsoleApp')
                     $scope.btn_disabled = false;
                     map.isLocked = true;
                 });
-            MapsService.saveMap(map).then(function (result) {
-                $scope.map.versions.push(result.data);
-            });
+
+            if (map.versionIndex == map.versions.length-1 || (map.versionIndex != map.versions.length-1 && !map.isLocked))
+                MapsService.saveMap(map).then(function (result) {
+                    $scope.map.versions.push(result.data);
+                });
             map.isLocked = true;
         };
         $scope.changeMode = function (mode) {
@@ -148,6 +150,8 @@ angular.module('productionMapConsoleApp')
             });
         }
 
+        $scope.mapStructures = {};
+
         $scope.jsTreeContextMenu = function (node) {
             var items = {
                 ShowMapVersions: {
@@ -158,6 +162,8 @@ angular.module('productionMapConsoleApp')
                             templateUrl: 'views/Popups/ShowMapVersions.html',
                             controller: 'MapVersionsCtrl',
                             resolve: { map: node.original}
+                        },function(versionIndex){
+                            $scope.loadMapVersion(versionIndex);
                         });
                     }
                 },
@@ -216,17 +222,26 @@ angular.module('productionMapConsoleApp')
         }
 
         $scope.onTreeItemClick = function (e, data) {
-            if (data.node.type == 'default')
+            if (data.node.type == 'default' || (($scope.map && $scope.map.id == data.node.original.id)&&($scope.map.versionIndex == $scope.map.versions.length-1)))
                 return;
 
             $scope.map = data.node.original;
-            console.log($scope.map);
-            $scope.map.versions.forEach(function (version) {
-                jsonpatch.apply($scope.map.structure, version.patches);
-            })
+
+            $scope.loadMapVersion($scope.map.versions.length-1);
+        }
+
+        $scope.loadMapVersion = function (index) {
+            $scope.map.mapView = angular.copy($scope.map.structure);
+            $scope.map.versionIndex = index;
+            for(var i= 0; i<=index ; i++){
+                jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
+            }
 
             Processes.set($scope.map.structure);
-            $scope.$digest();
+
+            $timeout(function(){
+                $scope.$digest();
+            });
         }
 
         $scope.saveMap = function(map){
