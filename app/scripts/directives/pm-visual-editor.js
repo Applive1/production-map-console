@@ -29,6 +29,7 @@ angular.module('productionMapConsoleApp')
       scope: {
         mapModel: '=mapModel',
         map: '=',
+        mapNew:'=',
         mapLocked : '=',
         clickMode: '='
       },

@@ -8,12 +8,14 @@
             <table ng-show="map.versions && map.versions.length > 0" class="ng-hide table table-hover table-striped">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Date Created</th>
                     <th>Changes</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="version in map.versions track by version.date">
+                <tr ng-repeat="version in map.versions track by version.date" ng-click="setVersion($index)" style="cursor: pointer;">
+                    <td>{{$index}}</td>
                     <td>{{version.date | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                     <td>{{versions.patches | json}}</td>
                 </tr>

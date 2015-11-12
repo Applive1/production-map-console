@@ -8,4 +8,8 @@ angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', function
         $modalInstance.dismiss();
     };
 
+    $scope.setVersion = function(index){
+        $modalInstance.close(index);
+    }
+
 });

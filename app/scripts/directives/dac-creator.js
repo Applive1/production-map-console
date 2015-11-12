@@ -6,9 +6,17 @@
  * @description
  * # dacCreator
  */
-angular.module('productionMapConsoleApp')
-    .directive('dacCreator', function () {
-        var controller = ['$scope', 'Popups', 'blockFactory', function ($scope, Popups, blockFactory) {
+angular.module('productionMapConsoleApp').directive('dacCreator', function () {
+    return {
+        scope: {
+            height: '=height',
+            width: '=width',
+            gridSize: '=',
+            map: '='
+        },
+        templateUrl: 'scripts/directives/templates/dac-creator.html',
+        restrict: 'E',
+        controller: ['$scope', 'Popups', 'blockFactory', function ($scope, Popups, blockFactory) {
             $scope.graph = [];
             function updateModel() {
                 // Save the cells in arrays
@@ -21,35 +29,33 @@ angular.module('productionMapConsoleApp')
                 for (var i = 0; i < elementos.length; i++) {
                     expElementos.push(elementos[i]);
                 }
-                ;
 
                 for (var i = 0; i < links.length; i++) {
                     expLinks.push(links[i]);
                 }
-                ;
-                $scope.graphModel = JSON.stringify({
+                $scope.map.mapView.content = JSON.stringify({
                     nodes: expElementos,
                     links: expLinks
                 });
             }
 
-            function loadMap(mapModel) {
+            function loadMap() {
                 // Clear the graph (Genius .__.)
                 $scope.graph.clear();
                 try {
-                    var model = JSON.parse(mapModel);
+                    var model = JSON.parse($scope.map.mapView.content);
 
                     // Wait 1s and add the cells
                     setTimeout(function () {
                         for (var i = 0; i < model.nodes.length; i++) {
                             $scope.graph.addCell(model.nodes[i]);
                         }
-                        ;
 
                         for (var i = 0; i < model.links.length; i++) {
                             $scope.graph.addCell(model.links[i]);
                         }
-                        ;
+
+                        $scope.map.isLocked = ($scope.map.versionIndex != $scope.map.versions.length - 1);
                     }, 100);
                 } catch (e) {
                     console.log(e);
@@ -62,15 +68,15 @@ angular.module('productionMapConsoleApp')
             }
 
             function removeNode(blockName) {
-                delete $scope.graphContent.nodes[blockName];
+                delete $scope.map.mapView.content.nodes[blockName];
             }
 
             function removeLink(linkId) {
                 var res = {};
-                for (var i = 0; i < $scope.graphContent.links.length; i++) {
-                    var link = $scope.graphContent.links[i];
+                for (var i = 0; i < $scope.map.mapView.content.links.length; i++) {
+                    var link = $scope.map.mapView.content.links[i];
                     if (linkId === link.id) {
-                        $scope.graphContent.links.splice(i, 1);
+                        $scope.map.mapView.content.links.splice(i, 1);
                         break;
                     }
                 }
@@ -78,7 +84,7 @@ angular.module('productionMapConsoleApp')
 
             function getNode(blockId) {
                 var res = {};
-                angular.forEach($scope.graphContent.nodes, function (block, key) {
+                angular.forEach($scope.map.mapView.content.nodes, function (block, key) {
                     if (blockId === block.id) {
                         res = block;
                     }
@@ -88,8 +94,8 @@ angular.module('productionMapConsoleApp')
 
             function getLink(linkId) {
                 var res = {};
-                for (var i = 0; i < $scope.graphContent.links.length; i++) {
-                    var link = $scope.graphContent.links[i];
+                for (var i = 0; i < $scope.map.mapView.content.links.length; i++) {
+                    var link = $scope.map.mapView.content.links[i];
                     if (linkId === link.id) {
                         res = link;
                         break;
@@ -123,16 +129,16 @@ angular.module('productionMapConsoleApp')
                         controller: 'PmblocksCtrl',
                         resolve: {
                             server: block,
-                            graphContent: $scope.graphContent
+                            graphContent: $scope.map.mapView.content
                         }
                     },
                     function (server) {
                         if (oldname !== server.name) {
                             cellView.attr('text/text', server.name);
-                            $scope.graphContent.nodes[oldname].name = server.name;
-                            $scope.graphContent.nodes[oldname].serverUrl = server.serverUrl;
-                            $scope.graphContent.nodes[server.name] = $scope.graphContent.nodes[oldname];
-                            delete $scope.graphContent.nodes[oldname];
+                            $scope.map.mapView.content.nodes[oldname].name = server.name;
+                            $scope.map.mapView.content.nodes[oldname].serverUrl = server.serverUrl;
+                            $scope.map.mapView.content.nodes[server.name] = $scope.map.mapView.content.nodes[oldname];
+                            delete $scope.map.mapView.content.nodes[oldname];
                         }
                     }
                 );
@@ -149,7 +155,7 @@ angular.module('productionMapConsoleApp')
                     targetId: target_block.id,
                     processes: []
                 };
-                $scope.graphContent.links.push(p_link);
+                $scope.map.mapView.content.links.push(p_link);
 
                 updateModel();
                 var sourceBlock = getNode(p_link.sourceId);
@@ -160,10 +166,6 @@ angular.module('productionMapConsoleApp')
                     target: targetBlock
                 }
                 return res;
-            }
-
-            function connector_on_click(source) {
-
             }
 
             function calcCellPosition(cellView, x, y) {
@@ -231,13 +233,13 @@ angular.module('productionMapConsoleApp')
                     $scope.innerHeight -= $scope.gridSize;
                     paperScale(graphScale, graphScale);
                 };
-                
-                $scope.$watch('mapLocked', function (newVal, oldVal) {
+
+                $scope.$watch('map.isLocked', function (newVal, oldVal) {
                     var innerElements = $scope.paper.$el.find('g');
                     for (var i = 0, length = innerElements.length; i < length; i++) {
                         var view = $scope.paper.findView(innerElements[i])
                         if (view)
-                            view.options.interactive = !$scope.mapLocked;
+                            view.options.interactive = !$scope.map.isLocked;
                     }
                 });
 
@@ -299,7 +301,7 @@ angular.module('productionMapConsoleApp')
                 });
 
                 $scope.paper.on('cell:mouseover', function (cellView, evt) {
-                    if (!cellView.model.isLink() && !$scope.mapLocked) {
+                    if (!cellView.model.isLink() && !$scope.map.isLocked) {
                         var bbox = cellView.getBBox();
                         var pos_width = bbox.width / 2; // if the cursor is on the right side
                         var relative = evt.offsetX - bbox.x;
@@ -316,7 +318,7 @@ angular.module('productionMapConsoleApp')
                 });
 
                 $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
-                    if (!$scope.mapLocked) {
+                    if (!$scope.map.isLocked) {
                         if (cellView.model.isLink()) {
                             var mapLink = getLink(cellView.model.id);
                             var sourceBlock = getNode(mapLink.sourceId);
@@ -329,7 +331,7 @@ angular.module('productionMapConsoleApp')
                             Popups.open({
                                 templateUrl: 'views/processes.html',
                                 controller: 'ProcessesCtrl',
-                                resolve: { link: link, map: $scope.graphContent}
+                                resolve: { link: link, map: $scope.map.mapView.content}
                             }, updateLink);
                         }
                         else {
@@ -345,7 +347,7 @@ angular.module('productionMapConsoleApp')
                 });
 
                 $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
-                    if (cellView.model.isLink() || $scope.mapLocked) {
+                    if (cellView.model.isLink() || $scope.map.isLocked) {
                         return;
                     }
                     if ($scope.connectorMode && !$scope.connecting) {
@@ -379,7 +381,7 @@ angular.module('productionMapConsoleApp')
                     }
                 });
                 $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
-                    if ($scope.mapLocked)
+                    if ($scope.map.isLocked)
                         return;
                     if (!$scope.connecting) {
                         console.log(evt);
@@ -413,7 +415,7 @@ angular.module('productionMapConsoleApp')
                             Popups.open({
                                 templateUrl: 'views/processes.html',
                                 controller: 'ProcessesCtrl',
-                                resolve: { link: link, map: $scope.graphContent }
+                                resolve: { link: link, map: $scope.map.mapView.content }
                             }, updateLink);
                             cellView.model.translate(0, 100);
                         }
@@ -427,7 +429,7 @@ angular.module('productionMapConsoleApp')
 
                 $scope.dropBlock = function (event) {
                     console.log('clickmode --->' + $scope.clickMode);
-                    if ($scope.clickMode !== '' && $scope.clickMode.mode !== '' && !$scope.mapLocked)  {
+                    if ($scope.clickMode && $scope.clickMode.mode !== '' && !$scope.map.isLocked) {
                         var x = event.offsetX;
                         var y = event.offsetY;
                         var name = blockFactory.newBlock($scope.clickMode.mode);
@@ -441,7 +443,7 @@ angular.module('productionMapConsoleApp')
                             }
                         });
                         $scope.graph.addCell(block);
-                        $scope.graphContent.nodes[name] = {
+                        $scope.map.mapView.content.nodes[name] = {
                             id: block.id,
                             type: $scope.clickMode.mode,
                             name: name,
@@ -449,7 +451,7 @@ angular.module('productionMapConsoleApp')
                         };
                         $scope.clickMode.mode = '';
                         updateModel();
-                    }else{
+                    } else {
                         $scope.clickMode = '';
                     }
                 }
@@ -460,7 +462,7 @@ angular.module('productionMapConsoleApp')
                 });
 
                 $scope.paper.on('cell:pointermove', function (cellView, evt, x, y) {
-                    if($scope.mapLocked)
+                    if ($scope.map.isLocked)
                         return;
 
                     if ($scope.connecting) {
@@ -477,28 +479,13 @@ angular.module('productionMapConsoleApp')
                     updateModel();
                 });
 
+                loadMap();
             }
 
             init();
-            $scope.$watch('graphContent', function (newVal, oldVal) {
-                console.log($scope.graphContent.content);
-                loadMap($scope.graphContent.content);
-            });
-        }];
 
-        return {
-            scope: {
-                graphContent: '=',
-                height: '=height',
-                width: '=width',
-                on_connection: '=onconnection',
-                gridSize: '=',
-                graphModel: '=graphModel',
-                clickMode: '=',
-                mapLocked:'='
-            },
-            templateUrl: 'scripts/directives/templates/dac-creator.html',
-            restrict: 'E',
-            controller: controller
-        };
-    });
+            $scope.$watchGroup(['map.id', 'map.versionIndex'], function (newValues, oldValues, scope) {
+                loadMap();
+            });
+        }]};
+});

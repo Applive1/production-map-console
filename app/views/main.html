@@ -27,7 +27,7 @@
     <div class="col-md-8">
 		<tabset ng-if="map">
 		    <tab heading="{{map.name}}">
-		      <pm-map-designer map-structure="map.structure" map-locked="map.isLocked"  click-mode="block_mode"></pm-map-designer>
+		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
 		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
               <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
 		    </tab>
