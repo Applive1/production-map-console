@@ -158,6 +158,20 @@ angular.module('productionMapConsoleApp')
                         });
                     }
                 },
+                ShowMapAttributs: {
+                    type: "map",
+                    "label": "show attributes",
+                    "action": function (obj) {
+                        var mapStruct = node.original.mapView;
+                        Popups.open({
+                            templateUrl: 'views/Popups/map_attributes.html',
+                            controller: 'mapAttributesCtrl',
+                            resolve: { map: mapStruct}
+                        },function(map){
+                            node.original.mapView.attributes = map.attributes;
+                        });
+                    }
+                },
                 DeleteProject: {
                     type: "default",
                     "label": "Delete Project",
