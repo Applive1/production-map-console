@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket) {
         $scope.messages = Messages.all();
         $scope.projects = [];
         $scope.block_mode = '';
@@ -255,7 +255,7 @@ angular.module('productionMapConsoleApp')
             });
         }
 
-        io.socket.on('update', function (msg){
+        Socket.on('update', function (msg){
             Messages.add(msg);
             console.log("***** got push *****");
             console.log(msg);
