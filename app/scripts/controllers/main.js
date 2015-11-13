@@ -242,7 +242,7 @@ angular.module('productionMapConsoleApp')
                 jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
             }
 
-            Processes.set($scope.map.structure);
+            Processes.set($scope.map.mapView);
 
             $timeout(function(){
                 $scope.$digest();
