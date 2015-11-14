@@ -1,7 +1,7 @@
-<div ng-style="{'width': width + 'px', 'height': height + 'px', 'overflow': 'scroll'}" ng-mouseup="dropBlock($event)">
-	<div id="paper"></div>
+<div class="board" ng-style="{'height': 520 + 'px','width': 100 + '%',  'overflow-y': 'scroll', 'overflow-x': 'hidden'}" ng-mouseup="dropBlock($event)">
+	<div id="paper" style="height: 520px;"></div>
 </div>
-<div>
-	<button type="button" class="btn btn-primary" data-ng-click="zoomIn()">zoom in</button>
-	<button type="button" class="btn btn-primary" data-ng-click="zoomOut()">zoom out</button>
+<div style="margin-left: 10px">
+	<button type="button" class="action-button" style="width: 30px" data-ng-click="zoomIn()">+</button>
+	<button type="button" class="action-button" style="width: 30px" data-ng-click="zoomOut()">-</button>
 </div>

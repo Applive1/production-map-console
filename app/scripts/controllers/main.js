@@ -9,6 +9,23 @@
  */
 angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups) {
+
+      $scope.rightEl = angular.element( document.querySelector( '#pm-main-content' ) );
+      $scope.initalLeft = angular.element( document.querySelector( '#pm-left-section' ) ).width();
+      $scope.containerWidth = $scope.initalLeft + $scope.rightEl.width();
+
+      $scope.resizeRight = function(){
+        var leftEl = angular.element( document.querySelector( '#pm-left-section' ) );
+        var currentWidth = leftEl.width();
+        $scope.rightEl.width($scope.containerWidth - currentWidth);
+      }
+
+    $scope.resizeLeft = function(){
+      var leftEl = angular.element( document.querySelector( '#pm-attributes' ) );
+      var currentWidth = leftEl.width();
+      $scope.rightEl.width($scope.containerWidth - currentWidth);
+    }
+
         $scope.messages = Messages.all();
         $scope.map = {
             name: "example_map.xml",

@@ -19,7 +19,9 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" type="text/css" href="styles/main.css"/>
-    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/twilight.css"
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/twilight.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
+
     <!-- endbuild -->
 </head>
 <body ng-app="productionMapConsoleApp">
@@ -29,68 +31,12 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="header">
-    <div class="navbar navbar-default" role="navigation">
 
-        <a class="navbar-brand" href="#/">Production Map</a>
-        <style type="text/css">
-            .btn-group {
-                margin-top: 1.2%;
-            }
-        </style>
-        <!-- Single button with keyboard nav -->
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Map <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                View <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Reports <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Administration <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Help <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-</div>
 
 <div ng-view="">
 </div>
 
-<div class="footer">
-    <div class="container">
-        <p>Developed by AnyApp</p>
-    </div>
-</div>
+
 
 
 <!-- Google Analytics: change UA-XXXXX-Xcom to be your site's ID -->
@@ -139,6 +85,7 @@
 <script src="bower_components/jsTree-directive/jsTree.directive.js"></script>
 <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
 <script src="bower_components/ngDraggable/ngDraggable.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -173,6 +120,7 @@
 <script src="scripts/controllers/pmblocks.js"></script>
 <script src="scripts/services/messages.js"></script>
 <script src="scripts/filters/cut.js"></script>
+<script src="scripts/directives/resizable.js"></script>
 <!-- endbuild -->
 </body>
 </html>

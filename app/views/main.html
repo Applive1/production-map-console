@@ -1,4 +1,107 @@
+<div class="pm-header">
+  <a class="logo">
+    <span class="pm-logo"></span>
+  </a>
+</div>
+<div class="pm-header-row">
+  <div class="pm-menu-bar">
+    <div class="pm-menu-item">File</div>
+    <div class="pm-menu-item">Map</div>
+    <div class="pm-menu-item">View</div>
+    <div class="pm-menu-item">Admin</div>
+    <div class="pm-menu-item">Help</div>
+  </div>
+</div>
 
+<div class="pm-splitbox" id="pm-splitbox">
+  <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
+    <div class="pm-box pm-maps">
+      <div class="pm-box-title">Maps</div>
+      <div class="pm-box-content">
+        <js-tree tree-plugins="dnd,sort,search" tree-data="json" tree-src="scripts/data/tree-json.json"></js-tree>
+      </div>
+    </div>
+    <div class="pm-box pm-map-items">
+      <div class="pm-box-title">Map Items</div>
+      <div class="pm-box-content">
+        <div class="pm_block" ng-drag="true" ng-drag-data="block" data-ng-repeat="block in pm_blocks" data-ng-mousedown="changeMode(block.text)">
+          <img data-ng-src="{{block.img_url}}" />
+          <span>{{block.text}}</span>
+        </div>
+        <div ng-drag-clone="">
+        <img data-ng-src="{{clonedData.img_url}}" />
+        <span>{{clonedData.text}}</span>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="pm-right-section" id="pm-main-content" >
+    <div class="pm-content">
+      <tabset>
+        <tab heading="{{map.name}}">
+          <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
+          <button data-ng-disabled="btn_disabled" type="button" class="action-button execute-btn" data-ng-click="execute_map(map)"> {{ button_text }} </button>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  <div class="pm-attributes" id="pm-attributes">
+    <div class="pm-box">
+      <div class="pm-box-title">Map Settings</div>
+      <div class="pm-box-content">
+        <div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-6">
+                <label class="control-label">Attribute 1</label>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6">
+                <label class="control-label">Attribute 2</label>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6">
+                <label class="control-label">Attribute 3</label>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<div class="footer pm-footer">
+  <div class="pm-box">
+    <div class="pm-box-title">Messages</div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tr>
+        <th>Date</th>
+        <th>Message</th>
+      </tr>
+      <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
+        <td>{{message.date}}</td>
+        <td>{{message.content |  cut:true:20:' ...'}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!--
 <div class="container-fluid row">
     <div class="col-md-2">
 	    <accordion close-others="False">
@@ -10,10 +113,10 @@
 				    <img data-ng-src="{{block.img_url}}" />
 	    			<span>{{block.text}}</span>
 	    		</div>
-	    		<!-- <div ng-drag-clone="">
+	    		&lt;!&ndash; <div ng-drag-clone="">
 			      <img data-ng-src="{{clonedData.img_url}}" />
 	    		  <span>{{clonedData.text}}</span>
-			  	</div> -->
+			  	</div> &ndash;&gt;
 		    </accordion-group>
 		</accordion>
     </div>
@@ -23,10 +126,10 @@
 		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
 		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
 		    </tab>
-		  </tabset>
-		  <div style="border-style: solid;border-width: 1px;">
+    </tabset>
+    <div style="border-style: solid;border-width: 1px;">
 		  	Messages:
-		  	<div class="table-responsive">
+      <div class="table-responsive">
                 <table class="table table-hover" style="border-style: solid;border-width: 1px;">
                     <tr>
                         <th>Date</th>
@@ -37,7 +140,8 @@
                         <td>{{message.content |  cut:true:20:' ...'}}</td>
                     </tr>
                 </table>
-            </div>
-		  </div>
+      </div>
     </div>
+  </div>
 </div>
+-->
