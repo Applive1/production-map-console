@@ -1,130 +1,125 @@
 <style>
-    :host {
-        display: block;
-        position: relative;
-        -webkit-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
-        box-sizing: border-box;
-        height: 100%;
-    }
+  :host {
+    display: block;
+    position: relative;
+    -webkit-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    height: 100%;
+  }
 
-    div.container {
-        width: 100%;
-        height: 100%;
-    }
+  div.container {
+    width: 100%;
+    height: 100%;
+  }
 
-    div.buttons {
-        -webkit-flex: 0 0 auto;
-        -moz-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-        -o-flex: 0 0 auto;
-        flex: 0 0 auto;
-        padding: 0 0.5em 0.5em 72px;
-        background: #4b79ff;
-        box-shadow: 0 -2px 6px rgba(0,0,0,0.25);
-    }
+  div.buttons {
+    padding-top: 10px;
+    padding-left: 10px;
+    background: #4a4a4a;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+  }
 
-    div.tabs {
-        -webkit-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
+  div.tabs {
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
 
-        display: -webkit-flex;
-        display: -moz-flex;
-        display: -ms-flex;
-        display: -o-flex;
-        display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
 
-        -webkit-flex-flow: column nowrap;
-        -moz-flex-flow: column nowrap;
-        -ms-flex-flow: column nowrap;
-        -o-flex-flow: column nowrap;
-        flex-flow: column nowrap;
+    -webkit-flex-flow: column nowrap;
+    -moz-flex-flow: column nowrap;
+    -ms-flex-flow: column nowrap;
+    -o-flex-flow: column nowrap;
+    flex-flow: column nowrap;
 
-    }
+  }
 
-    div.tabs /deep/ .container {
-        box-sizing: border-box;
-        -webkit-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
+  div.tabs /deep/ .container {
+    box-sizing: border-box;
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
 
-        width: 100%;
-        height: 100%;
+    width: 100%;
+    height: 100%;
 
-        background: white;
-    }
+    background: white;
+  }
 
-    button {
-        background: none;
-        border-radius: 0 0 0.3em 0.3em;
-        border: none;
-        box-shadow: none;
-        color: rgba(255,255,255,0.5);
-        position: relative;
-        font-weight: 400;
-        font-size: 0.7em;
-        -webkit-flex: 0 0 auto;
-    }
+  pm-visual-editor {
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
 
-    button:hover, buton:active {
-        background: none;
-        color: rgba(255,255,255,0.8);
-        box-shadow: none;
-    }
-    button[active] {
-        background: white;
-        border-top: 1px solid #ffffff;
-        box-shadow: none;
-        color: black;
-        z-index: 1;
-    }
+    width: 100%;
+    height: 100%;
+  }
 
-    pm-visual-editor {
-        -webkit-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
+  pm-code-editor {
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
 
-        width: 100%;
-        height: 100%;
-    }
+    width: 100%;
+    height: 100%;
+  }
 
-    pm-code-editor {
-        -webkit-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
+  pm-xml-editor {
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -o-flex: 1 1 100%;
+    flex: 1 1 100%;
 
-        width: 100%;
-        height: 100%;
-    }
+    width: 100%;
+    height: 100%;
+  }
 
-    pm-xml-editor {
-        -webkit-flex: 1 1 100%;
-        -moz-flex: 1 1 100%;
-        -ms-flex: 1 1 100%;
-        -o-flex: 1 1 100%;
-        flex: 1 1 100%;
+  button[hidden] {
+    display: none !important;
+  }
 
-        width: 100%;
-        height: 100%;
-    }
+  .no-margin-padding {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 
-    button[hidden] {
-        display: none !important;
-    }
+  .action-button {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.98) 0 1px 0 0;
+    -moz-box-shadow: rgba(0, 0, 0, 0.98) 0 1px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.98) 0 1px 0 0;
+    background-color: #EEE;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border: 1px solid #999;
+    color: #666;
+    font-family: 'Lucida Grande', Tahoma, Verdana, Arial, Sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 6px;
+  }
 </style>
-<div class="container" vertical>
+<div class="container no-margin-padding" vertical>
     <div class="tabs" vertical>
         <!--<pm-visual-editor id="designer" ng-show="viewMode==1" map="mapStructure" map-version="mapVersion" map-locked="mapLocked" map-model="mapStructure.content" click-mode="clickMode"></pm-visual-editor>-->
         <dac-creator ng-show="viewMode==1" height="500" width="800" map="map" grid-size="10" click-mode="clickMode"></dac-creator>
@@ -132,12 +127,12 @@
         <pm-code-editor ng-show="viewMode==3" map="map.mapView" markup="markup" code="code" width="800" height="535"></pm-code-editor>
     </div>
     <div class="buttons" horizontal>
-        <button ng-click="viewMode=1" active="{{designer_active}}">Design</button>
-        <button ng-click="setMarkup()" active="{{xml_editor_active}}">Markup</button>
-        <button ng-click="setCode()" active="{{code_editor_active}}">Code</button>
-        <button onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
-        <button onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
-        <button onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>
-        <button onclick={{ resumeMap }} hidden={{ hideResumeButton }}>Resume</button>
+        <button class="action-button" ng-click="viewMode=1" active="{{designer_active}}">Design</button>
+        <button class="action-button" ng-click="setMarkup()" active="{{xml_editor_active}}">Markup</button>
+        <button class="action-button" ng-click="setCode()" active="{{code_editor_active}}">Code</button>
+        <button class="action-button" onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
+        <button class="action-button" onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
+        <button class="action-button" onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>
+        <button class="action-button" onclick={{ resumeMap }} hidden={{ hideResumeButton }}>Resume</button>
     </div>
 </div>

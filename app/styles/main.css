@@ -7,6 +7,7 @@
 
 body {
     padding: 0;
+    background-color: #4a4a4a;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -100,4 +101,175 @@ body {
 
 .selected_action {
   background-color: #93cede;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  margin-right: 154px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.pm-logo{
+  background-image: url("../images/pm-logo.png");
+  background-repeat: no-repeat;
+  background-size: 154px 30px;
+  height: 30px;
+  width: 154px;
+  display: block;
+}
+
+.pm-header {
+  background: #3C3F41;
+  height: 40px;
+  display: block;
+  width: 100%;
+}
+
+.pm-header-row {
+  background: #3C3F41;
+  height: 40px;
+  display: block;
+  width: 100%;
+  box-shadow: 0 1px 0 0 #353535 inset;
+  border-top: 1px solid #000000;
+}
+
+.pm-menu-item {
+  display: inline-block;
+  color: #fff;
+  padding: 10px 7px;
+  cursor: pointer;
+}
+
+.pm-menu-item:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.pm-left-section {
+  width: 25%;
+  height: 650px;
+  float: left;
+  background-color: #303130;
+  border-right: 1px solid #000000;
+  box-shadow: 0 1px 0 0 #353535 inset;
+}
+
+.pm-right-section {
+  width: 49%;
+  height: 650px;
+  float: left;
+  display: inline-block;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+.clear {
+  clear: both;
+}
+
+.pm-box {
+  width: 100%;
+  color: #fff;
+}
+
+.pm-box-title {
+  padding:10px 0;
+  color: rgb(245, 245, 245);
+  text-align: center;
+  background: url("../images/noise.png") rgb(37, 37, 37);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.pm-box-content {
+  padding: 15px;
+}
+
+.pm-maps {
+  height: 35%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.pm-map-items {
+  height: 65%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.pm-box::-webkit-scrollbar {
+  width: 12px;
+}
+.pm-box::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+  border-left: 1px solid #ccc;
+}
+.pm-box::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+.pm-box::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+.board::-webkit-scrollbar {
+  width: 12px;
+}
+.board::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+  border-left: 1px solid #ccc;
+}
+.board::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+.board::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+.pm-content {
+  height: 650px;
+}
+
+.map-designer {
+  position: relative;
+}
+
+.tab-pane {
+  height: 605px;
+  width: 100%;
+  position: relative;
+}
+
+.execute-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.pm-splitbox {
+  background-color: #303130;
+}
+
+.pm-tabs {
+  background: url("../images/noise.png") rgb(37, 37, 37);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.nav-tabs {
+  background: url("../images/noise.png") rgb(37, 37, 37);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.pm-attributes {
+  float: left;
+  display: inline-block;
+  width: 22%;
+}
+
+.pm-footer {
+  background-color: #4a4a4a;
+}
+
+[ng-drag].dragging {
+    opacity: 0;
 }
