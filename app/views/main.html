@@ -157,8 +157,12 @@
 		<tabset ng-if="map">
 		    <tab heading="{{map.name}}">
 		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
-		      <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
-              <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
+		      <button ng-show="map.versions[map.versionIndex].status != 1 && map.versions[map.versionIndex].status != 4" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
+              <button ng-show="map.versions[map.versionIndex].status == 4" type="button" class="ng-hide btn btn-default" data-ng-click="resume_map(map)"> Resume </button>
+              <button ng-show="map.versions[map.versionIndex].status == 1" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="updateStatus(4)">Pause</button>
+              <button ng-show="map.versions[map.versionIndex].status == 1" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="updateStatus(5)">Stop</button>
+
+                <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
 		    </tab>
 		  </tabset>
 		  <div style="border-style: solid;border-width: 1px;">
