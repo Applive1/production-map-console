@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket) {
+    .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts) {
         $scope.messages = Messages.all();
         $scope.projects = [];
         $scope.block_mode = '';
@@ -93,7 +93,7 @@ angular.module('productionMapConsoleApp')
         if (AuthService.currentUser)
             ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
                 $scope.projects = result.data;
-                if($scope.projects.length === 0){
+                if ($scope.projects.length === 0) {
                     $scope.createProject();
                 }
             });
@@ -102,32 +102,57 @@ angular.module('productionMapConsoleApp')
         $scope.button_text = 'execute';
         $scope.btn_disabled = false;
         $scope.mapResult = 'waiting for result';
+
         $scope.execute_map = function (map) {
+            if (map.versionIndex == map.versions.length - 1 || (map.versionIndex != map.versions.length - 1 && !map.isLocked))
+                MapsService.saveMap(map).then(function (result) {
+                    $scope.map.versions.push(result.data);
+                    execute_map(map, false);
+                });
+            else if (map.isLocked) {
+                execute_map(map, false);
+            }
+        };
+
+        $scope.resume_map = function (map) {
+            execute_map(map, true);
+        };
+
+        var execute_map = function (map, isResume) {
             $scope.button_text = 'executing...';
             $scope.btn_disabled = true;
             console.log(map);
             // business logic...
-            MapsService.executeMap(map)
-                .success(function (result) {
+            var success = function (result) {
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
                     console.log(result);
                     Messages.add(result);
+                    $scope.map.versions[$scope.map.versionIndex].status = consts.MapRunStatuses.Done;
                     map.isLocked = false;
-                })
-                .error(function (err) {
+                },
+                error = function (err) {
                     console.log(err);
                     $scope.button_text = 'execute';
                     $scope.btn_disabled = false;
+                    $scope.map.versions[$scope.map.versionIndex].status = consts.MapRunStatuses.Failed;
                     map.isLocked = true;
-                });
+                };
 
-            if (map.versionIndex == map.versions.length-1 || (map.versionIndex != map.versions.length-1 && !map.isLocked))
-                MapsService.saveMap(map).then(function (result) {
-                    $scope.map.versions.push(result.data);
-                });
+            if (!isResume)
+                MapsService.executeMap(map)
+                    .success(success)
+                    .error(error);
+            else
+                MapsService.resumeMap(map)
+                    .success(success)
+                    .error(error);
+
+            $scope.updateStatus(consts.MapRunStatuses.Running);
+
             map.isLocked = true;
         };
+
         $scope.changeMode = function (mode) {
             $scope.block_mode = {mode: mode};
             console.log($scope.block_mode);
@@ -153,7 +178,7 @@ angular.module('productionMapConsoleApp')
                             templateUrl: 'views/Popups/ShowMapVersions.html',
                             controller: 'MapVersionsCtrl',
                             resolve: { map: node.original}
-                        },function(versionIndex){
+                        }, function (versionIndex) {
                             $scope.loadMapVersion(versionIndex);
                         });
                     }
@@ -167,7 +192,7 @@ angular.module('productionMapConsoleApp')
                             templateUrl: 'views/Popups/map_attributes.html',
                             controller: 'mapAttributesCtrl',
                             resolve: { map: mapStruct}
-                        },function(map){
+                        }, function (map) {
                             node.original.mapView.attributes = map.attributes;
                         });
                     }
@@ -191,11 +216,11 @@ angular.module('productionMapConsoleApp')
                             }}, function (map) {
                             for (var i = 0, length = $scope.projects.length; i < length; i++) {
                                 if (node.id == $scope.projects[i].id) {
-                                    if(!$scope.projects[i].maps){
+                                    if (!$scope.projects[i].maps) {
                                         $scope.projects[i].maps = [];
                                     }
                                     $scope.projects[i].maps.push(map);
-                                    if(!$scope.projects[i].children){
+                                    if (!$scope.projects[i].children) {
                                         $scope.projects[i].children = [];
                                     }
                                     $scope.projects[i].children.push(map);
@@ -227,39 +252,45 @@ angular.module('productionMapConsoleApp')
         }
 
         $scope.onTreeItemClick = function (e, data) {
-            if (data.node.type == 'default' || (($scope.map && $scope.map.id == data.node.original.id)&&($scope.map.versionIndex == $scope.map.versions.length-1)))
+            if (data.node.type == 'default' || (($scope.map && $scope.map.id == data.node.original.id) && ($scope.map.versionIndex == $scope.map.versions.length - 1)))
                 return;
 
             $scope.map = data.node.original;
 
-            $scope.loadMapVersion($scope.map.versions.length-1);
+            $scope.loadMapVersion($scope.map.versions.length - 1);
         }
 
         $scope.loadMapVersion = function (index) {
             $scope.map.mapView = angular.copy($scope.map.structure);
             $scope.map.versionIndex = index;
-            for(var i= 0; i<=index ; i++){
+            for (var i = 0; i <= index; i++) {
                 jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
             }
 
             Processes.set($scope.map.mapView);
 
-            $timeout(function(){
+            $timeout(function () {
                 $scope.$digest();
             });
         }
 
-        $scope.saveMap = function(map){
+        $scope.saveMap = function (map) {
             MapsService.saveMap(map).then(function (result) {
                 console.log(result);
             });
         }
 
-        Socket.on('update', function (msg){
+        Socket.on('update', function (msg) {
             Messages.add(msg);
             console.log("***** got push *****");
             console.log(msg);
             console.log("***** got push *****");
         });
+
+        $scope.updateStatus = function(status){
+            MapsService.ChangeMapRunStatus($scope.map, status,function(){
+                $scope.map.versions[$scope.map.versionIndex].status = status;
+            });
+        }
     })
 ;

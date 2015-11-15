@@ -454,6 +454,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                         $scope.clickMode.mode = '';
                         updateModel();
                     }
+                    else{
+                        $scope.clickMode.mode = '';
+                    }
                 }
 
                 $scope.graph.on('change', function (cell) {
