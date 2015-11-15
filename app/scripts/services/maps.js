@@ -17,7 +17,6 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
             return $http.get(consts.serverUrl + 'map/getMapById/'+mapId);
         },
         saveMap: function (map) {
-            map.structure = angular.copy(map.mapView);
             return $http.post(consts.serverUrl + 'map/addMapVersion',map);
         },
         createMap: function (mapName, projectId) {
@@ -29,6 +28,12 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
         },
         executeMap: function (map) {
             return $http.post(consts.serverUrl + 'sysfile/execute', map);
+        },
+        resumeMap : function(map){
+            return $http.post(consts.serverUrl + 'sysfile/resumeMap', map);
+        },
+        ChangeMapRunStatus : function(map, status){
+            return $http.post(consts.serverUrl + 'map/updateVersionStatus', {map:map, status: status});
         }
     };
 }]);
