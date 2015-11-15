@@ -36,69 +36,14 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="header">
-    <div class="navbar navbar-default" role="navigation">
 
-        <a class="navbar-brand" href="#/">Production Map</a>
-        <style type="text/css">
-            .btn-group {
-                margin-top: 1.2%;
-            }
-        </style>
-        <!-- Single button with keyboard nav -->
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Map <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                View <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Reports <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Administration <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default" dropdown-toggle>
-                Help <span class="caret"> </span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem"><a href="#">Action</a></li>
-            </ul>
-        </div>
-        <div class="nav navbar-nav navbar-right" style="margin-right: 0">
-            <li><a ng-click="logout()">Logout</a></li>
-        </div>
-    </div>
+<div class="pm-header">
+  <a class="logo">
+    <span class="pm-logo"></span>
+  </a>
 </div>
 
 <div ng-view="">
-</div>
-
-<div class="footer">
-    <div class="container">
-        <p>Developed by Production Map team</p>
-    </div>
 </div>
 
 
@@ -224,6 +169,7 @@
 <script src="scripts/controllers/pmblocks.js"></script>
 <script src="scripts/services/messages.js"></script>
 <script src="scripts/filters/cut.js"></script>
+<script src="scripts/directives/resizable.js"></script>
 <!-- endbuild -->
 </body>
 </html>

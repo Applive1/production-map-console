@@ -282,6 +282,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 $scope.graphContent_base_block = map_block;
                 console.log()
 
+                $scope.paper.$el.mouseup(function() {
+                  alert( "Handler for .mouseup() called." );
+                });
                 $scope.paper.$el.on('contextmenu', function (evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
                     evt.preventDefault();  // Prevent displaying default browser context menu.
