@@ -283,7 +283,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 console.log()
 
                 $scope.paper.$el.mouseup(function() {
-                  alert( "Handler for .mouseup() called." );
+                  // alert( "Handler for .mouseup() called." );
                 });
                 $scope.paper.$el.on('contextmenu', function (evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.

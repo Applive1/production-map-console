@@ -1,6 +1,7 @@
 <div class="pm-header-row">
   <div class="pm-menu-bar">
     <div class="pm-menu-item">File</div>
+    <div class="pm-menu-item"><a ng-click="createProject()">Add Project</a></div>
     <div class="pm-menu-item">Map</div>
     <div class="pm-menu-item">View</div>
     <div class="pm-menu-item">Admin</div>
@@ -9,7 +10,7 @@
 </div>
 
 <div class="pm-splitbox" id="pm-splitbox">
-  <div  on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
+  <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
     <div class="pm-box pm-maps">
       <div class="pm-box-title">Maps</div>
       <div class="pm-box-content">
@@ -45,8 +46,8 @@
       <tabset>
         <tab heading="{{map.name}}">
           <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
-          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
-          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
+          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{ button_text }} </button>
+          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;"> save </button>
         </tab>
       </tabset>
     </div>
