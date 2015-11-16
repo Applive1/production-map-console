@@ -55,38 +55,51 @@
   <div class="pm-attributes" id="pm-attributes">
     <div class="pm-box">
       <div class="pm-box-title">Map Settings</div>
-      <div class="pm-box-content">
-        <div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-xs-6">
-                <label class="control-label">Attribute 1</label>
-              </div>
-              <div class="col-xs-6">
-                <input type="text" class="form-control" />
-              </div>
+        <div class="pm-box-content">
+          <div class="table-responsive">
+              <span>Attributes</span>
+              <table class="table">
+              <tr style="font-weight: bold">
+                <td style="width:40%">Name</td>
+                <td style="width:40%">Value</td>
+                <td style="width:20%"></td>
+            </tr>
+              <tr data-ng-repeat="attribute in attributes track by attribute.name">
+                      <td>
+                <!-- editable name (text with validation) -->
+                <span editable-text="attribute.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, attribute)" e-required>
+                  {{ attribute.name || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <!-- editable status (select-local) -->
+                <span editable-text="attribute.value" e-name="value" e-form="rowform" onbeforesave="checkValue($data)" e-required>
+                  {{ attribute.value || 'empty' }}
+                </span>
+              </td>
+              <td style="white-space: nowrap">
+                <!-- form -->
+                <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == attribute" onaftersave="saveAttribute(attribute)">
+                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                    save
+                  </button>
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                    cancel
+                  </button>
+                </form>
+                <div ng-show="!rowform.$visible">
+                  <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                  <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+                </div>
+              </td>
+              </tr>
+              </table>
             </div>
-            <div class="row">
-              <div class="col-xs-6">
-                <label class="control-label">Attribute 2</label>
-              </div>
-              <div class="col-xs-6">
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-6">
-                <label class="control-label">Attribute 3</label>
-              </div>
-              <div class="col-xs-6">
-                <input type="text" class="form-control" />
-              </div>
-            </div>
-          </div>
+            <button class="btn btn-default" data-ng-disabled="mapLoaded === false" ng-click="addAttribute()">Add Attribute</button>
+        </div>
         </div>
       </div>
     </div>
-  </div>
   <div class="clear"></div>
 </div>
 <div class="dropdown" id="menu-tree" style="position: fixed">
