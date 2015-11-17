@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('productionMapConsoleApp').constant("consts", {
-    serverUrl: "http://localhost:8080/",
+    serverUrl: "http://localhost:1337/",
     MapRunStatuses : {
         Running : 1,
         Done:2,

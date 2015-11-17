@@ -5,12 +5,12 @@
     <div class="pm-menu-item"><a ng-click="addAgent()">Add Agent</a></div>
     <div class="pm-menu-item">Map</div>
     <div class="pm-menu-item">View</div>
-    <div class="pm-menu-item">Admin</div>
+    <div class="pm-menu-item"><a href="#/Admin">Admin</a></div>
     <div class="pm-menu-item">Help</div>
   </div>
 </div>
 
-<div class="pm-splitbox" id="pm-splitbox">
+<div class="pm-splitbox" id="pm-splitbox" style="width: 20%;">
   <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
     <div class="pm-box pm-maps">
       <div class="pm-box-title">Maps</div>
@@ -44,7 +44,7 @@
   </div>
   <div class="pm-right-section" id="pm-main-content" >
     <div class="pm-content">
-      <tabset>
+      <tabset ng-if="map">
         <tab heading="{{map.name}}">
           <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
           <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{ button_text }} </button>
