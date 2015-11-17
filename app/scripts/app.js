@@ -43,7 +43,10 @@ angular.module('productionMapConsoleApp', [
                 templateUrl: 'views/register.html',
                 controller: 'AuthCtrl'
             })
-            .otherwise({
+            .when('/Admin', {
+                templateUrl: 'views/AdminPanel.html',
+                controller: 'AdminCtrl'
+            }).otherwise({
                 redirectTo: '/'
             });
     })

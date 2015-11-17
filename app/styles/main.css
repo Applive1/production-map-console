@@ -143,12 +143,17 @@ body {
   cursor: pointer;
 }
 
+.pm-menu-item a{
+    color:white;
+}
+
+
 .pm-menu-item:hover {
   background: rgba(255, 255, 255, 0.4);
 }
 
 .pm-left-section {
-  width: 25%;
+  width: 100%;
   height: 650px;
   float: left;
   background-color: #303130;
@@ -157,7 +162,7 @@ body {
 }
 
 .pm-right-section {
-  width: 49%;
+  width: 50%;
   height: 650px;
   float: left;
   display: inline-block;
@@ -188,14 +193,12 @@ body {
 
 .pm-maps {
   height: 35%;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-y: auto;
 }
 
 .pm-map-items {
   height: 65%;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-y: auto;
 }
 
 .pm-box::-webkit-scrollbar {
@@ -261,9 +264,8 @@ body {
 }
 
 .pm-attributes {
-  float: left;
   display: inline-block;
-  width: 22%;
+  width: 30%;
 }
 
 .pm-footer {
@@ -280,4 +282,11 @@ body {
 
 .clickableRow {
     cursor: pointer;
+}
+.jstree-default .jstree-clicked {
+    background: #767E82;
+}
+
+.jstree-default .jstree-hovered {
+    background: #767E82;
 }
