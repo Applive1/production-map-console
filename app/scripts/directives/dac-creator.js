@@ -431,6 +431,12 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                     $scope.connecting = false;
                 });
 
+                $scope.$watch('clickMode.drop', function (newVal, oldVal) {
+                    if($scope.clickMode && $scope.clickMode.drop !== false){
+                        $scope.dropBlock($scope.clickMode.drop); // the event is here
+                    }
+                });
+
                 $scope.dropBlock = function (event) {
                     console.log('clickmode --->' + $scope.clickMode);
                     if ($scope.clickMode && $scope.clickMode.mode !== '' && !$scope.map.isLocked) {
@@ -455,9 +461,11 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                             attributes: {}
                         };
                         $scope.clickMode.mode = '';
+                        $scope.clickMode.drop = false;
                         updateModel();
                     }
                     else{
+                        $scope.clickMode.drop = false;
                         $scope.clickMode.mode = '';
                     }
                 }
