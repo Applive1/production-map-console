@@ -9,13 +9,6 @@
  */
 angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts) {
-        $scope.map = {
-            mapView:{
-                nodes: {},
-                code: '',
-                attributes: {}
-            }
-        }
 
     $scope.mapLoaded = false;
 
