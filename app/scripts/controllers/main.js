@@ -180,11 +180,11 @@ angular.module('productionMapConsoleApp')
         };
 
         $scope.changeMode = function (mode) {
-            $scope.block_mode = {mode: mode};
+            $scope.block_mode = {mode: mode , drop: false};
         };
 
         $scope.clearMode = function () {
-            $scope.block_mode = { mode: '' };
+            $scope.block_mode = { mode: '', drop: false };
         }
 
         $scope.showMessage = function (msg) {
@@ -376,6 +376,10 @@ angular.module('productionMapConsoleApp')
             MapsService.ChangeMapRunStatus($scope.map, status,function(){
                 $scope.map.versions[$scope.map.versionIndex].status = status;
             });
+        }
+
+        $scope.dropElement = function(event){
+            $scope.block_mode.drop = event;
         }
     })
 ;

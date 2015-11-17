@@ -31,7 +31,7 @@
           <img data-ng-src="{{block.img_url}}" />
           <span>{{block.text}}</span>
         </div>
-        <div ng-drag-clone="">
+        <div ng-drag-clone="" data-ng-mouseup="dropElement($event)">
             <div class="pm_block">
               <img data-ng-src="{{clonedData.img_url}}" />
               <span>{{clonedData.text}}</span>
