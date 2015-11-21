@@ -188,6 +188,13 @@ angular.module('productionMapConsoleApp')
             });
         }
 
+        $scope.showAdmin = function () {
+            Popups.open({
+                templateUrl: 'views/Popups/AdminPanel.html',
+                controller: 'AdminCtrl'
+            });
+        }
+
         $scope.mapStructures = {};
 
         $scope.jsTreeContextMenu = function (node) {

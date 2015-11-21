@@ -150,6 +150,7 @@ body {
 
 .pm-menu-item:hover {
   background: rgba(255, 255, 255, 0.4);
+  text-decoration: underline;
 }
 
 .pm-left-section {
@@ -288,4 +289,62 @@ body {
 
 .jstree-default .jstree-hovered {
     background: #767E82;
+}
+
+.adminBtn{
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+    background: #92d3e5; /* Old browsers */
+    background: -moz-linear-gradient(top,  #B7E4F1 0%, #86ADD4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #B7E4F1 0%,#86ADD4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #B7E4F1 0%,#86ADD4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#B7E4F1', endColorstr='#86ADD4',GradientType=0 ); /* IE6-9 */
+}
+
+.adminBtn.active:after{
+    content: "";
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 20px;
+    border-width: 15px 15px 0;
+    border-style: solid;
+    border-color: #4389d2 transparent;
+    display: block;
+    width: 0;
+}
+
+.adminBtn.active, .adminBtn:hover{
+    background: #3cc2e8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #3cc2e8 0%, #4389d2 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #3cc2e8 0%,#4389d2 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #3cc2e8 0%,#4389d2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3cc2e8', endColorstr='#4389d2',GradientType=0 ); /* IE6-9 */
+}
+
+
+.adminBtn i{
+    display: block;
+    font-size: 40px;
+    -webkit-box-reflect: below 0px
+    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+    margin-bottom: 10px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .modal-dialog {
+        width: 800px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .modal-dialog {
+        width: 1000px;
+    }
 }
