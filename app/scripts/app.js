@@ -16,6 +16,7 @@ angular.module('productionMapConsoleApp', [
     'ngSanitize',
     'ngTouch',
     'nvd3ChartDirectives',
+    'mwl.calendar',
     'ui.bootstrap',
     'ui.codemirror',
     'xeditable',
@@ -43,10 +44,7 @@ angular.module('productionMapConsoleApp', [
                 templateUrl: 'views/register.html',
                 controller: 'AuthCtrl'
             })
-            .when('/Admin', {
-                templateUrl: 'views/AdminPanel.html',
-                controller: 'AdminCtrl'
-            }).otherwise({
+            .otherwise({
                 redirectTo: '/'
             });
     })
