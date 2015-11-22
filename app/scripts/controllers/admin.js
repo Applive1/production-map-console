@@ -7,12 +7,20 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', function ($scope) {
+angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', function ($scope, $modalInstance, projects) {
+    $scope.projects = projects;
     $scope.view = 1;
-    $scope.calendarView = 'month';
+    $scope.dateOptions = {
+        formatMonth:'MM',
+        minDate : new Date()
+    }
+    $scope.event = {
+        startAt:new Date()
+    }
     $scope.calendar = {
         calendarDay: new Date(),
-        isCellOpen : true,
+        isCellOpen: true,
+        calendarView:'month',
         events: [
             {
                 title: 'An event',
@@ -40,9 +48,8 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', fun
                 resizable: true
             }
         ]
-};
-$scope.eventSources = [];
-}])
-;
+    };
+    $scope.eventSources = [];
+}]);
 
 
