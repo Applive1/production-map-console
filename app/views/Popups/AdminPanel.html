@@ -11,8 +11,44 @@
 <div class="modal-body" style="overflow: auto;">
     <div ng-if="view==1">
         <div class="col-md-3">
+            <div class="popupBox" style="margin-top:100px;">
+                <h3>Add A New Scheduled Job</h3>
+                <div class="form-group">
+                    <select class="form-control" ng-options="project.name for project in projects track by project.id"
+                            ng-model="event.selectedProject">
+                        <option value="">-- choose project --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select ng-show="event.selectedProject" class="ng-hide form-control"
+                            ng-options="map.name for map in event.selectedProject.maps track by map.id"
+                            ng-model="event.selectedMap">
+                        <option value="">-- choose Map --</option>
+                    </select>
+                </div>
+                <div class="form-group" ng-show="event.selectedMap">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                               min-date="dateOptions.minDate"
+                               ng-model="event.startAt" readonly ng-focus="dateOptions.isOpen=true;"
+                               is-open="dateOptions.isOpen" close-text="Close" datepicker-options="dateOptions"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="dateOptions.isOpen=true;">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                    <uib-timepicker style="margin: 0 auto;"
+                            ng-model="event.startAt"
+                            hour-step="1"
+                            minute-step="1"
+                            show-meridian="false">
+                    </uib-timepicker>
+                </div>
+            </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8 col-md-offset-1">
             <div class="col-md-12">
                 <h2 class="text-center">{{ calendar.calendarTitle }}</h2>
 
@@ -49,39 +85,42 @@
 
                     <div class="col-md-6 text-center">
                         <div class="btn-group">
-                            <label class="btn btn-primary" ng-class="{'active': calendarView=='year'}" ng-click="calendarView='year'">Year</label>
-                            <label class="btn btn-primary" ng-class="{'active': calendarView=='month'}" ng-click="calendarView='month'">Month</label>
-                            <label class="btn btn-primary" ng-class="{'active': calendarView=='week'}" ng-click="calendarView='week'">Week</label>
-                            <label class="btn btn-primary" ng-class="{'active': calendarView=='day'}" ng-click="calendarView='day'">Day</label>
+                            <label class="btn btn-primary" ng-model="calendar.calendarView"
+                                   uib-btn-radio="'year'">Year</label>
+                            <label class="btn btn-primary" ng-model="calendar.calendarView" uib-btn-radio="'month'">Month</label>
+                            <label class="btn btn-primary" ng-model="calendar.calendarView"
+                                   uib-btn-radio="'week'">Week</label>
+                            <label class="btn btn-primary" ng-model="calendar.calendarView"
+                                   uib-btn-radio="'day'">Day</label>
                         </div>
                     </div>
 
                 </div>
-                </div>
-                <mwl-calendar
-                        events="calendar.events"
-                        view="calendarView"
-                        view-title="calendar.calendarTitle"
-                        current-day="calendar.calendarDay"
-                        on-event-click="vm.eventClicked(calendarEvent)"
-                        on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-                        edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-                        delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                        on-edit-event-click="vm.eventEdited(calendarEvent)"
-                        on-delete-event-click="vm.eventDeleted(calendarEvent)"
-                        cell-is-open="calendar.isCellOpen"
-                        day-view-start="00:00"
-                        day-view-end="23:59"
-                        day-view-split="30"
-                        cell-modifier="vm.modifyCell(calendarCell)">
-                </mwl-calendar>
             </div>
-
-            <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
+            <mwl-calendar
+                    events="calendar.events"
+                    view="calendar.calendarView"
+                    view-title="calendar.calendarTitle"
+                    current-day="calendar.calendarDay"
+                    on-event-click="vm.eventClicked(calendarEvent)"
+                    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    on-edit-event-click="vm.eventEdited(calendarEvent)"
+                    on-delete-event-click="vm.eventDeleted(calendarEvent)"
+                    cell-is-open="calendar.isCellOpen"
+                    day-view-start="00:00"
+                    day-view-end="23:59"
+                    day-view-split="30"
+                    cell-modifier="vm.modifyCell(calendarCell)">
+            </mwl-calendar>
         </div>
-        <div class="row" ng-show="view==2" class="ng-hide">
-            <div class="col-md-12">
-                <input type="text" placeholder="Enter Base Agent Url" ng-model="model.baseAgentUrl"/>
-            </div>
+
+        <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
+    </div>
+    <div class="row" ng-show="view==2" class="ng-hide">
+        <div class="col-md-12">
+            <input type="text" placeholder="Enter Base Agent Url" ng-model="model.baseAgentUrl"/>
         </div>
     </div>
+</div>

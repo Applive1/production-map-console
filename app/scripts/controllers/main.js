@@ -191,7 +191,8 @@ angular.module('productionMapConsoleApp')
         $scope.showAdmin = function () {
             Popups.open({
                 templateUrl: 'views/Popups/AdminPanel.html',
-                controller: 'AdminCtrl'
+                controller: 'AdminCtrl',
+                resolve : {projects : function(){return $scope.projects;}}
             });
         }
 
