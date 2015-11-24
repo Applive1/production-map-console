@@ -7,49 +7,102 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', function ($scope, $modalInstance, projects) {
+angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects','JobsService', function ($scope, $modalInstance, projects,JobsService) {
+    var jobToEvent = function(job){
+        return {
+            title: job.Map.name,
+            type: 'important',
+            startsAt: job.startAt,
+            //endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
+            draggable: false,
+            resizable: false,
+            job:job
+        };
+    }
+
     $scope.projects = projects;
     $scope.view = 1;
     $scope.dateOptions = {
         formatMonth:'MM',
         minDate : new Date()
     }
-    $scope.event = {
+    $scope.job = {
         startAt:new Date()
     }
+    $scope.event = {};
     $scope.calendar = {
         calendarDay: new Date(),
         isCellOpen: true,
         calendarView:'month',
-        events: [
-            {
-                title: 'An event',
-                type: 'warning',
-                startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
-                endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
-                draggable: true,
-                resizable: true
-            },
-            {
-                title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
-                type: 'info',
-                startsAt: moment().subtract(1, 'day').toDate(),
-                endsAt: moment().add(5, 'days').toDate(),
-                draggable: true,
-                resizable: true
-            },
-            {
-                title: 'This is a really long event title that occurs on every year',
-                type: 'important',
-                startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-                endsAt: moment().startOf('day').add(19, 'hours').toDate(),
-                recursOn: 'year',
-                draggable: true,
-                resizable: true
-            }
-        ]
+        events: []
     };
     $scope.eventSources = [];
+
+    /*-------------------------------------------- Jobs Functions ----------------------------------*/
+
+    $scope.createJob = function(){
+        $scope.job.version = $scope.job.Map.versions.length-1;
+        JobsService.addJob($scope.job).then(function(result){
+            var job = result.data;
+            var event = {
+                title: $scope.job.Map.name,
+                type: 'important',
+                startsAt: job.startAt,
+                //endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
+                draggable: false,
+                resizable: false,
+                job:angular.copy($scope.job)
+            }
+
+            $scope.calendar.events.push(event);
+
+            $scope.job = {
+                startAt:new Date()
+            };
+        });
+    }
+
+    JobsService.getFutureJobs().then(function(result){
+        result.data.forEach(function(job){
+            $scope.calendar.events.push(jobToEvent(job));
+        })
+    })
+
+    $scope.editJob = function(event){
+        $scope.event = event;
+        $scope.job = event.job;
+    }
+
+    $scope.deleteJob = function(event){
+        var index = $scope.calendar.events.indexOf(event);
+        if(index == -1) return;
+
+        JobsService.deleteJob(event.job.id).then(function(result){
+            $scope.calendar.events.splice(index,1);
+        })
+    }
+
+    $scope.updateJob = function(){
+        JobsService.updateJob($scope.job).then(function(result){
+            var job = result.data;
+            var event = {
+                title: $scope.job.Map.name,
+                type: 'important',
+                startsAt: job.startAt,
+                draggable: false,
+                resizable: false,
+                job:angular.copy($scope.job)
+            }
+
+            $scope.calendar.events.splice($scope.calendar.events.indexOf($scope.event),1);
+
+            $scope.calendar.events.push(event);
+
+            $scope.job = {
+                startAt:new Date()
+            };
+        })
+    }
 }]);
 
 
