@@ -12,26 +12,26 @@
     <div ng-if="view==1">
         <div class="col-md-3">
             <div class="popupBox" style="margin-top:100px;">
-                <h3>Add A New Scheduled Job</h3>
+                <h3>{{(job.id) ? 'Update' : 'Add A New'}} Scheduled Job</h3>
                 <div class="form-group">
                     <select class="form-control" ng-options="project.name for project in projects track by project.id"
-                            ng-model="event.selectedProject">
+                            ng-model="job.selectedProject">
                         <option value="">-- choose project --</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <select ng-show="event.selectedProject" class="ng-hide form-control"
-                            ng-options="map.name for map in event.selectedProject.maps track by map.id"
-                            ng-model="event.selectedMap">
+                    <select ng-show="job.selectedProject" class="ng-hide form-control"
+                            ng-options="map.name for map in job.selectedProject.maps track by map.id"
+                            ng-model="job.Map">
                         <option value="">-- choose Map --</option>
                     </select>
                 </div>
-                <div class="form-group" ng-show="event.selectedMap">
+                <div class="form-group" ng-show="job.Map">
                     <p class="input-group">
                         <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
                                min-date="dateOptions.minDate"
-                               ng-model="event.startAt" readonly ng-focus="dateOptions.isOpen=true;"
+                               ng-model="job.startAt" readonly ng-focus="dateOptions.isOpen=true;"
                                is-open="dateOptions.isOpen" close-text="Close" datepicker-options="dateOptions"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="dateOptions.isOpen=true;">
@@ -40,11 +40,13 @@
                     </span>
                     </p>
                     <uib-timepicker style="margin: 0 auto;"
-                            ng-model="event.startAt"
+                            ng-model="job.startAt"
                             hour-step="1"
                             minute-step="1"
                             show-meridian="false">
                     </uib-timepicker>
+                    <button ng-show="!job.id" ng-click="createJob()" class="ng-hide btn btn-primary">Create</button>
+                    <button ng-show="job.id" ng-click="updateJob()" class="ng-hide btn btn-primary">Update</button>
                 </div>
             </div>
         </div>
@@ -103,11 +105,11 @@
                     view-title="calendar.calendarTitle"
                     current-day="calendar.calendarDay"
                     on-event-click="vm.eventClicked(calendarEvent)"
-                    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarjob.startsAt = calendarNewEventStart; calendarjob.endsAt = calendarNewEventEnd"
                     edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
                     delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    on-edit-event-click="vm.eventEdited(calendarEvent)"
-                    on-delete-event-click="vm.eventDeleted(calendarEvent)"
+                    on-edit-event-click="editJob(calendarEvent)"
+                    on-delete-event-click="deleteJob(calendarEvent)"
                     cell-is-open="calendar.isCellOpen"
                     day-view-start="00:00"
                     day-view-end="23:59"
