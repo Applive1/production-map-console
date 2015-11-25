@@ -52,7 +52,7 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
                     //endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
                     draggable: false,
                     resizable: false,
-                    job: angular.copy($scope.job)
+                    job: result.data
                 }
 
                 $scope.calendar.events.push(event);
