@@ -119,6 +119,10 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
             })
         };
 
+        $scope.setCurrentAgent = function(agent){
+            $scope.currentAgent = agent;
+        }
+
         $scope.updateBaseAgent = function () {
             BaseAgentService.updateAgent($scope.currentAgent).then(function (res) {})
         }
