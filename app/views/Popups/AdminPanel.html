@@ -13,6 +13,7 @@
         <div class="col-md-3">
             <div class="popupBox" style="margin-top:100px;">
                 <h3>{{(job.id) ? 'Update' : 'Add A New'}} Scheduled Job</h3>
+
                 <div class="form-group">
                     <select class="form-control" ng-options="project.name for project in projects track by project.id"
                             ng-model="job.selectedProject">
@@ -40,10 +41,10 @@
                     </span>
                     </p>
                     <uib-timepicker style="margin: 0 auto;"
-                            ng-model="job.startAt"
-                            hour-step="1"
-                            minute-step="1"
-                            show-meridian="false">
+                                    ng-model="job.startAt"
+                                    hour-step="1"
+                                    minute-step="1"
+                                    show-meridian="false">
                     </uib-timepicker>
                     <button ng-show="!job.id" ng-click="createJob()" class="ng-hide btn btn-primary">Create</button>
                     <button ng-show="job.id" ng-click="updateJob()" class="ng-hide btn btn-primary">Update</button>
@@ -122,16 +123,24 @@
     </div>
     <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
         <div class="col-md-8">
-            <div class="col-md-4" ng-repeat="agent in baseAgents track by agent.id">
+            <h3>Base Agents</h3>
+
+            <div class="col-md-5 BaseAgent" ng-class="{'col-md-offset-1':$odd}"
+                 ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
                 <span>Name : {{agent.name}}</span>
                 <span>Url : {{agent.url}}</span>
             </div>
         </div>
-        <div class="col-md-4 popupBox">
-            <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
-            <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
-            <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update</button>
-            <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create</button>
+        <div class="col-md-4">
+            <i class="glyphicon glyphicon-plus-sign ng-hide plus" ng-show="currentAgent.id" ng-click="setCurrentAgent({})"></i>
+            <div class="popupBox">
+                <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
+                <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
+                <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update
+                </button>
+                <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create
+                </button>
+            </div>
         </div>
     </div>
 </div>
