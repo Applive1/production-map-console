@@ -120,9 +120,18 @@
 
         <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
     </div>
-    <div class="row" ng-show="view==2" class="ng-hide">
-        <div class="col-md-12">
-            <input type="text" placeholder="Enter Base Agent Url" ng-model="model.baseAgentUrl"/>
+    <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
+        <div class="col-md-8">
+            <div class="col-md-4" ng-repeat="agent in baseAgents track by agent.id">
+                <span>Name : {{agent.name}}</span>
+                <span>Url : {{agent.url}}</span>
+            </div>
+        </div>
+        <div class="col-md-4 popupBox">
+            <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
+            <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
+            <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update</button>
+            <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create</button>
         </div>
     </div>
 </div>
