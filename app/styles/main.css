@@ -273,3 +273,11 @@ body {
 [ng-drag].dragging {
     opacity: 0;
 }
+
+.drop-target {
+  border: 2px dashed blue;
+}
+
+.clickableRow {
+    cursor: pointer;
+}
