@@ -56,6 +56,9 @@ module.exports = function(config) {
       'bower_components/fast-json-patch/src/json-patch-duplex.js',
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/jquery-ui/jquery-ui.js',
+      'bower_components/angular-file-upload/dist/angular-file-upload.min.js',
+      'bower_components/jszip/dist/jszip.js',
+      'bower_components/async/lib/async.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

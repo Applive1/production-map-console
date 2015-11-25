@@ -38,7 +38,8 @@ angular.module('productionMapConsoleApp')
         $modalInstance.dismiss('cancel');
     };
     $scope.getServerMethods = function(server){
-    	return blockFactory.getMethods(server.type);
+        console.log(blockFactory.get(server.type).methods);
+    	return blockFactory.get(server.type).methods;
     };
     $scope.addAction = function(action){
     	Processes.addAction(link.id, process.id, action);
@@ -61,6 +62,12 @@ angular.module('productionMapConsoleApp')
                 console.log(err);
                 console.log('********************');
             });
+    }
+
+    $scope.getMethods = function(type){
+        blockFactory.getMethods(type).then(function(methods){
+            $scope.action.server.methods = methods;
+        });
     }
     init();
   });

@@ -20,7 +20,8 @@ angular.module('productionMapConsoleApp', [
     'ui.codemirror',
     'xeditable',
     'ngDraggable',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'angularFileUpload'
 ])
     .config(function ($routeProvider) {
         $routeProvider
