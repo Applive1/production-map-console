@@ -83,6 +83,7 @@ angular.module('productionMapConsoleApp')
             if (map.versionIndex == map.versions.length - 1 || (map.versionIndex != map.versions.length - 1 && !map.isLocked))
                 MapsService.saveMap(map).then(function (result) {
                     $scope.map.versions.push(result.data);
+                    map.versionIndex = $scope.map.versions.length-1;
                     execute_map(map, false);
                 });
             else if (map.isLocked) {
