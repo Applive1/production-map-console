@@ -16,7 +16,7 @@ angular.module('productionMapConsoleApp')
 	    	params: {},
 	    	name: '',
 	    	timeout: 0,
-	    	timeunit: 'seconds',
+	    	timeunit: '1',
 	    	retries: 0,
 	    	mandatory: false,
 	    	suspend: false
