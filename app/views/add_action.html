@@ -74,8 +74,8 @@
       </tr>
       <tr data-ng-repeat="param in action.method.params">
         <td>{{param.name}}</td>
-        <td editable-checkbox="action.params[param.name].code" e-title="code?">
-            {{ action.params[param.name].code && "code!" || "not code" }}
+        <td>
+            <input type="checkbox" ng-model="action.params[param.name].code"/>
         </td>
         <td editable-text="action.params[param.name].text">{{ action.params[param.name].text || '' }}
         </td>

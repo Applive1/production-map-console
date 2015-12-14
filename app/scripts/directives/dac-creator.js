@@ -40,6 +40,17 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 });
             }
 
+            function isLinkInvalid(link) {
+                if (link.prop('source/id') && link.prop('target/id'))
+                {
+                    if ($scope.tmp_obj)
+                        return (link.prop('target/id')==$scope.tmp_obj.id);
+                    else
+                        return false;
+                }
+                return true;
+            }
+
             function loadMap() {
                 // Clear the graph (Genius .__.)
                 $scope.graph.clear();
@@ -216,6 +227,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                     model: $scope.graph
                 });
 
+                V($scope.paper.svg).attr({viewBox: "0 0 800 500" });
                 var graphScale = 1;
                 var paperScale = function (sx, sy) {
                     $scope.paper.scale(sx, sy);
@@ -282,8 +294,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 $scope.graphContent_base_block = map_block;
                 console.log()
 
-                $scope.paper.$el.mouseup(function() {
-                  // alert( "Handler for .mouseup() called." );
+                $scope.paper.$el.mouseup(function () {
+                    // alert( "Handler for .mouseup() called." );
                 });
                 $scope.paper.$el.on('contextmenu', function (evt) {
                     evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
@@ -385,13 +397,18 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                     }
                 });
                 $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
+                    if (cellView.model.isLink()) {
+                        cellView.model.unset('vertices');
+                        if (isLinkInvalid(cellView.model))
+                            cellView.model.remove();
+                    }
                     if ($scope.map.isLocked)
                         return;
                     if (!$scope.connecting) {
                         console.log(evt);
                         return;
                     }
-
+                    $('html').removeClass('pm_connector');
                     // Find the first element below that is not a link nor the dragged element itself.
                     var elementBelow = $scope.graph.get('cells').find(function (cell) {
                         if (cell instanceof joint.dia.Link) {
@@ -429,10 +446,15 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                     }
                     cellView.options.interactive = true;
                     $scope.connecting = false;
+
+                    $scope.graph.getLinks().forEach(function(link){
+                        if(isLinkInvalid(link)){
+                            link.remove();
+                        }});
                 });
 
                 $scope.$watch('clickMode.drop', function (newVal, oldVal) {
-                    if($scope.clickMode && $scope.clickMode.drop !== false){
+                    if ($scope.clickMode && $scope.clickMode.drop !== false) {
                         $scope.dropBlock($scope.clickMode.drop); // the event is here
                     }
                 });
@@ -464,7 +486,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                         $scope.clickMode.drop = false;
                         updateModel();
                     }
-                    else{
+                    else {
+                        if (!$scope.clickMode) $scope.clickMode = {};
                         $scope.clickMode.drop = false;
                         $scope.clickMode.mode = '';
                     }
@@ -481,6 +504,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
                     if ($scope.connecting) {
                         $scope.tmp_obj.position(x, y);
+                        $('html').addClass('pm_connector');
                     }
                     //if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }*/
                     //   });
