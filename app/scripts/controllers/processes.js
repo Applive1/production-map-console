@@ -13,6 +13,8 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     };
     $scope.selectedAction = {};
 
+    $scope.link = link;
+
     $scope.processes = Processes.all(link.id);
     console.log($scope.processes);
 
@@ -85,6 +87,8 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
                 Messages.add(result);
                 $modalInstance.close({
                                         linkId: link.id,
+                                        condition: angular.copy($scope.link.condition),
+                                        conditionCode: angular.copy($scope.link.conditionCode),
                                         process: angular.copy($scope.process)
                                       });
             })
@@ -96,10 +100,31 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     }
 
     $scope.cancel = function () {
-        var result = {
-            linkId: link.id,
-            process: angular.copy($scope.process)
-        };
-        $modalInstance.close(result);
+       $modalInstance.close({
+        linkId: link.id,
+        condition: angular.copy($scope.link.condition),
+        conditionCode: angular.copy($scope.link.conditionCode),
+        process: angular.copy($scope.process)
+      });
+    };
+
+    $scope.addProcessCondition = function () {
+        Popups.open({
+            templateUrl: 'views/Popups/add_condition.html',
+            controller: 'conditionCtrl',
+            resolve : { condition: $scope.process }
+        }, function (conditionCode){
+            $scope.process.conditionCode = conditionCode;
+        });
+    };
+
+    $scope.addLinkCondition = function () {
+        Popups.open({
+            templateUrl: 'views/Popups/add_condition.html',
+            controller: 'conditionCtrl',
+            resolve : { condition: $scope.link }
+        }, function (conditionCode){
+            $scope.link.conditionCode = conditionCode;
+        });
     };
 });
