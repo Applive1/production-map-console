@@ -109,6 +109,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 var linkId = result.linkId;
                 var process = result.process;
                 var user_link = getLink(linkId);
+                user_link.condition = result.condition;
+                user_link.conditionCode = result.conditionCode;
                 console.log("user Process");
                 console.log(user_link);
                 for (var i = 0; i < user_link.processes.length; i++) {
@@ -330,7 +332,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                             var link = {
                                 id: mapLink.id,
                                 source: sourceBlock,
-                                target: targetBlock
+                                target: targetBlock,
+                                condition: mapLink.condition,
+                                conditionCode: mapLink.conditionCode
                             }
                             Popups.open({
                                 templateUrl: 'views/processes.html',

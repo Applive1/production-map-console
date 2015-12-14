@@ -37,7 +37,7 @@ angular.module('productionMapConsoleApp')
     }
         $scope.messages = Messages.all();
         $scope.projects = [];
-        $scope.block_mode = '';
+        $scope.block_mode = { mode: '', drop: false };
         $scope.pm_blocks = [];
 
         blockFactory.all().then(function(res){

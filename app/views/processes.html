@@ -14,6 +14,15 @@
             <button type="button" class="btn btn-primary" data-ng-click="delete_process(process)">delete process</button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input data-ng-model="link.condition" type="checkbox" name="your-group" value="unit-in-group" />  <span>link has condition </span>
+        </div>
+        <div ng-show="link.condition" class="col-md-3">
+            <button class="btn btn-default" data-ng-click="addLinkCondition()">add condition</button>
+        </div>
+    </div>
+
     <div class="container" style=";border-style: solid;border-width: 1px;margin-top:5%;margin-buttom:5%;padding:3%">
         <div class="row" style="margin:2%">
             <div class="col-md-6">
@@ -38,11 +47,17 @@
             </div>
         </div>
         <div class="row" style="margin:2%">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <span>Description:</span>
             </div>
             <div class="col-md-3">
                 <input data-ng-model="process.description" type="text" class="form-control" placeholder="Description...">
+            </div>
+            <div class="col-md-3">
+                <input data-ng-model="process.condition" type="checkbox" name="your-group" value="unit-in-group" />  <span> has condition </span>
+            </div>
+            <div ng-show="process.condition" class="col-md-3">
+                <button class="btn btn-default" data-ng-click="addProcessCondition()">add condition</button>
             </div>
         </div>
         <div style="border-style: solid;border-width: 1px;">
