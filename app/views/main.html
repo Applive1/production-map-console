@@ -1,21 +1,20 @@
 <div class="pm-header-row">
-  <div class="pm-menu-bar">
-    <div class="pm-menu-item">File</div>
-    <div class="pm-menu-item"><a ng-click="createProject()">Add Project</a></div>
-    <div class="pm-menu-item"><a ng-click="addAgent()">Add Agent</a></div>
-    <div class="pm-menu-item">Map</div>
-    <div class="pm-menu-item">View</div>
-    <div class="pm-menu-item" ng-click="showAdmin()">Admin</div>
-    <div class="pm-menu-item">Help</div>
-  </div>
+    <div class="pm-menu-bar">
+        <div class="pm-menu-item">File</div>
+        <div class="pm-menu-item"><a ng-click="createProject()">Add Project</a></div>
+        <div class="pm-menu-item"><a ng-click="addAgent()">Add Agent</a></div>
+        <div class="pm-menu-item">Map</div>
+        <div class="pm-menu-item">View</div>
+        <div class="pm-menu-item" ng-click="showAdmin()">Admin</div>
+        <div class="pm-menu-item">Help</div>
+    </div>
 </div>
-
-<div class="pm-splitbox" id="pm-splitbox" style="width: 20%;">
-  <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
-    <div class="pm-box pm-maps">
-      <div class="pm-box-title">Maps</div>
-      <div class="pm-box-content">
-          <js-tree tree-plugins="dnd,sort,search,contextmenu,types"
+<div style="height: 650px;">
+    <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
+        <div class="pm-box pm-maps">
+            <div class="pm-box-title">Maps</div>
+            <div class="pm-box-content">
+                <js-tree tree-plugins="dnd,sort,search,contextmenu,types"
                          tree-contextmenu="jsTreeContextMenu"
                          tree-data="scope"
                          tree-model="projects"
@@ -23,85 +22,97 @@
                          tree-types="jsTreeTypes"
                          tree-events="changed:onTreeItemClick"
                          context-menu data-target="menu-tree"></js-tree>
-      </div>
-    </div>
-    <div class="pm-box pm-map-items">
-      <div class="pm-box-title">Map Items</div>
-      <div class="pm-box-content">
-        <div class="pm_block" ng-drag-data="block" data-ng-repeat="block in pm_blocks" droppable ng-mousedown="changeMode(block.text)" vertical-scroll="false" ng-drag="true" ng-drag-data="block">
-          <img data-ng-src="{{block.img_url}}" />
-          <span>{{block.text}}</span>
-        </div>
-        <div ng-drag-clone="" data-ng-mouseup="dropElement($event)">
-            <div class="pm_block">
-              <img data-ng-src="{{clonedData.img_url}}" />
-              <span>{{clonedData.text}}</span>
             </div>
         </div>
-      </div>
-      </div>
+        <div class="pm-box pm-map-items">
+            <div class="pm-box-title">Map Items</div>
+            <div class="pm-box-content">
+                <div class="pm_block" ng-drag-data="block" data-ng-repeat="block in pm_blocks" droppable
+                     ng-mousedown="changeMode(block.text)" vertical-scroll="false" ng-drag="true" ng-drag-data="block">
+                    <img data-ng-src="{{block.img_url}}"/>
+                    <span>{{block.text}}</span>
+                </div>
+                <div ng-drag-clone="" data-ng-mouseup="dropElement($event)">
+                    <div class="pm_block">
+                        <img data-ng-src="{{clonedData.img_url}}"/>
+                        <span>{{clonedData.text}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="pm-right-section" id="pm-main-content" >
-    <div class="pm-content">
-      <tabset ng-if="map">
-        <tab heading="{{map.name}}">
-          <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
-          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{ button_text }} </button>
-          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;"> save </button>
-        </tab>
-      </tabset>
+    <div class="pm-right-section" id="pm-main-content">
+        <div class="pm-content">
+            <tabset ng-if="map">
+                <tab heading="{{map.name}}">
+                    <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
+                    <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
+                            data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{
+                        button_text }}
+                    </button>
+                    <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
+                            data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;"> save
+                    </button>
+                </tab>
+            </tabset>
+        </div>
     </div>
-  </div>
-  <div class="pm-attributes" id="pm-attributes">
-    <div class="pm-box">
-      <div class="pm-box-title">Map Settings</div>
-        <div class="pm-box-content">
-          <div class="table-responsive">
-              <span>Attributes</span>
-              <table class="table">
-              <tr style="font-weight: bold">
-                <td style="width:40%">Name</td>
-                <td style="width:40%">Value</td>
-                <td style="width:20%"></td>
-            </tr>
-              <tr data-ng-repeat="attribute in attributes track by attribute.name">
-                      <td>
-                <!-- editable name (text with validation) -->
-                <span editable-text="attribute.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, attribute)" e-required>
+    <div class="pm-attributes" id="pm-attributes">
+        <div class="pm-box">
+            <div class="pm-box-title">Map Settings</div>
+            <div class="pm-box-content">
+                <div class="table-responsive">
+                    <span>Attributes</span>
+                    <table class="table">
+                        <tr style="font-weight: bold">
+                            <td style="width:40%">Name</td>
+                            <td style="width:40%">Value</td>
+                            <td style="width:20%"></td>
+                        </tr>
+                        <tr data-ng-repeat="attribute in attributes track by attribute.name">
+                            <td>
+                                <!-- editable name (text with validation) -->
+                <span editable-text="attribute.name" e-name="name" e-form="rowform"
+                      onbeforesave="checkName($data, attribute)" e-required>
                   {{ attribute.name || 'empty' }}
                 </span>
-              </td>
-              <td>
-                <!-- editable status (select-local) -->
-                <span editable-text="attribute.value" e-name="value" e-form="rowform" onbeforesave="checkValue($data)" e-required>
+                            </td>
+                            <td>
+                                <!-- editable status (select-local) -->
+                <span editable-text="attribute.value" e-name="value" e-form="rowform" onbeforesave="checkValue($data)"
+                      e-required>
                   {{ attribute.value || 'empty' }}
                 </span>
-              </td>
-              <td style="white-space: nowrap">
-                <!-- form -->
-                <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == attribute" onaftersave="saveAttribute(attribute)">
-                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
-                    save
-                  </button>
-                  <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
-                    cancel
-                  </button>
-                </form>
-                <div ng-show="!rowform.$visible">
-                  <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-                  <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+                            </td>
+                            <td style="white-space: nowrap">
+                                <!-- form -->
+                                <form editable-form name="rowform" ng-show="rowform.$visible"
+                                      class="form-buttons form-inline" shown="inserted == attribute"
+                                      onaftersave="saveAttribute(attribute)">
+                                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                        save
+                                    </button>
+                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                                            class="btn btn-default">
+                                        cancel
+                                    </button>
+                                </form>
+                                <div ng-show="!rowform.$visible">
+                                    <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                                    <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-              </td>
-              </tr>
-              </table>
+                <button class="btn btn-default" data-ng-disabled="mapLoaded === false" ng-click="addAttribute()">Add
+                    Attribute
+                </button>
             </div>
-            <button class="btn btn-default" data-ng-disabled="mapLoaded === false" ng-click="addAttribute()">Add Attribute</button>
         </div>
-        </div>
-      </div>
     </div>
-  <div class="clear"></div>
+</div>
+<div class="clear"></div>
 </div>
 <div class="dropdown" id="menu-tree" style="position: fixed">
     <ul class="dropdown-menu" role="menu">
@@ -110,22 +121,23 @@
         </li>
     </ul>
 </div>
+</div>
 <div class="footer pm-footer">
-  <div class="pm-box">
-    <div class="pm-box-title">Messages</div>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <tr>
-        <th>Date</th>
-        <th>Message</th>
-      </tr>
-      <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
-        <td>{{message.date}}</td>
-        <td>{{message.content |  cut:true:20:' ...'}}</td>
-      </tr>
-    </table>
-  </div>
+    <div class="pm-box">
+        <div class="pm-box-title">Messages</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Message</th>
+            </tr>
+            <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
+                <td>{{message.date}}</td>
+                <td>{{message.content | cut:true:20:' ...'}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <!--
