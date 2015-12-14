@@ -89,7 +89,7 @@ body {
 }
 
 .pm_connector {
-  cursor: url(../images/controls/connectorSmall.png), auto;
+  cursor: url(../images/controls/connectorSmall.png), auto !important;
 }
 
 .pm_block {
@@ -154,8 +154,8 @@ body {
 }
 
 .pm-left-section {
-  width: 100%;
-  height: 650px;
+  width: 20%;
+  height: 100%;
   float: left;
   background-color: #303130;
   border-right: 1px solid #000000;
@@ -164,7 +164,7 @@ body {
 
 .pm-right-section {
   width: 50%;
-  height: 650px;
+  height: 100%;
   float: left;
   display: inline-block;
   overflow: hidden;
@@ -410,3 +410,5 @@ body {
 .BaseAgent span{
     display: block;
 }
+
+/*.connection-wrap, .connection { pointer-events: none; }*/
