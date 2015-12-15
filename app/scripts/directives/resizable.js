@@ -8,18 +8,18 @@
  */
 angular.module('productionMapConsoleApp')
   .directive('resizable', function () {
-    var resizableConfig = {
-      handles: 'e',
-      maxWidth: 600,
-      minWidth: 200
-    }
     return {
       restrict: 'A',
       scope: {
-        callback: '&onResize'
+        callback: '&onResize',
+        handles:'@side'
       },
       link: function postLink(scope, elem) {
-        elem.resizable(resizableConfig);
+        elem.resizable({
+            handles: scope.handles,
+            maxWidth: 1000,
+            minWidth: 200
+        });
         elem.on('resize', function (event, ui) {
           if (scope.callback) scope.callback(event, ui);
         });

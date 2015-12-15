@@ -9,8 +9,8 @@
         <div class="pm-menu-item">Help</div>
     </div>
 </div>
-<div style="height: 650px;">
-    <div resizable on-resize="resizeRight()" class="pm-left-section" id="pm-left-section">
+<div style="height: 650px;" ng-init="init()">
+    <div resizable on-resize="resizeRight()" side="e" class="pm-left-section" id="pm-left-section">
         <div class="pm-box pm-maps">
             <div class="pm-box-title">Maps</div>
             <div class="pm-box-content">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="pm-right-section" id="pm-main-content">
+    <div resizable on-resize="resizeLeft()" side="e" class="pm-right-section" id="pm-main-content">
         <div class="pm-content">
             <tabset ng-if="map">
                 <tab heading="{{map.name}}">
@@ -50,14 +50,17 @@
                             data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{
                         button_text }}
                     </button>
-                    <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
-                            data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;"> save
+                    <button data-ng-disabled="btn_disabled || isSaving" type="button"
+                            class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
+                            data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;">
+                        <span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>
+                        save
                     </button>
                 </tab>
             </tabset>
         </div>
     </div>
-    <div class="pm-attributes" id="pm-attributes">
+    <div  class="pm-attributes" id="pm-attributes">
         <div class="pm-box">
             <div class="pm-box-title">Map Settings</div>
             <div class="pm-box-content">
@@ -126,79 +129,20 @@
     <div class="pm-box">
         <div class="pm-box-title">Messages</div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <tr>
-                <th>Date</th>
-                <th>Message</th>
-            </tr>
-            <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
-                <td>{{message.date}}</td>
-                <td>{{message.content | cut:true:20:' ...'}}</td>
-            </tr>
+    <div class="table-responsive" style="max-height: 200px; overflow: auto">
+        <table class="table table-inverse">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
+                    <td>{{message.date}}</td>
+                    <td>{{message.content | cut:true:20:' ...'}}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
-</div>
-
-<!--
-<div class="container-fluid row">
-    <div class="col-md-2">
-	    <accordion close-others="False">
-		    <accordion-group heading="Maps">
-		    	<js-tree tree-plugins="dnd,sort,search,contextmenu,types"
-                         tree-contextmenu="jsTreeContextMenu"
-                         tree-data="scope"
-                         tree-model="projects"
-                         tree-dnd="jsTreeDragConfig"
-                         tree-types="jsTreeTypes"
-                         tree-events="changed:onTreeItemClick"
-                         context-menu data-target="menu-tree"></js-tree>
-		    </accordion-group>
-		    <accordion-group heading="Map Items">
-			    <div class="pm_block" ng-drag="true" ng-drag-data="block" data-ng-repeat="block in pm_blocks" data-ng-mousedown="changeMode(block.text)">
-				    <img data-ng-src="{{block.img_url}}" />
-	    			<span>{{block.text}}</span>
-	    		</div>
-	    		&lt;!&ndash; <div ng-drag-clone="">
-			      <img data-ng-src="{{clonedData.img_url}}" />
-	    		  <span>{{clonedData.text}}</span>
-			  	</div> &ndash;&gt;
-		    </accordion-group>
-		</accordion>
-    </div>
-    <div class="col-md-8">
-		<tabset ng-if="map">
-		    <tab heading="{{map.name}}">
-		      <pm-map-designer map="map" click-mode="block_mode"></pm-map-designer>
-		      <button ng-show="map.versions[map.versionIndex].status != 1 && map.versions[map.versionIndex].status != 4" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="execute_map(map)"> {{ button_text }} </button>
-              <button ng-show="map.versions[map.versionIndex].status == 4" type="button" class="ng-hide btn btn-default" data-ng-click="resume_map(map)"> Resume </button>
-              <button ng-show="map.versions[map.versionIndex].status == 1" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="updateStatus(4)">Pause</button>
-              <button ng-show="map.versions[map.versionIndex].status == 1" data-ng-disabled="btn_disabled" type="button" class="ng-hide btn btn-default" data-ng-click="updateStatus(5)">Stop</button>
-
-                <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default" data-ng-click="saveMap(map)"> save </button>
-		    </tab>
-		  </tabset>
-		  <div style="border-style: solid;border-width: 1px;">
-		  	Messages:
-		  	<div class="table-responsive">
-                <table class="table table-hover" style="border-style: solid;border-width: 1px;">
-                    <tr>
-                        <th>Date</th>
-                        <th>Message</th>
-                    </tr>
-                    <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
-                        <td>{{message.date}}</td>
-                        <td>{{message.content |  cut:true:20:' ...'}}</td>
-                    </tr>
-                </table>
-            </div>
-		  </div>
-    </div>
-</div>
-<div class="dropdown" id="menu-tree" style="position: fixed">
-    <ul class="dropdown-menu" role="menu">
-        <li>
-            <a ng-click="createProject()">Add Project</a>
-        </li>
-    </ul>
 </div>
