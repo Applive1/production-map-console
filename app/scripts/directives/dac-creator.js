@@ -80,6 +80,14 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             }
 
             function removeNode(blockName) {
+                var elementId = $scope.map.mapView.nodes[blockName].id;
+                $scope.graph.getLinks().forEach(function(link){
+                    if(link.prop('source/id')==elementId || link.prop('target/id')==elementId)
+                        link.remove();
+                });
+                $scope.map.mapView.links = $scope.map.mapView.links.filter(function(link){
+                    return (link.sourceId!=elementId && link.targetId!=elementId);
+                });
                 delete $scope.map.mapView.nodes[blockName];
             }
 
