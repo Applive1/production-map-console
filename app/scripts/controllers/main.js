@@ -10,37 +10,42 @@
 angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory) {
         $scope.map = {
-            mapView:{
+            mapView: {
                 nodes: {},
                 code: '',
                 attributes: {}
             }
         }
 
-    $scope.mapLoaded = false;
+        $scope.mapLoaded = false;
 
-    $scope.attributes = [];
-    $scope.rightEl = angular.element( document.querySelector( '#pm-main-content' ) );
-      $scope.initalLeft = angular.element( document.querySelector( '#pm-left-section' ) ).width();
-      $scope.containerWidth = $scope.initalLeft + $scope.rightEl.width();
+        $scope.attributes = [];
 
-      $scope.resizeRight = function(){
-        var leftEl = angular.element( document.querySelector( '#pm-left-section' ) );
-        var currentWidth = leftEl.width();
-        $scope.rightEl.width($scope.containerWidth - currentWidth);
-      }
+        $scope.init=function(){
+            $scope.mainEl = angular.element(document.querySelector('#pm-main-content'));
+            $scope.rightEl = angular.element(document.querySelector('#pm-attributes'));
+            $scope.leftEl = angular.element(document.querySelector('#pm-left-section'));
 
-    $scope.resizeLeft = function(){
-      var leftEl = angular.element( document.querySelector( '#pm-attributes' ) );
-      var currentWidth = leftEl.width();
-      $scope.rightEl.width($scope.containerWidth - currentWidth);
-    }
+            $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
+            $scope.rightContainerWidth = $scope.rightEl.width() + $scope.mainEl.width();
+
+            $scope.resizeRight = function () {
+                $scope.mainEl.width($scope.leftContainerWidth - $scope.leftEl.width());
+                $scope.rightContainerWidth = $scope.rightEl.width() + $scope.mainEl.width();
+            }
+
+            $scope.resizeLeft = function () {
+                $scope.rightEl.width($scope.rightContainerWidth - $scope.mainEl.width());
+                $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
+            }
+        }
+
         $scope.messages = Messages.all();
         $scope.projects = [];
         $scope.block_mode = { mode: '', drop: false };
         $scope.pm_blocks = [];
 
-        blockFactory.all().then(function(res){
+        blockFactory.all().then(function (res) {
             $scope.pm_blocks = res.blocks;
         });
 
@@ -54,7 +59,7 @@ angular.module('productionMapConsoleApp')
             });
         }
 
-        $scope.addAgent = function(){
+        $scope.addAgent = function () {
             Popups.open({
                 templateUrl: 'views/Popups/installAgent.html',
                 controller: 'installAgentCtrl'
@@ -83,7 +88,7 @@ angular.module('productionMapConsoleApp')
             if (map.versionIndex == map.versions.length - 1 || (map.versionIndex != map.versions.length - 1 && !map.isLocked))
                 MapsService.saveMap(map).then(function (result) {
                     $scope.map.versions.push(result.data);
-                    map.versionIndex = $scope.map.versions.length-1;
+                    map.versionIndex = $scope.map.versions.length - 1;
                     execute_map(map, false);
                 });
             else if (map.isLocked) {
@@ -131,7 +136,7 @@ angular.module('productionMapConsoleApp')
         };
 
         $scope.changeMode = function (mode) {
-            $scope.block_mode = {mode: mode , drop: false};
+            $scope.block_mode = {mode: mode, drop: false};
         };
 
         $scope.clearMode = function () {
@@ -150,7 +155,9 @@ angular.module('productionMapConsoleApp')
             Popups.open({
                 templateUrl: 'views/Popups/AdminPanel.html',
                 controller: 'AdminCtrl',
-                resolve : {projects : function(){return $scope.projects;}}
+                resolve: {projects: function () {
+                    return $scope.projects;
+                }}
             });
         }
 
@@ -262,15 +269,17 @@ angular.module('productionMapConsoleApp')
                 $scope.$digest();
             });
 
-            for(var key in $scope.map.mapView.attributes){
-              $scope.attributes.push({name: key, value: $scope.map.mapView.attributes[key]});
+            for (var key in $scope.map.mapView.attributes) {
+                $scope.attributes.push({name: key, value: $scope.map.mapView.attributes[key]});
             }
 
             $scope.mapLoaded = true;
         }
 
         $scope.saveMap = function (map) {
+            $scope.isSaving = true;
             MapsService.saveMap(map).then(function (result) {
+                $scope.isSaving = false;
                 console.log(result);
             });
         }
@@ -282,14 +291,14 @@ angular.module('productionMapConsoleApp')
             console.log("***** got push *****");
         });
 
-        $scope.checkName = function(name, attribute){
-            if(!name || name === '' || name === 'empty'){
+        $scope.checkName = function (name, attribute) {
+            if (!name || name === '' || name === 'empty') {
                 return "name can't be empty!";
             }
-            if(!attribute || attribute.name !== name){
-                for(var i=0; i < $scope.attributes.length; i++){
+            if (!attribute || attribute.name !== name) {
+                for (var i = 0; i < $scope.attributes.length; i++) {
                     var attr = $scope.attributes[i];
-                    if(attr.name === name){
+                    if (attr.name === name) {
                         return "attribute name allready in use!";
                     }
                 }
@@ -297,20 +306,20 @@ angular.module('productionMapConsoleApp')
             return true;
         }
 
-        $scope.checkValue = function(value){
-            if(!value || value === '' || value === 'empty'){
+        $scope.checkValue = function (value) {
+            if (!value || value === '' || value === 'empty') {
                 return "value can't be empty";
             }
         }
 
-        $scope.saveAttribute = function(attr){
-            if(!$scope.map.mapView.attributes){
+        $scope.saveAttribute = function (attr) {
+            if (!$scope.map.mapView.attributes) {
                 $scope.map.mapView.attributes = {};
             }
             $scope.map.mapView.attributes[attr.name] = attr.value;
         }
 
-        $scope.addAttribute = function() {
+        $scope.addAttribute = function () {
             $scope.inserted = {
                 name: '',
                 value: ''
@@ -318,26 +327,26 @@ angular.module('productionMapConsoleApp')
             $scope.attributes.push($scope.inserted);
         };
 
-        $scope.removeAttribute = function(index) {
+        $scope.removeAttribute = function (index) {
             var attr = $scope.attributes[index];
 
             $scope.attributes.splice(index, 1);
 
-            if(!$scope.map.mapView.attributes){
+            if (!$scope.map.mapView.attributes) {
                 $scope.map.mapView.attributes = {};
             }
-            if($scope.map.mapView.attributes.hasOwnProperty(attr.name)){
+            if ($scope.map.mapView.attributes.hasOwnProperty(attr.name)) {
                 delete $scope.map.mapView.attributes[attr.name];
             }
         };
 
-        $scope.updateStatus = function(status){
-            MapsService.ChangeMapRunStatus($scope.map, status,function(){
+        $scope.updateStatus = function (status) {
+            MapsService.ChangeMapRunStatus($scope.map, status, function () {
                 $scope.map.versions[$scope.map.versionIndex].status = status;
             });
         }
 
-        $scope.dropElement = function(event){
+        $scope.dropElement = function (event) {
             $scope.block_mode.drop = event;
         }
     })
