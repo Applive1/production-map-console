@@ -346,6 +346,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
                     if (!$scope.map.isLocked) {
                         if (cellView.model.isLink()) {
+                            cellView.model.unset('vertices');
                             var mapLink = getLink(cellView.model.id);
                             var sourceBlock = getNode(mapLink.sourceId);
                             var targetBlock = getNode(mapLink.targetId);
@@ -410,7 +411,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 });
                 $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
                     if (cellView.model.isLink()) {
-                        cellView.model.unset('vertices');
                         if (isLinkInvalid(cellView.model))
                             cellView.model.remove();
                     }
