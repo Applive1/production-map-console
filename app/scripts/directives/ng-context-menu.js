@@ -4,6 +4,8 @@
  *
  * @author Ian Kennington Walter (http://ianvonwalter.com)
  */
+'use strict';
+
 angular.module('productionMapConsoleApp').factory('ContextMenuService', function() {
     return {
       element: null,
