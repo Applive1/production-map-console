@@ -1,3 +1,4 @@
+'use strict';
 /*
  * jstree.directive [http://www.jstree.com]
  * http://arvindr21.github.io/jsTree-Angular-Directive
