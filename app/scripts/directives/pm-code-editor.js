@@ -95,11 +95,12 @@ angular.module('productionMapConsoleApp')
                         $scope.map.code = newValue;
                     }
                 });
-                $scope.$watch('code', function (newVal, oldVal) {
+                $scope.$watch('map.code', function (newVal, oldVal) {
                     if ($scope.editorChanged) {
                         $scope.editorChanged = false;
                         return;
                     }
+                    $scope.code = $scope.map.code;
                     $scope.codeChanged = true;
                     editor.setValue($scope.code);
                 });
