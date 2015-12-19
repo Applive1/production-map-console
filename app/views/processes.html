@@ -23,7 +23,7 @@
                 <input data-ng-model="link.condition" type="checkbox" name="your-group" value="unit-in-group"/> <span>link has condition </span>
             </div>
             <div ng-show="link.condition" class="col-md-3">
-                <button class="btn btn-default" data-ng-click="addLinkCondition()">add condition</button>
+                <input data-ng-model="link.conditionCode" type="text" class="form-control" placeholder="condition function...">
             </div>
         </div>
 
@@ -65,7 +65,7 @@
                     <span> has condition </span>
                 </div>
                 <div ng-show="process.condition" class="col-md-3">
-                    <button class="btn btn-default" data-ng-click="addProcessCondition()">add condition</button>
+                    <input data-ng-model="process.conditionCode" type="text" class="form-control" placeholder="condition function...">
                 </div>
             </div>
             <div style="border-style: solid;border-width: 1px;">
