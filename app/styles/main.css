@@ -101,7 +101,7 @@ body {
 }
 
 .selected_action {
-  background-color: #93cede;
+  background-color: #93cede !important;
 }
 
 .logo {
