@@ -17,6 +17,16 @@ angular.module('productionMapConsoleApp')
             }
         }
 
+        /* Listen on the ctrl-s event and save map at server! */
+        document.addEventListener("keydown", function(e) {
+          if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+            e.preventDefault();
+            // Process event...
+            $scope.saveMap($scope.map);
+            //angular.injector(['ng', 'productionMapConsoleApp']).get("MapsService").saveMap($scope.map);
+          }
+        }, false);
+
         $scope.mapLoaded = false;
 
         $scope.attributes = [];
