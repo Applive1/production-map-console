@@ -77,7 +77,8 @@
         <td>
             <input type="checkbox" ng-model="action.params[param.name].code"/>
         </td>
-        <td editable-text="action.params[param.name].text">{{ action.params[param.name].text || '' }}
+        <td>
+            <input ng-class="{pm_code_text: action.params[param.name].code === true}" type="text" placeholder="enter value..." data-ng-model="action.params[param.name].text" />
         </td>
       </tr>
       </table>

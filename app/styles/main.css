@@ -518,3 +518,7 @@ body {
     background-color: #808080;
 }
 /*.connection-wrap, .connection { pointer-events: none; }*/
+
+.pm_code_text {
+  color: #1E90FF !important;
+}
