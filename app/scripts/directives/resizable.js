@@ -21,6 +21,7 @@ angular.module('productionMapConsoleApp')
             minWidth: 200
         });
         elem.on('resize', function (event, ui) {
+          if (scope.handles.indexOf('n') != -1) $(elem).css('top','auto');
           if (scope.callback) scope.callback(event, ui);
         });
       }
