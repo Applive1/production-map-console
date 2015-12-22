@@ -10,7 +10,7 @@
 angular.module('productionMapConsoleApp')
     .directive('pmMapDesigner', function () {
 
-        var controller = ['$scope', function ($scope) {
+        var controller = ['$scope', 'Processes','$timeout', function ($scope,Processes,$timeout) {
             function init() {
                 console.log("init controller");
                 $scope.viewMode = 1; //Set to designer

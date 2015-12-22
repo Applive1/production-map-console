@@ -9,25 +9,24 @@
  */
 angular.module('productionMapConsoleApp')
     .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory) {
-        $scope.map = {
-            mapView: {
-                nodes: {},
-                code: '',
-                attributes: {}
-            }
-        }
 
         $scope.mapLoaded = false;
-
         $scope.attributes = [];
 
         $scope.init=function(){
+            $scope.mainContainerEl = angular.element(document.querySelector('#mainContent'));
+            $scope.footerContainerEl = angular.element(document.querySelector('#messages'));
+
+            $scope.mapsListEl = angular.element(document.querySelector('#pm-maps'));
+            $scope.mapsItemsListEl = angular.element(document.querySelector('#pm-map-items'));
+
             $scope.mainEl = angular.element(document.querySelector('#pm-main-content'));
             $scope.rightEl = angular.element(document.querySelector('#pm-attributes'));
             $scope.leftEl = angular.element(document.querySelector('#pm-left-section'));
 
             $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
             $scope.rightContainerWidth = $scope.rightEl.width() + $scope.mainEl.width();
+            $scope.pageHeight = $scope.mainContainerEl.height() + $scope.footerContainerEl.height();
 
             $scope.resizeRight = function () {
                 $scope.mainEl.width($scope.leftContainerWidth - $scope.leftEl.width());
@@ -37,6 +36,14 @@ angular.module('productionMapConsoleApp')
             $scope.resizeLeft = function () {
                 $scope.rightEl.width($scope.rightContainerWidth - $scope.mainEl.width());
                 $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
+            }
+
+            $scope.resizeHeight = function () {
+                $scope.mainContainerEl.height($scope.pageHeight - $scope.footerContainerEl.height());
+            }
+
+            $scope.resizeMapItems = function () {
+                $scope.mapsListEl.height($scope.mainContainerEl.height()-$scope.mapsItemsListEl.height());
             }
         }
 
@@ -250,10 +257,11 @@ angular.module('productionMapConsoleApp')
             if (data.node.type == 'default' || (($scope.map && $scope.map.id == data.node.original.id) && ($scope.map.versionIndex == $scope.map.versions.length - 1)))
                 return;
 
-            $scope.map = data.node.original;
+             $scope.map = data.node.original;
 
             $scope.loadMapVersion($scope.map.versions.length - 1);
         }
+
 
         $scope.loadMapVersion = function (index) {
             $scope.attributes = [];
