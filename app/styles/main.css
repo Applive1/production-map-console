@@ -528,3 +528,9 @@ body {
 }
 
 .ui-resizable-e{right:0 !important;}
+
+.marker-source, .marker-target{
+  fill:white;
+}
+
+.connection{stroke: white !important;}
