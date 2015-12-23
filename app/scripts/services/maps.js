@@ -34,6 +34,9 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
         },
         ChangeMapRunStatus : function(map, status){
             return $http.post(consts.serverUrl + 'map/updateVersionStatus', {map:map, status: status});
+        },
+        updateMapProject : function (MapId, ProjectId){
+          return $http.get(consts.serverUrl + 'map/updateMapProject/'+MapId+'/'+ProjectId);
         }
     };
 }]);
