@@ -241,10 +241,6 @@ body {
   background-color: #aaa;
 }
 
-.pm-content {
-  height: 650px;
-}
-
 .map-designer {
   position: relative;
 }
@@ -530,3 +526,5 @@ body {
 .pm_code_text {
   color: #1E90FF !important;
 }
+
+.ui-resizable-e{right:0 !important;}
