@@ -7,17 +7,17 @@
  * Licensed under the MIT license.
  */
 
-angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function($http) {
+angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function ($http) {
 
   var treeDir = {
     restrict: 'EA',
-    fetchResource: function(url, cb) {
-      return $http.get(url).then(function(data) {
+    fetchResource: function (url, cb) {
+      return $http.get(url).then(function (data) {
         if (cb) cb(data.data);
       });
     },
 
-    managePlugins: function(s, e, a, config) {
+    managePlugins: function (s, e, a, config) {
       if (a.treePlugins) {
         config.plugins = a.treePlugins.split(',');
         config.core = config.core || {};
@@ -33,11 +33,11 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
           if (e.next().attr('class') !== 'ng-tree-search') {
             e.after('<input type="text" placeholder="Search Tree" class="ng-tree-search"/>')
               .next()
-              .on('keyup', function(ev) {
+              .on('keyup', function (ev) {
                 if (to) {
                   clearTimeout(to);
                 }
-                to = setTimeout(function() {
+                to = setTimeout(function () {
                   treeDir.tree.jstree(true).search(ev.target.value);
                 }, 250);
               });
@@ -54,11 +54,11 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
             config.contextmenu = config.contextmenu || {};
 
             if (a.treeContextmenuaction != undefined) {
-              config.contextmenu.items = function(e) {
+              config.contextmenu.items = function (e) {
                 return s.$eval(a.treeContextmenuaction)(e);
               }
             } else {
-              config.contextmenu.items = function(node) {
+              config.contextmenu.items = function (node) {
                 return s[a.treeContextmenu](node);
               }
             }
@@ -74,17 +74,22 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
         if (config.plugins.indexOf('dnd') >= 0) {
           if (a.treeDnd) {
             config.dnd = s[a.treeDnd];
+            if (s[a.treeDnd].stopDrag && angular.isFunction(s[a.treeDnd].stopDrag)) {
+              $(document).on('dnd_stop.vakata', function (e, data) {
+                s[a.treeDnd].stopDrag(e,data);
+              });
+            }
           }
         }
       }
       return config;
     },
-    manageEvents: function(s, e, a) {
+    manageEvents: function (s, e, a) {
       if (a.treeEvents) {
         var evMap = a.treeEvents.split(';');
         for (var i = 0; i < evMap.length; i++) {
           if (evMap[i].length > 0) {
-	    // plugins could have events with suffixes other than '.jstree'
+            // plugins could have events with suffixes other than '.jstree'
             var evt = evMap[i].split(':')[0];
             if (evt.indexOf('.') < 0) {
               evt = evt + '.jstree';
@@ -95,11 +100,11 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
         }
       }
     },
-    link: function(s, e, a) { // scope, element, attribute \O/
-      $(function() {
+    link: function (s, e, a) { // scope, element, attribute \O/
+      $(function () {
         var config = {};
-	
-	// users can define 'core'
+
+        // users can define 'core'
         config.core = {};
         if (a.treeCore) {
           config.core = $.extend(config.core, s[a.treeCore]);
@@ -110,17 +115,17 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
         a.treeSrc = a.treeSrc ? a.treeSrc.toLowerCase() : '';
 
         if (a.treeData == 'html') {
-          treeDir.fetchResource(a.treeSrc, function(data) {
+          treeDir.fetchResource(a.treeSrc, function (data) {
             e.html(data);
             treeDir.init(s, e, a, config);
           });
         } else if (a.treeData == 'json') {
-          treeDir.fetchResource(a.treeSrc, function(data) {
+          treeDir.fetchResource(a.treeSrc, function (data) {
             config.core.data = data;
             treeDir.init(s, e, a, config);
           });
         } else if (a.treeData == 'scope') {
-          s.$watch(a.treeModel, function(n, o) {
+          s.$watch(a.treeModel, function (n, o) {
             if (n) {
               config.core.data = s[a.treeModel];
               $(e).jstree('destroy');
@@ -134,7 +139,7 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
         } else if (a.treeAjax) {
           config.core.data = {
             'url': a.treeAjax,
-            'data': function(node) {
+            'data': function (node) {
               return {
                 'id': node.id != '#' ? node.id : 1
               };
@@ -145,7 +150,7 @@ angular.module('productionMapConsoleApp').directive('jsTree', ['$http', function
       });
 
     },
-    init: function(s, e, a, config) {
+    init: function (s, e, a, config) {
       treeDir.managePlugins(s, e, a, config);
       this.tree = $(e).jstree(config);
       treeDir.manageEvents(s, e, a);

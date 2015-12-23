@@ -278,7 +278,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                     defaults: joint.util.deepSupplement({
 
                         type: 'basic.DecoratedRect',
-                        size: { width: 160, height: 50 },
+                        size: { width: 260, height: 50 },
                         attrs: {
                             '.': { magnet: false },
                             'rect': { fill: '#FFFFFF', stroke: 'black', width: 100, height: 50 },
