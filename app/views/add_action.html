@@ -7,7 +7,7 @@
              <span>Server:</span>
         </div>
         <div class="col-md-4">
-          <select class="form-control" ng-options="server as server.name for server in processServers" data-ng-model="action.server" ng-change="getMethods(action.server.type)">
+          <select class="form-control" ng-options="server as server.name for server in processServers track by server.id" data-ng-model="action.server" ng-change="getMethods(action.server.type)">
             <option value=""> ---select server ---</option>
             </select>
         </div>
@@ -23,7 +23,7 @@
              <span>Method:</span>
         </div>
         <div class="col-md-4">
-             <select class="form-control" data-ng-disabled="action.server === ''" ng-options="method as method.name for method in methods" data-ng-model="action.method">
+             <select class="form-control" data-ng-disabled="action.server === ''" ng-options="method as method.name for method in methods track by method.id" data-ng-model="action.method">
              <option value=""> ---select method ---</option>
             </select>
         </div>

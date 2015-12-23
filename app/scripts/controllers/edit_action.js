@@ -22,20 +22,8 @@ angular.module('productionMapConsoleApp')
                 id: server.id
 	    	});
 	    }
-        for(var i=0; i< $scope.processServers.length; i++){
-            var server = $scope.processServers[i];
-            if(server.id === $scope.action.server.id){
-                $scope.action.server = server;
-            }
-        }
         blockFactory.getMethods($scope.action.server.type).then(function(methods){
             $scope.methods = methods;
-            for(var i = 0 ; i < $scope.methods.length ; i++){
-                var method = $scope.methods[i];
-                if(method.id === $scope.action.method.id){
-                    $scope.action.method = method;
-                }
-            }
         });
         console.log(action);
     }
