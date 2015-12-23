@@ -34,18 +34,18 @@ angular.module('productionMapConsoleApp')
       $scope.rightEl = angular.element(document.querySelector('#pm-attributes'));
       $scope.leftEl = angular.element(document.querySelector('#pm-left-section'));
 
-      $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
-      $scope.rightContainerWidth = $scope.rightEl.width() + $scope.mainEl.width();
+      $scope.leftContainerWidth = parseInt($scope.leftEl.width() + $scope.mainEl.width());
+      $scope.rightContainerWidth = parseInt($scope.rightEl.width() + $scope.mainEl.width());
       $scope.pageHeight = $scope.mainContainerEl.height() + $scope.footerContainerEl.height();
 
       $scope.resizeRight = function () {
         $scope.mainEl.width($scope.leftContainerWidth - $scope.leftEl.width());
-        $scope.rightContainerWidth = $scope.rightEl.width() + $scope.mainEl.width();
+        $scope.rightContainerWidth = parseInt($scope.rightEl.width() + $scope.mainEl.width());
       }
 
       $scope.resizeLeft = function () {
         $scope.rightEl.width($scope.rightContainerWidth - $scope.mainEl.width());
-        $scope.leftContainerWidth = $scope.leftEl.width() + $scope.mainEl.width();
+        $scope.leftContainerWidth = parseInt($scope.leftEl.width() + $scope.mainEl.width());
       }
 
       $scope.resizeHeight = function () {
