@@ -27,7 +27,6 @@ angular.module('productionMapConsoleApp')
 	    angular.forEach(servers, function(server, name){
             $scope.processServers.push({
                 type: server.type,
-                methods: $scope.getServerMethods(server),
                 name: server.name,
                 id: server.id
             });
@@ -66,7 +65,7 @@ angular.module('productionMapConsoleApp')
 
     $scope.getMethods = function(type){
         blockFactory.getMethods(type).then(function(methods){
-            $scope.action.server.methods = methods;
+            $scope.methods = methods;
         });
     }
     init();

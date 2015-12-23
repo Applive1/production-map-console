@@ -34,7 +34,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 for (var i = 0; i < links.length; i++) {
                     expLinks.push(links[i]);
                 }
-                $scope.map.mapView.content = JSON.stringify({
+                $scope.map.mapView.content = angular.toJson({
                     nodes: expElementos,
                     links: expLinks
                 });
@@ -76,7 +76,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
             function clone(a) {
                 console.log(a);
-                return JSON.parse(JSON.stringify(a));
+                return JSON.parse(angular.toJson(a));
             }
 
             function removeNode(blockName) {
