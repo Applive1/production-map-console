@@ -81,7 +81,7 @@ angular.module('productionMapConsoleApp')
           lint: true,
         });
 
-        editor.setSize($scope.width, $scope.height);
+        editor.setSize('100%', $scope.height);
         $scope.editorChanged = false;
         $scope.codeChanged = false;
         $scope.cmeditor = editor;
