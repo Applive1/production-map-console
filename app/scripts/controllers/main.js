@@ -197,6 +197,19 @@ angular.module('productionMapConsoleApp')
             });
           }
         },
+        DeleteMap: {
+          type: "map",
+          "label": "Delete Map",
+          "action": function (obj) {
+            MapsService.deleteMap(node.original.id).then(function(){
+              $('js-tree').jstree(true).delete_node(node);
+              $timeout(function () {
+                if ($scope.map && node.original.id == $scope.map.id)
+                  delete $scope.map;
+              });
+            })
+          }
+        },
         ShowMapAttributs: {
           type: "map",
           "label": "show attributes",
