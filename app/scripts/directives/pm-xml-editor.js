@@ -42,7 +42,7 @@ angular.module('productionMapConsoleApp')
             editor.setValue($scope.map_json);
             editor.refresh();
           };
-        editor.setSize($scope.width, $scope.height);
+        editor.setSize('100%', $scope.height);
         $scope.markup.cm = editor;
         $scope.$watch('content', function (newVal, oldVal) {
           /*if ($scope.jsonChange) {
