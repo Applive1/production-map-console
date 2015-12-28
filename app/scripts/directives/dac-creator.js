@@ -55,15 +55,19 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
                 // Clear the graph (Genius .__.)
                 $scope.graph.clear();
                 try {
-                    var model = JSON.parse($scope.map.mapView.content);
+					var model = {};
+					
+					if($scope.map.mapView.content) {
+						model = JSON.parse($scope.map.mapView.content);
+					}
 
                     // Wait 1s and add the cells
                     setTimeout(function () {
-                        for (var i = 0; i < model.nodes.length; i++) {
+                        for (var i = 0; model.nodes && i < model.nodes.length; i++) {
                             $scope.graph.addCell(model.nodes[i]);
                         }
 
-                        for (var i = 0; i < model.links.length; i++) {
+                        for (var i = 0; model.nodes && i < model.links.length; i++) {
                             $scope.graph.addCell(model.links[i]);
                         }
 
