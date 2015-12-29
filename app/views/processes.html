@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-6">
                 <button type="button" class="btn btn-primary" data-ng-click="add_process(process)"
-                        data-ng-disabled="process.name === ''">new process
+                data-ng-disabled="process.name === ''">new process
                 </button>
                 <button type="button" class="btn btn-primary" data-ng-click="delete_process(process)">delete process
                 </button>
@@ -95,11 +95,11 @@
                 <div class="row" style="margin:2%">
                     <div class="col-md-1"></div>
                     <div class="col-md-11">
-                        <button data-ng-click="addAction()" class="btn btn-default">add</button>
-                        <button class="btn btn-default" data-ng-click="editAction(selectedAction)">edit</button>
-                        <button class="btn btn-default" data-ng-click="removeAction()">delete</button>
-                        <button class="btn btn-default" data-ng-click="moveActionUp()">move up</button>
-                        <button class="btn btn-default" data-ng-click="moveActionDown()">move down</button>
+                        <button data-ng-click="addAction()" data-ng-disabled="process.name === ''" class="btn btn-default">add</button>
+                        <button class="btn btn-default" data-ng-disabled="process.name === ''" data-ng-click="editAction(selectedAction)">edit</button>
+                        <button class="btn btn-default" data-ng-disabled="process.name === ''" data-ng-click="removeAction()">delete</button>
+                        <button class="btn btn-default" data-ng-disabled="process.name === ''" data-ng-click="moveActionUp()">move up</button>
+                        <button class="btn btn-default" data-ng-disabled="process.name === ''" data-ng-click="moveActionDown()">move down</button>
                     </div>
                 </div>
             </div>
