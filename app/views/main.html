@@ -9,8 +9,12 @@
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
-        <li><button type="button" class="btn btn-link" ng-disabled="!map" ng-click="execute_map(map)">Execute Map</button></li>
-        <li><button type="button" class="btn btn-link" ng-disabled="!map" ng-click="saveMap(map)">Save Map</button></li>
+        <li>
+          <button type="button" class="btn btn-link" ng-disabled="!map" ng-click="execute_map(map)">Execute Map</button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-link" ng-disabled="!map" ng-click="saveMap(map)">Save Map</button>
+        </li>
       </ul>
     </li>
     <li class="pm-menu-item">View</li>
@@ -54,19 +58,25 @@
   </div>
   <div resizable on-resize="resizeLeft()" side="e" class="pm-right-section" id="pm-main-content" style="overflow:auto;">
     <div class="pm-content">
-      <tabset ng-if="map">
-        <tab heading="{{map.name}}" ng-if="map">
-          <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
-          <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
-                  data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{
-            button_text }}
-          </button>
-          <button data-ng-disabled="btn_disabled || isSaving" type="button"
-                  class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
-                  data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;">
-            <span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>
-            save
-          </button>
+      <tabset ng-show="map">
+        <tab>
+          <tab-heading>
+            {{(map.versionIndex == map.versions.length-1) ? map.name : map.name + '('+(map.versionIndex+1)+')'}}
+            <button class="close closeTab" ng-click="clearMap()" type="button">×</button>
+          </tab-heading>
+          <div ng-if="map">
+            <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
+            <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
+                    data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{
+              button_text }}
+            </button>
+            <button data-ng-disabled="btn_disabled || isSaving" type="button"
+                    class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
+                    data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;">
+              <span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>
+              save
+            </button>
+          </div>
         </tab>
       </tabset>
     </div>
@@ -83,7 +93,7 @@
               <td style="width:40%">Value</td>
               <td style="width:20%"></td>
             </tr>
-            <tr data-ng-repeat="attribute in attributes track by attribute.name">
+            <tr data-ng-repeat="attribute in attributes track by $index">
               <td>
                 <!-- editable name (text with validation) -->
                 <span editable-text="attribute.name" e-name="name" e-form="rowform"
@@ -106,7 +116,7 @@
                   <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                     save
                   </button>
-                  <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="canacelAttributeEdit(rowform,$index)"
                           class="btn btn-default">
                     cancel
                   </button>
@@ -137,7 +147,11 @@
 
 <div id="messages" resizable on-resize="resizeHeight()" side="n" class="footer pm-footer">
   <div class="pm-box">
-    <div class="pm-box-title">Messages</div>
+    <div class="pm-box-title">Messages
+      <button class="btn btn-primary" style="right: 0; position: absolute; margin-top: -7px; margin-right: 10px;"
+              ng-click="messages=[]">Clear
+      </button>
+    </div>
   </div>
   <div class="table-responsive" style="max-height: 200px; overflow: auto">
     <table class="table table-inverse">
