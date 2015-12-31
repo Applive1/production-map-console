@@ -402,5 +402,14 @@ angular.module('productionMapConsoleApp')
     $scope.dropElement = function (event) {
       $scope.block_mode.drop = event;
     }
+
+    $scope.clearMap= function(){
+      $scope.map = undefined;
+    }
+
+    $scope.canacelAttributeEdit = function(rowform, index){
+      if (!rowform.$data.name && !rowform.$data.value) $scope.removeAttribute(index)
+      else rowform.$cancel()
+    }
   })
 ;

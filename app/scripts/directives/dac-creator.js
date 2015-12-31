@@ -85,13 +85,10 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
       function removeNode(blockName) {
         var elementId = $scope.map.mapView.nodes[blockName].id;
-        $scope.graph.getLinks().forEach(function (link) {
-          if (link.prop('source/id') == elementId || link.prop('target/id') == elementId)
-            link.remove();
-        });
         $scope.map.mapView.links = $scope.map.mapView.links.filter(function (link) {
           return (link.sourceId != elementId && link.targetId != elementId);
         });
+        removeLinks();
         delete $scope.map.mapView.nodes[blockName];
       }
 
@@ -282,7 +279,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           defaults: joint.util.deepSupplement({
 
             type: 'basic.DecoratedRect',
-            size: {width: 260, height: 50},
+            size: {width: 200, height: 50},
             attrs: {
               '.': {magnet: false},
               'rect': {fill: '#FFFFFF', stroke: 'black', width: 100, height: 50},
@@ -424,8 +421,14 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         });
         $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
           if (cellView.model.isLink()) {
-            if (isLinkInvalid(cellView.model))
+            if (isLinkInvalid(cellView.model)) {
+              $scope.map.mapView.links = $scope.map.mapView.links.filter(function(link){
+                return link.id != cellView.model.id;
+              })
               cellView.model.remove();
+              removeLinks();
+              $scope.$apply();
+            }
           }
           if ($scope.map.isLocked)
             return;
@@ -488,9 +491,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         $scope.dropBlock = function (event) {
           console.log('clickmode --->' + $scope.clickMode);
           if ($scope.clickMode && $scope.clickMode.mode !== '' && !$scope.map.isLocked) {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            var name = blockFactory.newBlock($scope.clickMode.mode);
+            var x = event.pageX - $scope.paper.$el.offset().left,
+                y = event.pageY - $scope.paper.$el.offset().top,
+                name = blockFactory.newBlock($scope.clickMode.mode);
             var block = $scope.graphContent_base_block.clone().position(x, y).attr({
               image: {
                 'xlink:href': 'images/controls/' + $scope.clickMode.mode + '.png'
@@ -532,14 +535,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             $scope.tmp_obj.position(x, y);
             $('html').addClass('pm_connector');
           }
-          //if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }*/
-          //   });
 
-          // var position = calcCellPosition(cellView, x, y);
-
-          // //if you fire the event all the time you get a stack overflow
-          // if (position.constrained) { cellView.pointermove(evt, position.constrainedX, position.constrainedY); }
-          // });
           updateModel();
         });
 
@@ -557,6 +553,27 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           loadMap();
       });
 
+      $scope.$watch('map.mapView', function (newValues, oldValues) {
+        removeLinks();
+      });
+
+      var removeLinks = function(){
+        $scope.graph.getLinks().forEach(function (link) {
+          if (isLinkInvalid(link)) {
+            link.remove();
+          }
+        });
+
+        var content = JSON.parse($scope.map.mapView.content);
+        content.links = content.links.filter(function(link){
+          for (var i= 0, length=$scope.map.mapView.links.length; i<length; i++)
+            if (link.id==$scope.map.mapView.links[i].id) return true;
+
+          return false;
+        })
+
+        $scope.map.mapView.content = JSON.stringify(content);
+      };
 
     }]
   };
