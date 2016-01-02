@@ -411,5 +411,9 @@ angular.module('productionMapConsoleApp')
       if (!rowform.$data.name && !rowform.$data.value) $scope.removeAttribute(index)
       else rowform.$cancel()
     }
+
+    $scope.clearMsgs = function(){
+      Messages.clear();
+    }
   })
 ;
