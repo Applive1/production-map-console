@@ -124,11 +124,13 @@
         <dac-creator ng-show="viewMode==1" style="background: #272822;" height="500" width="800" map="map" grid-size="10" view-mode="viewMode" click-mode="clickMode"></dac-creator>
         <pm-xml-editor ng-show="viewMode==2" map="map" content="map.mapView" markup="markup" view-mode="viewMode" height="535" style="width:100%;"></pm-xml-editor>
         <pm-code-editor ng-show="viewMode==3" map="map.mapView" markup="markup" code="code" style="width:100%;" view-mode="viewMode" height="535"></pm-code-editor>
+        <pm-yaml-viewer disabled ng-show="viewMode==4" content="map.versions[map.versionIndex].log" width="800" height="535"></pm-yaml-viewer>
     </div>
     <div class="buttons" horizontal>
         <button class="action-button" ng-click="viewMode=1" active="{{designer_active}}">Design</button>
         <button class="action-button" ng-click="setMarkup()" active="{{xml_editor_active}}">Markup</button>
         <button class="action-button" ng-click="setCode()" active="{{code_editor_active}}">Code</button>
+        <button class="action-button" ng-click="setLog()" active="{{viewMode==4}}">Logs</button>
         <button class="action-button" onclick={{ stopMap }} hidden={{ hideStopButton }}>Stop</button>
         <button class="action-button" onclick={{ suspendMap }} hidden={{ hideSuspendButton }}>Suspend</button>
         <button class="action-button" onclick={{ runMap }} hidden={{ hideRunButton }}>Run</button>

@@ -30,6 +30,10 @@ angular.module('productionMapConsoleApp')
                 $scope.viewMode = 2;
                 $scope.$broadcast('refreshCM');
             };
+            $scope.setLog = function(){
+                $scope.viewMode = 4;
+                $scope.$broadcast('refreshCM');
+            };
 
             init();
         }];

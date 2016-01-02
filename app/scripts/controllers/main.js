@@ -126,8 +126,9 @@ angular.module('productionMapConsoleApp')
           $scope.button_text = 'execute';
           $scope.btn_disabled = false;
           console.log(result);
-          Messages.add(result);
+          Messages.add(result.res);
           $scope.map.versions[$scope.map.versionIndex].status = consts.MapRunStatuses.Done;
+          $scope.map.versions[$scope.map.versionIndex].log = result.log;
           map.isLocked = false;
         },
         error = function (err) {
