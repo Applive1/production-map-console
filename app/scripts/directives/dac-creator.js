@@ -23,7 +23,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
       $scope.graph = [];
       var localViewMode = 1;
 
-      function updateModel() {
+      $scope.updateModel=function() {
         // Save the cells in arrays
         var elementos = $scope.graph.getElements();
         var links = $scope.graph.getLinks();
@@ -83,7 +83,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         return JSON.parse(angular.toJson(a));
       }
 
-      function removeNode(blockName) {
+      $scope.removeNode = function(blockName) {
         var elementId = $scope.map.mapView.nodes[blockName].id;
         $scope.map.mapView.links = $scope.map.mapView.links.filter(function (link) {
           return (link.sourceId != elementId && link.targetId != elementId);
@@ -103,7 +103,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
       }
 
-      function getNode(blockId) {
+      $scope.getNode = function (blockId) {
         var res = {};
         angular.forEach($scope.map.mapView.nodes, function (block, key) {
           if (blockId === block.id) {
@@ -143,8 +143,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         user_link.processes.push(process);
       }
 
-      function editBlock(cellView) {
-        var block = getNode(cellView.id);
+      $scope.editBlock = function (cellView) {
+        var block = $scope.getNode(cellView.id);
         var oldname = angular.copy(block.name);
         Popups.open(
           {
@@ -180,9 +180,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         };
         $scope.map.mapView.links.push(p_link);
 
-        updateModel();
-        var sourceBlock = getNode(p_link.sourceId);
-        var targetBlock = getNode(p_link.targetId);
+        $scope.updateModel();
+        var sourceBlock = $scope.getNode(p_link.sourceId);
+        var targetBlock = $scope.getNode(p_link.targetId);
         var res = {
           id: p_link.id,
           source: sourceBlock,
@@ -320,20 +320,11 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         $scope.paper.$el.on('contextmenu', function (evt) {
           evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
           evt.preventDefault();  // Prevent displaying default browser context menu.
+
           var cellView = $scope.paper.findView(evt.target);
-          if (cellView) {
-            // The context menu was brought up when clicking a cell view in the paper.
-            console.log(cellView.model.attr('text/text'));  // So now you have access to both the cell view and its model.
-            if (cellView.model.isLink()) {
-              removeLink(cellView.model.id);
-            }
-            else {
-              removeNode(cellView.model.attr('text/text'));
-            }
-            cellView.remove();
-            updateModel();
-            // ... display custom context menu, ...
-          }
+          if (cellView && !cellView.model.isLink())
+            $scope.toggleCellContext(cellView);
+
         });
 
         $scope.paper.on('cell:mouseover', function (cellView, evt) {
@@ -354,35 +345,24 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         });
 
         $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
-          if (!$scope.map.isLocked) {
-            if (cellView.model.isLink()) {
-              cellView.model.unset('vertices');
-              var mapLink = getLink(cellView.model.id);
-              var sourceBlock = getNode(mapLink.sourceId);
-              var targetBlock = getNode(mapLink.targetId);
-              var link = {
-                id: mapLink.id,
-                source: sourceBlock,
-                target: targetBlock,
-                condition: mapLink.condition,
-                conditionCode: mapLink.conditionCode
-              }
-              Popups.open({
-                templateUrl: 'views/processes.html',
-                controller: 'ProcessesCtrl',
-                resolve: {link: link, map: $scope.map.mapView}
-              }, updateLink);
-            }
-            else {
-              var block = getNode(cellView.model.id);
-              if (block === {}) {
-                console.log("Error: can't find block");
-                return;
-              }
-              console.log(block);
-              editBlock(cellView.model);
-            }
+          if ($scope.map.isLocked || !cellView.model.isLink()) return;
+
+          cellView.model.unset('vertices');
+          var mapLink = getLink(cellView.model.id);
+          var sourceBlock = $scope.getNode(mapLink.sourceId);
+          var targetBlock = $scope.getNode(mapLink.targetId);
+          var link = {
+            id: mapLink.id,
+            source: sourceBlock,
+            target: targetBlock,
+            condition: mapLink.condition,
+            conditionCode: mapLink.conditionCode
           }
+          Popups.open({
+            templateUrl: 'views/processes.html',
+            controller: 'ProcessesCtrl',
+            resolve: {link: link, map: $scope.map.mapView}
+          }, updateLink);
         });
 
         $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
@@ -419,10 +399,11 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             $scope.graph.addCell($scope.connection_link);
           }
         });
+
         $scope.paper.on('cell:pointerup', function (cellView, evt, x, y) {
           if (cellView.model.isLink()) {
             if (isLinkInvalid(cellView.model)) {
-              $scope.map.mapView.links = $scope.map.mapView.links.filter(function(link){
+              $scope.map.mapView.links = $scope.map.mapView.links.filter(function (link) {
                 return link.id != cellView.model.id;
               })
               cellView.model.remove();
@@ -460,7 +441,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               console.log(cellView.model);
               console.log($scope.connection_link.get('source'));
               var link = link_blocks($scope.connection_link.get('source'), elementBelow);
-              updateModel();
+              $scope.updateModel();
               Popups.open({
                 templateUrl: 'views/processes.html',
                 controller: 'ProcessesCtrl',
@@ -513,7 +494,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             };
             $scope.clickMode.mode = '';
             $scope.clickMode.drop = false;
-            updateModel();
+            $scope.updateModel();
           }
           else {
             if (!$scope.clickMode) $scope.clickMode = {};
@@ -524,7 +505,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
         $scope.graph.on('change', function (cell) {
           console.log('New cell with id ' + cell.id + ' added to the graph.');
-          updateModel();
+          $scope.updateModel();
         });
 
         $scope.paper.on('cell:pointermove', function (cellView, evt, x, y) {
@@ -536,7 +517,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             $('html').addClass('pm_connector');
           }
 
-          updateModel();
+          $scope.updateModel();
         });
 
         loadMap();
@@ -549,7 +530,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
       });
 
       $scope.$watch('map.mapView.content', function (newValues, oldValues) {
-        if ($scope.viewMode!=localViewMode)
+        if ($scope.viewMode != localViewMode)
           loadMap();
       });
 
@@ -557,7 +538,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         removeLinks();
       });
 
-      var removeLinks = function(){
+      var removeLinks = function () {
         $scope.graph.getLinks().forEach(function (link) {
           if (isLinkInvalid(link)) {
             link.remove();
@@ -570,9 +551,9 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
         content = JSON.parse($scope.map.mapView.content);
 
-        content.links = content.links.filter(function(link){
-          for (var i= 0, length=$scope.map.mapView.links.length; i<length; i++)
-            if (link.id==$scope.map.mapView.links[i].id) return true;
+        content.links = content.links.filter(function (link) {
+          for (var i = 0, length = $scope.map.mapView.links.length; i < length; i++)
+            if (link.id == $scope.map.mapView.links[i].id) return true;
 
           return false;
         })
@@ -586,6 +567,53 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
       };
 
-    }]
+
+    }],
+    link: function ($scope, $element) {
+      var cellView = null;
+      $scope.toggleCellContext = function (cv) {
+        $(".custom-menu").finish().toggle(100).
+        css({
+          top: event.pageY - $scope.paper.$el.offset().top + "px",
+          left: event.pageX - $scope.paper.$el.offset().left + "px"
+        });
+        cellView = cv;
+
+      };
+
+      $(document).bind("mousedown", function (e) {
+
+        // If the clicked element is not the menu
+        if (!$(e.target).parents(".custom-menu").length > 0) {
+
+          // Hide it
+          $(".custom-menu").hide(100);
+        }
+      });
+
+      $scope.cellContext = [
+        {
+          Name: 'Delete',
+          action: function () {
+            $scope.removeNode(cellView.model.attr('text/text'));
+            cellView.remove();
+            $scope.updateModel();
+            $(document).mousedown();
+          }
+        },
+        {
+          Name: 'Settings',
+          action: function () {
+            var block = $scope.getNode(cellView.model.id);
+            if (block === {}) {
+              console.log("Error: can't find block");
+              return;
+            }
+            console.log(block);
+            $scope.editBlock(cellView.model);
+          }
+        }
+      ]
+    }
   };
 });

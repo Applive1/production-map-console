@@ -39,6 +39,13 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
         };
         $scope.eventSources = [];
 
+        $scope.changeCalendarView=function(movement){
+          if (movement !== 0)
+            $scope.calendar.calendarDay = moment($scope.calendar.calendarDay).add(movement, $scope.calendar.calendarView).toDate();
+          else
+            $scope.calendar.calendarDay = new Date();
+        }
+
         /*-------------------------------------------- Jobs Functions ----------------------------------*/
 
         $scope.createJob = function () {
