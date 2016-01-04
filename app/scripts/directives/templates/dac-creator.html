@@ -1,5 +1,8 @@
 <div ng-style="{'width': width + 'px', 'height': height + 'px', 'overflow-y': 'auto'}" data-ng-mouseup="dropBlock($event)">
 	<div id="paper"></div>
+  <ul class="custom-menu">
+    <li ng-repeat="item in cellContext" ng-click="item.action()">{{item.Name}}</li>
+  </ul>
 </div>
 <div>
 	<button type="button" class="btn btn-primary" data-ng-click="zoomIn()">zoom in</button>

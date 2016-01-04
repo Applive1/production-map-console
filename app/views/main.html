@@ -66,16 +66,18 @@
           </tab-heading>
           <div ng-if="map">
             <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
-            <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
-                    data-ng-click="execute_map(map)" style="position: absolute; bottom: 0; right: 0;"> {{
-              button_text }}
-            </button>
-            <button data-ng-disabled="btn_disabled || isSaving" type="button"
-                    class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
-                    data-ng-click="saveMap(map)" style="position: absolute; bottom: 0; right: 80px;">
-              <span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>
-              save
-            </button>
+            <div style="position: absolute; bottom: 0; right: 0;">
+              <button data-ng-disabled="btn_disabled || isSaving" type="button"
+                      class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
+                      data-ng-click="saveMap(map)">
+                <span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>
+                save
+              </button>
+              <button data-ng-disabled="btn_disabled" type="button" class="btn btn-default"
+                      data-ng-click="execute_map(map)">
+                {{button_text }}
+              </button>
+            </div>
           </div>
         </tab>
       </tabset>
@@ -116,7 +118,7 @@
                   <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                     save
                   </button>
-                  <button type="button" ng-disabled="rowform.$waiting" ng-click="canacelAttributeEdit(rowform,$index)"
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="removeAttribute($index)"
                           class="btn btn-default">
                     cancel
                   </button>

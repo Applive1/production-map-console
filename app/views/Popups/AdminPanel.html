@@ -62,23 +62,17 @@
 
                             <button
                                     class="btn btn-primary"
-                                    mwl-date-modifier
-                                    date="calendar.calendarDay"
-                                    decrement="calendarView">
+                                    ng-click="changeCalendarView(-1)">
                                 Previous
                             </button>
                             <button
-                                    class="btn btn-default"
-                                    mwl-date-modifier
-                                    date="calendar.calendarDay"
-                                    set-to-today>
+                                    class="btn btn-primary"
+                                    ng-click="changeCalendarView(0)">
                                 Today
                             </button>
                             <button
                                     class="btn btn-primary"
-                                    mwl-date-modifier
-                                    date="calendar.calendarDay"
-                                    increment="calendarView">
+                                    ng-click="changeCalendarView(1)">
                                 Next
                             </button>
                         </div>
