@@ -90,6 +90,12 @@ angular.module('productionMapConsoleApp')
 
     if (AuthService.currentUser)
       ProjectsService.getJstreeProjectsByUser(AuthService.currentUser.id).then(function (result) {
+        result.data.forEach(function(project){
+          project.maps = project.maps.filter(function(map,index){
+            if (!map.isActive) project.children.splice(index,1);
+            return map.isActive;
+          });
+        });
         $scope.projects = result.data;
         if ($scope.projects.length === 0) {
           $scope.createProject();
@@ -406,11 +412,6 @@ angular.module('productionMapConsoleApp')
 
     $scope.clearMap= function(){
       $scope.map = undefined;
-    }
-
-    $scope.canacelAttributeEdit = function(rowform, index){
-      if (!rowform.$data.name && !rowform.$data.value) $scope.removeAttribute(index)
-      else rowform.$cancel()
     }
 
     $scope.clearMsgs = function(){
