@@ -564,7 +564,12 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           }
         });
 
-        var content = JSON.parse($scope.map.mapView.content);
+        var content;
+        if($scope.map.mapView.content === ''){
+          return;
+        }
+        content = JSON.parse($scope.map.mapView.content);
+
         content.links = content.links.filter(function(link){
           for (var i= 0, length=$scope.map.mapView.links.length; i<length; i++)
             if (link.id==$scope.map.mapView.links[i].id) return true;
@@ -572,7 +577,13 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           return false;
         })
 
-        $scope.map.mapView.content = JSON.stringify(content);
+        if($scope.map.mapView.hasOwnProperty('content')){
+          try{
+            $scope.map.mapView.content = JSON.stringify(content);
+          }catch(e){
+            console.log(e);
+          }
+        }
       };
 
     }]
