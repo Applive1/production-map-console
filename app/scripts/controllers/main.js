@@ -334,6 +334,8 @@ angular.module('productionMapConsoleApp')
       $scope.isSaving = true;
       MapsService.saveMap(map).then(function (result) {
         $scope.isSaving = false;
+        map.versions.push(result.data);
+        map.versionIndex++;
         console.log(result);
       });
     }
