@@ -78,29 +78,42 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
       }
 
-      function clone(a) {
-        console.log(a);
-        return JSON.parse(angular.toJson(a));
-      }
+      $scope.removeNode = function(cellView) {
+        var blockName = cellView.model.attr('text/text'),
+            elementId = $scope.map.mapView.nodes[blockName].id;
 
-      $scope.removeNode = function(blockName) {
-        var elementId = $scope.map.mapView.nodes[blockName].id;
+        $scope.graph.getElements().forEach(function (cell) {
+          if (cell.id==elementId)
+            cell.remove();
+        });
+
         $scope.map.mapView.links = $scope.map.mapView.links.filter(function (link) {
           return (link.sourceId != elementId && link.targetId != elementId);
         });
-        removeLinks();
-        delete $scope.map.mapView.nodes[blockName];
-      }
 
-      function removeLink(linkId) {
-        var res = {};
-        for (var i = 0; i < $scope.map.mapView.links.length; i++) {
-          var link = $scope.map.mapView.links[i];
-          if (linkId === link.id) {
-            $scope.map.mapView.links.splice(i, 1);
-            break;
+        /*$scope.graph.getLinks().forEach(function (link) {
+          if (link.prop('source/id')==elementId || link.prop('target/id')==elementId)
+            link.remove();
+        });*/
+
+
+        delete $scope.map.mapView.nodes[blockName];
+
+        /*var content = JSON.parse($scope.map.mapView.content);
+
+        content.nodes = content.nodes.filter(function (node) {
+          return node.id!=elementId;
+        })
+
+        if($scope.map.mapView.hasOwnProperty('content')){
+          try{
+            $scope.map.mapView.content = JSON.stringify(content);
+          }catch(e){
+            console.log(e);
           }
-        }
+        }*/
+
+        removeLinks();
       }
 
       $scope.getNode = function (blockId) {
@@ -449,9 +462,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               }, updateLink);
               cellView.model.translate(0, 100);
             }
-            /*var bbox = cellView.getBBox();
-             var position = calcCellPosition(cellView, bbox.x, bbox.y)
-             cellView.model.position(position.constrainedX, position.constrainedY);*/
           }
           cellView.options.interactive = true;
           $scope.connecting = false;
@@ -525,7 +535,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
       init();
 
-      $scope.$watchGroup(['map.id', 'map.versionIndex'], function (newValues, oldValues, scope) {
+      $scope.$on('loadDesignerMap', function(event, args) {
         loadMap();
       });
 
@@ -567,7 +577,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
       };
 
-
     }],
     link: function ($scope, $element) {
       var cellView = null;
@@ -595,8 +604,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         {
           Name: 'Delete',
           action: function () {
-            $scope.removeNode(cellView.model.attr('text/text'));
-            cellView.remove();
+            $scope.removeNode(cellView);
             $scope.updateModel();
             $(document).mousedown();
           }

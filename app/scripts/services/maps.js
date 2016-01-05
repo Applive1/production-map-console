@@ -20,11 +20,7 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
             return $http.post(consts.serverUrl + 'map/addMapVersion',map);
         },
         createMap: function (mapName, projectId) {
-            return $http.post(consts.serverUrl + 'map/createMap', {name : mapName, Project:projectId, versions:[], structure:{
-                content: '',
-                nodes: {},
-                links: [],
-                code: ''}});
+            return $http.post(consts.serverUrl + 'map/createMap', {name : mapName, Project:projectId});
         },
         executeMap: function (map) {
             return $http.post(consts.serverUrl + 'sysfile/execute', map);

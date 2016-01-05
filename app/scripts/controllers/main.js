@@ -320,7 +320,7 @@ angular.module('productionMapConsoleApp')
       $scope.map.mapView = angular.copy($scope.map.structure);
       $scope.map.versionIndex = index;
       for (var i = 0; i <= index; i++) {
-        jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
+        if ($scope.map.versions[i].patches) jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
       }
 
       Processes.set($scope.map.mapView);
@@ -332,6 +332,8 @@ angular.module('productionMapConsoleApp')
       for (var key in $scope.map.mapView.attributes) {
         $scope.attributes.push({name: key, value: $scope.map.mapView.attributes[key]});
       }
+
+      $scope.$broadcast('loadDesignerMap', {});
 
       $scope.mapLoaded = true;
     }
