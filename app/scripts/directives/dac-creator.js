@@ -257,6 +257,10 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           $scope.paper.scale(sx, sy);
         };
 
+        var paperResize = function(sx, sy){
+          $scope.paper.resize(sx, sy);
+        }
+
         $scope.zoomIn = function () {
           graphScale += 0.1;
           paperScale(graphScale, graphScale);
@@ -495,6 +499,27 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               }
             });
             $scope.graph.addCell(block);
+            block.on('change:position', function(evt, pos, y) {
+                console.log(pos);
+                var my_width = block.attributes.size.width;
+                var my_height = block.attributes.size.height;
+                if(pos.x + my_width >= $scope.innerWidth){
+                  $scope.innerWidth = pos.x + my_width;
+                  // paperResize($scope.innerWidth, $scope.innerHeight);
+                  $scope.paper.fitToContent({
+                      minWidth: $scope.innerWidth,
+                      minHeight: $scope.innerHeight
+                  });
+                }
+                if(pos.y + my_height >= $scope.innerHeight){
+                  $scope.innerHeight = pos.y + my_height;
+                  // paperResize($scope.innerWidth, $scope.innerHeight);
+                  $scope.paper.fitToContent({
+                      minWidth: $scope.innerWidth,
+                      minHeight: $scope.innerHeight
+                  });
+                }
+            });
             $scope.map.mapView.nodes[name] = {
               id: block.id,
               type: $scope.clickMode.mode,
