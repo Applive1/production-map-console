@@ -19,7 +19,8 @@ angular.module('productionMapConsoleApp')
 	    	timeunit: '1',
 	    	retries: 0,
 	    	mandatory: false,
-	    	suspend: false
+	    	suspend: false,
+            result: ''
 	    };
 	    $scope.processServers = [];
 	    var servers = [link.source, link.target];
