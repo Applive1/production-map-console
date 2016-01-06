@@ -9,7 +9,8 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         order: 0,
         default_execution: false,
         mandatory: false,
-        actions: []
+        actions: [],
+        result: ''
     };
     $scope.selectedAction = {};
 

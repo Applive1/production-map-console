@@ -189,7 +189,8 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           id: link.id,
           sourceId: source_block.id,
           targetId: target_block.id,
-          processes: []
+          processes: [],
+          result: ''
         };
         $scope.map.mapView.links.push(p_link);
 
