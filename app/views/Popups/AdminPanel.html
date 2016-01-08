@@ -1,140 +1,169 @@
 <div class="modal-header" style="text-align: center">
-    <div class="adminBtn" ng-click="view=1" ng-class="{'active':view==1}">
-        <i class="glyphicon glyphicon-calendar"></i>
-        <span>Calendar</span>
-    </div>
-    <div class="adminBtn" ng-click="view=2" ng-class="{'active':view==2}">
-        <i class="fa fa-desktop"></i>
-        <span>Servers</span>
-    </div>
+  <div class="adminBtn" ng-click="view=1" ng-class="{'active':view==1}">
+    <i class="glyphicon glyphicon-calendar"></i>
+    <span>Calendar</span>
+  </div>
+  <div class="adminBtn" ng-click="view=2" ng-class="{'active':view==2}">
+    <i class="fa fa-desktop"></i>
+    <span>Servers</span>
+  </div>
+  <div class="adminBtn" ng-click="view=3" ng-class="{'active':view==3}">
+    <i class="fa fa-clock-o"></i>
+    <span>Cron Jobs</span>
+  </div>
 </div>
 <div class="modal-body" style="overflow: auto;">
-    <div ng-if="view==1">
-        <div class="col-md-3">
-            <div class="popupBox" style="margin-top:100px;">
-                <h3>{{(job.id) ? 'Update' : 'Add A New'}} Scheduled Job</h3>
+  <div ng-if="view==1">
+    <div class="col-md-3">
+      <div class="popupBox" style="margin-top:100px;">
+        <h3>{{(job.id) ? 'Update' : 'Add A New'}} Scheduled Job</h3>
 
-                <div class="form-group">
-                    <select class="form-control" ng-options="project.name for project in projects track by project.id"
-                            ng-model="job.selectedProject">
-                        <option value="">-- choose project --</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <select class="form-control" ng-options="project.name for project in projects track by project.id"
+                  ng-model="job.selectedProject">
+            <option value="">-- choose project --</option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <select ng-show="job.selectedProject" class="ng-hide form-control"
-                            ng-options="map.name for map in job.selectedProject.maps track by map.id"
-                            ng-model="job.Map">
-                        <option value="">-- choose Map --</option>
-                    </select>
-                </div>
-                <div class="form-group" ng-show="job.Map">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
-                               min-date="dateOptions.minDate"
-                               ng-model="job.startAt" readonly ng-focus="dateOptions.isOpen=true;"
-                               is-open="dateOptions.isOpen" close-text="Close" datepicker-options="dateOptions"/>
+        <div class="form-group">
+          <select ng-show="job.selectedProject" class="ng-hide form-control"
+                  ng-options="map.name for map in job.selectedProject.maps track by map.id"
+                  ng-model="job.Map">
+            <option value="">-- choose Map --</option>
+          </select>
+        </div>
+        <div class="form-group" ng-show="job.Map">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                   min-date="dateOptions.minDate"
+                   ng-model="job.startAt" readonly ng-focus="dateOptions.isOpen=true;"
+                   is-open="dateOptions.isOpen" close-text="Close" datepicker-options="dateOptions"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="dateOptions.isOpen=true;">
-                            <i class="glyphicon glyphicon-calendar"></i>
+                          <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                     </span>
-                    </p>
-                    <uib-timepicker style="margin: 0 auto;"
-                                    ng-model="job.startAt"
-                                    hour-step="1"
-                                    minute-step="1"
-                                    show-meridian="false">
-                    </uib-timepicker>
-                    <button ng-show="!job.id" ng-click="createJob()" class="ng-hide btn btn-primary">Create</button>
-                    <button ng-show="job.id" ng-click="updateJob()" class="ng-hide btn btn-primary">Update</button>
-                </div>
-            </div>
+          </p>
+          <input type="radio" ng-model="job.isCron" ng-value="true">Repeated
+          <input type="radio" ng-model="job.isCron" ng-value="false">Once
+          <uib-timepicker style="margin: 0 auto;" ng-hide="job.isCron" class="ng-hide"
+                          ng-model="job.startAt"
+                          hour-step="1"
+                          minute-step="1"
+                          show-meridian="false">
+          </uib-timepicker>
+          <cron-selection output="job.Cron" ng-show="job.isCron" class="ng-hide"></cron-selection>
+          <button ng-show="!job.id" ng-click="createJob()" class="ng-hide btn btn-primary">Create</button>
+          <button ng-show="job.id" ng-click="updateJob()" class="ng-hide btn btn-primary">Update</button>
         </div>
-        <div class="col-md-8 col-md-offset-1">
-            <div class="col-md-12">
-                <h2 class="text-center">{{ calendar.calendarTitle }}</h2>
-
-                <div class="row">
-
-                    <div class="col-md-6 text-center">
-                        <div class="btn-group">
-
-                            <button
-                                    class="btn btn-primary"
-                                    ng-click="changeCalendarView(-1)">
-                                Previous
-                            </button>
-                            <button
-                                    class="btn btn-primary"
-                                    ng-click="changeCalendarView(0)">
-                                Today
-                            </button>
-                            <button
-                                    class="btn btn-primary"
-                                    ng-click="changeCalendarView(1)">
-                                Next
-                            </button>
-                        </div>
-                    </div>
-
-                    <br class="visible-xs visible-sm">
-
-                    <div class="col-md-6 text-center">
-                        <div class="btn-group">
-                            <label class="btn btn-primary" ng-model="calendar.calendarView"
-                                   uib-btn-radio="'year'">Year</label>
-                            <label class="btn btn-primary" ng-model="calendar.calendarView" uib-btn-radio="'month'">Month</label>
-                            <label class="btn btn-primary" ng-model="calendar.calendarView"
-                                   uib-btn-radio="'week'">Week</label>
-                            <label class="btn btn-primary" ng-model="calendar.calendarView"
-                                   uib-btn-radio="'day'">Day</label>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <mwl-calendar
-                    events="calendar.events"
-                    view="calendar.calendarView"
-                    view-title="calendar.calendarTitle"
-                    current-day="calendar.calendarDay"
-                    on-event-click="vm.eventClicked(calendarEvent)"
-                    on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarjob.startsAt = calendarNewEventStart; calendarjob.endsAt = calendarNewEventEnd"
-                    edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-                    delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    on-edit-event-click="editJob(calendarEvent)"
-                    on-delete-event-click="deleteJob(calendarEvent)"
-                    cell-is-open="calendar.isCellOpen"
-                    day-view-start="00:00"
-                    day-view-end="23:59"
-                    day-view-split="30"
-                    cell-modifier="vm.modifyCell(calendarCell)">
-            </mwl-calendar>
-        </div>
-
-        <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
+      </div>
     </div>
-    <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
-        <div class="col-md-8">
-            <h3>Base Agents</h3>
+    <div class="col-md-8 col-md-offset-1">
+      <div class="col-md-12">
+        <h2 class="text-center">{{ calendar.calendarTitle }}</h2>
 
-            <div class="col-md-5 BaseAgent" ng-class="{'col-md-offset-1':$odd}"
-                 ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
-                <span>Name : {{agent.name}}</span>
-                <span>Url : {{agent.url}}</span>
+        <div class="row">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(-1)">
+                Previous
+              </button>
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(0)">
+                Today
+              </button>
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(1)">
+                Next
+              </button>
             </div>
-        </div>
-        <div class="col-md-4">
-            <i class="glyphicon glyphicon-plus-sign ng-hide plus" ng-show="currentAgent.id" ng-click="setCurrentAgent({})"></i>
-            <div class="popupBox">
-                <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
-                <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
-                <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update
-                </button>
-                <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create
-                </button>
+          </div>
+
+          <br class="visible-xs visible-sm">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'year'">Year</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView" uib-btn-radio="'month'">Month</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'week'">Week</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'day'">Day</label>
             </div>
+          </div>
+
         </div>
+      </div>
+      <mwl-calendar
+        events="calendar.events"
+        view="calendar.calendarView"
+        view-title="calendar.calendarTitle"
+        current-day="calendar.calendarDay"
+        on-event-click="vm.eventClicked(calendarEvent)"
+        on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarjob.startsAt = calendarNewEventStart; calendarjob.endsAt = calendarNewEventEnd"
+        edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+        delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+        on-edit-event-click="editJob(calendarEvent)"
+        on-delete-event-click="deleteJob(calendarEvent)"
+        cell-is-open="calendar.isCellOpen"
+        day-view-start="00:00"
+        day-view-end="23:59"
+        day-view-split="30"
+        cell-modifier="vm.modifyCell(calendarCell)">
+      </mwl-calendar>
     </div>
+
+    <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
+  </div>
+  <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-8">
+      <h3>Base Agents</h3>
+
+      <div class="col-md-5 BaseAgent" ng-class="{'col-md-offset-1':$odd}"
+           ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
+        <span>Name : {{agent.name}}</span>
+        <span>Url : {{agent.url}}</span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <i class="glyphicon glyphicon-plus-sign ng-hide plus" ng-show="currentAgent.id"
+         ng-click="setCurrentAgent({})"></i>
+
+      <div class="popupBox">
+        <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
+        <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
+        <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update
+        </button>
+        <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" ng-show="view==3" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-12">
+      <h3>Repeated Cron Jobs</h3>
+
+      <div class="col-md-3 BaseAgent" ng-class="{'col-md-offset-1':$index%3!=0}"
+           ng-repeat="job in cronJobs track by job.id" ng-click="setCurrentCron(job,$index)">
+        <span>Map Name : {{job.Map.name}}</span>
+        <span>Cron : {{job.Cron}}</span>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="popupBox cronBox ng-hide form-inline" ng-show="currentCronJob.id">
+        <cron-selection output="currentCronJob.Cron" init="currentCronJob.Cron"></cron-selection>
+        <span>
+          <button class="btn btn-primary" ng-click="updateCronJob()">Update</button>
+        <button class="btn btn-danger" ng-click="deleteCronJob()">Delete</button>
+          </span>
+      </div>
+    </div>
+  </div>
 </div>
