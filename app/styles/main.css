@@ -587,3 +587,11 @@ body {
 .custom-menu li:hover {
   background-color: #DEF;
 }
+
+.cronBox div{
+  display: inline-block;
+}
+.cronBox>span{
+  display: block;
+  margin: 15px auto 0;
+}
