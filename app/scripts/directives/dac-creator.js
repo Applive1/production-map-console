@@ -18,7 +18,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
     },
     templateUrl: 'scripts/directives/templates/dac-creator.html',
     restrict: 'E',
-    controller: ['$scope', 'Popups', 'blockFactory', function ($scope, Popups, blockFactory) {
+    controller: ['$scope', 'Popups', 'blockFactory', '$timeout', function ($scope, Popups, blockFactory, $timeout) {
 
       $scope.graph = [];
       var localViewMode = 1;
@@ -59,10 +59,11 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         // Clear the graph (Genius .__.)
         $scope.graph.clear();
         try {
-          var model = JSON.parse($scope.map.mapView.content);
 
           // Wait 1s and add the cells
-          setTimeout(function () {
+          $timeout(function () {
+            var model = JSON.parse($scope.map.mapView.content);
+
             for (var i = 0; i < model.nodes.length; i++) {
               $scope.graph.addCell(model.nodes[i]);
             }
@@ -72,6 +73,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             }
 
             $scope.map.isLocked = ($scope.map.versionIndex != $scope.map.versions.length - 1);
+
           }, 100);
         } catch (e) {
           console.log(e);

@@ -325,10 +325,6 @@ angular.module('productionMapConsoleApp')
 
       Processes.set($scope.map.mapView);
 
-      $timeout(function () {
-        $scope.$digest();
-      });
-
       for (var key in $scope.map.mapView.attributes) {
         $scope.attributes.push({name: key, value: $scope.map.mapView.attributes[key]});
       }
@@ -336,6 +332,10 @@ angular.module('productionMapConsoleApp')
       $scope.$broadcast('loadDesignerMap', {});
 
       $scope.mapLoaded = true;
+
+      $timeout(function () {
+        $scope.$digest();
+      });
     }
 
     $scope.saveMap = function (map) {
