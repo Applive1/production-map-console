@@ -249,10 +249,12 @@ body {
 
 .map-designer {
   position: relative;
+  max-height: calc(100% - 40px);
+  overflow: auto;
 }
 
 .tab-pane {
-  height: 605px;
+  height: 100%;
   width: 100%;
   position: relative;
 }
@@ -595,3 +597,20 @@ body {
   display: block;
   margin: 15px auto 0;
 }
+
+.nav-pills > li > a{
+  background-color: white;
+  cursor: pointer;
+}
+
+.tab-content{
+  height: calc(100% - 41px);
+}
+
+.mainHolder{
+  max-width: 100%;
+  height: calc(100% - 50px);
+  overflow: auto;
+  background-color: #272822;
+}
+
