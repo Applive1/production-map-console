@@ -56,17 +56,18 @@
       </div>
     </div>
   </div>
-  <div resizable on-resize="resizeLeft()" side="e" class="pm-right-section" id="pm-main-content" style="overflow:auto;">
-    <div class="pm-content">
-      <tabset ng-show="map">
-        <tab>
-          <tab-heading>
-            {{(map.versionIndex == map.versions.length-1) ? map.name : map.name + '('+(map.versionIndex+1)+')'}}
-            <button class="close closeTab" ng-click="clearMap()" type="button">×</button>
-          </tab-heading>
-          <div ng-if="map">
-            <pm-map-designer map="map" click-mode="block_mode" class="map-designer"></pm-map-designer>
-            <div style="position: absolute; bottom: 0; right: 0;">
+  <div resizable on-resize="resizeLeft()" side="e" class="pm-right-section" id="pm-main-content">
+    <tabset ng-show="map" style="height:100%">
+      <tab>
+        <tab-heading>
+          {{(map.versionIndex == map.versions.length-1) ? map.name : map.name + '('+(map.versionIndex+1)+')'}}
+          <button class="close closeTab" ng-click="clearMap()" type="button">×</button>
+        </tab-heading>
+        <div ng-if="map" style="height: 100%;">
+          <pm-map-designer map="map" click-mode="block_mode" class="map-designer"
+                           view-mode="viewMode"></pm-map-designer>
+          <div style="position: absolute; bottom: 5px; right: 0; width:100%;">
+            <div class="pull-right">
               <button data-ng-disabled="btn_disabled || isSaving" type="button"
                       class="btn btn-default has-spinner" ng-class="{'active':isSaving}"
                       data-ng-click="saveMap(map)">
@@ -78,10 +79,23 @@
                 {{button_text }}
               </button>
             </div>
+            <div class="pull-right ng-hide" ng-show="viewMode==1" style="margin-right: 30px;">
+              <button class="btn btn-primary" ng-click="zoomMap(1)">Zoom In</button>
+              <button class="btn btn-primary" ng-click="zoomMap(-1)">Zoom Out</button>
+            </div>
+            <div class="pull-left">
+              <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{active:viewMode==1}"><a ng-click="setDesigner()">Design</a></li>
+                <li role="presentation" ng-class="{active:viewMode==2}"><a ng-click="setMarkup()">Markup</a></li>
+                <li role="presentation" ng-class="{active:viewMode==3}"><a ng-click="setCode()">Code</a></li>
+                <li role="presentation" ng-class="{active:viewMode==4}"><a ng-click="setLog()">Logs</a></li>
+              </ul>
+
+            </div>
           </div>
-        </tab>
-      </tabset>
-    </div>
+        </div>
+      </tab>
+    </tabset>
   </div>
   <div class="pm-attributes" id="pm-attributes">
     <div class="pm-box" ng-show="map">

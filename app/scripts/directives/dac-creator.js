@@ -567,6 +567,11 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         loadMap();
       });
 
+      $scope.$on('zoomMap', function(event, args) {
+        if (args.type==1)  $scope.zoomIn();
+        else $scope.zoomOut();
+      });
+
       $scope.$watch('map.mapView.content', function (newValues, oldValues) {
         if ($scope.viewMode != localViewMode)
           loadMap();

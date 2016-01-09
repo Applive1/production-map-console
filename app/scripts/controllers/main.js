@@ -23,6 +23,8 @@ angular.module('productionMapConsoleApp')
       }
     }, false);
 
+    $scope.viewMode = 1;
+
     $scope.init = function () {
       $scope.mainContainerEl = angular.element(document.querySelector('#mainContent'));
       $scope.footerContainerEl = angular.element(document.querySelector('#messages'));
@@ -353,6 +355,7 @@ angular.module('productionMapConsoleApp')
       console.log("***** got push *****");
       console.log(msg);
       console.log("***** got push *****");
+      $scope.$digest();
     });
 
     $scope.checkName = function (name, attribute) {
@@ -420,6 +423,26 @@ angular.module('productionMapConsoleApp')
 
     $scope.clearMsgs = function(){
       Messages.clear();
+    }
+
+    $scope.setCode = function(){
+      $scope.viewMode = 3;
+      $scope.$broadcast('refreshCM');
+    };
+    $scope.setMarkup = function(){
+      $scope.viewMode = 2;
+      $scope.$broadcast('refreshCM');
+    };
+    $scope.setLog = function(){
+      $scope.viewMode = 4;
+      $scope.$broadcast('refreshCM');
+    };
+    $scope.setDesigner = function(){
+      $scope.viewMode = 1;
+    };
+
+    $scope.zoomMap = function(type){
+      $scope.$broadcast('zoomMap', {type:type});
     }
   })
 ;
