@@ -78,6 +78,8 @@ angular.module('productionMapConsoleApp')
           theme: 'monokai',
           tabSize: 2,
           // gutters: ['CodeMirror-lint-markers'],
+          foldGutter: true,
+          gutters: ['CodeMirror-foldgutter'],
           lint: true,
         });
 

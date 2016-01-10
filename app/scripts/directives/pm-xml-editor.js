@@ -28,7 +28,8 @@ angular.module('productionMapConsoleApp')
             showCursorWhenSelecting: true,
             theme: 'monokai',
             tabSize: 2,
-            gutters: ['CodeMirror-lint-markers'],
+            foldGutter: true,
+            gutters: ['CodeMirror-lint-markers', 'CodeMirror-foldgutter'],
             lint: true,
             autofocus: true
           }),

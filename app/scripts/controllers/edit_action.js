@@ -19,7 +19,8 @@ angular.module('productionMapConsoleApp')
 	    	$scope.processServers.push({
 	    		type: server.type,
 	    		name: server.name,
-                id: server.id
+                id: server.id,
+                url: server.serverUrl
 	    	});
 	    }
         blockFactory.getMethods($scope.action.server.type).then(function(methods){
