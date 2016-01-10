@@ -46,7 +46,7 @@ angular.module('productionMapConsoleApp')
       }
 
       $scope.resizeLeft = function () {
-        $scope.rightEl.width($scope.rightContainerWidth - $scope.mainEl.width());
+        $scope.rightEl.width($scope.rightContainerWidth - $scope.mainEl.width() - 1);
         $scope.leftContainerWidth = parseInt($scope.leftEl.width() + $scope.mainEl.width());
       }
 
