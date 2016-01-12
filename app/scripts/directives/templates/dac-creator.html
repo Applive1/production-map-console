@@ -1,5 +1,5 @@
-<div ng-style="{'width': width + 'px', 'height': height + 'px', 'overflow': 'auto !important'}" data-ng-mouseup="dropBlock($event)">
-	<div id="paper"></div>
+<div data-ng-mouseup="dropBlock($event)">
+	<div id="paper" style="max-height:100%;"></div>
   <ul class="custom-menu">
     <li ng-repeat="item in cellContext" ng-click="item.action()">{{item.Name}}</li>
   </ul>
