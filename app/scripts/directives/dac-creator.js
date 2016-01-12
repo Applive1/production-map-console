@@ -254,10 +254,13 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           model: $scope.graph
         });
 
-        V($scope.paper.svg).attr({viewBox: "0 0 800 500"});
+        //V($scope.paper.svg).attr({viewBox: "0 0 800 500"});
         var graphScale = 1;
         var paperScale = function (sx, sy) {
           $scope.paper.scale(sx, sy);
+          var newSize = V($scope.paper.viewport).bbox();
+          $($scope.paper.svg).width(newSize.x + newSize.width+100);
+          $($scope.paper.svg).height(newSize.y + newSize.height+100);
         };
 
         var paperResize = function(sx, sy){
