@@ -23,7 +23,8 @@ angular.module('productionMapConsoleApp', [
     'ngDraggable',
     'LocalStorageModule',
     'angularFileUpload',
-    'angular-cron-jobs'
+    'angular-cron-jobs',
+    'ngStorage'
 ])
     .config(function ($routeProvider) {
         $routeProvider

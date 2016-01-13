@@ -130,6 +130,7 @@
            ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
         <span>Name : {{agent.name}}</span>
         <span>Url : {{agent.url}}</span>
+        <span>Execute on?: <input type="checkbox" data-ng-change="checkedAgent(agent)" ng-model="$storage.agentsToExecute[agent.id]"></span>
       </div>
     </div>
     <div class="col-md-7">

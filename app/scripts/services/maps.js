@@ -22,8 +22,8 @@ angular.module('productionMapConsoleApp').factory('MapsService', ['$http', 'cons
         createMap: function (mapName, projectId) {
             return $http.post(consts.serverUrl + 'map/createMap', {name : mapName, Project:projectId});
         },
-        executeMap: function (map) {
-            return $http.post(consts.serverUrl + 'sysfile/execute', map);
+        executeMap: function (map, agents) {
+            return $http.post(consts.serverUrl + 'sysfile/execute', {"map": map, agentsIds: agents});
         },
         resumeMap : function(map){
             return $http.post(consts.serverUrl + 'sysfile/resumeMap', map);

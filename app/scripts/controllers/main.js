@@ -8,10 +8,12 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory) {
+  .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
 
     $scope.mapLoaded = false;
     $scope.attributes = [];
+    $scope.$storage = $localStorage;
+    $scope.$storage.agentsToExecute = {};
 
     /* Listen on the ctrl-s event and save map at server! */
     document.addEventListener("keydown", function(e) {
@@ -148,7 +150,7 @@ angular.module('productionMapConsoleApp')
         };
 
       if (!isResume)
-        MapsService.executeMap(map)
+        MapsService.executeMap(map, $scope.$storage.agentsToExecute)
           .success(success)
           .error(error);
       else
