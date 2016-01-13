@@ -7,8 +7,8 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', 'JobsService', 'BaseAgentService', 'blockFactory',
-  function ($scope, $modalInstance, projects, JobsService, BaseAgentService, blockFactory) {
+angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', 'JobsService', 'BaseAgentService', 'blockFactory', '$localStorage',
+  function ($scope, $modalInstance, projects, JobsService, BaseAgentService, blockFactory, $localStorage) {
     var jobToEvent = function (job) {
       return {
         title: job.Map.name,
@@ -174,6 +174,9 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
     $scope.removeAttribute = function (index) {
       $scope.currentAgent.attributes.splice(index, 1);
     };
+
+
+    $scope.$storage = $localStorage;
 
   }]);
 
