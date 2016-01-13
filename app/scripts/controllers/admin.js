@@ -157,7 +157,23 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
         $scope.cronJobs.splice($scope.currentCronJobIndex, 1);
         $scope.currentCronJob={};
       })
-    }
+    };
+
+    $scope.AddAttribute = function(){
+      if (!$scope.currentAgent.attributes)
+        $scope.currentAgent.attributes = [];
+
+      $scope.inserted = {
+        name: '',
+        value: ''
+      };
+      $scope.currentAgent.attributes.push($scope.inserted);
+    };
+
+    $scope.removeAttribute = function (index) {
+      $scope.currentAgent.attributes.splice(index, 1);
+    };
+
   }]);
 
 
