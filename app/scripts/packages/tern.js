@@ -224,7 +224,7 @@ var baseURI = "http://localhost:8080";
     var map_str = "map: " + copiedScope.getValue();
     var servers_str = "servers: "+ ts.servers;
     var pm_str = "var pm = { " + map_str + "," + servers_str + "};";
-    copiedScope.setValue('var map = ' + copiedScope.getValue() + ';\n' + ts.libPMCode);
+    copiedScope.setValue('var map = ' + copiedScope.getValue() + ';\n' + 'var currentAgent = {name: "", url: "", dedicatedAgents: [{type: "", url: ""}], attributes:[{name:"", value:""}]}' + ts.libPMCode);
     ts.request(cm, {type: "completions", types: true, docs: true, urls: true}, function(error, data) {
       if (error) return showError(ts, cm, error);
       ts.request(copiedScope, {type: "completions", types: true, docs: true, urls: true}, function(err, scopeData) {
