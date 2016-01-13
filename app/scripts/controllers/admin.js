@@ -7,8 +7,8 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', 'JobsService', 'BaseAgentService',
-  function ($scope, $modalInstance, projects, JobsService, BaseAgentService) {
+angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', 'JobsService', 'BaseAgentService', 'blockFactory',
+  function ($scope, $modalInstance, projects, JobsService, BaseAgentService, blockFactory) {
     var jobToEvent = function (job) {
       return {
         title: job.Map.name,
@@ -121,6 +121,7 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
     /*-------------------------------------------- Base Agents Functions ----------------------------------*/
 
     $scope.currentAgent = {};
+    $scope.currentAgent.dedicatedAgents = blockFactory.all(true);
     $scope.baseAgents = [];
     BaseAgentService.getAgents().then(function (res) {
       $scope.baseAgents = res.data;

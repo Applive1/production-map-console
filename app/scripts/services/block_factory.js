@@ -115,8 +115,12 @@ angular.module('productionMapConsoleApp')
     // Public API here
 
     var blocks_names = {};
+    var dedicated_types = [];
     return {
       all: function(cb){
+        if(cb === true){
+            return dedicated_types;
+        }
         var deferred = $q.defer();
         $http.get(consts.serverUrl + "dedicatedAgent").then(
             function(msg){
@@ -126,6 +130,10 @@ angular.module('productionMapConsoleApp')
                     drag_blocks.push({
                         img_url: block.imgUrl,
                         text: block.type
+                    });
+                    dedicated_types.push({
+                        type: block.type,
+                        url: ''
                     });
                 }
                 deferred.resolve({
