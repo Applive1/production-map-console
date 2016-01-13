@@ -141,6 +141,25 @@
         <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
 
         <div class="table-responsive">
+          <span>Dedicated Agents</span>
+          <table class="table">
+            <tr style="font-weight: bold">
+              <td style="width:40%">Type</td>
+              <td style="width:60%">URL</td>
+            </tr>
+            <tr data-ng-repeat="dedicatedAgent in currentAgent.dedicatedAgents track by $index">
+              <td>
+                <span >
+                  {{ dedicatedAgent.type }}
+                </span>
+              </td>
+              <td>
+                <input type="text" placeholder="dedicated Agent URL" ng-model="dedicatedAgent.url" class="form-control"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-responsive">
           <span>Attributes</span>
           <table class="table">
             <tr style="font-weight: bold">
