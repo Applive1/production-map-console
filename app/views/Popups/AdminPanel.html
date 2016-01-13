@@ -123,22 +123,71 @@
     <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
   </div>
   <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
-    <div class="col-md-8">
+    <div class="col-md-5">
       <h3>Base Agents</h3>
 
-      <div class="col-md-5 BaseAgent" ng-class="{'col-md-offset-1':$odd}"
+      <div class="col-md-12 BaseAgent"
            ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
         <span>Name : {{agent.name}}</span>
         <span>Url : {{agent.url}}</span>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-7">
       <i class="glyphicon glyphicon-plus-sign ng-hide plus" ng-show="currentAgent.id"
          ng-click="setCurrentAgent({})"></i>
 
       <div class="popupBox">
         <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
         <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
+
+        <div class="table-responsive">
+          <span>Attributes</span>
+          <table class="table">
+            <tr style="font-weight: bold">
+              <td style="width:40%">Name</td>
+              <td style="width:40%">Value</td>
+              <td style="width:20%"></td>
+            </tr>
+            <tr data-ng-repeat="attribute in currentAgent.attributes track by $index">
+              <td>
+                <!-- editable name (text with validation) -->
+                <span editable-text="attribute.name" e-name="name" e-form="rowform"
+                      onbeforesave="checkName($data, attribute)" e-required>
+                  {{ attribute.name || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <!-- editable status (select-local) -->
+                <span editable-text="attribute.value" e-name="value" e-form="rowform" onbeforesave="checkValue($data)"
+                      e-required>
+                  {{ attribute.value || 'empty' }}
+                </span>
+              </td>
+              <td style="white-space: nowrap">
+                <!-- form -->
+                <form editable-form name="rowform" ng-show="rowform.$visible"
+                      class="form-buttons form-inline" shown="inserted == attribute"
+                      onaftersave="saveAttribute(attribute)">
+                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                    save
+                  </button>
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="removeAttribute($index)"
+                          class="btn btn-default">
+                    cancel
+                  </button>
+                </form>
+                <div ng-show="!rowform.$visible">
+                  <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                  <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <button class="btn btn-default" ng-click="AddAttribute()">
+          Add Attribute
+        </button>
+
         <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update
         </button>
         <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create

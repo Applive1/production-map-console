@@ -392,6 +392,7 @@ angular.module('productionMapConsoleApp')
         value: ''
       };
       $scope.attributes.push($scope.inserted);
+
     };
 
     $scope.removeAttribute = function (index) {
