@@ -138,13 +138,16 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
       if(dedicatedAgents.length !== agent.dedicatedAgents.length){
         for (var i = dedicatedAgents.length - 1; i >= 0; i--) {
           var dedicated = dedicatedAgents[i];
-          for (var i = agent.dedicatedAgents.length - 1; i >= 0; i--) {
-            var cAgent = agent.dedicatedAgents[i];
-            if(cAgent.type !== dedicated.type){
-              agent.push(dedicated);
+          for (var j = agent.dedicatedAgents.length - 1; j >= 0; j--) {
+            var cAgent = agent.dedicatedAgents[j];
+            if(cAgent.type === dedicated.type){
+              break;
             }
-          };
-        };
+          }
+          if(j === -1){
+            agent.dedicatedAgents.push(dedicated);
+          }
+        }
       }
       $scope.currentAgent = agent;
     }
