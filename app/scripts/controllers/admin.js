@@ -134,12 +134,24 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
     };
 
     $scope.setCurrentAgent = function (agent) {
+      var dedicatedAgents = blockFactory.all(true);
+      if(dedicatedAgents.length !== agent.dedicatedAgents.length){
+        for (var i = dedicatedAgents.length - 1; i >= 0; i--) {
+          var dedicated = dedicatedAgents[i];
+          for (var i = agent.dedicatedAgents.length - 1; i >= 0; i--) {
+            var cAgent = agent.dedicatedAgents[i];
+            if(cAgent.type !== dedicated.type){
+              agent.push(dedicated);
+            }
+          };
+        };
+      }
       $scope.currentAgent = agent;
     }
 
     $scope.updateBaseAgent = function () {
       BaseAgentService.updateAgent($scope.currentAgent).then(function (res) {
-      })
+      });
     }
 
     /*-------------------------------------------- Base Agents Functions ----------------------------------*/
