@@ -109,8 +109,8 @@
 <!-- endbuild -->
 
 <!-- user libs -->
-<script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
-<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>
+<script src="scripts/packages/jshint.js"></script>
+<script src="scripts/packages/jsonlint.js"></script>
 <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
 <script src="bower_components/codemirror/addon/lint/lint.js"></script>
 <script src="bower_components/codemirror/addon/lint/javascript-lint.js"></script>
@@ -133,16 +133,16 @@
 <script type="text/javascript">
     io.sails.autoConnect = false;
 </script>
-<script src="http://ternjs.net/node_modules/acorn/dist/acorn.js"></script>
-<script src="http://ternjs.net/node_modules/acorn/dist/acorn_loose.js"></script>
-<script src="http://ternjs.net/node_modules/acorn/dist/walk.js"></script>
-<script src="http://ternjs.net/doc/demo/polyfill.js"></script>
-<script src="http://ternjs.net/lib/signal.js"></script>
-<script src="http://ternjs.net/lib/tern.js"></script>
-<script src="http://ternjs.net/lib/def.js"></script>
-<script src="http://ternjs.net/lib/comment.js"></script>
-<script src="http://ternjs.net/lib/infer.js"></script>
-<script src="http://ternjs.net/plugin/doc_comment.js"></script>
+<script src="scripts/packages/ternjs/acorn.js"></script>
+<script src="scripts/packages/ternjs/acorn_loose.js"></script>
+<script src="scripts/packages/ternjs/walk.js"></script>
+<script src="scripts/packages/ternjs/polyfill.js"></script>
+<script src="scripts/packages/ternjs/signal.js"></script>
+<script src="scripts/packages/ternjs/tern.js"></script>
+<script src="scripts/packages/ternjs/def.js"></script>
+<script src="scripts/packages/ternjs/comment.js"></script>
+<script src="scripts/packages/ternjs/infer.js"></script>
+<script src="scripts/packages/ternjs/doc_comment.js"></script>
 <!-- end user libs -->
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
@@ -196,6 +196,6 @@
 <script src="scripts/services/extract_and_parse.js"></script>
 <script src="scripts/services/methodsservice.js"></script>
 <!-- endbuild -->
-<script data-require="jszip@2.4.0" data-semver="2.4.0" src="https://cdn.rawgit.com/Stuk/jszip/v2.4.0/dist/jszip.js"></script>
+<script data-require="jszip@2.4.0" data-semver="2.4.0" src="scripts/packages/jszip.js"></script>
 </body>
 </html>
