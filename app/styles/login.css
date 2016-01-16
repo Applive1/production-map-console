@@ -64,6 +64,7 @@
     border: 5px solid #fff;
     border-radius: 50%;
     transition: all ease-in-out 500ms;
+    outline:0;
 }
 .login-form-1 .login-button:hover {
     color: #555555;
