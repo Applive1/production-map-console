@@ -104,14 +104,6 @@ body {
   background-color: #93cede !important;
 }
 
-.logo {
-  position: absolute;
-  left: 50%;
-  margin-right: 154px;
-  top: 5px;
-  cursor: pointer;
-}
-
 .pm-logo {
   background-image: url("../images/pm-logo.png");
   background-repeat: no-repeat;
@@ -119,6 +111,8 @@ body {
   height: 30px;
   width: 154px;
   display: block;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
 .pm-header {
@@ -126,6 +120,7 @@ body {
   height: 40px;
   display: block;
   width: 100%;
+  padding-top: 5px;
 }
 
 .pm-header-row {
