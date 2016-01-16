@@ -361,7 +361,7 @@ angular.module('productionMapConsoleApp')
     });
 
     Socket.on('serverError', function (msg) {
-      Messages.addError(msg.err.code);
+      Messages.addError(msg);
       $scope.$digest();
     });
 
