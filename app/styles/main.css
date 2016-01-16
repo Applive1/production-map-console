@@ -622,3 +622,10 @@ svg:not(:root){
   min-height:100% !important;
   min-width:100% !important;
 }
+
+.ErrorSpan{
+  text-align: center;
+  font-size: 18px;
+  margin-top: 10px;
+  color: red;
+}

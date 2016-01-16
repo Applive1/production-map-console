@@ -212,9 +212,12 @@
         </button>
         <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create
         </button>
+        <button ng-show="currentAgent.id" class="ng-hide btn btn-danger" ng-click="deleteBaseAgent()">Delete Agent
+        </button>
       </div>
     </div>
   </div>
+  <span class="col-md-12 ErrorSpan">{{ErrorMeesage}}</span>
   <div class="col-md-12" ng-show="view==3" class="ng-hide" style="padding-top: 20px">
     <div class="col-md-12">
       <h3>Repeated Cron Jobs</h3>

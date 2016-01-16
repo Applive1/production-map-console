@@ -120,12 +120,16 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
 
     /*-------------------------------------------- Base Agents Functions ----------------------------------*/
 
-    $scope.currentAgent = {};
-    $scope.currentAgent.dedicatedAgents = blockFactory.all(true);
+    $scope.currentAgent = {
+      dedicatedAgents : blockFactory.all(true)
+    };
+    $scope.currentAgentIndex = null;
     $scope.baseAgents = [];
+
     BaseAgentService.getAgents().then(function (res) {
       $scope.baseAgents = res.data;
     })
+
     $scope.addBaseAgent = function () {
       BaseAgentService.addAgent($scope.currentAgent).then(function (res) {
         $scope.baseAgents.push(res.data);
@@ -133,8 +137,10 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
       })
     };
 
-    $scope.setCurrentAgent = function (agent) {
+    $scope.setCurrentAgent = function (agent, index) {
       var dedicatedAgents = blockFactory.all(true);
+      $scope.currentAgentIndex = index;
+      if (!agent.dedicatedAgents) agent.dedicatedAgents=[];
       if(dedicatedAgents.length !== agent.dedicatedAgents.length){
         for (var i = dedicatedAgents.length - 1; i >= 0; i--) {
           var dedicated = dedicatedAgents[i];
@@ -154,6 +160,18 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
 
     $scope.updateBaseAgent = function () {
       BaseAgentService.updateAgent($scope.currentAgent).then(function (res) {
+      });
+    }
+
+    $scope.deleteBaseAgent= function (index) {
+      BaseAgentService.deleteAgent($scope.currentAgent.id).then(function (res) {
+        $scope.baseAgents.splice($scope.currentAgentIndex,1);
+        $scope.currentAgentIndex = null;
+        $scope.currentAgent = {
+          dedicatedAgents : blockFactory.all(true)
+        };
+      },function(err){
+        $scope.ErrorMeesage =  err.data;
       });
     }
 
