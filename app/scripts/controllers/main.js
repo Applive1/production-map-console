@@ -8,7 +8,8 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
+  .controller('MainCtrl', ['$scope', 'Messages', 'Popups', 'ProjectsService', 'AuthService', 'MapsService', 'Processes', '$timeout', 'Socket', 'consts', 'blockFactory', '$localStorage',
+    function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
 
     $scope.mapLoaded = false;
     $scope.attributes = [];
@@ -452,5 +453,4 @@ angular.module('productionMapConsoleApp')
     $scope.zoomMap = function(type){
       $scope.$broadcast('zoomMap', {type:type});
     };
-  })
-;
+  }]);
