@@ -23,7 +23,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
       $scope.graph = [];
       var localViewMode = 1;
 
-      $scope.updateModel=function() {
+      $scope.updateModel = function () {
         // Save the cells in arrays
         var elementos = $scope.graph.getElements();
         var links = $scope.graph.getLinks();
@@ -55,6 +55,15 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         return true;
       }
 
+      var graphScale = 1,
+        paperScale = function (sx, sy) {
+          $scope.paper.scale(sx, sy);
+          var newSize = V($scope.paper.viewport).bbox();
+          $($scope.paper.svg).width(newSize.x + newSize.width + 100);
+          $($scope.paper.svg).height(newSize.y + newSize.height + 100);
+        };
+
+
       function loadMap() {
         // Clear the graph (Genius .__.)
         $scope.graph.clear();
@@ -74,18 +83,19 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
             $scope.map.isLocked = ($scope.map.versionIndex != $scope.map.versions.length - 1);
 
+            paperScale(graphScale, graphScale);
           }, 100);
         } catch (e) {
           console.log(e);
         }
       }
 
-      $scope.removeNode = function(cellView) {
+      $scope.removeNode = function (cellView) {
         var blockName = cellView.model.attr('text/text'),
-            elementId = $scope.map.mapView.nodes[blockName].id;
+          elementId = $scope.map.mapView.nodes[blockName].id;
 
         $scope.graph.getElements().forEach(function (cell) {
-          if (cell.id==elementId)
+          if (cell.id == elementId)
             cell.remove();
         });
 
@@ -93,27 +103,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           return (link.sourceId != elementId && link.targetId != elementId);
         });
 
-        /*$scope.graph.getLinks().forEach(function (link) {
-          if (link.prop('source/id')==elementId || link.prop('target/id')==elementId)
-            link.remove();
-        });*/
-
-
         delete $scope.map.mapView.nodes[blockName];
-
-        /*var content = JSON.parse($scope.map.mapView.content);
-
-        content.nodes = content.nodes.filter(function (node) {
-          return node.id!=elementId;
-        })
-
-        if($scope.map.mapView.hasOwnProperty('content')){
-          try{
-            $scope.map.mapView.content = JSON.stringify(content);
-          }catch(e){
-            console.log(e);
-          }
-        }*/
 
         removeLinks();
       }
@@ -254,16 +244,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           model: $scope.graph
         });
 
-        //V($scope.paper.svg).attr({viewBox: "0 0 800 500"});
-        var graphScale = 1;
-        var paperScale = function (sx, sy) {
-          $scope.paper.scale(sx, sy);
-          var newSize = V($scope.paper.viewport).bbox();
-          $($scope.paper.svg).width(newSize.x + newSize.width+100);
-          $($scope.paper.svg).height(newSize.y + newSize.height+100);
-        };
-
-        var paperResize = function(sx, sy){
+        var paperResize = function (sx, sy) {
           $scope.paper.resize(sx, sy);
         }
 
@@ -505,26 +486,26 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               }
             });
             $scope.graph.addCell(block);
-            block.on('change:position', function(evt, pos, y) {
-                console.log(pos);
-                var my_width = block.attributes.size.width;
-                var my_height = block.attributes.size.height;
-                if(pos.x + my_width >= $scope.innerWidth){
-                  $scope.innerWidth = pos.x + my_width;
-                  // paperResize($scope.innerWidth, $scope.innerHeight);
-                  $scope.paper.fitToContent({
-                      minWidth: $scope.innerWidth,
-                      minHeight: $scope.innerHeight
-                  });
-                }
-                if(pos.y + my_height >= $scope.innerHeight){
-                  $scope.innerHeight = pos.y + my_height;
-                  // paperResize($scope.innerWidth, $scope.innerHeight);
-                  $scope.paper.fitToContent({
-                      minWidth: $scope.innerWidth,
-                      minHeight: $scope.innerHeight
-                  });
-                }
+            block.on('change:position', function (evt, pos, y) {
+              console.log(pos);
+              var my_width = block.attributes.size.width;
+              var my_height = block.attributes.size.height;
+              if (pos.x + my_width >= $scope.innerWidth) {
+                $scope.innerWidth = pos.x + my_width;
+                // paperResize($scope.innerWidth, $scope.innerHeight);
+                $scope.paper.fitToContent({
+                  minWidth: $scope.innerWidth,
+                  minHeight: $scope.innerHeight
+                });
+              }
+              if (pos.y + my_height >= $scope.innerHeight) {
+                $scope.innerHeight = pos.y + my_height;
+                // paperResize($scope.innerWidth, $scope.innerHeight);
+                $scope.paper.fitToContent({
+                  minWidth: $scope.innerWidth,
+                  minHeight: $scope.innerHeight
+                });
+              }
             });
             $scope.map.mapView.nodes[name] = {
               id: block.id,
@@ -566,12 +547,12 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
       init();
 
-      $scope.$on('loadDesignerMap', function(event, args) {
+      $scope.$on('loadDesignerMap', function (event, args) {
         loadMap();
       });
 
-      $scope.$on('zoomMap', function(event, args) {
-        if (args.type==1)  $scope.zoomIn();
+      $scope.$on('zoomMap', function (event, args) {
+        if (args.type == 1)  $scope.zoomIn();
         else $scope.zoomOut();
       });
 
@@ -592,7 +573,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         });
 
         var content;
-        if($scope.map.mapView.content === ''){
+        if ($scope.map.mapView.content === '') {
           return;
         }
         content = JSON.parse($scope.map.mapView.content);
@@ -604,10 +585,10 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           return false;
         })
 
-        if($scope.map.mapView.hasOwnProperty('content')){
-          try{
+        if ($scope.map.mapView.hasOwnProperty('content')) {
+          try {
             $scope.map.mapView.content = JSON.stringify(content);
-          }catch(e){
+          } catch (e) {
             console.log(e);
           }
         }
