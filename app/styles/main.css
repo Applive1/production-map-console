@@ -524,6 +524,11 @@ body {
   background-color: #808080;
 }
 
+tr.danger > td {
+  color: black !important;
+  background-color: #EDA6A6 !important;
+}
+
 .marker-vertices {
   display: none
 }

@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', function ($scope, $http, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
+  .controller('MainCtrl', function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
 
     $scope.mapLoaded = false;
     $scope.attributes = [];
@@ -360,6 +360,11 @@ angular.module('productionMapConsoleApp')
       $scope.$digest();
     });
 
+    Socket.on('serverError', function (msg) {
+      Messages.addError(msg.err.code);
+      $scope.$digest();
+    });
+
     $scope.checkName = function (name, attribute) {
       if (!name || name === '' || name === 'empty') {
         return "name can't be empty!";
@@ -446,6 +451,6 @@ angular.module('productionMapConsoleApp')
 
     $scope.zoomMap = function(type){
       $scope.$broadcast('zoomMap', {type:type});
-    }
+    };
   })
 ;

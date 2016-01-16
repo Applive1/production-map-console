@@ -16,6 +16,10 @@ angular.module('productionMapConsoleApp')
         var now = new Date().toString();
         messages.push({id:messages.length, date: now, content: msg});
       },
+      addError: function (msg) {
+        var now = new Date().toString();
+        messages.push({id:messages.length, date: now, content: msg, isErr:true});
+      },
       clear: function(){
         messages.splice(0,messages.length);
       },

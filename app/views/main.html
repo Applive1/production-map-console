@@ -178,7 +178,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr data-ng-repeat="message in messages | orderBy:'date'" data-ng-dblclick="showMessage(message)">
+      <tr data-ng-repeat="message in messages | orderBy:'date'" ng-class="{danger:message.isErr}" data-ng-dblclick="showMessage(message)">
         <td>{{message.date}}</td>
         <td class="cell-ellipsis">{{message.content}}</td>
       </tr>
