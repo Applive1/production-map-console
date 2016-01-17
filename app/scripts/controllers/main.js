@@ -14,7 +14,9 @@ angular.module('productionMapConsoleApp')
     $scope.mapLoaded = false;
     $scope.attributes = [];
     $scope.$storage = $localStorage;
-    $scope.$storage.agentsToExecute = {};
+    if(!$scope.$storage.agentsToExecute){
+      $scope.$storage.agentsToExecute = {};
+    }
 
     /* Listen on the ctrl-s event and save map at server! */
     document.addEventListener("keydown", function(e) {
