@@ -128,13 +128,12 @@ angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$m
 
     BaseAgentService.getAgents().then(function (res) {
       $scope.baseAgents = res.data;
-    })
-
+    });
     $scope.addBaseAgent = function () {
       BaseAgentService.addAgent($scope.currentAgent).then(function (res) {
         $scope.baseAgents.push(res.data);
         $scope.currentAgent = $scope.baseAgents[$scope.baseAgents.length - 1];
-      })
+      });
     };
 
     $scope.setCurrentAgent = function (agent, index) {
