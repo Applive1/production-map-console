@@ -31,6 +31,7 @@ angular.module('productionMapConsoleApp')
     $scope.init = function () {
       $scope.mainContainerEl = angular.element(document.querySelector('#mainContent'));
       $scope.footerContainerEl = angular.element(document.querySelector('#messages'));
+      $scope.footerContainerEl.height($scope.footerContainerEl.height());
 
       $scope.mapsListEl = angular.element(document.querySelector('#pm-maps'));
       $scope.mapsItemsListEl = angular.element(document.querySelector('#pm-map-items'));
