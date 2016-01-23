@@ -25,6 +25,8 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  grunt.loadNpmTasks('grunt-include-source');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -64,6 +66,10 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      includeSource: {
+        files: ['<%= yeoman.app %>/index.html'],
+        tasks: ['includeSource:server']
       }
     },
 
@@ -219,7 +225,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.dist %>/index.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -405,6 +411,38 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    app: {
+      // Application variables
+      scripts: [
+        // JS files to be included by includeSource task into index.html
+        'scripts/packages/**/*.js',
+        'bower_components/codemirror/**/*.js',
+        'scripts/app.js',
+        'scripts/constants/**/*.js',
+        'scripts/services/**/*.js',
+        'scripts/filters/**/*.js',
+        'scripts/directives/**/*.js',
+        'scripts/controllers/**/*.js'
+      ]
+    },
+
+    includeSource: {
+      options: {
+        basePath: 'app',
+        baseUrl: '/',
+      },
+      server: {
+        files: {
+          '.tmp/index.html': '<%= yeoman.app %>/index.html'
+        }
+      },
+      dist: {
+        files: {
+          '<%= yeoman.dist %>/index.html': '<%= yeoman.app %>/index.html'
+        }
+      }
     }
   });
 
@@ -417,6 +455,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'includeSource',
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
@@ -440,7 +479,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'includeSource:dist',
     'wiredep',
+    'includeSource',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

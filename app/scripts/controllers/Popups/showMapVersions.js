@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', function ($scope, $modalInstance,map) {
+angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', ['$scope', '$modalInstance','map',function ($scope, $modalInstance,map) {
 
     $scope.map = map;
 
@@ -12,4 +12,4 @@ angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', function
         $modalInstance.close(index);
     }
 
-});
+}]);

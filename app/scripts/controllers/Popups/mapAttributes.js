@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('mapAttributesCtrl',function ($scope, $modalInstance, map) {
+  .controller('mapAttributesCtrl',['$scope', '$modalInstance', 'map',function ($scope, $modalInstance, map) {
   	$scope.map = map;
   	$scope.attributes = [];
     for(var key in map.attributes){
@@ -40,4 +40,4 @@ angular.module('productionMapConsoleApp')
 	    $scope.attributes.splice(index, 1);
 	 };
 
-  });
+  }]);

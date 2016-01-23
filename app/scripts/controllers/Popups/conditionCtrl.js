@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('conditionCtrl',function ($scope, $modalInstance, $timeout, condition) {
+  .controller('conditionCtrl',['$scope', '$modalInstance', '$timeout', 'condition',function ($scope, $modalInstance, $timeout, condition) {
 
   	function init(){
   		var orig = CodeMirror.hint.javascript;
@@ -95,4 +95,4 @@ angular.module('productionMapConsoleApp')
     $timeout(function() {
         init();
     }, 0);
-  });
+  }]);

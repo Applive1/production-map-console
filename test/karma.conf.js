@@ -63,6 +63,8 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
       'bower_components/angular-cron-jobs/dist/angular-cron-jobs.min.js',
       'bower_components/ngstorage/ngStorage.js',
+      'bower_components/sails.io.js/dist/sails.io.js',
+      'bower_components/angular-sails/dist/angular-sails.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

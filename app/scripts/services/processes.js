@@ -8,7 +8,7 @@
  * Factory in the productionMapConsoleApp.
  */
 angular.module('productionMapConsoleApp')
-    .factory('Processes', function ($http, $q, consts) {
+    .factory('Processes',['$http', '$q', 'consts', function ($http, $q, consts) {
         // Service Logic
 
         var processes = {};
@@ -53,9 +53,6 @@ angular.module('productionMapConsoleApp')
         return {
             get: getProcess,
             set: function(map){
-                console.log(map);
-                console.log(map.nodes);
-                console.log(map.links);
                 processes = {};
                 for(var i=0; i < map.links.length; i++){
                     var link = map.links[i];
@@ -65,7 +62,6 @@ angular.module('productionMapConsoleApp')
                         size: link.processes.length
                     };
                 }
-                console.log(processes);
             },
             all: function(link_id) {
                 if(!processes.hasOwnProperty(link_id)){
@@ -135,4 +131,4 @@ angular.module('productionMapConsoleApp')
                 return $http.post(TEST_ACTION_URL, action);
             }
         };
-    });
+    }]);

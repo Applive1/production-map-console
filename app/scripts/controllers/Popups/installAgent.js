@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('installAgentCtrl',function ($scope, $modalInstance, extractAndParse, blockFactory) {
+  .controller('installAgentCtrl',['$scope', '$modalInstance', 'extractAndParse', 'blockFactory',function ($scope, $modalInstance, extractAndParse, blockFactory) {
     $scope.handleFiles = function (files) {
 	    $scope.error = null;
 
@@ -30,4 +30,4 @@ angular.module('productionMapConsoleApp')
             });
     	}
     }
-  });
+  }]);
