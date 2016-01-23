@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProjectsAndMapsCtrl', function ($scope, $modalInstance, ProjectsService, MapsService, data) {
+angular.module('productionMapConsoleApp').controller('ProjectsAndMapsCtrl', ['$scope', '$modalInstance', 'ProjectsService', 'MapsService', 'data',function ($scope, $modalInstance, ProjectsService, MapsService, data) {
 
     $scope.data = data;
     $scope.model = {};
@@ -20,4 +20,4 @@ angular.module('productionMapConsoleApp').controller('ProjectsAndMapsCtrl', func
             });
 
     };
-});
+}]);

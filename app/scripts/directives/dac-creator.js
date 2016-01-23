@@ -71,6 +71,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
 
           // Wait 1s and add the cells
           $timeout(function () {
+            if (!$scope.map.mapView.content) return;
             var model = JSON.parse($scope.map.mapView.content);
 
             for (var i = 0; i < model.nodes.length; i++) {

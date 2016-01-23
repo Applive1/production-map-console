@@ -31,7 +31,7 @@
 
     <!-- endbuild -->
 </head>
-<body ng-app="productionMapConsoleApp">
+<body ng-app="productionMapConsoleApp" ng-strict-di>
 <!--[if lte IE 8]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -47,7 +47,7 @@
 </div>
 
 
-<!-- Google Analytics: change UA-XXXXX-Xcom to be your site's ID -->
+<!-- Google Analytics: change UA-XXXXX-Xcom to be your site's ID
 <script>
     !function (A, n, g, u, l, a, r) {
         A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
@@ -58,7 +58,7 @@
 
     ga('create', 'UA-XXXXX-X');
     ga('send', 'pageview');
-</script>
+</script>-->
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
@@ -103,29 +103,58 @@
 <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
 <script src="bower_components/angular-cron-jobs/dist/angular-cron-jobs.min.js"></script>
 <script src="bower_components/ngstorage/ngStorage.js"></script>
+<script src="bower_components/sails.io.js/dist/sails.io.js"></script>
+<script src="bower_components/angular-sails/dist/angular-sails.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
+<!-- include: "type": "js", "files": "scripts/packages/*.js" -->
+
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/acorn.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/acorn_loose.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/walk.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/polyfill.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/signal.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/tern.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/def.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/comment.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/infer.js" -->
+<!-- include: "type": "js", "files": "scripts/packages/ternjs/doc_comment.js" -->
+
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/hint/show-hint.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/lint/lint.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/lint/javascript-lint.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/lint/json-lint.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/search/searchcursor.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/search/search.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/dialog/dialog.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/edit/matchbrackets.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/edit/closebrackets.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/comment/comment.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/wrap/hardwrap.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/fold/foldcode.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/fold/brace-fold.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/mode/javascript/javascript.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/keymap/sublime.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/addon/dialog/dialog.js" -->
+<!-- include: "type": "js", "files": "../bower_components/codemirror/mode/yaml/yaml.js" -->
+
+<!-- include: "type": "js", "files": "scripts/app.js" -->
+
+<!-- include: "type": "js", "files": "scripts/constants/**/*.js" -->
+
+<!-- include: "type": "js", "files": "scripts/services/**/*.js" -->
+
+<!-- include: "type": "js", "files": "scripts/filters/**/*.js" -->
+
+<!-- include: "type": "js", "files": "scripts/directives/**/*.js" -->
+
+<!-- include: "type": "js", "files": "scripts/controllers/**/*.js" -->
+
+
 <!-- user libs -->
-<script src="scripts/packages/jshint.js"></script>
+<!--<script src="scripts/packages/jshint.js"></script>
 <script src="scripts/packages/jsonlint.js"></script>
-<script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
-<script src="bower_components/codemirror/addon/lint/lint.js"></script>
-<script src="bower_components/codemirror/addon/lint/javascript-lint.js"></script>
-<script src="bower_components/codemirror/addon/lint/json-lint.js"></script>
-<script src="bower_components/codemirror/addon/search/searchcursor.js"></script>
-<script src="bower_components/codemirror/addon/search/search.js"></script>
-<script src="bower_components/codemirror/addon/dialog/dialog.js"></script>
-<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
-<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
-<script src="bower_components/codemirror/addon/comment/comment.js"></script>
-<script src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
-<script src="bower_components/codemirror/addon/fold/foldcode.js"></script>
-<script src="bower_components/codemirror/addon/fold/brace-fold.js"></script>
-<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-<script src="bower_components/codemirror/keymap/sublime.js"></script>
-<script src="bower_components/codemirror/addon/dialog/dialog.js"></script>
-<script src="bower_components/codemirror/mode/yaml/yaml.js"></script>
 <script src="scripts/packages/tern.js"></script>
 <script src="scripts/packages/sails.io.js"></script>
 <script type="text/javascript">
@@ -142,7 +171,7 @@
 <script src="scripts/packages/ternjs/infer.js"></script>
 <script src="scripts/packages/ternjs/doc_comment.js"></script>
 <!-- end user libs -->
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!-- build:js({.tmp,app}) scripts/scripts.js
 <script src="scripts/app.js"></script>
 
 <script src="scripts/services/processes.js"></script>
@@ -193,7 +222,7 @@
 <script src="scripts/directives/drop_files.js"></script>
 <script src="scripts/services/extract_and_parse.js"></script>
 <script src="scripts/services/methodsservice.js"></script>
-<!-- endbuild -->
-<script data-require="jszip@2.4.0" data-semver="2.4.0" src="scripts/packages/jszip.js"></script>
+<!-- endbuild
+<script data-require="jszip@2.4.0" data-semver="2.4.0" src="scripts/packages/jszip.js"></script>-->
 </body>
 </html>

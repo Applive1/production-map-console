@@ -8,7 +8,7 @@
  * Factory in the productionMapConsoleApp.
  */
 angular.module('productionMapConsoleApp')
-  .factory('blockFactory', function ($http, $q, consts, Socket) {
+  .factory('blockFactory', ['$http', '$q', 'consts',function ($http, $q, consts) {
     var blocks = [];
     var drag_blocks = [];
     // var blocks = {
@@ -204,4 +204,4 @@ angular.module('productionMapConsoleApp')
         }
       }
     };
-  });
+  }]);

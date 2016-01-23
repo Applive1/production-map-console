@@ -8,8 +8,8 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', ['$scope', 'Messages', 'Popups', 'ProjectsService', 'AuthService', 'MapsService', 'Processes', '$timeout', 'Socket', 'consts', 'blockFactory', '$localStorage',
-    function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, Socket, consts, blockFactory, $localStorage) {
+  .controller('MainCtrl', ['$scope', 'Messages', 'Popups', 'ProjectsService', 'AuthService', 'MapsService', 'Processes', '$timeout', '$sails', 'consts', 'blockFactory', '$localStorage',
+    function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, $sails, consts, blockFactory, $localStorage) {
 
     $scope.mapLoaded = false;
     $scope.attributes = [];
@@ -356,7 +356,7 @@ angular.module('productionMapConsoleApp')
       });
     }
 
-    Socket.on('update', function (msg) {
+      $sails.on('update', function (msg) {
       Messages.add(msg);
       console.log("***** got push *****");
       console.log(msg);
@@ -364,7 +364,7 @@ angular.module('productionMapConsoleApp')
       $scope.$digest();
     });
 
-    Socket.on('serverError', function (msg) {
+      $sails.on('serverError', function (msg) {
       Messages.addError(msg);
       $scope.$digest();
     });
