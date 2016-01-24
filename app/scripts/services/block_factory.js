@@ -185,9 +185,11 @@ angular.module('productionMapConsoleApp')
             methods: methods,
             imgUrl: imgUrl
         }
-        $http.post(consts.serverUrl + "dedicatedAgent", server).then(function(resData){
+        $http.post(consts.serverUrl + "dedicatedAgent", server).success(function(resData){
             blocks.push(server);
             deferred.resolve(resData);
+        }).error(function(err){
+            console.log("");
         });
 
         return deferred.promise;

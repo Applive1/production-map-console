@@ -78,7 +78,10 @@
             <input type="checkbox" ng-model="action.params[param.name].code"/>
         </td>
         <td>
-            <input ng-class="{pm_code_text: action.params[param.name].code === true}" type="text" placeholder="enter value..." data-ng-model="action.params[param.name].text" />
+            <input data-ng-if="param.type !== 'collection' || action.params[param.name].code === true" ng-class="{pm_code_text: action.params[param.name].code === true}" type="text" placeholder="enter value..." data-ng-model="action.params[param.name].text" />
+            <select data-ng-if="showCollection(param)" class="form-control" ng-options="opt.id as opt.name for opt in param.options track by opt.id" data-ng-model="action.params[param.name].text" ng-change="getMethods(action.server.type)">
+            <option value=""> ---select option ---</option>
+            </select>
         </td>
       </tr>
       </table>

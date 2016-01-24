@@ -56,6 +56,13 @@ angular.module('productionMapConsoleApp')
             $scope.methods = methods;
         });
     }
-
+    $scope.showCollection = function(param){
+        try{
+            return param.type === 'collection' && ((!action.params[param.name].code) || (action.params[param.name].code  === false));
+        } catch(e) {
+            console.log(e);
+            return true;
+        }
+    }
     init();
   });
