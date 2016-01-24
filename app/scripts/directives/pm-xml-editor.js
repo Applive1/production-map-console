@@ -17,7 +17,8 @@ angular.module('productionMapConsoleApp')
         console.log("------------");
         $scope.jsonChange = false;
         $scope.contentChange = false;
-        var editor = CodeMirror.fromTextArea(document.getElementById("markup"), {
+
+        $scope.editorOptions = {
             lineNumbers: true,
             lineWrapping: true,
             mode: 'application/json',
@@ -32,8 +33,9 @@ angular.module('productionMapConsoleApp')
             gutters: ['CodeMirror-lint-markers', 'CodeMirror-foldgutter'],
             lint: true,
             autofocus: true
-          }),
-          updateEditor = function (newVal) {
+          };
+
+          var updateEditor = function (newVal) {
             var map = {
               nodes: newVal.nodes,
               links: newVal.links,
@@ -43,8 +45,8 @@ angular.module('productionMapConsoleApp')
             editor.setValue($scope.map_json);
             editor.refresh();
           };
-        editor.setSize('100%', $scope.height);
-        $scope.markup.cm = editor;
+        //editor.setSize('100%', $scope.height);
+        //$scope.markup.cm = editor;
         $scope.$watch('content', function (newVal, oldVal) {
           /*if ($scope.jsonChange) {
            $scope.jsonChange = false;
@@ -54,12 +56,12 @@ angular.module('productionMapConsoleApp')
           if ($scope.viewMode == localViewMode)
             return;
 
-          updateEditor(newVal);
+          //updateEditor(newVal);
         }, true);
-        $scope.$watchGroup(['map.id', 'map.versionIndex'], function (newValues, oldValues, scope) {
+        /*$scope.$watchGroup(['map.id', 'map.versionIndex'], function (newValues, oldValues, scope) {
           updateEditor($scope.content);
-        });
-        editor.on('change', function (instance) {
+        });*/
+        /*editor.on('change', function (instance) {
           var newValue = instance.getValue();
           if (newValue !== $scope.map_json) {
             $scope.map_json = newValue;
@@ -98,15 +100,15 @@ angular.module('productionMapConsoleApp')
             }
           }
         });
-        $scope.cmeditor = editor;
+        $scope.cmeditor = editor;*/
       }
 
       init();
-      $scope.$on('refreshCM', function (e) {
+      /*$scope.$on('refreshCM', function (e) {
         setTimeout(function () {
           $scope.cmeditor.refresh();
         }, 100);
-      });
+      });*/
     }];
     return {
       scope: {

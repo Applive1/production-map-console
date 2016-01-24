@@ -18,7 +18,7 @@ angular.module('productionMapConsoleApp', [
     'nvd3ChartDirectives',
     'mwl.calendar',
     'ui.bootstrap',
-    'ui.codemirror',
+    //'ui.codemirror',
     'xeditable',
     'ngDraggable',
     'LocalStorageModule',

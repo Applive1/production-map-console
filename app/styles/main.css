@@ -629,3 +629,8 @@ svg:not(:root){
   margin-top: 10px;
   color: red;
 }
+
+.fill-container, .CodeMirror{
+  width:100%;
+  height:100%;
+}

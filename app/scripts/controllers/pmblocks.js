@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('PmblocksCtrl',function ($scope, $modalInstance, server) {
+  .controller('PmblocksCtrl',['$scope', '$modalInstance', 'server',function ($scope, $modalInstance, server) {
   	$scope.server = server;
   	$scope.attributes = [];
   	for(var key in server.attributes){
@@ -40,4 +40,4 @@ angular.module('productionMapConsoleApp')
 	    $scope.attributes.splice(index, 1);
 	 };
 
-  });
+  }]);

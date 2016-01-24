@@ -573,11 +573,10 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           }
         });
 
-        var content;
-        if ($scope.map.mapView.content === '') {
+        if ($scope.map.mapView.content === '' || !$scope.map.mapView.content) {
           return;
         }
-        content = JSON.parse($scope.map.mapView.content);
+        var content = JSON.parse($scope.map.mapView.content);
 
         content.links = content.links.filter(function (link) {
           for (var i = 0, length = $scope.map.mapView.links.length; i < length; i++)

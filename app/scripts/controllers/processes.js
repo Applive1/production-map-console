@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link, Messages, map) {
+angular.module('productionMapConsoleApp').controller('ProcessesCtrl', ['$scope', '$modalInstance', 'Processes', 'Popups', 'link', 'Messages', 'map',function ($scope, $modalInstance, Processes, Popups, link, Messages, map) {
 
     $scope.process = {
         id: 0,
@@ -128,4 +128,4 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
             $scope.link.conditionCode = conditionCode;
         });
     };
-});
+}]);
