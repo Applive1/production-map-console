@@ -1,9 +1,7 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProcessesCtrl', ['$scope', '$uibModalInstance','$timeout', 'Popups', 'link', 'Messages', 'map', 'source','target',
-  function ($scope, $uibModalInstance,$timeout, Popups, link, Messages, map,source,target) {
-
-
+angular.module('productionMapConsoleApp').controller('ProcessesCtrl', ['$scope', '$uibModalInstance','$timeout', 'Popups', 'link', 'Messages', 'map', 'source','target','ProcessesService',
+  function ($scope, $uibModalInstance,$timeout, Popups, link, Messages, map,source,target,ProcessesService) {
 
     var newProc = function() {
       $scope.process = {
@@ -95,7 +93,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', ['$scope',
     }
 
     $scope.testProcess = function(){
-        Processes.testProcess({
+      ProcessesService.testProcess({
             process: $scope.process,
             map: map
         }).success(function (result) {
