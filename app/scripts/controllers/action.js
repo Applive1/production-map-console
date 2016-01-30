@@ -12,7 +12,7 @@ angular.module('productionMapConsoleApp')
     function ($scope, $uibModalInstance, blockFactory, link, Messages, map, source, target, action) {
       function init() {
 
-        $scope.action = action || {
+        $scope.action = action|| {
             server: '',
             method: '',
             params: {},
@@ -75,6 +75,7 @@ angular.module('productionMapConsoleApp')
           $scope.methods = methods;
         });
       }
+
       $scope.showCollection = function (param) {
         try {
           return param.type === 'collection' && ((!action.params[param.name].code) || (action.params[param.name].code === false));
@@ -83,5 +84,5 @@ angular.module('productionMapConsoleApp')
           return true;
         }
       }
-      init();//
+      init();
     }]);
