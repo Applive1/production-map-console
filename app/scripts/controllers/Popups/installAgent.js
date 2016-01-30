@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('installAgentCtrl',['$scope', '$modalInstance', 'extractAndParse', 'blockFactory',function ($scope, $modalInstance, extractAndParse, blockFactory) {
+  .controller('installAgentCtrl',['$scope', '$uibModalInstance', 'extractAndParse', 'blockFactory',function ($scope, $uibModalInstance, extractAndParse, blockFactory) {
     $scope.handleFiles = function (files) {
 	    $scope.error = null;
 
@@ -21,12 +21,12 @@ angular.module('productionMapConsoleApp')
 	      });
 	  };
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
     $scope.installAgent = function(){
     	if($scope.data){
     		blockFactory.add($scope.data.type, $scope.data.methods, $scope.data.imgUrl).then(function(msg){
-                $modalInstance.close(msg.data);
+                $uibModalInstance.close(msg.data);
             });
     	}
     }

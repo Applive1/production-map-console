@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('PmblocksCtrl',function ($scope, $modalInstance, server) {
+  .controller('PmblocksCtrl',['$scope', '$uibModalInstance', 'server',function ($scope, $uibModalInstance, server) {
   	$scope.server = server;
   	$scope.attributes = [];
   	for(var key in server.attributes){
@@ -22,10 +22,10 @@ angular.module('productionMapConsoleApp')
   		};
   		$scope.server.attributes = angular.copy(attrs);
   		console.log($scope.server.attributes);
-  		$modalInstance.close($scope.server);
+  		$uibModalInstance.close($scope.server);
   	}
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.addAttribute = function() {
@@ -40,4 +40,4 @@ angular.module('productionMapConsoleApp')
 	    $scope.attributes.splice(index, 1);
 	 };
 
-  });
+  }]);

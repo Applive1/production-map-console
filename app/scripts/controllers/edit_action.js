@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('EditActionCtrl', function ($scope, $modalInstance, blockFactory, Processes, link, action) {
+  .controller('EditActionCtrl', ['$scope', '$uibModalInstance', 'blockFactory', 'link', 'action',function ($scope, $uibModalInstance, blockFactory, link, action) {
     function init(){
         $scope.action = action;
 	    $scope.processServers = [];
@@ -30,19 +30,19 @@ angular.module('productionMapConsoleApp')
     }
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
     $scope.getServerMethods = function(server){
     	return blockFactory.getMethods(server.type);
     };
     $scope.addAction = function(action){
-    	$modalInstance.dismiss('sucess');
+    	$uibModalInstance.dismiss('sucess');
     }
     $scope.testAction =function(){
         Processes.testAction({ action: $scope.action, map: map}).success(function (result) {
                 console.log(result);
                 Messages.add(result);
-                $modalInstance.close({message: result});
+                $uibModalInstance.close({message: result});
             })
             .error(function (err) {
                 console.log('****** FAILD *******');
@@ -65,4 +65,4 @@ angular.module('productionMapConsoleApp')
         }
     }
     init();
-  });
+  }]);

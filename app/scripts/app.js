@@ -28,7 +28,7 @@ angular.module('productionMapConsoleApp', [
     'ngSails'
   ])
   .config(['$routeProvider', '$httpProvider', '$sailsProvider', 'consts', function ($routeProvider, $httpProvider, $sailsProvider, consts) {
-    console.log("Never gets here, but a is");
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

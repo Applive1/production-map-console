@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('AboutCtrl', ['$scope',function ($scope) {
     $scope.draggableObjects = [{name:'one'}, {name:'two'}, {name:'three'}, {name:'no-clone', allowClone:false}];
         $scope.droppedObjects1 = [];
         $scope.droppedObjects2= [];
@@ -38,4 +38,4 @@ angular.module('productionMapConsoleApp')
         var inArray = function(array, obj) {
             var index = array.indexOf(obj);
         }
-  });
+  }]);

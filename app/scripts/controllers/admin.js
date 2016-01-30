@@ -7,8 +7,8 @@
  * # AboutCtrl
  * Controller of the productionMapConsoleApp
  */
-angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$modalInstance', 'projects', 'JobsService', 'BaseAgentService', 'blockFactory', '$localStorage',
-  function ($scope, $modalInstance, projects, JobsService, BaseAgentService, blockFactory, $localStorage) {
+angular.module('productionMapConsoleApp').controller('AdminCtrl', ['$scope', '$uibModalInstance', 'projects', 'JobsService', 'BaseAgentService', 'blockFactory', '$localStorage',
+  function ($scope, $uibModalInstance, projects, JobsService, BaseAgentService, blockFactory, $localStorage) {
     var jobToEvent = function (job) {
       return {
         title: job.Map.name,
