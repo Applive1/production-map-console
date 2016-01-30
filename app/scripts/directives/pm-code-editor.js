@@ -108,9 +108,6 @@ angular.module('productionMapConsoleApp')
           $scope.codeChanged = true;
           editor.setValue($scope.code);
         });
-        $scope.$watch('map.name', function (newVal, oldVal) {
-          console.log($scope.map);
-        });
       }
 
       init();

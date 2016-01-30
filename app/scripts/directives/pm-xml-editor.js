@@ -12,9 +12,6 @@ angular.module('productionMapConsoleApp')
       var localViewMode = 2;
 
       function init() {
-        console.log("------------");
-        console.log($scope.content);
-        console.log("------------");
         $scope.jsonChange = false;
         $scope.contentChange = false;
         var editor = CodeMirror.fromTextArea(document.getElementById("markup"), {
