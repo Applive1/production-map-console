@@ -8,8 +8,8 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('ActionCtrl', ['$scope', '$uibModalInstance', 'blockFactory', 'link', 'Messages', 'map', 'source', 'target', 'action',
-    function ($scope, $uibModalInstance, blockFactory, link, Messages, map, source, target, action) {
+  .controller('ActionCtrl', ['$scope', '$uibModalInstance', 'blockFactory', 'link', 'Messages', 'map', 'source', 'target', 'action','ProcessesService',
+    function ($scope, $uibModalInstance, blockFactory, link, Messages, map, source, target, action,ProcessesService) {
       function init() {
 
         $scope.action = action || {
@@ -53,8 +53,7 @@ angular.module('productionMapConsoleApp')
       }
 
       $scope.testAction = function () {
-        Processes.addAction(link.id, process.id, $scope.action);
-        Processes.testAction(
+        ProcessesService.testAction(
           {
             action: $scope.action,
             map: map
