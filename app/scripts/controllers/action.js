@@ -84,5 +84,5 @@ angular.module('productionMapConsoleApp')
           return true;
         }
       }
-      init();
+      init();//
     }]);
