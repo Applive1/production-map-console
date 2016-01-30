@@ -8,11 +8,11 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MessagesCtrl',function ($scope, $modalInstance, message) {
+  .controller('MessagesCtrl',['$scope', '$uibModalInstance', 'message',function ($scope, $uibModalInstance, message) {
 
   	$scope.message = message;
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
-  });
+  }]);

@@ -8,8 +8,8 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('MainCtrl', ['$scope', 'Messages', 'Popups', 'ProjectsService', 'AuthService', 'MapsService', 'Processes', '$timeout', '$sails', 'consts', 'blockFactory', '$localStorage',
-    function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, Processes, $timeout, $sails, consts, blockFactory, $localStorage) {
+  .controller('MainCtrl', ['$scope', 'Messages', 'Popups', 'ProjectsService', 'AuthService', 'MapsService', '$timeout', '$sails', 'consts', 'blockFactory', '$localStorage',
+    function ($scope, Messages, Popups, ProjectsService, AuthService, MapsService, $timeout, $sails, consts, blockFactory, $localStorage) {
 
     $scope.mapLoaded = false;
     $scope.attributes = [];
@@ -330,8 +330,6 @@ angular.module('productionMapConsoleApp')
       for (var i = 0; i <= index; i++) {
         if ($scope.map.versions[i].patches) jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
       }
-
-      Processes.set($scope.map.mapView);
 
       for (var key in $scope.map.mapView.attributes) {
         $scope.attributes.push({name: key, value: $scope.map.mapView.attributes[key]});

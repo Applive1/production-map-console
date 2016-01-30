@@ -8,7 +8,7 @@
  * Controller of the productionMapConsoleApp
  */
 angular.module('productionMapConsoleApp')
-  .controller('mapAttributesCtrl',['$scope', '$modalInstance', 'map',function ($scope, $modalInstance, map) {
+  .controller('mapAttributesCtrl',['$scope', '$uibModalInstance', 'map',function ($scope, $uibModalInstance, map) {
   	$scope.map = map;
   	$scope.attributes = [];
     for(var key in map.attributes){
@@ -22,10 +22,10 @@ angular.module('productionMapConsoleApp')
   		};
   		$scope.map.attributes = angular.copy(attrs);
   		console.log($scope.map.attributes);
-  		$modalInstance.close($scope.map);
+  		$uibModalInstance.close($scope.map);
   	}
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.addAttribute = function() {

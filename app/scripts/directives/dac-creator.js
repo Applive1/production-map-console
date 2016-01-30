@@ -131,7 +131,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         return res;
       }
 
-      function updateLink(result) {
+      /*function updateLink(result) {
         var linkId = result.linkId;
         var process = result.process;
         var user_link = getLink(linkId);
@@ -147,6 +147,20 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           }
         }
         user_link.processes.push(process);
+      }*/
+
+      function editLinkProcesses(linkId) {
+        var mapLink = getLink(linkId);
+        var sourceBlock = $scope.getNode(mapLink.sourceId);
+        var targetBlock = $scope.getNode(mapLink.targetId);
+
+        Popups.open({
+          templateUrl: 'views/processes.html',
+          controller: 'ProcessesCtrl',
+          resolve: {link: mapLink, map: $scope.map.mapView, source:sourceBlock,target: targetBlock}
+        }, function (result) {
+          link = result.link;
+        });
       }
 
       $scope.editBlock = function (cellView) {
@@ -352,10 +366,13 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         $scope.paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
           if ($scope.map.isLocked || !cellView.model.isLink()) return;
 
-          cellView.model.unset('vertices');
+          editLinkProcesses(cellView.model.id);
+
+          /*cellView.model.unset('vertices');
           var mapLink = getLink(cellView.model.id);
           var sourceBlock = $scope.getNode(mapLink.sourceId);
           var targetBlock = $scope.getNode(mapLink.targetId);
+
           var link = {
             id: mapLink.id,
             source: sourceBlock,
@@ -363,11 +380,12 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
             condition: mapLink.condition,
             conditionCode: mapLink.conditionCode
           }
+
           Popups.open({
             templateUrl: 'views/processes.html',
             controller: 'ProcessesCtrl',
-            resolve: {link: link, map: $scope.map.mapView}
-          }, updateLink);
+            resolve: {link: mapLink, map: $scope.map.mapView, source:sourceBlock,target: targetBlock}
+          }, updateLink);*/
         });
 
         $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
@@ -447,12 +465,14 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               console.log($scope.connection_link.get('source'));
               var link = link_blocks($scope.connection_link.get('source'), elementBelow);
               $scope.updateModel();
+
+              editLinkProcesses(link.id);/*
               Popups.open({
                 templateUrl: 'views/processes.html',
                 controller: 'ProcessesCtrl',
                 resolve: {link: link, map: $scope.map.mapView}
               }, updateLink);
-              cellView.model.translate(0, 100);
+              cellView.model.translate(0, 100);*/
             }
           }
           cellView.options.interactive = true;
