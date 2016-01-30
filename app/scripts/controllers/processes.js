@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function ($scope, $modalInstance, Processes, Popups, link, Messages, map) {
+angular.module('productionMapConsoleApp').controller('ProcessesCtrl', ['$scope', '$uibModalInstance','$timeout', 'Popups', 'link', 'Messages', 'map', 'source','target',
+  function ($scope, $uibModalInstance,$timeout, Popups, link, Messages, map,source,target) {
 
-    $scope.process = {
-        id: 0,
+
+
+    var newProc = function() {
+      $scope.process = {
         name: "",
         description: "",
         order: 0,
@@ -11,72 +14,84 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         mandatory: false,
         actions: [],
         result: ''
-    };
-    $scope.selectedAction = {};
+      };
+    }
+
+    newProc();
 
     $scope.link = link;
+    $scope.link.processes.forEach(function(proc){
+      proc.inside = true;
+    })
 
-    $scope.processes = Processes.all(link.id);
-    console.log($scope.processes);
-
-    console.log(map);
     /* Processes operations */
-    $scope.add_process = function(process){
-        $scope.process = angular.copy(process);
-        $scope.process = Processes.add(link.id, $scope.process);
+    $scope.add_process = function(){
+      $scope.process.inside = true;
+      $scope.link.processes.push(angular.copy($scope.process));
+      newProc();
+    };
+
+    $scope.createNew = function(){
+      newProc();
     };
 
     $scope.delete_process = function(process){
-        Processes.remove(link.id, process);
+      var ProcIndex = $scope.link.processes.indexOf($scope.process);
+
+      if (ProcIndex > -1) {
+        $scope.link.processes.splice(ProcIndex,1);
+        newProc();
+      }
     };
 
     /* Actions operations */
     $scope.addAction = function(){
-        Popups.open({
-            templateUrl: 'views/add_action.html',
-            controller: 'ActionCtrl',
-            resolve : {link: link, process: $scope.process, map: map}
-        });
+      manageAction(null,function(action){
+        $scope.process.actions.push(action);
+        $scope.selectAction(action,$scope.process.actions.length-1);
+      });
     };
 
     $scope.removeAction = function(){
-        Processes.removeAction(link.id, $scope.process.id, $scope.selectedAction);
+      $scope.process.actions.splice($scope.selectedIndex,1);
+      delete $scope.selectedIndex;
+      delete $scope.selectedAction;
     };
 
-    $scope.editAction = function(action){
-        Popups.open({
-            templateUrl: 'views/add_action.html',
-            controller: 'EditActionCtrl',
-            resolve: {link: link, action: action, map: map}
-        });
+    $scope.editAction = function(){
+      manageAction($scope.selectedAction,function(editedAction){
+        angular.copy(editedAction,$scope.selectedAction);
+      });
+    }
+
+    var manageAction = function(action,cb){
+      Popups.open({
+        templateUrl: 'views/add_action.html',
+        controller: 'ActionCtrl',
+        resolve : {link: link, process: $scope.process, map: map,source:source,target: target,action:angular.copy(action)}
+      },cb);
     }
 
     /* change action order up */
     $scope.moveActionUp = function(){
-        for(var i=0;i<$scope.process.actions.length;i++){
-            var action = $scope.process.actions[i];
-            if($scope.selectedAction.order - 1 === action.order){
-                $scope.selectedAction.order = action.order;
-                action.order = action.order + 1;
-                break;
-            }
-        }
+      var prevAction = $scope.process.actions[$scope.selectedIndex-1];
+      $scope.process.actions[$scope.selectedIndex-1] = $scope.selectedAction;
+      $scope.process.actions[$scope.selectedIndex]=prevAction;
+      $scope.selectedIndex--;
     }
 
     /* change action order down */
     $scope.moveActionDown = function(){
-        for(var i=0;i<$scope.process.actions.length;i++){
-            var action = $scope.process.actions[i];
-            if($scope.selectedAction.order + 1 === action.order){
-                $scope.selectedAction.order = action.order;
-                action.order = action.order - 1;
-                break;
-            }
-        }
+      var nextAction = $scope.process.actions[$scope.selectedIndex+1];
+      $scope.process.actions[$scope.selectedIndex+1] = $scope.selectedAction;
+      $scope.process.actions[$scope.selectedIndex]=nextAction;
+      $scope.selectedIndex++;
+
     }
 
-    $scope.selectAction = function(action){
-        $scope.selectedAction = action;
+    $scope.selectAction = function(action,index){
+      $scope.selectedAction = action;
+      $scope.selectedIndex = index;
     }
 
     $scope.testProcess = function(){
@@ -86,7 +101,7 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
         }).success(function (result) {
                 console.log(result);
                 Messages.add(result);
-                $modalInstance.close({
+                $uibModalInstance.close({
                                         linkId: link.id,
                                         condition: angular.copy($scope.link.condition),
                                         conditionCode: angular.copy($scope.link.conditionCode),
@@ -101,11 +116,8 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
     }
 
     $scope.cancel = function () {
-       $modalInstance.close({
-        linkId: link.id,
-        condition: angular.copy($scope.link.condition),
-        conditionCode: angular.copy($scope.link.conditionCode),
-        process: angular.copy($scope.process)
+       $uibModalInstance.close({
+          link: $scope.link
       });
     };
 
@@ -128,4 +140,4 @@ angular.module('productionMapConsoleApp').controller('ProcessesCtrl', function (
             $scope.link.conditionCode = conditionCode;
         });
     };
-});
+}]);

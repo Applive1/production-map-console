@@ -6,7 +6,7 @@
  * @description
  * # processes
  * Factory in the productionMapConsoleApp.
- */
+
 angular.module('productionMapConsoleApp')
     .factory('Processes',['$http', '$q', 'consts', function ($http, $q, consts) {
         // Service Logic
@@ -132,3 +132,4 @@ angular.module('productionMapConsoleApp')
             }
         };
     }]);
+ */

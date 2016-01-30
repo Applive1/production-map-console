@@ -8,12 +8,12 @@
  */
 angular.module('productionMapConsoleApp')
   .directive('pmVisualEditor', function () {
-  var controller = ['$scope', '$modal', function ($scope, $modal) {
+  var controller = ['$scope', '$uibModal', function ($scope, $uibModal) {
 
     $scope.animationsEnabled = true;
 
     function open(url, controller, size) {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: url,
         controller: controller,
