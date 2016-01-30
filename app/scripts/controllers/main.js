@@ -327,8 +327,12 @@ angular.module('productionMapConsoleApp')
       $scope.attributes = [];
       $scope.map.mapView = angular.copy($scope.map.structure);
       $scope.map.versionIndex = index;
+
+      var versions = angular.copy($scope.map.versions);
       for (var i = 0; i <= index; i++) {
-        if ($scope.map.versions[i].patches) jsonpatch.apply($scope.map.mapView, $scope.map.versions[i].patches);
+        if ($scope.map.versions[i].patches){
+          jsonpatch.apply($scope.map.mapView, versions[i].patches);
+        }
       }
 
       for (var key in $scope.map.mapView.attributes) {
