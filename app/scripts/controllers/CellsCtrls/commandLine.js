@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('CommandLineCtrl', function ($scope, $modalInstance, node) {
+angular.module('productionMapConsoleApp').controller('CommandLineCtrl', ['$scope', '$uibModalInstance', 'node',function ($scope, $uibModalInstance, node) {
     $scope.node = node;
     if (!$scope.node.data)
         $scope.node.data={};
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.fileChanged = function(element){
@@ -22,4 +22,4 @@ angular.module('productionMapConsoleApp').controller('CommandLineCtrl', function
         }
 
     }
-});
+}]);

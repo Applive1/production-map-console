@@ -8,11 +8,11 @@
  * Factory in the productionMapConsoleApp.
  */
 angular.module('productionMapConsoleApp')
-    .factory('Popups', ['$modal',function ($modal) {
+    .factory('Popups', ['$uibModal',function ($uibModal) {
         // Service Logic
         return {
             open: function(options, success){
-                var modalInstance = $modal.open(options);
+                var modalInstance = $uibModal.open(options);
 
                 if(!angular.isFunction(success)){
                     return; // no need to link async function

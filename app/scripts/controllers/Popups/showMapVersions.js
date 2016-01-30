@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', ['$scope', '$modalInstance','map',function ($scope, $modalInstance,map) {
+angular.module('productionMapConsoleApp').controller('MapVersionsCtrl', ['$scope', '$uibModalInstance','map',function ($scope, $uibModalInstance,map) {
 
     $scope.map = map;
 
     $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
     };
 
     $scope.setVersion = function(index){
-        $modalInstance.close(index);
+        $uibModalInstance.close(index);
     }
 
 }]);
