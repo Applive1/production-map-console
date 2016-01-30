@@ -159,7 +159,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           controller: 'ProcessesCtrl',
           resolve: {link: mapLink, map: $scope.map.mapView, source:sourceBlock,target: targetBlock}
         }, function (result) {
-          link = result.link;
+          mapLink = result.link;
         });
       }
 
