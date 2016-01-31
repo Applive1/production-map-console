@@ -63,7 +63,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           $($scope.paper.svg).height(newSize.y + newSize.height + 100);
         };
 
-
       function loadMap() {
         // Clear the graph (Genius .__.)
         $scope.graph.clear();
@@ -130,24 +129,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         }
         return res;
       }
-
-      /*function updateLink(result) {
-        var linkId = result.linkId;
-        var process = result.process;
-        var user_link = getLink(linkId);
-        user_link.condition = result.condition;
-        user_link.conditionCode = result.conditionCode;
-        console.log("user Process");
-        console.log(user_link);
-        for (var i = 0; i < user_link.processes.length; i++) {
-          var pro = user_link.processes[i];
-          if (pro.id == process.id) {
-            user_link.processes[i] = process;
-            return;
-          }
-        }
-        user_link.processes.push(process);
-      }*/
 
       function editLinkProcesses(linkId) {
         var mapLink = getLink(linkId);
@@ -333,9 +314,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         $scope.graphContent_base_block = map_block;
         console.log()
 
-        $scope.paper.$el.mouseup(function () {
-          // alert( "Handler for .mouseup() called." );
-        });
         $scope.paper.$el.on('contextmenu', function (evt) {
           evt.stopPropagation(); // Stop bubbling so that the paper does not handle mousedown.
           evt.preventDefault();  // Prevent displaying default browser context menu.
@@ -367,25 +345,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           if ($scope.map.isLocked || !cellView.model.isLink()) return;
 
           editLinkProcesses(cellView.model.id);
-
-          /*cellView.model.unset('vertices');
-          var mapLink = getLink(cellView.model.id);
-          var sourceBlock = $scope.getNode(mapLink.sourceId);
-          var targetBlock = $scope.getNode(mapLink.targetId);
-
-          var link = {
-            id: mapLink.id,
-            source: sourceBlock,
-            target: targetBlock,
-            condition: mapLink.condition,
-            conditionCode: mapLink.conditionCode
-          }
-
-          Popups.open({
-            templateUrl: 'views/processes.html',
-            controller: 'ProcessesCtrl',
-            resolve: {link: mapLink, map: $scope.map.mapView, source:sourceBlock,target: targetBlock}
-          }, updateLink);*/
         });
 
         $scope.paper.on('cell:pointerdown', function (cellView, evt, x, y) {
@@ -466,13 +425,7 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               var link = link_blocks($scope.connection_link.get('source'), elementBelow);
               $scope.updateModel();
 
-              editLinkProcesses(link.id);/*
-              Popups.open({
-                templateUrl: 'views/processes.html',
-                controller: 'ProcessesCtrl',
-                resolve: {link: link, map: $scope.map.mapView}
-              }, updateLink);
-              cellView.model.translate(0, 100);*/
+              editLinkProcesses(link.id);
             }
           }
           cellView.options.interactive = true;
@@ -577,10 +530,10 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         else $scope.zoomOut();
       });
 
-      $scope.$watch('map.mapView.content', function (newValues, oldValues) {
+      /*$scope.$watch('map.mapView.content', function (newValues, oldValues) {
         if ($scope.viewMode != localViewMode)
           loadMap();
-      });
+      });*/
 
       $scope.$watch('map.mapView', function (newValues, oldValues) {
         removeLinks();

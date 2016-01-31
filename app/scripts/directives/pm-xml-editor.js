@@ -73,12 +73,22 @@ angular.module('productionMapConsoleApp')
               $scope.content.attributes = map.attributes;
               var tempContent = JSON.parse($scope.content.content);
               var newNodes = tempContent.nodes.filter(function (node) {
-                for (key in $scope.content.nodes) {
+                for (var key in $scope.content.nodes) {
                   if ($scope.content.nodes[key].id == node.id)
                     return true;
                 }
                 return false;
               });
+
+              newNodes.forEach(function(node){
+                for (var key in $scope.content.nodes) {
+                  if ($scope.content.nodes[key].id == node.id){
+                    node.attrs.text.text = key;
+                    break;
+                  }
+                }
+              });
+
               var newLinks = tempContent.links.filter(function (link) {
                 for (var i = 0, length = $scope.content.links.length; i < length; i++) {
                   if ($scope.content.links[i].id == link.id)
