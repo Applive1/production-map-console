@@ -21,7 +21,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
     controller: ['$scope', 'Popups', 'blockFactory', '$timeout', function ($scope, Popups, blockFactory, $timeout) {
 
       $scope.graph = [];
-      var localViewMode = 1;
 
       $scope.updateModel = function () {
         // Save the cells in arrays
@@ -193,39 +192,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         return res;
       }
 
-      function calcCellPosition(cellView, x, y) {
-        var position = {};
-
-        var bbox = cellView.getBBox();
-        position.constrained = false;
-
-        position.constrainedX = x;
-
-        if (bbox.x <= 0) {
-          position.constrainedX = x + $scope.gridSize;
-          position.constrained = true;
-        }
-        if (bbox.x + bbox.width >= $scope.width) {
-          //position.constrainedX = x - $scope.gridSize;
-          $scope.width += $scope.gridSize;
-          position.constrained = true;
-        }
-
-        position.constrainedY = y;
-
-        if (bbox.y <= 0) {
-          position.constrainedY = y + $scope.gridSize;
-          position.constrained = true;
-        }
-        if (bbox.y + bbox.height >= $scope.height) {
-          //position.constrainedY = y - $scope.gridSize;
-          $scope.height += $scope.gridSize;
-          position.constrained = true;
-        }
-
-        return position;
-      }
-
       function init() {
         $scope.graph = new joint.dia.Graph();
         $scope.innerWidth = $scope.width;
@@ -239,10 +205,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
           gridSize: $scope.gridSize,
           model: $scope.graph
         });
-
-        var paperResize = function (sx, sy) {
-          $scope.paper.resize(sx, sy);
-        }
 
         $scope.zoomIn = function () {
           graphScale += 0.1;
@@ -466,7 +428,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               var my_height = block.attributes.size.height;
               if (pos.x + my_width >= $scope.innerWidth) {
                 $scope.innerWidth = pos.x + my_width;
-                // paperResize($scope.innerWidth, $scope.innerHeight);
                 $scope.paper.fitToContent({
                   minWidth: $scope.innerWidth,
                   minHeight: $scope.innerHeight
@@ -474,7 +435,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
               }
               if (pos.y + my_height >= $scope.innerHeight) {
                 $scope.innerHeight = pos.y + my_height;
-                // paperResize($scope.innerWidth, $scope.innerHeight);
                 $scope.paper.fitToContent({
                   minWidth: $scope.innerWidth,
                   minHeight: $scope.innerHeight
@@ -529,11 +489,6 @@ angular.module('productionMapConsoleApp').directive('dacCreator', function () {
         if (args.type == 1)  $scope.zoomIn();
         else $scope.zoomOut();
       });
-
-      /*$scope.$watch('map.mapView.content', function (newValues, oldValues) {
-        if ($scope.viewMode != localViewMode)
-          loadMap();
-      });*/
 
       $scope.$watch('map.mapView', function (newValues, oldValues) {
         removeLinks();

@@ -42,30 +42,27 @@ angular.module('productionMapConsoleApp')
           };
         editor.setSize('100%', $scope.height);
         $scope.markup.cm = editor;
+
         $scope.$watch('content', function (newVal, oldVal) {
-          /*if ($scope.jsonChange) {
-           $scope.jsonChange = false;
-           return;
-           }
-           $scope.contentChange = true;*/
+
           if ($scope.viewMode == localViewMode)
             return;
 
           updateEditor(newVal);
         }, true);
+
         $scope.$watchGroup(['map.id', 'map.versionIndex'], function (newValues, oldValues, scope) {
           updateEditor($scope.content);
         });
+
         editor.on('change', function (instance) {
           var newValue = instance.getValue();
           if (newValue !== $scope.map_json) {
             $scope.map_json = newValue;
 
-            if ($scope.viewMode != localViewMode) {// $scope.contentChange) {
-              //$scope.contentChange = false;
+            if ($scope.viewMode != localViewMode)
               return;
-            }
-            //$scope.jsonChange = true;
+
             try {
               var map = JSON.parse($scope.map_json);
               $scope.content.nodes = map.nodes;
@@ -114,6 +111,7 @@ angular.module('productionMapConsoleApp')
           $scope.cmeditor.refresh();
         }, 100);
       });
+
     }];
     return {
       scope: {
