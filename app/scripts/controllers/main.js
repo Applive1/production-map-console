@@ -448,6 +448,7 @@ angular.module('productionMapConsoleApp')
       };
       $scope.setDesigner = function () {
         $scope.viewMode = 1;
+        $scope.$broadcast('loadDesignerMap');
       };
 
       $scope.zoomMap = function (type) {
