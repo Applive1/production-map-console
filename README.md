@@ -4,7 +4,8 @@ This project is generated with [yo angular generator](https://github.com/yeoman/
 version 0.12.1.
 
 The Client Side Of Production Map.
-Current Version 2.0.0 - Release Date: January 1st 2016
+Current Version : 2.0.0 
+Release Date: January 1st 2016
 
 ## Installation
 Run Bower install to install all relavent dependencies.
