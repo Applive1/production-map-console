@@ -1,9 +1,0 @@
-<div data-ng-mouseup="dropBlock($event)" class="full-height">
-	<div id="paper" class="full-height"></div>
-  <ul class="custom-menu">
-    <li ng-repeat="item in cellContext" ng-click="item.action()">{{item.Name}}</li>
-  </ul>
-</div>
-<div>
-	<button type="button" ng-show="map.versionIndex != map.versions.length-1 && map.isLocked" class="btn btn-primary ng-hide" ng-click="map.isLocked = !map.isLocked">Edit as new version</button>
-</div>
