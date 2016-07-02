@@ -67,7 +67,7 @@ gulp.task('less', function(){
 
 gulp.task('build', ['optimize', 'images', 'fonts', 'libs-graphics', 'themify-icons'], function(){
   // clean temp
-  //del(config.temp);
+  del(config.temp);
 
   return gulp.src(config.dist + 'index.html')
     .pipe(inject(gulp.src(config.dist + 'assets/*.css', {read: false}), {
