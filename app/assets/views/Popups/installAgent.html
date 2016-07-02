@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Agents</h3>
+</div>
+<div class="modal-body container">
+  <div class="panel panel-default drop-target" drop-files="handleFiles($files)">
+      <div class="panel-body">
+        Drop Your Zip File Here
+      </div>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="error"><strong>Uh oh!</strong> {{error}}</div>
+    <ul class="nav nav-tabs">
+      <li ng-repeat="agent in dedicatedAgents" role="presentation" ng-click="showAgent($index)" ><a href="#">{{ agent.data.type }}</a></li>
+    </ul>
+    <div ng-if="dedicatedAgents.length > 0">
+      <h3>Block Preview</h3>
+      <div class="pm_block">
+          <img data-ng-src="{{dedicatedAgents[agentIndex].data.imgUrl}}" />
+          <span>{{dedicatedAgents[agentIndex].data.type}}</span>
+        </div>
+      <hr />
+      <pre ng-bind="dedicatedAgents[agentIndex].data | json"></pre>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+    <button data-ng-disabled="dedicatedAgents.length == 0" class="btn btn-primary" type="button" ng-click="installAgent()">Install</button>
+</div>

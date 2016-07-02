@@ -1,0 +1,325 @@
+<div class="modal-header" style="text-align: center">
+  <div class="adminBtn" ng-click="view=1" ng-class="{'active':view==1}">
+    <i class="glyphicon glyphicon-calendar"></i>
+    <span>Calendar</span>
+  </div>
+  <div class="adminBtn" ng-click="view=2" ng-class="{'active':view==2}">
+    <i class="fa fa-desktop"></i>
+    <span>Servers</span>
+  </div>
+  <div class="adminBtn" ng-click="view=3" ng-class="{'active':view==3}">
+    <i class="fa fa-clock-o"></i>
+    <span>Cron Jobs</span>
+  </div>
+  <div class="adminBtn" ng-click="view=4" ng-class="{'active':view==4}">
+    <i class="fa fa-server"></i>
+    <span>Agents</span>
+  </div>
+  <div class="adminBtn" ng-click="view=5" ng-class="{'active':view==5}">
+    <i class="fa fa-server"></i>
+    <span>Triggers</span>
+  </div>
+</div>
+<div class="modal-body" style="overflow: auto;">
+  <div ng-if="view==1">
+    <div class="col-md-3">
+      <div class="popupBox" style="margin-top:100px;">
+        <h3>{{(job.id) ? 'Update' : 'Add A New'}} Scheduled Job</h3>
+
+        <div class="form-group">
+          <select class="form-control" ng-options="project.name for project in projects track by project.id"
+                  ng-model="job.selectedProject">
+            <option value="">-- choose project --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select ng-show="job.selectedProject" class="ng-hide form-control"
+                  ng-options="map.name for map in job.selectedProject.maps track by map.id"
+                  ng-model="job.Map">
+            <option value="">-- choose Map --</option>
+          </select>
+        </div>
+        <div class="form-group" ng-show="job.Map">
+          <input type="radio" ng-model="job.isCron" ng-value="true">Repeated
+          <input type="radio" ng-model="job.isCron" ng-value="false">Once
+          <p class="input-group" ng-hide="job.isCron" class="ng-hide">
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy"
+                   min-date="dateOptions.minDate"
+                   ng-model="job.startAt" readonly ng-focus="dateOptions.isOpen=true;"
+                   is-open="dateOptions.isOpen" close-text="Close" datepicker-options="dateOptions"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="dateOptions.isOpen=true;">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+          </p>
+          <uib-timepicker style="margin: 0 auto;" ng-hide="job.isCron" class="ng-hide"
+                          ng-model="job.startAt"
+                          hour-step="1"
+                          minute-step="1"
+                          show-meridian="false">
+          </uib-timepicker>
+          <cron-selection output="job.Cron" ng-show="job.isCron" class="ng-hide"></cron-selection>
+          <button ng-show="!job.id" ng-click="createJob()" class="ng-hide btn btn-primary">Create</button>
+          <button ng-show="job.id" ng-click="updateJob()" class="ng-hide btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-1">
+      <div class="col-md-12">
+        <h2 class="text-center">{{ calendar.calendarTitle }}</h2>
+
+        <div class="row">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(-1)">
+                Previous
+              </button>
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(0)">
+                Today
+              </button>
+              <button
+                class="btn btn-primary"
+                ng-click="changeCalendarView(1)">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <br class="visible-xs visible-sm">
+
+          <div class="col-md-6 text-center">
+            <div class="btn-group">
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'year'">Year</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView" uib-btn-radio="'month'">Month</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'week'">Week</label>
+              <label class="btn btn-primary" ng-model="calendar.calendarView"
+                     uib-btn-radio="'day'">Day</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <mwl-calendar
+        events="calendar.events"
+        view="calendar.calendarView"
+        view-title="calendar.calendarTitle"
+        current-day="calendar.calendarDay"
+        on-event-click="vm.eventClicked(calendarEvent)"
+        on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarjob.startsAt = calendarNewEventStart; calendarjob.endsAt = calendarNewEventEnd"
+        edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+        delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+        on-edit-event-click="editJob(calendarEvent)"
+        on-delete-event-click="deleteJob(calendarEvent)"
+        cell-is-open="calendar.isCellOpen"
+        day-view-start="00:00"
+        day-view-end="23:59"
+        day-view-split="30"
+        cell-modifier="vm.modifyCell(calendarCell)">
+      </mwl-calendar>
+    </div>
+
+    <!--<div ui-calendar="uiConfig.calendar" class="col-md-9" ng-model="eventSources"></div>-->
+  </div>
+  <div class="col-md-12" ng-show="view==2" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-5">
+      <h3>Base Agents</h3>
+
+      <div class="col-md-12 BaseAgent"
+           ng-repeat="agent in baseAgents track by agent.id" ng-click="setCurrentAgent(agent)">
+        <span>Name : {{agent.name}}</span>
+        <span>Url : {{agent.url}}</span>
+        <span>Execute on?: <input type="checkbox" data-ng-change="checkedAgent(agent)" ng-model="$storage.agentsToExecute[agent.id]"></span>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <i class="glyphicon glyphicon-plus-sign ng-hide plus" ng-show="currentAgent.id"
+         ng-click="setCurrentAgent({})"></i>
+
+      <div class="popupBox">
+        <input type="text" placeholder="Base Agent Name" ng-model="currentAgent.name" class="form-control"/>
+        <input type="text" placeholder="Base Agent Url" ng-model="currentAgent.url" class="form-control"/>
+
+        <div class="table-responsive">
+          <span>Dedicated Agents</span>
+          <table class="table">
+            <tr style="font-weight: bold">
+              <td style="width:40%">Type</td>
+              <td style="width:60%">URL</td>
+            </tr>
+            <tr data-ng-repeat="dedicatedAgent in currentAgent.dedicatedAgents track by $index">
+              <td>
+                <span >
+                  {{ dedicatedAgent.type }}
+                </span>
+              </td>
+              <td>
+                <input type="text" placeholder="dedicated Agent URL" ng-model="dedicatedAgent.url" class="form-control"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-responsive">
+          <span>Attributes</span>
+          <table class="table">
+            <tr style="font-weight: bold">
+              <td style="width:40%">Name</td>
+              <td style="width:40%">Value</td>
+              <td style="width:20%"></td>
+            </tr>
+            <tr data-ng-repeat="attribute in currentAgent.attributes track by $index">
+              <td>
+                <!-- editable name (text with validation) -->
+                <span editable-text="attribute.name" e-name="name" e-form="rowform"
+                      onbeforesave="checkName($data, attribute)" e-required>
+                  {{ attribute.name || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <!-- editable status (select-local) -->
+                <span editable-text="attribute.value" e-name="value" e-form="rowform" onbeforesave="checkValue($data)"
+                      e-required>
+                  {{ attribute.value || 'empty' }}
+                </span>
+              </td>
+              <td style="white-space: nowrap">
+                <!-- form -->
+                <form editable-form name="rowform" ng-show="rowform.$visible"
+                      class="form-buttons form-inline" shown="inserted == attribute"
+                      onaftersave="saveAttribute(attribute)">
+                  <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                    save
+                  </button>
+                  <button type="button" ng-disabled="rowform.$waiting" ng-click="removeAttribute($index)"
+                          class="btn btn-default">
+                    cancel
+                  </button>
+                </form>
+                <div ng-show="!rowform.$visible">
+                  <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                  <button class="btn btn-danger" ng-click="removeAttribute($index)">del</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <button class="btn btn-default" ng-click="AddAttribute()">
+          Add Attribute
+        </button>
+
+        <button ng-show="currentAgent.id" class="ng-hide btn btn-primary" ng-click="updateBaseAgent()">Update
+        </button>
+        <button ng-hide="currentAgent.id" class="ng-hide btn btn-primary" ng-click="addBaseAgent()">Create
+        </button>
+        <button ng-show="currentAgent.id" class="ng-hide btn btn-danger" ng-click="deleteBaseAgent()">Delete Agent
+        </button>
+      </div>
+    </div>
+  </div>
+  <span class="col-md-12 ErrorSpan">{{ErrorMeesage}}</span>
+  <div class="col-md-12" ng-show="view==3" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-12">
+      <h3>Repeated Cron Jobs</h3>
+
+      <div class="col-md-3 BaseAgent" ng-class="{'col-md-offset-1':$index%3!=0}"
+           ng-repeat="job in cronJobs track by job.id" ng-click="setCurrentCron(job,$index)">
+        <span>Map Name : {{job.Map.name}}</span>
+        <span>Cron : {{job.Cron}}</span>
+      </div>
+      <div ng-show="cronJobs.length == 0"><h4>There are no cron jobs.</h4></div>
+    </div>
+    <div class="col-md-12">
+      <div class="popupBox cronBox ng-hide form-inline" ng-show="currentCronJob.id">
+        <cron-selection output="currentCronJob.Cron" init="currentCronJob.Cron"></cron-selection>
+        <span>
+          <button class="btn btn-primary" ng-click="updateCronJob()">Update</button>
+        <button class="btn btn-danger" ng-click="deleteCronJob()">Delete</button>
+          </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" ng-show="view==4" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-12">
+      <h3>Dedicated Agents</h3>
+      <div class="table-responsive row" style="margin:2%;">
+        <div class="col-md-12">
+          <table class="table table-hover" style="border-style: solid;border-width: 1px;">
+            <tr>
+              <th>Agent</th>
+              <th>Type</th>
+              <th>static / service</th>
+              <th>version</th>
+            </tr>
+            <tr ng-repeat="dedicatedAgent in dedicatedAgents"
+                ng-class="{selected_action: selectedIndex === $index}"
+                ng-click="selectAgent(dedicatedAgent, $index)"
+                ng-dblclick="showAgent(dedicatedAgent)">
+              <td>
+                <div class="pm_block">
+                    <img data-ng-src="{{dedicatedAgent.imgUrl}}" />
+                    <span>{{dedicatedAgent.type}}</span>
+                </div>
+              </td>
+              <td>{{dedicatedAgent.type}}</td>
+              <td>{{dedicatedAgent.api}}</td>
+              <td>{{dedicatedAgent.version}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row" style="margin:2%">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+          <button data-ng-click="addAgent()" class="btn btn-default">add
+          </button>
+          <button class="btn btn-default" data-ng-disabled="selectedIndex < 0" data-ng-click="removeAgent()">delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" ng-show="view==5" class="ng-hide" style="padding-top: 20px">
+    <div class="col-md-12">
+      <h3>Triggers</h3>
+      <div class="table-responsive row" style="margin:2%;">
+        <div class="col-md-12">
+          <table class="table table-hover" style="border-style: solid;border-width: 1px;">
+            <tr>
+              <th>Name</th>
+              <th>map</th>
+              <th>Type</th>
+            </tr>
+            <tr ng-repeat="trigger in triggers"
+                ng-class="{selected_action: selectedIndex === $index}"
+                ng-click="selectTrigger(trigger, $index)"
+                ng-dblclick="showTrigger(trigger)">
+              <td>
+                {{trigger.name}}
+              </td>
+              <td>{{trigger.map.name}}</td>
+              <td>{{trigger.type.viewName}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row" style="margin:2%">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+          <button data-ng-click="addTrigger()" class="btn btn-default">add
+          </button>
+          <button class="btn btn-default" data-ng-disabled="selectedIndex < 0" data-ng-click="removeTrigger()">delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h3 class="modal-title">Execution log</h3>
+</div>
+<div class="modal-body">
+    <div class="row"style="margin:2%">
+        <div class="col-md-2">
+             <span>base agent</span>
+        </div>
+        <div class="col-md-4">
+          <select class="form-control" data-ng-disabled="execution === ''" data-ng-model="baseAgent">
+                 <option value=""> ---select agent ---</option>
+                 <option ng-show="isAgent(key)" value="{{ key }}" ng-repeat="(key, value) in execution.resObj" value>{{ key }}</option>
+            </select>
+        </div>
+    </div>
+    <div ng-show="baseAgent == ''">
+      <nvd3 options="options" data="data"></nvd3>
+    </div>
+    <div ng-hide="baseAgent == ''">
+      <nvd3 options="agentOptions" data="agentData"></nvd3>
+    </div>
+    <div ng-hide="baseAgent == ''">
+      <span>Executions</span>
+      <div class="row">
+        <section class="col-md-12">
+          <div ui-codemirror="{
+              lineNumbers: true,
+            lineWrapping: true,
+            mode: 'application/json',
+            extraKeys: {'Ctrl-Space': 'autocomplete'},
+            keyMap: 'sublime',
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            showCursorWhenSelecting: true,
+            theme: 'monokai',
+            tabSize: 2,
+            foldGutter: true,
+            gutters: ['CodeMirror-lint-markers', 'CodeMirror-foldgutter'],
+            lint: true,
+            autofocus: true
+            }" ng-model="json_viewer" ></div>
+            </section>
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+</div>

@@ -1,0 +1,130 @@
+<div class="modal-header">
+  <h3 class="modal-title">Processes</h3>
+</div>
+<div class="modal-body">
+  <div class="container" style="padding:3%">
+    <div class="row">
+      <div class="col-md-6">
+        <span>Process:</span>
+        <select ng-options="proc as proc.name for proc in link.processes" ng-model="process">
+          <option value=""> ---select process ---</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <button type="button" ng-show="process.inside" class="btn btn-primary ng-hide" ng-click="createNew()">Create New Process</button>
+        <button type="button" ng-show="!process.inside" class="btn btn-primary ng-hide" ng-click="add_process(process)"
+                ng-disabled="process.name === ''">Save New Process
+        </button>
+        <button type="button" ng-show="process.inside" class="btn btn-primary ng-hide" data-ng-click="delete_process(process)">Delete Process</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <input data-ng-model="link.condition" type="checkbox" name="your-group" value="unit-in-group"/> <span>link has condition </span>
+      </div>
+      <div ng-show="link.condition" class="col-md-3">
+        <input data-ng-model="link.conditionCode" type="text" class="form-control" placeholder="condition function...">
+      </div>
+      <div class="col-md-3">
+        <input data-ng-model="link.filterAgent" type="checkbox" name="your-group" value="unit-in-group"/> <span>filter Agent</span>
+      </div>
+      <div ng-show="link.filterAgent" class="col-md-3">
+        <input data-ng-model="link.filterAgentCode" type="text" class="form-control" placeholder="filter function...">
+      </div>
+    </div>
+
+    <div style="border-style: solid;border-width: 1px;margin-top:5%;margin-buttom:5%;">
+      <div class="row" style="margin:2%">
+        <div class="col-md-6">
+          <input data-ng-model="process.default_execution" type="checkbox" name="your-group"
+                 value="unit-in-group"/> <span> Default execution process </span>
+        </div>
+        <div class="col-md-6">
+          <input data-ng-model="process.mandatory" type="checkbox" name="your-group" value="unit-in-group"/>
+          Mandatory process
+        </div>
+      </div>
+      <div class="row" style="margin:2%">
+        <div class="col-md-2">
+          <span>Name:</span>
+        </div>
+        <div class="col-md-4">
+          <input data-ng-model="process.name" type="text" class="form-control" placeholder="name...">
+        </div>
+        <div class="col-md-3">
+          <span>internal order:</span>
+        </div>
+        <div class="col-md-2">
+          <input data-ng-model="process.order" type="number" name="quantity" min="1" max="5">
+        </div>
+      </div>
+      <div class="row" style="margin:2%">
+        <div class="col-md-2">
+          <span>Description:</span>
+        </div>
+        <div class="col-md-4">
+          <input data-ng-model="process.description" type="text" class="form-control"
+                 placeholder="Description...">
+        </div>
+        <div class="col-md-3">
+          <input data-ng-model="process.condition" type="checkbox" name="your-group" value="unit-in-group"/>
+          <span> has condition </span>
+        </div>
+        <div ng-show="process.condition" class="col-md-3">
+          <input data-ng-model="process.conditionCode" type="text" class="form-control"
+                 placeholder="condition function...">
+        </div>
+      </div>
+      <div ng-show="process.inside" class="ng-hide">
+        <div style="border-style: solid;border-width: 1px;">
+          <div class="row" style="margin:2%">
+            <div class="col-md-3">Actions:</div>
+          </div>
+          <div class="table-responsive row" style="margin:2%;">
+            <div class="col-md-12">
+              <table class="table table-hover" style="border-style: solid;border-width: 1px;">
+                <tr>
+                  <th>Action owner</th>
+                  <th>Name</th>
+                  <th>last update</th>
+                </tr>
+                <tr ng-repeat="action in process.actions"
+                    ng-class="{selected_action: selectedIndex === $index}"
+                    ng-click="selectAction(action,$index)" ng-dblclick="editAction(action)">
+                  <td>{{action.server.name}}</td>
+                  <td>{{action.name}}</td>
+                  <td>{{action.lastUpdate}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row" style="margin:2%">
+            <div class="col-md-1"></div>
+            <div class="col-md-11">
+              <button data-ng-click="addAction()" data-ng-disabled="process.name === ''" class="btn btn-default">add
+              </button>
+              <button class="btn btn-default" data-ng-disabled="!selectedAction" data-ng-click="editAction()">edit
+              </button>
+              <button class="btn btn-default" data-ng-disabled="!selectedIndex" data-ng-click="removeAction()">delete
+              </button>
+              <button class="btn btn-default"
+                      ng-disabled="!selectedIndex || selectedIndex==0 || process.actions.length==0"
+                      data-ng-click="moveActionUp()">move up
+              </button>
+              <button class="btn btn-default"
+                      data-ng-disabled="(!selectedIndex && selectedIndex!==0)|| selectedIndex==process.actions.length-1 || process.actions.length==0"
+                      data-ng-click="moveActionDown()">move down
+              </button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2%;">
+          <button class="btn btn-default" data-ng-click="testProcess()">Test Process</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="cancel()">close</button>
+</div>

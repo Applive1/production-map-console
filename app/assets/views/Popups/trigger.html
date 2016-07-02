@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Trigger</h3>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+             <span>Name:</span>
+        </div>
+        <div class="col-md-4">
+          <input type="text" placeholder="enter name..." data-ng-model="trigger.name" />
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+             <span>Type:</span>
+        </div>
+        <div class="col-md-4">
+             <select class="form-control" data-ng-disabled="trigger.name === ''" ng-options="type as type.viewName for type in types track by type.id" data-ng-model="trigger.type">
+             <option selected value=""> ---select type ---</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+             <span>Project:</span>
+        </div>
+        <div class="col-md-4">
+             <select class="form-control" data-ng-disabled="trigger.name === ''" ng-options="proj as proj.name for proj in projects track by proj.id" data-ng-model="trigger.project">
+             <option value=""> ---select project ---</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+             <span>Map:</span>
+        </div>
+        <div class="col-md-4">
+             <select class="form-control" data-ng-disabled="trigger.project === ''" ng-options="map as map.name for map in trigger.project.maps track by map.id" data-ng-model="trigger.map">
+             <option value=""> ---select type ---</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-responsive">
+      <span>Parameters</span>
+      <table class="table table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+      </tr>
+      <tr data-ng-repeat="param in trigger.type.params">
+        <td>{{param.viewName}}</td>
+        <td>
+            <!-- Input type string -->
+            <input data-ng-if="param.type === 'string'" type="text" class="form-control" placeholder="enter value..." data-ng-model="trigger.params[param.name].text" />
+
+            <!-- Input type collection -->
+            <select data-ng-if="param.type === 'collection'" class="form-control" ng-options="opt.id as opt.name for opt in param.options" data-ng-model="trigger.params[param.name].text">
+            <option value=""> ---select option ---</option>
+            </select>
+
+            <!-- Input type file -->
+            <input data-ng-if="param.type === 'file'" class="form-control" type="file" placeholder="select file..." data-ng-model="trigger.params[param.name].text" />
+
+        </td>
+      </tr>
+      </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="add(trigger)">save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">cancel</button>
+</div>
