@@ -1,0 +1,15 @@
+.col-xs-0-5 {
+    -webkit-flex-basis: 4.15%;
+    -ms-flex-preferred-size: 4.15%;
+    flex-basis: 4.15%;
+    max-width: 4.15%;
+}
+
+.side-bar-data {
+    background-color: #36393b;
+    height: 100%;
+    border-right-style: solid;
+    border-right-color: black;
+    border-right-width: 1px;
+    padding-top: 2rem;
+}

@@ -1,0 +1,23 @@
+.pm-header {
+  background-color: #3c3e41;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  height: 2.4rem;
+}
+
+.header-label {
+  color: #bbbbbb;
+  font-size: 14;
+  font-weight: normal;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+
+.help-label {
+  margin-right: 15%;
+}
+
+.help-login-view {
+  padding-left: 15%;
+}

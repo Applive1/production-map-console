@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/jointjs/dist/joint.css" />
+    <link rel="stylesheet" href="bower_components/jstree/dist/themes/default/style.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/addon/hint/show-hint.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/addon/lint/lint.css" />
+    <link rel="stylesheet" href="bower_components/codemirror/addon/fold/foldgutter.css">
+    <link rel="stylesheet" href="bower_components/codemirror/addon/dialog/dialog.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/monokai.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/addon/tern/tern.css" />
+
+    <!-- endbuild -->
+</head>
+<!-- todo return ng-strict-di -->
+<body ng-app="productionMapConsoleApp">
+<!--[if lte IE 8]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+
+<div class="pm-header">
+  <span class="pm-logo"></span>
+</div>
+
+<div ng-view="">
+</div>
+
+
+<!-- Google Analytics: change UA-XXXXX-Xcom to be your site's ID
+<script>
+    !function (A, n, g, u, l, a, r) {
+        A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+            (A[l].q = A[l].q || []).push(arguments)
+        }, A[l].l = +new Date, a = n.createElement(g),
+                r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+</script>-->
+
+<!-- joint js chrome 48 temp fix -->
+<script type="text/javascript">
+    SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(toElement) {
+        return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
+    };
+</script>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/codemirror/lib/codemirror.js"></script>
+<script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+<script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+<script src="bower_components/x2js/xml2json.min.js"></script>
+<script src="bower_components/angular-x2js/dist/x2js.min.js"></script>
+<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/backbone/backbone.js"></script>
+<script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+<script src="bower_components/graphlib/dist/graphlib.core.min.js"></script>
+<script src="bower_components/dagre/dist/dagre.core.js"></script>
+<script src="bower_components/dagre/dist/dagre.core.min.js"></script>
+<script src="bower_components/jointjs/dist/joint.js"></script>
+<script src="bower_components/jstree/dist/jstree.js"></script>
+<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+<script src="bower_components/ngDraggable/ngDraggable.js"></script>
+<script src="bower_components/ng-codemirror-dictionary-hint/lib/ng-codemirror-dictionary-hint.js"></script>
+<script src="bower_components/fast-json-patch/src/json-patch-duplex.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<script src="bower_components/jszip/dist/jszip.js"></script>
+<script src="bower_components/async/lib/async.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+<script src="bower_components/angular-cron-jobs/dist/angular-cron-jobs.min.js"></script>
+<script src="bower_components/ngstorage/ngStorage.js"></script>
+<script src="bower_components/sails.io.js/dist/sails.io.js"></script>
+<script src="bower_components/angular-sails/dist/angular-sails.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<script src="/scripts/packages/jshint.js"></script>
+<script src="/scripts/packages/jsonlint.js"></script>
+<script src="/scripts/packages/jszip.js"></script>
+<script src="/scripts/packages/tern.js"></script>
+
+<script src="/scripts/packages/ternjs/acorn.js"></script>
+<script src="/scripts/packages/ternjs/acorn_loose.js"></script>
+<script src="/scripts/packages/ternjs/walk.js"></script>
+<script src="/scripts/packages/ternjs/polyfill.js"></script>
+<script src="/scripts/packages/ternjs/signal.js"></script>
+<script src="/scripts/packages/ternjs/tern.js"></script>
+<script src="/scripts/packages/ternjs/def.js"></script>
+<script src="/scripts/packages/ternjs/comment.js"></script>
+<script src="/scripts/packages/ternjs/infer.js"></script>
+<script src="/scripts/packages/ternjs/doc_comment.js"></script>
+
+<script src="/bower_components/codemirror/addon/hint/show-hint.js"></script>
+<script src="/bower_components/codemirror/addon/lint/lint.js"></script>
+<script src="/bower_components/codemirror/addon/lint/javascript-lint.js"></script>
+<script src="/bower_components/codemirror/addon/lint/json-lint.js"></script>
+<script src="/bower_components/codemirror/addon/search/searchcursor.js"></script>
+<script src="/bower_components/codemirror/addon/search/search.js"></script>
+<script src="/bower_components/codemirror/addon/dialog/dialog.js"></script>
+<script src="/bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="/bower_components/codemirror/addon/edit/closebrackets.js"></script>
+<script src="/bower_components/codemirror/addon/comment/comment.js"></script>
+<script src="/bower_components/codemirror/addon/wrap/hardwrap.js"></script>
+<script src="/bower_components/codemirror/addon/fold/foldcode.js"></script>
+<script src="/bower_components/codemirror/addon/fold/brace-fold.js"></script>
+<script src="/bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script src="/bower_components/codemirror/keymap/sublime.js"></script>
+<script src="/bower_components/codemirror/addon/dialog/dialog.js"></script>
+<script src="/bower_components/codemirror/mode/yaml/yaml.js"></script>
+
+<script src="/scripts/app.js"></script>
+
+<script src="/scripts/constants/consts.js"></script>
+
+<script src="/scripts/services/auth.js"></script>
+<script src="/scripts/services/baseAgents.js"></script>
+<script src="/scripts/services/block_factory.js"></script>
+<script src="/scripts/services/extract_and_parse.js"></script>
+<script src="/scripts/services/interceptor.js"></script>
+<script src="/scripts/services/maps.js"></script>
+<script src="/scripts/services/messages.js"></script>
+<script src="/scripts/services/popups.js"></script>
+<script src="/scripts/services/processes.js"></script>
+<script src="/scripts/services/projects.js"></script>
+<script src="/scripts/services/scheduledJobs.js"></script>
+
+<script src="/scripts/filters/cut.js"></script>
+
+<script src="/scripts/directives/dac-creator.js"></script>
+<script src="/scripts/directives/draggableModal.js"></script>
+<script src="/scripts/directives/drop_files.js"></script>
+<script src="/scripts/directives/jsTree.js"></script>
+<script src="/scripts/directives/ng-context-menu.js"></script>
+<script src="/scripts/directives/pm-code-editor.js"></script>
+<script src="/scripts/directives/pm-map-designer.js"></script>
+<script src="/scripts/directives/pm-visual-editor.js"></script>
+<script src="/scripts/directives/pm-xml-editor.js"></script>
+<script src="/scripts/directives/pm-yaml-viewer.js"></script>
+<script src="/scripts/directives/resizable.js"></script>
+<script src="/scripts/directives/sc-hover.js"></script>
+
+<script src="/scripts/controllers/CellsCtrls/FileServer.js"></script>
+<script src="/scripts/controllers/CellsCtrls/commandLine.js"></script>
+<script src="/scripts/controllers/Popups/conditionCtrl.js"></script>
+<script src="/scripts/controllers/Popups/installAgent.js"></script>
+<script src="/scripts/controllers/Popups/showAgent.js"></script>
+<script src="/scripts/controllers/Popups/mapAttributes.js"></script>
+<script src="/scripts/controllers/Popups/projectsAndMaps.js"></script>
+<script src="/scripts/controllers/Popups/showMapVersions.js"></script>
+<script src="/scripts/controllers/Popups/showMapExecutions.js"></script>
+<script src="/scripts/controllers/Popups/showMapExecution.js"></script>
+<script src="/scripts/controllers/Popups/processExecution.js"></script>
+<script src="/scripts/controllers/Popups/showMapActions.js"></script>
+<script src="/scripts/controllers/Popups/actionExecution.js"></script>
+<script src="/scripts/controllers/about.js"></script>
+<script src="/scripts/controllers/action.js"></script>
+<script src="/scripts/controllers/admin.js"></script>
+<script src="/scripts/controllers/edit_action.js"></script>
+<script src="/scripts/controllers/login.js"></script>
+<script src="/scripts/controllers/main.js"></script>
+<script src="/scripts/controllers/messages.js"></script>
+<script src="/scripts/controllers/pmblocks.js"></script>
+<script src="/scripts/controllers/processes.js"></script>
+
+
+<!-- user libs -->
+<script src="scripts/packages/jshint.js"></script>
+<script src="scripts/packages/jsonlint.js"></script>
+<script type="text/javascript">
+    io.sails.autoConnect = false;
+</script>
+<script src="scripts/packages/ternjs/acorn.js"></script>
+<script src="scripts/packages/ternjs/acorn_loose.js"></script>
+<script src="scripts/packages/ternjs/walk.js"></script>
+<script src="scripts/packages/ternjs/polyfill.js"></script>
+<script src="scripts/packages/ternjs/signal.js"></script>
+<script src="scripts/packages/ternjs/def.js"></script>
+<script src="scripts/packages/ternjs/comment.js"></script>
+<script src="scripts/packages/ternjs/infer.js"></script>
+<script src="scripts/packages/ternjs/doc_comment.js"></script>
+<script src="scripts/packages/d3/d3.min.js" charset="utf-8"></script>
+<!-- <script src="bower_components/nvd3/nv.d3.js"></script> -->
+<script src="scripts/packages/d3/nv.d3.min.js" charset="utf-8"></script>
+<script src="scripts/packages/d3/angular-nvd3.min.js"></script>
+<!-- end user libs -->
+</body>
+</html>
