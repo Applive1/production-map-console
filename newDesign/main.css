@@ -1,0 +1,44 @@
+/* Production map header classes */
+
+.pm-header {
+    background-color: #3c3e41;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+    height: 2.4rem;
+}
+
+.header-label {
+    color: #bbbbbb;
+    font-size: 14;
+    font-weight: normal;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.help-label {
+    margin-right: 15%;
+}
+
+.help-login-view {
+    padding-left: 15%;
+}
+
+.border {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #1f2122;
+}
+
+.label {
+    color: #bbbbbb;
+}
+
+.pm-map-container {
+    height: 94.8%;
+    width: 96.1%;
+}
+
+.pm-main-windows {
+    height: 72.6%;
+}

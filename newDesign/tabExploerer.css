@@ -1,0 +1,72 @@
+.map-header {
+    margin-top: 0.2rem;
+}
+
+.tab-explorer {
+    background-color: #3c3e41;
+}
+
+.search-box {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #4a4e50;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.tab-search-box {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.search-img {
+    margin-bottom: 0.5rem;
+}
+
+.tab {
+    background-color: #36393b;
+    color: #757677;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #1f2122;
+    padding: 0.3rem;
+}
+
+.selected-tab {
+    background-color: #4b4f51;
+    color: #bbbbbb;
+}
+
+.server-item {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #4a4e50;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.servers-list {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: #bbbbbb;
+    font-size: 14;
+}
+
+.add-server {
+    margin: 1rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #696f70;
+    height: 1.625rem;
+    color: #ffffff;
+    background-color: #3c3e41;
+    padding-top:0.2rem;
+}
+
+input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+

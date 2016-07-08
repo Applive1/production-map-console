@@ -1,0 +1,19 @@
+.pm-messages {
+    height: 22.1%;
+    background-color: #2d2f30;
+}
+
+.pm-messages-header {
+    background-color: #3c3e41;
+    padding: 0.4rem;
+    color: #bbbbbb;
+}
+
+.pm-messages-message {
+    color: #959595;
+    border-bottom-style: solid;
+    border-bottom-color: #404040;
+    border-bottom-size: 1px;
+    margin: 0.3rem;
+    padding-bottom: 0.2rem;
+}

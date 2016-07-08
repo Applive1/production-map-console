@@ -1,0 +1,30 @@
+/* Production map side bar (at angular2 there is no need for the prefix pm-side-bar) */
+
+.pm-side-bar {
+    background-color: #36393b;
+    border-right-style: solid;
+    border-right-color: black;
+    border-right-width: 1px;
+    height: 94.8%;
+    padding-top: 2rem; /* start from 70px down (use rem  instead) */
+}
+
+/* half column copies from flexbox grid */
+.col-xs-0-5 {
+  -webkit-flex-basis: 4.15%;
+  -ms-flex-preferred-size: 4.15%;
+  flex-basis: 4.15%;
+  max-width: 4.15%;
+}
+
+.pm-side-bar-element {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+.pm-side-bar-element-selected {
+    background-color: #2d2f30; /*from ora #262829; */
+    border-left-style: solid; 
+    border-left-width: 3px;
+    border-left-color: #02a7c7;
+}
