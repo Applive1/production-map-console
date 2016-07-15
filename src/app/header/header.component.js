@@ -16,7 +16,7 @@ var HeaderComponent = (function () {
             moduleId: module.id,
             selector: 'pm-header',
             templateUrl: 'header.component.html',
-            styleUrls: ['../shared/css/flexboxgrid.css', 'header.component.css']
+            styleUrls: ['header.component.css']
         })
     ], HeaderComponent);
     return HeaderComponent;

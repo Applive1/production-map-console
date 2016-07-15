@@ -1,4 +1,26 @@
-<pm-header>Loading...</pm-header>
-<div class="row">
-    <pm-side-bar class="col-xs-1 col-xs-0-5 center-xs side-bar-data">Loading side bar....</pm-side-bar>
+<div role="production-map">
+  <pm-header>header</pm-header>
+  <section>
+    <aside>
+      <pm-side-bar>Loading side bar</pm-side-bar>
+    </aside>
+    <section>
+      <div role="vertical-canvas" style="padding-bottom:200px">
+        <div role="horizontal-canvas" style="padding: 0 317px 0 238px">
+          <aside role="left-bar" style="width:238px;">
+            <pm-map-explorer></pm-map-explorer>
+          </aside>
+          <section>
+            <pm-map-editor></pm-map-editor>
+          </section>
+          <aside role="right-bar" style="width:317px;">
+            <pm-map-settings></pm-map-settings>
+          </aside>
+        </div>
+        <footer style="height:200px;">
+          <pm-messages role="messages"></pm-messages>
+        </footer>
+      </div>
+    </section>
+  </section>
 </div>

@@ -1,15 +1,104 @@
-.col-xs-0-5 {
-    -webkit-flex-basis: 4.15%;
-    -ms-flex-preferred-size: 4.15%;
-    flex-basis: 4.15%;
-    max-width: 4.15%;
+[role="production-map"] {
+  background-color: #3c3e41;
+  height: 100%;
+  width: 100%;
+  min-height: 793px;
+  padding-top: 40px;
+  overflow: hidden;
 }
 
-.side-bar-data {
-    background-color: #36393b;
-    height: 100%;
-    border-right-style: solid;
-    border-right-color: black;
-    border-right-width: 1px;
-    padding-top: 2rem;
+[role="production-map"]:before, [role="production-map"]:after {
+  content: " ";
+  display: table;
+}
+
+[role="production-map"]:after {
+  clear: both;
+}
+
+[role="production-map"] > section {
+  float: right;
+  height: 100%;
+  width: 100%;
+  padding-left: 55px;
+}
+
+[role="production-map"] > section:before, [role="production-map"] > section:after {
+  content: " ";
+  display: table;
+}
+
+[role="production-map"] > section:after {
+  clear: both;
+}
+
+[role="production-map"] > section > aside {
+  height: 100%;
+  width: 55px;
+  float: left;
+  margin-left: -55px;
+  padding-top: 29px;
+}
+
+[role="production-map"] > section > section {
+  float: right;
+  width: 100%;
+  height: 100%;
+  padding: 1px 0 0 1px;
+  background-color: #222222;
+}
+
+[role="production-map"] > section > section [role="vertical-canvas"] {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 114px;
+  position: relative;
+}
+
+[role="production-map"] > section > section [role="vertical-canvas"] > footer {
+  height: 100%;
+  width: 100%;
+  padding-top: 32px;
+  min-height: 114px;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  background-color: #2d2f30;
+  border-top: 1px solid #1f2122;
+}
+
+/* horizontal canvas */
+
+[role="production-map"] > section > section [role="vertical-canvas"] [role="horizontal-canvas"] {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+[role="production-map"] > section > section [role="vertical-canvas"] [role="horizontal-canvas"] > section {
+  width: 100%;
+  height: 100%;
+  float: left;
+  padding-top: 30px;
+  padding-bottom: 37px;
+}
+
+[role$="bar"] {
+  height: 100%;
+  background-color: #3c3e41;
+  position: absolute;
+  top: 0;
+}
+
+[role="production-map"] > section > section [role="vertical-canvas"] [role="horizontal-canvas"] [role$="bar"][role*="left"] {
+  padding-top: 70px;
+  resize: horizontal;
+  left: 0;
+  min-width: 238px;
+}
+
+[role="production-map"] > section > section [role="vertical-canvas"] [role="horizontal-canvas"] [role$="bar"][role*="right"] {
+  min-width: 317px;
+  right: 0;
+  padding-top: 60px;
 }

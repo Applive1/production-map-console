@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   moduleId: module.id,
   selector: 'pm-header',
   templateUrl: 'header.component.html',
-  styleUrls: ['../shared/css/flexboxgrid.css', 'header.component.css']
+  styleUrls: ['header.component.css']
 })
 export class HeaderComponent implements OnInit {
 

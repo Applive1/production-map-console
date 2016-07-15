@@ -29,6 +29,16 @@ var barrels = [
     'app/shared',
     'app/header',
     'app/side-bar',
+    'app/map-editor',
+    'app/messages',
+    'app/map-explorer',
+    'app/map-settings',
+    'app/map-servers',
+    'app/map-attributes',
+    'app/map-designer',
+    'app/map-markup',
+    'app/map-code-editor',
+    'app/map-toolbox',
 ];
 var cliSystemConfigPackages = {};
 barrels.forEach(function (barrelName) {

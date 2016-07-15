@@ -8,6 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require('@angular/core');
 var header_component_1 = require("./header/header.component");
 var side_bar_component_1 = require("./side-bar/side-bar.component");
+var messages_component_1 = require("./messages/messages.component");
+var map_explorer_component_1 = require("./map-explorer/map-explorer.component");
+var map_settings_component_1 = require("./map-settings/map-settings.component");
+var map_editor_component_1 = require("./map-editor/map-editor.component");
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -16,8 +20,8 @@ var AppComponent = (function () {
             moduleId: module.id,
             selector: 'app-root',
             templateUrl: 'app.component.html',
-            styleUrls: ['shared/css/flexboxgrid.css', 'app.component.css'],
-            directives: [header_component_1.HeaderComponent, side_bar_component_1.SideBarComponent]
+            styleUrls: ['app.component.css'],
+            directives: [header_component_1.HeaderComponent, side_bar_component_1.SideBarComponent, messages_component_1.MessagesComponent, map_explorer_component_1.MapExplorerComponent, map_settings_component_1.MapSettingsComponent, map_editor_component_1.MapEditorComponent]
         })
     ], AppComponent);
     return AppComponent;

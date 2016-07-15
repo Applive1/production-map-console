@@ -1,0 +1,20 @@
+<header>
+  <span role="tab" class="active"><span>This map (6)</span><i class="pmap-8 orange"></i><i class="pmap-9"></i></span>
+  <span role="tab"><span>This map (6)</span><i class="pmap-9"></i></span>
+</header>
+<section [ngSwitch]="currentPanel">
+  <pm-map-designer *ngSwitchCase="0"></pm-map-designer>
+  <pm-map-markup *ngSwitchCase="1"></pm-map-markup>
+  <pm-map-code-editor *ngSwitchCase="2"></pm-map-code-editor>
+</section>
+<footer>
+  <div role="left-tabs">
+    <span role="tab" [class.active]="currentPanel == 0" (click)="selectPanel(0)"><i class="pmap-29 blue"></i>Design</span>
+    <span role="tab" [class.active]="currentPanel == 1" (click)="selectPanel(1)"><i class="pmap-19"></i>Markup</span>
+    <span role="tab" [class.active]="currentPanel == 2" (click)="selectPanel(2)" style="border-right: 1px solid #1f2122;"><i class="pmap-18"></i>Code</span>
+  </div>
+  <div role="right-btns">
+    <button type="button"><i class="pmap-28"></i>Save</button>
+    <button type="button"><i class="pmap-26"></i>Execute</button>
+  </div>
+</footer>
