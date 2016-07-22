@@ -1,24 +1,27 @@
 import { WebpackAsyncRoute } from '@angularclass/webpack-toolkit';
 import { RouterConfig } from '@angular/router';
-import { Home } from './home';
+import { Home } from './home'; 
 import { NoContent } from './no-content';
+import { MapManagmentComponent } from './map-managment/map-managment.component';
 
 import { DataResolver } from './app.resolver';
 
 export const routes: RouterConfig = [
-  { path: '',      component: Home },
-  { path: 'home',  component: Home },
-  // make sure you match the component type string to the require in asyncRoutes
-  { path: 'about', component: 'About',
-    resolve: {
-      'yourData': DataResolver
-    }},
-  // async components with children routes must use WebpackAsyncRoute
-  { path: 'detail', component: 'Detail',
-    canActivate: [ WebpackAsyncRoute ],
-    children: [
-      { path: '', component: 'Index' }  // must be included
-    ]},
+  { path: '',
+    component: MapManagmentComponent
+  },
+  // { path: 'home',  component: Home },
+  // // make sure you match the component type string to the require in asyncRoutes
+  // { path: 'about', component: 'About',
+  //   resolve: {
+  //     'yourData': DataResolver
+  //   }},
+  // // async components with children routes must use WebpackAsyncRoute
+  // { path: 'detail', component: 'Detail',
+  //   canActivate: [ WebpackAsyncRoute ],
+  //   children: [
+  //     { path: '', component: 'Index' }  // must be included
+  //   ]},
   { path: '**',    component: NoContent },
 ];
 
@@ -28,17 +31,17 @@ export const routes: RouterConfig = [
 
 export const asyncRoutes: AsyncRoutes = {
   // we have to use the alternative syntax for es6-promise-loader to grab the routes
-  'About': require('es6-promise-loader!./about'),
-  'Detail': require('es6-promise-loader!./+detail'),
-  'Index': require('es6-promise-loader!./+detail'), // must be exported with detail/index.ts
+  // 'About': require('es6-promise-loader!./about'),
+  // 'Detail': require('es6-promise-loader!./+detail'),
+  // 'Index': require('es6-promise-loader!./+detail'), // must be exported with detail/index.ts
 };
 
 
 // Optimizations for initial loads
 // An array of callbacks to be invoked after bootstrap to prefetch async routes
 export const prefetchRouteCallbacks: Array<IdleCallbacks> = [
-  asyncRoutes['About'],
-  asyncRoutes['Detail'],
+  // asyncRoutes['About'],
+  // asyncRoutes['Detail'],
    // es6-promise-loader returns a function
 ];
 
