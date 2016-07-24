@@ -27,6 +27,31 @@ export class MapToolboxComponent implements OnInit, OnChanges {
         interactive: false
       });
     
+    joint.shapes.devs.PMDragModel = joint.shapes.devs.Model.extend({
+
+        markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
+        portMarkup: '<g class="port port<%= id %>"><circle class="port-body"/><text class="port-label"/></g>',
+    
+        defaults: joint.util.deepSupplement({
+    
+            type: 'devs.PMDragModel',
+            size: { width: 110, height: 84 },
+            inPorts: [''],
+            outPorts: [''],
+            attrs: {
+                '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6},
+                '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
+                '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
+                'image': {'ref-x': 34, 'ref-y': 30, ref: 'rect',
+                     width: 46, height: 34, 'y-alignment': 'middle',
+                     'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'}
+            }
+    
+        }, joint.shapes.devs.Model.prototype.defaults)
+    });
+    
+    joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
+
     joint.shapes.basic.DecoratedRect = joint.shapes.basic.Generic.extend({
 
       markup: '<g class="rotatable"><g class="scalable"><rect/></g><image/><text/></g>',
@@ -127,8 +152,8 @@ export class MapToolboxComponent implements OnInit, OnChanges {
     });
     joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
 
-    console.log("***************************************************************");
-     let model =  new joint.shapes.devs.PMDragModelView({
+    
+     return   new joint.shapes.devs.PMDragModel({
         position: { x: 22, y: 100 },
         attrs: {
           '.label': {
@@ -139,7 +164,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
           }
         }
     });
-    return model.model.clone();
+  
     
   }
 
