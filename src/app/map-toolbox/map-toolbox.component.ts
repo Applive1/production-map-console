@@ -26,7 +26,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
         model: stencilGraph,
         interactive: false
       });
-
+    
     joint.shapes.basic.DecoratedRect = joint.shapes.basic.Generic.extend({
 
       markup: '<g class="rotatable"><g class="scalable"><rect/></g><image/><text/></g>',
@@ -102,12 +102,50 @@ export class MapToolboxComponent implements OnInit, OnChanges {
     stencilGraph.addCells([r1, r2, r3, r4]);
   }
 
+  getFlyCell(cellView: any): any {
+    joint.shapes.devs.PMDragModelView = joint.shapes.devs.Model.extend({
+
+        markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
+        portMarkup: '<g class="port"><circle class="port-body"/><text class="port-label"/></g>',
+    
+        defaults: joint.util.deepSupplement({
+    
+            type: 'devs.PMDragModelView',
+            size: { width: 110, height: 84 },
+            inPorts: [''],
+            outPorts: [''],
+            attrs: {
+                '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6},
+                '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
+                '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
+                'image': {'ref-x': 34, 'ref-y': 30, ref: 'rect',
+                     width: 46, height: 34, 'y-alignment': 'middle',
+                     'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'}
+            }
+    
+        }, joint.shapes.devs.Model.prototype.defaults)
+    });
+    joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
+
+    console.log("***************************************************************");
+     let model =  new joint.shapes.devs.PMDragModelView({
+        position: { x: 22, y: 100 },
+        attrs: {
+          '.label': {
+            text: cellView.model.attr('text/text')
+          },
+          image: {
+            'xlink:href': cellView.model.attr('image/xlink:href')
+          }
+        }
+    });
+    return model.model.clone();
+    
+  }
+
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}): void {
-    console.log("ChangedProperty paper");
-    console.log(changes);
-    console.log(this.paper);
     if(changes['paper'].currentValue != null){
-      this.stencilPaper.on('cell:pointerdown', function(cellView, e, x, y) {
+      this.stencilPaper.on('cell:pointerdown', (cellView, e, x, y) => {
         let paper = changes['paper'].currentValue;
         let graph = changes['graph'].currentValue;
         $('body').append('<div id="flyPaper" style="position:fixed;z-index:100;opacity:.7;pointer-event:none;"></div>');
@@ -117,7 +155,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
             model: flyGraph,
             interactive: false
           }),
-          flyShape = cellView.model.clone(),
+          flyShape = this.getFlyCell(cellView),
           pos = cellView.model.position(),
           offset = {
             x: x - pos.x,
@@ -137,8 +175,6 @@ export class MapToolboxComponent implements OnInit, OnChanges {
           });
         });
         $('body').on('mouseup.fly', function(e) {
-          console.log("asdfasdfasdfsafasdf");
-          console.log(paper);
           let x = e.pageX,
             y = e.pageY,
             target = paper.$el.offset();

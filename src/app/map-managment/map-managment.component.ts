@@ -23,14 +23,11 @@ export class MapManagmentComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-      console.log('Loaded Map Managment component');
   }
 
   updateToolBox($event: any) {
     this.innerPaper = $event.paper;
     this.innerGraph = $event.graph;
-    console.log(this.innerPaper);
-    console.log(this.innerGraph);
   }
 
 }
