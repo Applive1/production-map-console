@@ -3,7 +3,7 @@
   <span role="tab"><span>This map (6)</span><i class="pmap-9"></i></span>
 </header>
 <section [ngSwitch]="currentPanel">
-  <pm-map-designer *ngSwitchCase="0"></pm-map-designer>
+  <pm-map-designer (paperInit)="updateManagmentPanel($event)" *ngSwitchCase="0"></pm-map-designer>
   <pm-map-markup *ngSwitchCase="1"></pm-map-markup>
   <pm-map-code-editor *ngSwitchCase="2"></pm-map-code-editor>
 </section>
