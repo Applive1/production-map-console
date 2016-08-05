@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
-import * as joint from 'jointjs';
 import * as $ from 'jquery';
+import * as joint from 'jointjs';
 
 @Component({
   moduleId: module.id,
   selector: 'pm-map-toolbox',
   templateUrl: 'map-toolbox.component.html',
-  styleUrls: ['../shared/css/map-bar.css', 'map-toolbox.component.css']
+  styleUrls: ['../shared/css/style.css', '../shared/css/map-bar.css', 'map-toolbox.component.css']
 })
 export class MapToolboxComponent implements OnInit, OnChanges {
 
@@ -128,32 +128,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
   }
 
   getFlyCell(cellView: any): any {
-    joint.shapes.devs.PMDragModelView = joint.shapes.devs.Model.extend({
-
-        markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
-        portMarkup: '<g class="port"><circle class="port-body"/><text class="port-label"/></g>',
-    
-        defaults: joint.util.deepSupplement({
-    
-            type: 'devs.PMDragModelView',
-            size: { width: 110, height: 84 },
-            inPorts: [''],
-            outPorts: [''],
-            attrs: {
-                '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6},
-                '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
-                '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
-                'image': {'ref-x': 34, 'ref-y': 30, ref: 'rect',
-                     width: 46, height: 34, 'y-alignment': 'middle',
-                     'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'}
-            }
-    
-        }, joint.shapes.devs.Model.prototype.defaults)
-    });
-    joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
-
-    
-     return   new joint.shapes.devs.PMDragModel({
+     return new joint.shapes.devs.PMDragModel({
         position: { x: 22, y: 100 },
         attrs: {
           '.label': {
@@ -164,8 +139,6 @@ export class MapToolboxComponent implements OnInit, OnChanges {
           }
         }
     });
-  
-    
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}): void {
@@ -193,13 +166,13 @@ export class MapToolboxComponent implements OnInit, OnChanges {
           left: e.pageX - offset.x,
           top: e.pageY - offset.y
         });
-        $('body').on('mousemove.fly', function(e) {
+        $('body').on('mousemove.fly', (e) => {
           $("#flyPaper").offset({
             left: e.pageX - offset.x,
             top: e.pageY - offset.y
           });
         });
-        $('body').on('mouseup.fly', function(e) {
+        $('body').on('mouseup.fly', (e) => {
           let x = e.pageX,
             y = e.pageY,
             target = paper.$el.offset();

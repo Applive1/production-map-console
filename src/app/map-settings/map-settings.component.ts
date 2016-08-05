@@ -7,7 +7,7 @@ import {NgSwitch, NgSwitchCase} from "@angular/common";
   moduleId: module.id,
   selector: 'pm-map-settings',
   templateUrl: 'map-settings.component.html',
-  styleUrls: ['../shared/css/map-bar.css', 'map-settings.component.css'],
+  styleUrls: ['../shared/css/style.css', '../shared/css/map-bar.css', 'map-settings.component.css'],
   directives: [MapAttributesComponent, MapServersComponent, NgSwitch, NgSwitchCase]
 })
 export class MapSettingsComponent implements OnInit {

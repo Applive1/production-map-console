@@ -1,0 +1,110 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Action</h3>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+            <span>Server:</span>
+        </div>
+        <div class="col-md-4">
+            <!--<span>{{action.server.name}}</span>-->
+        </div>
+        <div class="col-md-2">
+            <span>Timeout:</span>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="number" name="quantity" min="1" max="5" data-ng-model="action.timeout">
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+            <span>Method:</span>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" data-ng-disabled="action.server === ''" ng-options="method as method.viewName for method in methods track by method.id"
+                data-ng-model="action.method">
+             <option value=""> ---select method ---</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <span>Timeunit:</span>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" data-ng-model="action.timeunit">
+              <option value>--- select unit ---</option>
+              <option value="1">seconds</option>
+              <option value="2">minutes</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+            <span>Action name:</span>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="name" data-ng-model="action.name">
+        </div>
+        <div class="col-md-2">
+            <span>Retries:</span>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="number" name="quantity" min="1" max="5" data-ng-model="action.retries">
+        </div>
+    </div>
+    <div class="row" style="margin:2%">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <input type="checkbox" name="your-group" value="unit-in-group" data-ng-model="action.mandatory" /> Mandatory
+            Action
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <input type="checkbox" name="your-group" value="unit-in-group" data-ng-model="action.suspend" /> Suspend Action
+        </div>
+    </div>
+    <div class="table-responsive">
+        <span>Parameters</span>
+        <table class="table table-hover">
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Value</th>
+            </tr>
+            <tr data-ng-repeat="param in action.method.params">
+                <!--<td>{{param.name}}</td>-->
+                <td>
+                    <input type="checkbox" ng-model="action.params[param.name].code" />
+                </td>
+                <td>
+                    <!-- Input type string -->
+                    <input data-ng-if="param.type === 'string' || action.params[param.name].code === true" ng-class="{pm_code_text: action.params[param.name].code === true}"
+                        type="text" placeholder="enter value..." data-ng-model="action.params[param.name].text" />
+
+                    <!-- Input type text area -->
+                    <textarea rows="4" cols="50" data-ng-if="param.type === 'text'" ng-class="{pm_code_text: action.params[param.name].code === true}"
+                        placeholder="enter value..." data-ng-model="action.params[param.name].text">
+                    </textarea>
+
+                    <!-- Input type collection -->
+                    <select data-ng-if="showCollection(param)" class="form-control" ng-options="opt.id as opt.name for opt in param.options"
+                        data-ng-model="action.params[param.name].text" ng-change="getMethods(action.server.type)">
+            <option value=""> ---select option ---</option>
+            </select>
+
+                    <!-- Input type file -->
+                    <input data-ng-if="param.type === 'file' && (!action.params[param.name].code || action.params[param.name].code === false)"
+                        class="form-control" type="file" placeholder="select file..." data-ng-model="action.params[param.name].text"
+                    />
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <button class="btn btn-primary" type="button" ng-click="testAction()">Test Action</button>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addAction(action)">save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">cancel</button>
+</div>

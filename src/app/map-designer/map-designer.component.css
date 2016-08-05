@@ -1,1 +1,49 @@
+/*.link .connection-wrap,
+.link .connection {
+   fill: none;
+   stroke: #6b6b6b;
+   stroke-width: 4px;
+}
 
+.link .marker-target {
+    fill: #6b6b6b;
+    stroke: black;
+}
+
+.marker-source {
+    display: none;
+}
+*/
+
+/* links */
+
+.link .connection {
+    stroke: #6b6b6b;
+    stroke-width: 3px;
+}
+
+.link .marker-arrowhead, .link .marker-vertex {
+    fill: #31D0C6;
+}
+.link .marker-arrowhead:hover {
+    fill: #F39C12;    
+}
+
+.link .marker-target {
+    fill: #6b6b6b;
+    stroke: black;
+}
+
+.link-tools .tool-remove circle {
+    fill: #fe854f;
+}
+
+/* port styling */
+.available-magnet {
+    fill: green;
+}
+
+/* element styling */
+.available-cell rect {
+    stroke-dasharray: 5, 2;
+}

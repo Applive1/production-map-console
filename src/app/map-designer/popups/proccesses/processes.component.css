@@ -1,0 +1,125 @@
+/*[role^="small-popup"][role="small-popup-processes"] {
+  top: 47px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] > h3 {
+  font-size: 14px;
+  color: #000;
+  margin: 0 0 3px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table {
+  margin-bottom: 10px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .thead .tr .cell:first-of-type, [role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .thead .tr .cell:nth-of-type(2), [role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:first-of-type, [role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:nth-of-type(2) {
+  width: 130px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:nth-of-type(3) {
+  width: 63px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:nth-of-type(7), [role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:nth-of-type(8) {
+  width: 18px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] [role="actions"] .pmap-table .tbody .tr .cell:last-child {
+  padding-right: 10px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-group {
+  width: 378px;
+  margin-bottom: 18px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-checkbox {
+  margin-right: 56px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-checkbox {
+  padding-left: 158px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-checkbox:before, [role^="small-popup"][role="small-popup-processes"] section .has-checkbox:after {
+  content: " ";
+  display: table;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-checkbox:after {
+  clear: both;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-checkbox .form-checkbox {
+  float: left;
+  margin-left: -158px;
+  width: 158px;
+  margin-right: 0;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-checkbox .form-control {
+  float: left;
+  width: 100%;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-form-label {
+  padding-left: 85px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-form-label:before, [role^="small-popup"][role="small-popup-processes"] section .has-form-label:after {
+  content: " ";
+  display: table;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-form-label:after {
+  clear: both;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-form-label .form-label {
+  width: 85px;
+  margin-left: -85px;
+  float: left;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .has-form-label .form-control {
+  width: 100%;
+  float: left;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group:first-child {
+  width: 100%;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group:before, [role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group:after {
+  content: " ";
+  display: table;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group:after {
+  clear: both;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group .col {
+  float: left;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group .col:first-child {
+  width: 378px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-horizontal .form-group .col:first-child + .col {
+  width: 212px;
+  text-align: right;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section:nth-of-type(2) {
+  padding-top: 16px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section:nth-of-type(3) {
+  padding-top: 14px;
+}
+
+[role^="small-popup"][role="small-popup-processes"] section .form-group:last-child {
+  margin-bottom: 0;
+}*/

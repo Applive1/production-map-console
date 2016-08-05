@@ -1,0 +1,59 @@
+[role^="small-popup"] {
+  position: absolute;
+  z-index: 2000;
+  background-color: #404345;
+  width: 656px;
+  left: 50%;
+  margin-left: -328px;
+}
+
+[role^="small-popup"] > header {
+  text-align: center;
+  height: 34px;
+  background-color: #5d5f61;
+  cursor: default;
+}
+
+[role^="small-popup"] > header h2 {
+  margin: 0;
+  line-height: 34px;
+  font-size: 16px;
+  color: #d1d1d1;
+  font-weight: normal;
+}
+
+[role^="small-popup"] > header i {
+  width: 36px;
+  text-align: center;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 34px;
+  line-height: 34px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #393b3d;
+}
+
+[role^="small-popup"] > header i:hover {
+  color: #9e9c9c;
+}
+
+[role^="small-popup"] > section {
+  padding: 25px 33px;
+  border-bottom: 1px solid #323436;
+}
+
+[role^="small-popup"] > footer {
+  padding: 20px 29px;
+  text-align: right;
+}
+
+[role^="small-popup"] > footer button {
+  vertical-align: middle;
+}
+
+[role^="small-popup"] > footer button:first-child {
+  margin-right: 4px;
+}

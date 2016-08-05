@@ -20,6 +20,14 @@ import '@angularclass/request-idle-callback';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
+/* my files */
+
+import  'jquery';
+global.jQuery = require('jquery');
+import  'jointjs';
+import  'lodash';
+import 'bootstrap';
+
 if ('production' === ENV) {
   // Production
 

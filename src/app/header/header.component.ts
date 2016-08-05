@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   moduleId: module.id,
   selector: 'pm-header',
   templateUrl: 'header.component.html',
-  styleUrls: ['header.component.css']
+  styleUrls: ['../shared/css/style.css', 'header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
