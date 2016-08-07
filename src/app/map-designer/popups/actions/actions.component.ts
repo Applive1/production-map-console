@@ -1,7 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import {DialogRef, ModalComponent} from '../../../../../node_modules/angular2-modal';
+import { DialogRef, ModalComponent } from '../../../../../node_modules/angular2-modal';
 import { BSModalContext } from '../../../../../node_modules/angular2-modal/plugins/bootstrap/index';
+
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 export class ActionsComponentWindowData extends BSModalContext {
     constructor(public num1: number, public num2: number) {
@@ -23,7 +25,7 @@ export class ActionsComponentWindow implements ModalComponent<ActionsComponentWi
 
     link: any = {};
 
-    constructor(public dialog: DialogRef<ActionsComponentWindowData>) {
+    constructor(public dialog: DialogRef<ActionsComponentWindowData>, public modal: Modal) {
         this.context = dialog.context;
     }
 

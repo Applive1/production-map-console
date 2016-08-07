@@ -6,7 +6,7 @@ import * as joint from 'jointjs';
   moduleId: module.id,
   selector: 'pm-map-toolbox',
   templateUrl: 'map-toolbox.component.html',
-  styleUrls: ['../shared/css/style.css', '../shared/css/map-bar.css', 'map-toolbox.component.css']
+  styleUrls: ['../shared/css/map-bar.css', 'map-toolbox.component.css']
 })
 export class MapToolboxComponent implements OnInit, OnChanges {
 

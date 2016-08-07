@@ -1,10 +1,133 @@
-<div class="modal-header">
-	<button type="button" class="close">&times;</button>
-	<h4 class="modal-title">Modal Header</h4>
-</div>
-<div class="modal-body">
-	<p>Some text in the modal.</p>
-</div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-default">Close</button>
+<div role="small-popup-processes" class="small-popup-processes">
+	<header>
+		<h2>Processes</h2>
+		<i role="closing" class="pmap-15" (click)="closeWindow()"></i>
+	</header>
+	<section>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<div class="col has-form-label">
+					<label for="pr-process" class="form-label">Process</label>
+					<select id="pr-process" class="form-control">
+						<option value="1">1</option>
+					</select>
+				</div>
+				<div class="col">
+					<button type="button" class="btn-event"><i class="pmap-25"></i> Add New Process</button>
+				</div>
+			</div>
+			<div class="form-group has-checkbox">
+				<label for="pr-chx-1" class="form-checkbox">
+					<input type="checkbox" id="pr-chx-1"><i></i>
+					<span class="form-label">Link has Condition</span>
+				</label>
+				<input type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="pr-chx-2" class="form-checkbox">
+					<input type="checkbox" id="pr-chx-2"><i></i>
+					<span class="form-label">Filter Agents</span>
+				</label>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div class="form-group">
+			<label for="pr-chx-3" class="form-checkbox">
+				<input type="checkbox" id="pr-chx-3"><i></i>
+				<span class="form-label">Default Execution Process</span>
+			</label>
+			<label for="pr-chx-4" class="form-checkbox">
+				<input type="checkbox" id="pr-chx-4"><i></i>
+				<span class="form-label">Mandatory Process</span>
+			</label>
+		</div>
+		<div class="form-group has-checkbox">
+			<label for="pr-chx-5" class="form-checkbox">
+				<input type="checkbox" id="pr-chx-5"><i></i>
+				<span class="form-label">Has Condition</span>
+			</label>
+			<input type="text" class="form-control">
+		</div>
+		<div class="form-group has-form-label">
+			<label for="pr-txta" class="form-label">Description</label>
+			<textarea id="pr-txta" class="form-control"></textarea>
+		</div>
+	</section>
+	<section>
+		<div role="actions">
+			<h3>Actions</h3>
+			<div class="pmap-table">
+				<div class="thead-wrapper">
+					<div class="thead">
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">Last Update</div>
+						</div>
+					</div>
+				</div>
+				<div class="tbody-wrapper">
+					<div class="tbody">
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">10/6/16</div>
+							<div class="cell">15:47</div>
+							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
+							<div class="cell"></div>
+							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
+						</div>
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">10/6/16</div>
+							<div class="cell">15:47</div>
+							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
+						</div>
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">10/6/16</div>
+							<div class="cell">15:47</div>
+							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
+						</div>
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">10/6/16</div>
+							<div class="cell">15:47</div>
+							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
+						</div>
+						<div class="tr">
+							<div class="cell">Action Owner</div>
+							<div class="cell">Name</div>
+							<div class="cell">10/6/16</div>
+							<div class="cell">15:47</div>
+							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
+							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
+							<div class="cell"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn-event" (click)="addAction()"><i class="pmap-25"></i>Add Action</button>
+		</div>
+	</section>
+	<footer>
+		<button class="btn-event btn-danger" type="button"><i class="pmap-31"></i>Delete Process</button>
+		<button class="btn-event" type="button"><i class="pmap-26"></i>Test Process</button>
+		<button class="btn-event btn-no-icon" type="button">Close</button>
+	</footer>
 </div>

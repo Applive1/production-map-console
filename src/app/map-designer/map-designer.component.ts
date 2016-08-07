@@ -29,8 +29,8 @@ export class MapDesignerComponent implements OnInit {
     this._currentLink = null;
   }
 
-  openProcessesModal(linkId) {
-    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(2, 3));
+  openProcessesModal(linkId: any) {
+    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(linkId));
   }
 
   getLink(linkId: any) {
@@ -55,22 +55,6 @@ export class MapDesignerComponent implements OnInit {
     // let sourceBlock = this.getNode(sourceId);
     // let targetBlock = this.getNode(targetId);
 
-    // _modal.prom()
-    //   .size('lg')
-    //   .isBlocking(true)
-    //   .showClose(true)
-    //   .keyboard(27)
-    //   .title('Hello World')
-    //   .body('<h1>asdfasdfadsf</h1>')
-    //   .open();
-
-    // Popups.open({
-    //   templateUrl: 'views/processes.html',
-    //   controller: 'ProcessesCtrl',
-    //   resolve: { link: mapLink, map: $scope.map.mapView, source: sourceBlock, target: targetBlock }
-    // }, function (result) {
-    //   mapLink = result.link;
-    // });
   }
 
 

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   moduleId: module.id,
   selector: 'pm-messages',
   templateUrl: 'messages.component.html',
-  styleUrls: ['../shared/css/style.css', 'messages.component.css']
+  styleUrls: ['messages.component.css']
 })
 export class MessagesComponent implements OnInit {
 

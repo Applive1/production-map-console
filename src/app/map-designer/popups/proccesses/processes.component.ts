@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import {DialogRef, ModalComponent} from '../../../../../node_modules/angular2-modal';
+import { DialogRef, ModalComponent } from '../../../../../node_modules/angular2-modal';
 import { BSModalContext } from '../../../../../node_modules/angular2-modal/plugins/bootstrap/index';
 
 import { Modal } from 'angular2-modal/plugins/bootstrap';
@@ -8,9 +8,12 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { ActionsComponentWindowData, ActionsComponentWindow } from '../actions';
 
 export class ProcessesComponentWindowData extends BSModalContext {
-    constructor(public num1: number, public num2: number) {
+    constructor(public linkId: any) {
         super();
         this.size = 'lg';
+        this.isBlocking = true;
+        this.showClose = true;
+        this.keyboard = 27; /* close on escape */
     }
 }
 
@@ -19,8 +22,7 @@ export class ProcessesComponentWindowData extends BSModalContext {
  */
 @Component({
     selector: 'modal-content',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./../../../../assets/css/bootstrap.css', 'processes.component.css'],
+    styleUrls: ['processes.component.css'],
     templateUrl: 'processes.component.html'
 })
 export class ProcessesComponentWindow implements ModalComponent<ProcessesComponentWindowData> {

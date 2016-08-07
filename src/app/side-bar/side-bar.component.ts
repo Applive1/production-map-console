@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   moduleId: module.id,
   selector: 'pm-side-bar',
   templateUrl: 'side-bar.component.html',
-  styleUrls: ['../shared/css/style.css', 'side-bar.component.css']
+  styleUrls: ['side-bar.component.css']
 })
 export class SideBarComponent implements OnInit {
 

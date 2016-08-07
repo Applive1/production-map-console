@@ -6,7 +6,7 @@ import { Modal, BS_MODAL_PROVIDERS } from 'angular2-modal/plugins/bootstrap';
 @Component({
   selector: 'app',
   templateUrl: 'app.component.html',
-  styleUrls: ['./shared/css/style.css', 'app.component.css'],
+  styleUrls: ['app.component.css'],
   viewProviders: [...BS_MODAL_PROVIDERS],
   directives: [HeaderComponent, SideBarComponent]
 })

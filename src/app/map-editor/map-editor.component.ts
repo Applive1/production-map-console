@@ -8,7 +8,7 @@ import { NgSwitch, NgSwitchCase } from '@angular/common';
   moduleId: module.id,
   selector: 'pm-map-editor',
   templateUrl: 'map-editor.component.html',
-  styleUrls: ['../shared/css/style.css', 'map-editor.component.css'],
+  styleUrls: ['map-editor.component.css'],
   directives: [MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, NgSwitch, NgSwitchCase]
 })
 export class MapEditorComponent implements OnInit {
