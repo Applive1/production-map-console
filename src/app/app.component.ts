@@ -1,20 +1,33 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { HeaderComponent } from './header/header.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import { Modal, BS_MODAL_PROVIDERS } from 'angular2-modal/plugins/bootstrap';
+import { Http } from '@angular/http';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './shared/services/authentication.service';
+import * as  _ from 'lodash';
+
 
 @Component({
   selector: 'app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   viewProviders: [...BS_MODAL_PROVIDERS],
-  directives: [HeaderComponent, SideBarComponent]
+  providers: [AuthenticationService]
 })
 export class App {
-  constructor(public modal: Modal, viewContainer: ViewContainerRef) {
+  constructor(public modal: Modal, viewContainer: ViewContainerRef, private http: Http,
+              private authenticationService: AuthenticationService, private router: Router) {
     modal.defaultViewContainer = viewContainer;
   }
 
   ngOnInit() {
+    this.authenticationService.isLoggedIn().subscribe((result) => {
+      console.log(result);
+      if (!result) {
+        this.router.navigate(['login']);
+      }
+    },
+    (error) => {
+      this.router.navigate(['login']);
+    });
   }
 }

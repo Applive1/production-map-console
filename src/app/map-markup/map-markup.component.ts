@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -8,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapMarkupComponent implements OnInit {
 
-  constructor() {}
+  @Input() map: any = {};
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }

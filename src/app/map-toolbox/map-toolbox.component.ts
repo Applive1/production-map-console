@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+import { MapDesignerComponent } from '../map-designer';
+import { AgentsService } from '../shared/services/agents.service';
 import * as $ from 'jquery';
 import * as joint from 'jointjs';
+import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -12,44 +15,83 @@ export class MapToolboxComponent implements OnInit, OnChanges {
 
   @Input() paper: any;
   @Input() graph: any;
+  @Input() designerOps: MapDesignerComponent;
 
+  private stencilGraph: any;
   private stencilPaper: any;
-  constructor() {}
+  constructor(private agentsService: AgentsService) {
+  }
+
+  initDragPanel(graph) {
+    return (data) => {
+      let servers = data.servers, blocks = data.blocks;
+      let mapBlock = new joint.shapes.basic.DecoratedRect({
+        position: { x: 50, y: 50 },
+        attrs: {
+          text: {
+            text: 'Obstacle'
+          }
+        }
+      });
+
+      let cells = [];
+      let offset = 62;
+      let iteration = 0;
+
+      _.forEach(blocks, (block) => {
+        let url = 'assets/img/agents/' + block.text + '.png';
+        let node = mapBlock.clone().position(0, iteration * offset).attr({
+          image: {
+            'xlink:href': url
+          },
+          text: {
+            text: block.text
+          }
+        });
+        iteration++;
+        cells.push(node);
+      });
+
+      graph.addCells(cells);
+    };
+  }
 
   ngOnInit() {
     // Canvas from which you take shapes
-    let stencilGraph = new joint.dia.Graph;
+    this.stencilGraph = new joint.dia.Graph;
     this.stencilPaper = new joint.dia.Paper({
-        el: $('#stencil'),
-        height: 248,
-        width: 270,
-        model: stencilGraph,
-        interactive: false
-      });
-    
+      el: $('#stencil'),
+      height: 248,
+      width: 270,
+      model: this.stencilGraph,
+      interactive: false
+    });
+
     joint.shapes.devs.PMDragModel = joint.shapes.devs.Model.extend({
 
-        markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
-        portMarkup: '<g class="port port<%= id %>"><circle class="port-body"/><text class="port-label"/></g>',
-    
-        defaults: joint.util.deepSupplement({
-    
-            type: 'devs.PMDragModel',
-            size: { width: 110, height: 84 },
-            inPorts: [''],
-            outPorts: [''],
-            attrs: {
-                '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6},
-                '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
-                '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
-                'image': {'ref-x': 34, 'ref-y': 30, ref: 'rect',
-                     width: 46, height: 34, 'y-alignment': 'middle',
-                     'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'}
-            }
-    
-        }, joint.shapes.devs.Model.prototype.defaults)
+      markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
+      portMarkup: '<g class="port port<%= id %>"><circle class="port-body"/><text class="port-label"/></g>',
+
+      defaults: joint.util.deepSupplement({
+
+        type: 'devs.PMDragModel',
+        size: { width: 110, height: 84 },
+        inPorts: [''],
+        outPorts: [''],
+        attrs: {
+          '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6 },
+          '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
+          '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
+          'image': {
+            'ref-x': 34, 'ref-y': 30, ref: 'rect',
+            width: 46, height: 34, 'y-alignment': 'middle',
+            'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'
+          }
+        }
+
+      }, joint.shapes.devs.Model.prototype.defaults)
     });
-    
+
     joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
 
     joint.shapes.basic.DecoratedRect = joint.shapes.basic.Generic.extend({
@@ -59,10 +101,10 @@ export class MapToolboxComponent implements OnInit, OnChanges {
       defaults: joint.util.deepSupplement({
 
         type: 'basic.DecoratedRect',
-        size: {width: this.stencilPaper.options.width, height: 62},
+        size: { width: this.stencilPaper.options.width, height: 62 },
         attrs: {
-          '.': {magnet: false},
-          'rect': {width: this.stencilPaper.options.width, height: 62, fill: '#2d2f30'},
+          '.': { magnet: false },
+          'rect': { width: this.stencilPaper.options.width, height: 62, fill: '#2d2f30' },
           'text': {
             'font-size': 13,
             text: '',
@@ -73,58 +115,18 @@ export class MapToolboxComponent implements OnInit, OnChanges {
             'x-alignment': 'middle',
             fill: '#bbb'
           },
-          'image': {'ref-x': 37, 'ref-y': 30, ref: 'rect',
-                     width: 29, height: 33, 'y-alignment': 'middle',
-                     'x-alignment': 'middle'}
+          'image': {
+            'ref-x': 37, 'ref-y': 30, ref: 'rect',
+            width: 29, height: 33, 'y-alignment': 'middle',
+            'x-alignment': 'middle'
+          }
         }
 
       }, joint.shapes.basic.Generic.prototype.defaults)
     });
 
-    let mapBlock = new joint.shapes.basic.DecoratedRect({
-      position: {x: 50, y: 50},
-      attrs: {
-        text: {
-          text: 'Obstacle'
-        }
-      }
-    });
-
-    let r1 = mapBlock.clone().position(0, 0).attr({
-              image: {
-                'xlink:href': 'assets/img/agents-small-01.png'
-              },
-              text: {
-                text: 'Command Line'
-              }
-            });
-    let r2 = mapBlock.clone().position(0, 62).attr({
-              image: {
-                'xlink:href': 'assets/img/agents-small-02.png'
-              },
-              text: {
-                text: 'File Server'
-              }
-            });
-    let r3 = mapBlock.clone().position(0, 124).attr({
-              image: {
-                'xlink:href': 'assets/img/agents-small-03.png'
-              },
-              text: {
-                text: 'Amazon Ec2'
-              }
-            });
-
-    let r4 = mapBlock.clone().position(0, 186).attr({
-              image: {
-                'xlink:href': 'assets/img/agents-small-04.png'
-              },
-              text: {
-                text: 'Text Editor'
-              }
-            });
-
-    stencilGraph.addCells([r1, r2, r3, r4]);
+    console.log('get all services');
+    this.agentsService.all(false).subscribe(this.initDragPanel(this.stencilGraph));
   }
 
   getFlyCell(cellView: any): any {
@@ -142,7 +144,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}): void {
-    if(changes['paper'].currentValue != null){
+    if (changes['paper'].currentValue != null) {
       this.stencilPaper.on('cell:pointerdown', (cellView, e, x, y) => {
         let paper = changes['paper'].currentValue;
         let graph = changes['graph'].currentValue;
@@ -181,6 +183,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
             let s = flyShape.clone();
             s.position(x - target.left - offset.x, y - target.top - offset.y);
             graph.addCell(s);
+            this.designerOps.addNode(s.id, cellView.model.attr('text/text'), cellView.model.attr('text/text'));
           }
           $('body').off('mousemove.fly').off('mouseup.fly');
           flyShape.remove();

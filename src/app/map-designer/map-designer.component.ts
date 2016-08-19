@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, Input, EventEmitter, ViewEncapsulation, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ViewEncapsulation, ViewContainerRef, ViewChild, OnChanges, SimpleChange } from '@angular/core';
 import * as $ from 'jquery';
 import * as joint from 'jointjs';
 import * as _ from 'lodash';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { MapService } from '../shared/services/map.service';
+import { Response } from '@angular/http';
 
 import { ProcessesComponentWindowData, ProcessesComponentWindow } from './popups/proccesses';
 
@@ -14,9 +16,10 @@ import { ProcessesComponentWindowData, ProcessesComponentWindow } from './popups
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['../../../node_modules/jointjs/css/layout.css',
     '../../../node_modules/jointjs/css/themes/default.css',
-    'map-designer.component.css']
+    'map-designer.component.css'],
+  providers: [MapService]
 })
-export class MapDesignerComponent implements OnInit {
+export class MapDesignerComponent implements OnInit, OnChanges {
 
   @Output() paperInit = new EventEmitter();
   @Input() map: any = {};
@@ -24,13 +27,14 @@ export class MapDesignerComponent implements OnInit {
   public graph: any;
   public paper: any;
   private _currentLink: any;
+  private _map: any;
 
-  constructor(public modal: Modal) {
+  constructor(public modal: Modal, private mapService: MapService) {
     this._currentLink = null;
   }
 
-  openProcessesModal(linkId: any) {
-    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(linkId));
+  openProcessesModal(link: any, src: any, dest: any) {
+    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(link, src, dest));
   }
 
   getLink(linkId: any) {
@@ -45,21 +49,42 @@ export class MapDesignerComponent implements OnInit {
 
   getNode(blockId) {
     let res = {};
-    res = _.find(this.map.mapView.nodes, (node) => { return node.id === blockId; });
+    res = _.find(this.map.mapView.nodes, (node) => {
+      return node.id === blockId;
+    });
     return res;
   }
 
   connectNodes(linkId: any, sourceId: any, targetId: any) {
-    this.openProcessesModal(linkId);
-    // let mapLink = this.getLink(linkId);
-    // let sourceBlock = this.getNode(sourceId);
-    // let targetBlock = this.getNode(targetId);
+    let pLink = {
+      id: linkId,
+      sourceId: sourceId,
+      targetId: targetId,
+      processes: [],
+      result: '',
+      condition: false
+    };
+    this.map.mapView.links.push(pLink);
+    let mapLink = this.getLink(linkId);
+    let sourceBlock = this.getNode(sourceId);
+    let targetBlock = this.getNode(targetId);
+
+    this.openProcessesModal(mapLink, sourceBlock, targetBlock);
 
   }
 
+  addNode(id, name, type) {
+    this.map.mapView.nodes[id] = {
+      id: id,
+      type: type,
+      name: name,
+      serverUrl: "localhost:8100", /* Default address */
+      attributes: {}
+    };
+    this.updateMapGraph();
+  }
 
   ngOnInit() {
-    this.openProcessesModal(1);
     // Canvas where sape are dropped
     this.graph = new joint.dia.Graph;
     this.paper = new joint.dia.Paper({
@@ -122,20 +147,31 @@ export class MapDesignerComponent implements OnInit {
         let sourceId = link.get('source').id;
         let targetId = link.get('target').id;
 
-        
         this.connectNodes(link.id, sourceId, targetId);
         this._currentLink = null;
+        this.updateMapGraph();
       }
     });
 
+    this.paper.on('cell:pointerdblclick', (cellView, evt, x, y) => {
+      if (!cellView.model.isLink())
+        return;
+      let link = cellView.model;
+      let sourceId = link.get('source').id;
+      let targetId = link.get('target').id;
+      let mapLink = this.getLink(cellView.model.id);
+      let sourceBlock = this.getNode(sourceId);
+      let targetBlock = this.getNode(targetId);
+
+      this.openProcessesModal(mapLink, sourceBlock, targetBlock);
+    });
     this.graph.on('change:source change:target', (link) => {
       let sourceId = link.get('source').id;
       let targetId = link.get('target').id;
 
       if (targetId && sourceId) {
         this._currentLink = link;
-      }
-      else {
+      } else {
         this._currentLink = null;
       }
 
@@ -145,9 +181,21 @@ export class MapDesignerComponent implements OnInit {
     window.setTimeout(() => {
       this.paperInit.emit({
         paper: this.paper,
-        graph: this.graph
+        graph: this.graph,
+        designerOps: this
       });
     }, 100);
+  }
+
+  ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
+    if (changes['map'].currentValue != null && this.graph != null) {
+      console.log(this.graph);
+      //this.graph.fromJSON(this.map.mapView.content);
+      console.log(this.graph.toJSON());
+    }
+  }
+  updateMapGraph() {
+    //this.map.mapView.content = this.graph.toJSON();
   }
 
 }

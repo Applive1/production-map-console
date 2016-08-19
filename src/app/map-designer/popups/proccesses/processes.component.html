@@ -1,6 +1,6 @@
 <div role="small-popup-processes" class="small-popup-processes">
 	<header>
-		<h2>Processes</h2>
+		<h2>Processes </h2>
 		<i role="closing" class="pmap-15" (click)="closeWindow()"></i>
 	</header>
 	<section>
@@ -8,50 +8,62 @@
 			<div class="form-group">
 				<div class="col has-form-label">
 					<label for="pr-process" class="form-label">Process</label>
-					<select id="pr-process" class="form-control">
-						<option value="1">1</option>
+					<select id="pr-process" class="form-control" [(ngModel)]="currentProcess">
+						<option>-- select process --</option>
+						<option *ngFor="let process of link.processes" [ngValue]="process">{{process.name}}</option>
 					</select>
 				</div>
 				<div class="col">
-					<button type="button" class="btn-event"><i class="pmap-25"></i> Add New Process</button>
+					<button type="button" class="btn-event" (click)="addProcess()"><i class="pmap-25"></i> Add New Process</button>
 				</div>
 			</div>
 			<div class="form-group has-checkbox">
 				<label for="pr-chx-1" class="form-checkbox">
-					<input type="checkbox" id="pr-chx-1"><i></i>
+					<input type="checkbox" id="pr-chx-1" [(ngModel)]="link.condition"><i></i>
 					<span class="form-label">Link has Condition</span>
 				</label>
-				<input type="text" class="form-control">
+				<div [hidden]="!link.condition">
+					<input type="text" class="form-control" [(ngModel)]="link.conditionCode" />
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="pr-chx-2" class="form-checkbox">
-					<input type="checkbox" id="pr-chx-2"><i></i>
+					<input type="checkbox" id="pr-chx-2" [(ngModel)]="link.filterAgent"><i></i>
 					<span class="form-label">Filter Agents</span>
 				</label>
+				<div [hidden]="!link.filterAgent">
+					<input type="text" class="form-control" [(ngModel)]="link.filterAgentCode" />
+				</div>
 			</div>
 		</div>
 	</section>
 	<section>
 		<div class="form-group">
 			<label for="pr-chx-3" class="form-checkbox">
-				<input type="checkbox" id="pr-chx-3"><i></i>
+				<input type="checkbox" id="pr-chx-3" [(ngModel)]="currentProcess.default_execution" ><i></i>
 				<span class="form-label">Default Execution Process</span>
 			</label>
 			<label for="pr-chx-4" class="form-checkbox">
-				<input type="checkbox" id="pr-chx-4"><i></i>
+				<input type="checkbox" id="pr-chx-4" [(ngModel)]="currentProcess.mandatory"><i></i>
 				<span class="form-label">Mandatory Process</span>
 			</label>
 		</div>
 		<div class="form-group has-checkbox">
 			<label for="pr-chx-5" class="form-checkbox">
-				<input type="checkbox" id="pr-chx-5"><i></i>
+				<input type="checkbox" id="pr-chx-5" [(ngModel)]="currentProcess.condition"><i></i>
 				<span class="form-label">Has Condition</span>
 			</label>
-			<input type="text" class="form-control">
+			<div [hidden]="!currentProcess.condition">
+				<input type="text" class="form-control" [(ngModel)]="currentProcess.conditionCode">
+			</div>
+		</div>
+		<div class="form-group has-form-label">
+			<label for="pr-namea" class="form-label">Name</label>
+			<input for="pr-namea" type="text" class="form-control" [(ngModel)]="currentProcess.name">
 		</div>
 		<div class="form-group has-form-label">
 			<label for="pr-txta" class="form-label">Description</label>
-			<textarea id="pr-txta" class="form-control"></textarea>
+			<textarea id="pr-txta" class="form-control" [(ngModel)]="currentProcess.description"></textarea>
 		</div>
 	</section>
 	<section>
@@ -69,55 +81,19 @@
 				</div>
 				<div class="tbody-wrapper">
 					<div class="tbody">
-						<div class="tr">
-							<div class="cell">Action Owner</div>
-							<div class="cell">Name</div>
-							<div class="cell">10/6/16</div>
-							<div class="cell">15:47</div>
-							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
-							<div class="cell"></div>
-							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
-						</div>
-						<div class="tr">
-							<div class="cell">Action Owner</div>
-							<div class="cell">Name</div>
-							<div class="cell">10/6/16</div>
-							<div class="cell">15:47</div>
-							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
-						</div>
-						<div class="tr">
-							<div class="cell">Action Owner</div>
-							<div class="cell">Name</div>
-							<div class="cell">10/6/16</div>
-							<div class="cell">15:47</div>
-							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
-						</div>
-						<div class="tr">
-							<div class="cell">Action Owner</div>
-							<div class="cell">Name</div>
-							<div class="cell">10/6/16</div>
-							<div class="cell">15:47</div>
-							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-37"></i></button></div>
-						</div>
-						<div class="tr">
-							<div class="cell">Action Owner</div>
-							<div class="cell">Name</div>
-							<div class="cell">10/6/16</div>
-							<div class="cell">15:47</div>
-							<div class="cell"><button type="button"><i class="pmap-35"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-27"></i></button></div>
-							<div class="cell"><button type="button"><i class="pmap-33"></i></button></div>
-							<div class="cell"></div>
+						<div *ngFor="let action of currentProcess.actions; let actionIndex = index" class="tr">
+							<div class="cell">{{action.server.name}}</div>
+							<div class="cell">{{action.name}}</div>
+							<div class="cell">{{action.lastUpdate | date:'shortDate' }}</div>
+							<div class="cell">{{action.lastUpdate | date:'shortTime'}}</div>
+							<div class="cell"><button type="button" (click)="editAction(action)"><i class="pmap-35"></i></button></div>
+							<div class="cell"><button type="button" (click)="deleteAction(actionIndex)"><i class="pmap-27"></i></button></div>
+							<div class="cell">
+								<div [hidden]="(actionIndex == 0)"><button type="button" (click)="moveActionUp(actionIndex)"><i class="pmap-33"></i></button></div>
+							</div>
+							<div class="cell">
+								<div [hidden]="(actionIndex == (currentProcess.actions.length - 1))"><button type="button" (click)="moveActionDown(actionIndex)"><i class="pmap-37"></i></button></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -126,8 +102,8 @@
 		</div>
 	</section>
 	<footer>
-		<button class="btn-event btn-danger" type="button"><i class="pmap-31"></i>Delete Process</button>
-		<button class="btn-event" type="button"><i class="pmap-26"></i>Test Process</button>
-		<button class="btn-event btn-no-icon" type="button">Close</button>
+		<button class="btn-event btn-danger" type="button" (click)="deleteProcess(currentProcess)"><i class="pmap-31"></i>Delete Process</button>
+		<button class="btn-event" type="button" (click)="testProcess(currentProcess)"><i class="pmap-26"></i>Test Process</button>
+		<button class="btn-event btn-no-icon" (click)="closeWindow()" type="button">Close</button>
 	</footer>
 </div>

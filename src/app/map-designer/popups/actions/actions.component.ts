@@ -1,12 +1,15 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { OnInit, Component, ViewEncapsulation } from '@angular/core';
 
 import { DialogRef, ModalComponent } from '../../../../../node_modules/angular2-modal';
 import { BSModalContext } from '../../../../../node_modules/angular2-modal/plugins/bootstrap/index';
-
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
+import { AgentsService } from '../../../shared/services/agents.service';
+
+import * as _ from 'lodash';
+
 export class ActionsComponentWindowData extends BSModalContext {
-    constructor(public num1: number, public num2: number) {
+    constructor(public action: any, public serverType: any) {
         super();
         this.size = 'lg';
     }
@@ -20,17 +23,28 @@ export class ActionsComponentWindowData extends BSModalContext {
     styleUrls: ['actions.component.css'],
     templateUrl: 'actions.component.html'
 })
-export class ActionsComponentWindow implements ModalComponent<ActionsComponentWindowData> {
+export class ActionsComponentWindow implements ModalComponent<ActionsComponentWindowData>, OnInit {
     context: ActionsComponentWindowData;
+    action: any = {};
 
-    link: any = {};
-
-    constructor(public dialog: DialogRef<ActionsComponentWindowData>, public modal: Modal) {
+    constructor(public dialog: DialogRef<ActionsComponentWindowData>, public modal: Modal, private agentsService: AgentsService) {
         this.context = dialog.context;
+        this.action = this.context.action;
+    }
+
+    ngOnInit() {
+        console.log("action on init");
+        console.log(this.action);
+        console.log(this.context.serverType);
+        if (_.isEmpty(this.action.server)) {
+            this.action.server = _.cloneDeep(this.agentsService.get(this.context.serverType));
+            console.log(this.action.server);
+        }
     }
 
     closeWindow() {
+        let now = new Date();
+        this.action.lastUpdate = now;
         this.dialog.close();
     }
-
 }

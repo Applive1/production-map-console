@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewQuery, OnInit }
+import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input }
 from '@angular/core';
 import { COMMON_DIRECTIVES  }
 from '@angular/common';
@@ -20,8 +20,9 @@ declare const require: any;
 export class MapCodeEditorComponent {
 
   @ViewChild('editor') editorContent: ElementRef;
+  @Input() map: any = {};
 
-  private firstInit: any;
+  private firstInit: boolean;
   constructor() {
     this.firstInit = true;
   }
@@ -48,6 +49,10 @@ export class MapCodeEditorComponent {
 
   // Will be called once monaco library is available
   initMonaco() {
+    if (this.firstInit === false) {
+      return;
+    }
+    this.firstInit = false;
     let myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({

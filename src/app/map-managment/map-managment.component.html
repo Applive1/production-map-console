@@ -1,8 +1,21 @@
 <div role="vertical-canvas" style="padding-bottom:200px">
     <div role="horizontal-canvas" style="padding: 0 317px 0 238px">
-        <aside role="left-bar" style="width:238px;">
-            <!--<pm-map-explorer></pm-map-explorer>-->
-            <pm-map-toolbox [paper]="innerPaper" [graph]="innerGraph"></pm-map-toolbox>
+        <aside role="left-bar" style="width:238px;" [ngSwitch]="leftPanelState">
+            <!--<header class="leftPanel">
+                <h2><span>{{leftPanelText}}</span></h2>
+                <div role="map-settings-buttons">
+                    <button type="button" [class.active]="currentPanel == 0" (click)="selectPanel(0)">PROJECTS</button>
+                    <button type="button" [class.active]="currentPanel == 1" (click)="selectPanel(1)">AGENTS</button>
+                </div>
+                <div role="search">
+                    <input type="text">
+                    <button type="button"><i class="pmap-4"></i></button>
+                </div>
+            </header>-->
+            <section [ngSwitch]="currentPanel">
+                <pm-map-explorer *ngSwitchCase="0"></pm-map-explorer>
+                <pm-map-toolbox *ngSwitchCase="1" [paper]="innerPaper" [graph]="innerGraph" [designerOps]="designerOps"></pm-map-toolbox>
+            </section>
         </aside>
         <section>
             <pm-map-editor (informOuterLayer)="updateToolBox($event)"></pm-map-editor>

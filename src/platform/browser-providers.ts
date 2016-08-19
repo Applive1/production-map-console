@@ -4,6 +4,8 @@
 
 // Angular 2
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
+import { Provider, provide } from '@angular/core';
 // Angular 2 Http
 import { HTTP_PROVIDERS } from '@angular/http';
 // Angular 2 Router
@@ -20,6 +22,20 @@ import { routes, asyncRoutes, prefetchRouteCallbacks } from '../app/app.routes';
 import { APP_RESOLVER_PROVIDERS } from '../app/app.resolver';
 
 import { MODAL_BROWSER_PROVIDERS } from 'angular2-modal/platform-browser';
+
+import { AgentsService } from '../app/shared/services/agents.service';
+
+import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+
+// Create config options (see ILocalStorageServiceConfigOptions) for deets:
+let localStorageServiceConfig = {
+  prefix: 'pm',
+  storageType: 'sessionStorage'
+};
+// Provide the config to the service:
+const LOCAL_STORAGE_CONFIG_PROVIDER: Provider = provide(LOCAL_STORAGE_SERVICE_CONFIG, {
+  useValue: localStorageServiceConfig
+});
 
 /*
 * Application Providers/Directives/Pipes
@@ -38,6 +54,10 @@ export const APPLICATION_PROVIDERS = [
 
   ...HTTP_PROVIDERS,
   ...MODAL_BROWSER_PROVIDERS,
+  AgentsService,
+  LocalStorageService,
+  LOCAL_STORAGE_CONFIG_PROVIDER,
+
 
   { provide: LocationStrategy, useClass: HashLocationStrategy }
 ];

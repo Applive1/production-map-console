@@ -74,7 +74,7 @@ nav[region="agents"] {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
-  boder: 0;
+  border: 0;
 }
 
 nav[region="agents"] a {

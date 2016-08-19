@@ -1,6 +1,6 @@
 <nav>
-  <a href="#" class="active"><i class="pmap-24"></i></a>
-  <a href="#"><i class="pmap-1"></i></a>
-  <a href="#"><i class="pmap-2"></i></a>
-  <a href="#"><i class="pmap-3"></i></a>
+  <a href="#" (click)="changePanel(0)" [class.active]="currentPanel == 0"><i class="pmap-24"></i></a>
+  <a href="#" (click)="changePanel(1)" [class.active]="currentPanel == 1" ><i class="pmap-1"></i></a>
+  <a href="#" (click)="changePanel(2)" [class.active]="currentPanel == 2"><i class="pmap-2"></i></a>
+  <a href="#" (click)="changePanel(3)" [class.active]="currentPanel == 3"><i class="pmap-3"></i></a>
 </nav>
