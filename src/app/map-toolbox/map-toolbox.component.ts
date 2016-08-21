@@ -19,6 +19,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
 
   private stencilGraph: any;
   private stencilPaper: any;
+  
   constructor(private agentsService: AgentsService) {
   }
 
@@ -57,12 +58,15 @@ export class MapToolboxComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if (this.stencilPaper != null) {
+      return;
+    }
     // Canvas from which you take shapes
     this.stencilGraph = new joint.dia.Graph;
     this.stencilPaper = new joint.dia.Paper({
       el: $('#stencil'),
       height: 248,
-      width: 270,
+      width: 238,
       model: this.stencilGraph,
       interactive: false
     });
@@ -145,6 +149,9 @@ export class MapToolboxComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}): void {
     if (changes['paper'].currentValue != null) {
+      if (this.stencilPaper == null) {
+        this.ngOnInit();
+      }
       this.stencilPaper.on('cell:pointerdown', (cellView, e, x, y) => {
         let paper = changes['paper'].currentValue;
         let graph = changes['graph'].currentValue;

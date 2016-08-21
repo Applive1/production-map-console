@@ -1,0 +1,15 @@
+<header>
+    <h2><span>{{ leftPanelTitle }}</span><i class="pmap-custom l-resize"></i></h2>
+    <div role="map-settings-buttons">
+        <button type="button" [class.active]="currentPanel == 0" (click)="selectPanel(0)">Projects</button>
+        <button type="button" [class.active]="currentPanel == 1" (click)="selectPanel(1)">Agents</button>
+    </div>
+    <div role="search">
+        <input type="text">
+        <button type="button"><i class="pmap-4"></i></button>
+    </div>
+</header>
+<section class="agents" [ngSwitch]="currentPanel">
+    <pm-map-explorer *ngSwitchCase="0" [projectsTree]="projectsTree"></pm-map-explorer>
+    <pm-map-toolbox  *ngSwitchCase="1" [paper]="innerPaper" [graph]="innerGraph" [designerOps]="designerOps"></pm-map-toolbox>
+</section>

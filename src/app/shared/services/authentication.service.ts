@@ -41,11 +41,6 @@ export class AuthenticationService {
     logout() {
         this.currentUser = {};
         this.localStorageService.set('user', this.currentUser);
-        // var cookies = $cookies.getAll();
-        // angular.forEach(cookies, function (v, k) {
-        //     $cookies.remove(k);
-        // });
-        // $location.path('/login');
     }
 
     register(user) {
@@ -57,7 +52,6 @@ export class AuthenticationService {
     }
 
     private extractData(res: Response) {
-        console.log(res);
         let body = res.json();
         return body || {};
     }

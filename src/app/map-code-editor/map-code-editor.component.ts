@@ -22,13 +22,13 @@ export class MapCodeEditorComponent {
   @ViewChild('editor') editorContent: ElementRef;
   @Input() map: any = {};
 
-  private firstInit: boolean;
+  private firstInit: boolean = true;
   constructor() {
     this.firstInit = true;
   }
 
   ngAfterViewInit() {
-    var onGotAmdLoader = () => {
+    let onGotAmdLoader = () => {
       // Load monaco
       (<any>window).require(['vs/editor/editor.main'], () => {
         this.initMonaco();
@@ -37,7 +37,7 @@ export class MapCodeEditorComponent {
 
     // Load AMD loader if necessary
     if (!(<any>window).require) {
-      var loaderScript = document.createElement('script');
+      let loaderScript = document.createElement('script');
       loaderScript.type = 'text/javascript';
       loaderScript.src = 'vs/loader.js';
       loaderScript.addEventListener('load', onGotAmdLoader);
@@ -49,10 +49,7 @@ export class MapCodeEditorComponent {
 
   // Will be called once monaco library is available
   initMonaco() {
-    if (this.firstInit === false) {
-      return;
-    }
-    this.firstInit = false;
+
     let myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
@@ -60,21 +57,22 @@ export class MapCodeEditorComponent {
       allowNonTsExtensions: true
     });
 
-    // extra libraries
-    monaco.languages.typescript.javascriptDefaults.addExtraLib([
-      'let map =  {',
-      '    "a": 2',
-      '    "b": [1, 2, 3]',
-      '}',
-    ].join('\n'), 'filename/pm-lib.d.ts');
+    try {
 
+      // extra libraries
+      monaco.languages.typescript.javascriptDefaults.addExtraLib([
+        'let map = {',
+        '    "a": 2',
+        '    "b": [1, 2, 3]',
+        '}',
+      ].join('\n'), 'filename/pm-lib.d.ts');
+
+    } catch (ex) {
+      console.log(ex);
+    }
 
     let editor = monaco.editor.create(myDiv, {
-      value: [
-        'function x() {',
-        '\tconsole.log("Hello world!");',
-        '}'
-      ].join('\n'),
+      value: this.map.code,
       theme: 'vs-dark',
       language: 'javascript',
       allowNonTsExtensions: true

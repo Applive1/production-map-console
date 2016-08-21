@@ -1,9 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MessagesComponent } from '../messages/messages.component';
-import { MapExplorerComponent } from '../map-explorer/map-explorer.component';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapEditorComponent } from '../map-editor/map-editor.component';
-import { MapToolboxComponent } from '../map-toolbox/map-toolbox.component';
+import { MapLeftPanelComponent } from '../map-left-panel/map-left-panel.component';
+import { ProjectService } from '../shared/services/project.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import * as _ from 'lodash';
+
 
 @Component({
   moduleId: module.id,
@@ -11,34 +14,30 @@ import { MapToolboxComponent } from '../map-toolbox/map-toolbox.component';
   templateUrl: 'map-managment.component.html',
   styleUrls: ['map-managment.component.css'],
   directives: [
-                MessagesComponent, MapExplorerComponent, MapSettingsComponent,
-                MapEditorComponent, MapToolboxComponent
-  ]
+                MessagesComponent, MapSettingsComponent,
+                MapEditorComponent, MapLeftPanelComponent
+  ],
+  providers: [ProjectService]
 })
 export class MapManagmentComponent implements OnInit {
 
-  public innerPaper: any = null;
-  public innerGraph: any = null;
   public designerOps: any = null;
   public sideBarState: boolean = true;
-  public currentPanel: number;
-  public leftPanelTitle: string;
-  public panelsTitles: any;
+  public projectsTree: any;
 
-  constructor() {
-    this.panelsTitles = [
-      'PROJECTS',
-      'AGENTS'
-    ]
+  constructor(private projectService: ProjectService, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.currentPanel = 1;
-  }
-
-  selectPanel(panelId: number) {
-    this.currentPanel = panelId;
-    this.leftPanelTitle = this.panelsTitles[this.currentPanel];
+    let user = this.authenticationService.currentUser;
+    if (_.isEmpty(user)) {
+      return;
+    }
+    console.log("get Projects");
+    this.projectService.getJstreeProjectsByUser(user.id).subscribe((projects) => {
+      console.log(projects);
+      this.projectsTree = projects;
+    });
   }
 
   setSideBarState(state: boolean) {
@@ -46,9 +45,7 @@ export class MapManagmentComponent implements OnInit {
   }
 
   updateToolBox($event: any) {
-    this.innerPaper = $event.paper;
-    this.innerGraph = $event.graph;
-    this.designerOps = $event.designerOps;
+    this.designerOps = $event;
   }
 
 }
