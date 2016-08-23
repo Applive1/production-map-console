@@ -87,26 +87,32 @@
         border-bottom: 2px solid #02a7c7;
 }
 
+.login-box .form-elem-group input[placeholder] {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 300;
+}
+
 .login-box .form-elem-group input::-webkit-input-placeholder {
-    color: #777777;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 300;
 }
 
 .login-box .form-elem-group input:-moz-placeholder { 
-    color: #777777;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 300; 
 }
 
 .login-box .form-elem-group input::-moz-placeholder { 
-    color: #777777;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 300; 
 }
 
 .login-box .form-elem-group input:-ms-input-placeholder {  
-    color: #777777;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 300;
 }
