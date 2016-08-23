@@ -10,6 +10,6 @@
     </div>
 </header>
 <section class="agents" [ngSwitch]="currentPanel">
-    <pm-map-explorer *ngSwitchCase="0" [projectsTree]="projectsTree"></pm-map-explorer>
+    <pm-map-explorer (onMapSelect)="selectMap($event)" *ngSwitchCase="0" [projectsTree]="projectsTree"></pm-map-explorer>
     <pm-map-toolbox  *ngSwitchCase="1" [paper]="innerPaper" [graph]="innerGraph" [designerOps]="designerOps"></pm-map-toolbox>
 </section>

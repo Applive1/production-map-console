@@ -6,6 +6,7 @@ import { MapLeftPanelComponent } from '../map-left-panel/map-left-panel.componen
 import { ProjectService } from '../shared/services/project.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import * as _ from 'lodash';
+import * as jsonpatch from 'jsonpatch';
 
 
 @Component({
@@ -23,20 +24,23 @@ export class MapManagmentComponent implements OnInit {
 
   public designerOps: any = null;
   public sideBarState: boolean = true;
-  public projectsTree: any;
+  public projectsTree: any = [];
+  public currentMap: any = {};
+  public messages:any [];
 
   constructor(private projectService: ProjectService, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
     let user = this.authenticationService.currentUser;
-    if (_.isEmpty(user)) {
-      return;
-    }
-    console.log("get Projects");
+    user = { id: '5732cd1d60a8d7b815c3416b' };
+    console.log('Get Projects');
     this.projectService.getJstreeProjectsByUser(user.id).subscribe((projects) => {
-      console.log(projects);
+      console.log('Got Projects');
       this.projectsTree = projects;
+    },
+    (error) => {
+      console.log(error);
     });
   }
 
@@ -46,6 +50,38 @@ export class MapManagmentComponent implements OnInit {
 
   updateToolBox($event: any) {
     this.designerOps = $event;
+  }
+
+  mapExecuted($event) {
+    this.messages.push({
+      content: $event
+    });
+  }
+
+  loadMapVersion(index) {
+    let mapView = _.cloneDeep(this.currentMap.structure);
+    this.currentMap.versionIndex = index;
+
+    let versions = _.cloneDeep(this.currentMap.versions);
+    for (let i = 0; i <= index; i++) {
+      if (versions[i].patches) {
+        try {
+          mapView = jsonpatch.apply_patch(mapView, versions[i].patches);
+        } catch (ex) {
+          console.log(ex);
+          console.log(i);
+          console.log(versions[i]);
+          console.log(mapView);
+        }
+      }
+    }
+    this.currentMap.mapView = mapView;
+  }
+
+  selectMap($event) {
+    this.currentMap = $event;
+    this.currentMap.versionIndex = this.currentMap.versions.length - 1;
+    this.loadMapVersion(this.currentMap.versionIndex);
   }
 
 }

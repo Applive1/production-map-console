@@ -21,7 +21,6 @@ export class App {
 
   ngOnInit() {
     this.authenticationService.isLoggedIn().subscribe((result) => {
-      console.log(result);
       if (!result) {
         this.router.navigate(['login']);
       }

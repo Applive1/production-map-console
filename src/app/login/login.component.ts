@@ -18,6 +18,7 @@ export class LoginComponent {
 
     login(username, password) {
         this.authenticationService.login(username, password).subscribe((res) => {
+            console.log('login clicked returned');
             this.router.navigate(['']);
         });
     }

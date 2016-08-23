@@ -9,40 +9,13 @@
 <section>
   <div class="grid">
     <!--  -->
-    <div class="row">
-      <span class="cell">10/6/16</span>
-      <span class="cell">15:47</span>
+    <div class="row" *ngFor="let msg of messages" >
+      <span class="cell">{{msg.date | date:'shortDate'}}</span>
+      <!--<span class="cell">15:47</span>-->
       <span class="cell"><i class="red"></i></span>
-      <span class="cell">Map name</span>
-      <span class="cell">Agent Name</span>
-      <span class="cell">});mw.loader.load(["mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","mw.TMHGalleryHook.js","mediawiki.page.startup","mediawiki.legacy.wietf</span>
-      <span class="cell"><i class="pmap-23"></i></span>
-    </div>
-    <div class="row">
-      <span class="cell">10/6/16</span>
-      <span class="cell">15:47</span>
-      <span class="cell"><i class="red"></i></span>
-      <span class="cell">Map name</span>
-      <span class="cell">Agent Name</span>
-      <span class="cell">});mw.loader.load(["mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","mw.TMHGalleryHook.js","mediawiki.page.startup","mediawiki.legacy.wietf</span>
-      <span class="cell"><i class="pmap-23"></i></span>
-    </div>
-    <div class="row">
-      <span class="cell">10/6/16</span>
-      <span class="cell">15:47</span>
-      <span class="cell"><i class="red"></i></span>
-      <span class="cell">Map name</span>
-      <span class="cell">Agent Name</span>
-      <span class="cell">});mw.loader.load(["mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","mw.TMHGalleryHook.js","mediawiki.page.startup","mediawiki.legacy.wietf</span>
-      <span class="cell"><i class="pmap-23"></i></span>
-    </div>
-    <div class="row">
-      <span class="cell">10/6/16</span>
-      <span class="cell">15:47</span>
-      <span class="cell"><i class="red"></i></span>
-      <span class="cell">Map name</span>
-      <span class="cell">Agent Name</span>
-      <span class="cell">});mw.loader.load(["mw.MediaWikiPlayer.loader","mw.PopUpMediaTransform","mw.TMHGalleryHook.js","mediawiki.page.startup","mediawiki.legacy.wietf</span>
+      <!--<span class="cell">Map name</span>
+      <span class="cell">Agent Name</span>-->
+      <span class="cell">{{msg.content}}</span>
       <span class="cell"><i class="pmap-23"></i></span>
     </div>
   </div>

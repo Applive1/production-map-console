@@ -191,7 +191,6 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     if (changes['map'].currentValue != null && this.graph != null) {
       console.log(this.graph);
       this.loadMap();
-      console.log(this.graph.toJSON());
     }
   }
   updateMapGraph() {
@@ -203,25 +202,25 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     this.graph.clear();
     try {
 
-      // Wait 1s and add the cells
-      setInterval(() => {
-        if (!this.map.mapView.content) {
-          console.log("no content");
-          return;
-        }
-        let model = JSON.parse(this.map.mapView.content);
+      // Wait 1s and add the cells    
+      if (!this.map.mapView.content) {
+        console.log("no content");
+        console.log(this.map.mapView);
+        console.log("content");
+        return;
+      }
+      let model = JSON.parse(this.map.mapView.content);
 
-        for (let i = 0; i < model.nodes.length; i++) {
-          this.graph.addCell(model.nodes[i]);
-        }
+      for (let i = 0; i < model.nodes.length; i++) {
+        this.graph.addCell(model.nodes[i]);
+      }
 
-        for (let i = 0; i < model.links.length; i++) {
-          this.graph.addCell(model.links[i]);
-        }
+      for (let i = 0; i < model.links.length; i++) {
+        this.graph.addCell(model.links[i]);
+      }
 
-        this.map.isLocked = (this.map.versionIndex != this.map.versions.length - 1);
+      this.map.isLocked = (this.map.versionIndex != this.map.versions.length - 1);
 
-      }, 100);
     } catch (e) {
       console.log(e);
     }

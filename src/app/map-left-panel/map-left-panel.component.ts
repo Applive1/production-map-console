@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { MessagesComponent } from '../messages/messages.component';
 import { MapExplorerComponent } from '../map-explorer/map-explorer.component';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
@@ -26,6 +26,9 @@ export class MapLeftPanelComponent implements OnInit, OnChanges {
     public panelsTitles: any;
     @Input() graphProps: any;
     @Input() projectsTree: any;
+    @Output() onMapSelect: EventEmitter = new EventEmitter();
+
+
 
 
     constructor() {
@@ -36,7 +39,12 @@ export class MapLeftPanelComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        console.log('load left panel');
         this.selectPanel(0);
+    }
+
+    selectMap($event) {
+        this.onMapSelect.emit($event);
     }
 
     selectPanel(panelId: number) {

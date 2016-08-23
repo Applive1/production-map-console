@@ -7,7 +7,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 @Injectable()
 export class AuthenticationService {
 
-    public currentUser: any = {};
+    public currentUser: any = { id: '5732cd1d60a8d7b815c3416b'};
 
     private serverUrl: string = 'http://localhost:8080/';
 
@@ -19,7 +19,8 @@ export class AuthenticationService {
 
     isLoggedIn() {
         return this.http.get(this.serverUrl + 'isLoggedIn').map(this.extractData).map((result) => {
-            this.currentUser = this.localStorageService.get('user');
+            this.currentUser = { id: '5732cd1d60a8d7b815c3416b' };
+            console.log(this.currentUser);
             if (_.isEmpty(this.currentUser)) {
                 return false;
             }
@@ -33,20 +34,20 @@ export class AuthenticationService {
             password: password
         }).map(this.extractData).map((result) => {
             this.currentUser = result;
-            this.localStorageService.set('user', this.currentUser);
+            //localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
             return this.currentUser;
         });
     }
 
     logout() {
         this.currentUser = {};
-        this.localStorageService.set('user', this.currentUser);
+        // localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
     }
 
     register(user) {
         return this.http.post(this.serverUrl + 'auth/local/register', user).map(this.extractData).map((result) => {
             this.currentUser = result;
-            this.localStorageService.set('user', this.currentUser);
+            // localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
             return this.currentUser;
         });
     }

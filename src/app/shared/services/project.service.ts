@@ -27,7 +27,10 @@ export class ProjectService {
     }
 
     private extractData(res: Response) {
+        console.log('proj ext data');
+        console.log(res);
         let body = res.json();
+        console.log(body);
         return body || {};
     }
 }

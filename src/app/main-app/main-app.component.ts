@@ -15,7 +15,7 @@ export class MainAppComponent {
     }
 
     ngOnInit() {
-
+        console.log('init main app');
     }
 
     updatePanel($event) {
