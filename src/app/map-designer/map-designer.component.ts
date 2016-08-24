@@ -73,7 +73,7 @@ export class MapDesignerComponent implements OnInit, OnChanges {
 
   }
 
-  addNode(id, name, type) {
+  addNode(id, name, type, node) {
     this.map.mapView.nodes[id] = {
       id: id,
       type: type,
@@ -81,7 +81,9 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       serverUrl: "localhost:8100", /* Default address */
       attributes: {}
     };
-    this.updateMapGraph();
+    let model = JSON.parse(this.map.mapView.content);
+    model.nodes.push(node);
+    this.map.mapView.content = JSON.stringify(model);
   }
 
   ngOnInit() {
@@ -149,7 +151,9 @@ export class MapDesignerComponent implements OnInit, OnChanges {
 
         this.connectNodes(link.id, sourceId, targetId);
         this._currentLink = null;
-        this.updateMapGraph();
+        let model = JSON.parse(this.map.mapView.content);
+        model.links.push(link);
+        this.map.mapView.content = JSON.stringify(model);
       }
     });
 
@@ -192,9 +196,6 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       console.log(this.graph);
       this.loadMap();
     }
-  }
-  updateMapGraph() {
-    //this.map.mapView.content = this.graph.toJSON();
   }
 
   loadMap() {

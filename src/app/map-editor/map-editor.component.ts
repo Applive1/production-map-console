@@ -47,7 +47,18 @@ export class MapEditorComponent implements OnInit {
   executeMap(map) {
     this.mapService.executeMap(map, []).subscribe((result) => {
       this.onExecution.emit(result.res);
-      this.map.versions[this.map.versionIndex].executions.push(result.resObj);
+      this.map.versions[this.map.versionIndex].executions.push(result);
+      this.map.versionIndex = this.map.versions.length - 1;
     });
+  }
+
+  saveMap(map) {
+      this.mapService.saveMap(map).subscribe((result) => {
+        if (result.date) {
+          map.versions.push(result);
+          map.versionIndex++;
+        }
+        console.log(result);
+      });
   }
 }

@@ -190,7 +190,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
             let s = flyShape.clone();
             s.position(x - target.left - offset.x, y - target.top - offset.y);
             graph.addCell(s);
-            this.designerOps.addNode(s.id, cellView.model.attr('text/text'), cellView.model.attr('text/text'));
+            this.designerOps.addNode(s.id, cellView.model.attr('text/text'), cellView.model.attr('text/text'), s);
           }
           $('body').off('mousemove.fly').off('mouseup.fly');
           flyShape.remove();

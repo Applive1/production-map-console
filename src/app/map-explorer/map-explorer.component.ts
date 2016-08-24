@@ -36,10 +36,11 @@ export class MapExplorerComponent implements OnInit {
     console.log('add map');
     let node: TreeNode = this.tree.treeModel.getFocusedNode();
     let project = node.data;
+    console.log(node);
     this.mapService.createMap('exampleMap', project.id).subscribe((map) => {
       node.children.push(map);
-      node.treeModel.update();
-    })
+      this.tree.treeModel.update();
+    });
   }
 
   addProject() {
