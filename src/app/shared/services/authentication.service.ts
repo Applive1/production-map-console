@@ -7,7 +7,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 @Injectable()
 export class AuthenticationService {
 
-    public currentUser: any = { id: '5732cd1d60a8d7b815c3416b'};
+    public currentUser: any;
 
     private serverUrl: string = 'http://localhost:8080/';
 

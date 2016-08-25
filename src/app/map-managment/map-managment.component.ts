@@ -33,8 +33,9 @@ export class MapManagmentComponent implements OnInit {
 
   ngOnInit() {
     let user = this.authenticationService.currentUser;
-    user = { id: '5732cd1d60a8d7b815c3416b' };
-    console.log('Get Projects');
+    if(!user) {
+      return;
+    }
     this.projectService.getJstreeProjectsByUser(user.id).subscribe((projects) => {
       console.log('Got Projects');
       this.projectsTree = projects;
