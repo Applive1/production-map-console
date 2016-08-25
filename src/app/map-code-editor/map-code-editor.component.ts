@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input }
-from '@angular/core';
-import { COMMON_DIRECTIVES  }
-from '@angular/common';
+import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input } from '@angular/core';
+import { COMMON_DIRECTIVES  } from '@angular/common';
+
+import { LibPMService } from '../shared/services/libpm.service';
 
 import * as _ from 'lodash';
 
@@ -15,7 +15,8 @@ declare const require: any;
   selector: 'pm-map-code-editor',
   templateUrl: 'map-code-editor.component.html',
   styleUrls: ['map-code-editor.component.css'],
-  directives: [COMMON_DIRECTIVES]
+  directives: [COMMON_DIRECTIVES],
+  providers: [LibPMService]
 })
 export class MapCodeEditorComponent {
 
@@ -23,7 +24,7 @@ export class MapCodeEditorComponent {
   @Input() map: any = {};
 
   private firstInit: boolean = true;
-  constructor() {
+  constructor(private libpmService: LibPMService) {
     this.firstInit = true;
   }
 
@@ -49,7 +50,6 @@ export class MapCodeEditorComponent {
 
   // Will be called once monaco library is available
   initMonaco() {
-
     let myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
@@ -57,19 +57,17 @@ export class MapCodeEditorComponent {
       allowNonTsExtensions: true
     });
 
-    try {
 
-      // extra libraries
-      monaco.languages.typescript.javascriptDefaults.addExtraLib([
-        'let map = {',
-        '    "a": 2',
-        '    "b": [1, 2, 3]',
-        '}',
-      ].join('\n'), 'filename/pm-lib.d.ts');
 
-    } catch (ex) {
-      console.log(ex);
-    }
+    this.libpmService.getLibPM().subscribe( (result) => {
+      try {
+        /* add libproduction map */
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(result, 'productionMap/pm-lib.d.ts');
+      } catch (ex) {
+        console.log(ex);
+      }
+    });
+
 
     let editor = monaco.editor.create(myDiv, {
       value: this.map.code,

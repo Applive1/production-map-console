@@ -106,7 +106,7 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       },
     });
 
-    /* TODO: add support for hovering on output port, when user mouse hovers above output show the relevant inputs for that node 
+    /* TODO: add support for hovering on output port, when user mouse hovers above output show the relevant inputs for that node
         use Marking available magnets example from jointjs website*/
     joint.shapes.devs.PMStartPoint = joint.shapes.devs.Model.extend({
 
@@ -230,7 +230,7 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     this.graph.clear();
     try {
 
-      // Wait 1s and add the cells    
+      // Wait 1s and add the cells
       if (!this.map.mapView.content) {
         console.log("no content");
         console.log(this.map.mapView);
