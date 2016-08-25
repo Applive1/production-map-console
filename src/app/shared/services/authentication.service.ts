@@ -54,6 +54,10 @@ export class AuthenticationService {
     }
 
     getCurrentUser() {
+        if (!this.currentUser) {
+            this.currentUser = this.localStorageService.get(this.userKeyName);
+            this.currentUser = JSON.parse(this.currentUser);
+        }
         return this.currentUser;
     }
     private extractData(res: Response) {
