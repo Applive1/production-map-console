@@ -54,18 +54,27 @@ export class MapCodeEditorComponent {
 
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ES6,
-      allowNonTsExtensions: true
+      allowNonTsExtensions: true,
+
     });
 
 
 
-    this.libpmService.getLibPM().subscribe( (result) => {
+    this.libpmService.getLibPM().subscribe((result) => {
       try {
-        /* add libproduction map */
+        /* add libproduction map, load it only once */
         monaco.languages.typescript.javascriptDefaults.addExtraLib(result, 'productionMap/pm-lib.d.ts');
       } catch (ex) {
         console.log(ex);
       }
+
+      try {
+        this.libpmService.addMap(monaco, this.map);
+      } catch (ex) {
+        console.log(ex);
+      }
+
+
     });
 
 
