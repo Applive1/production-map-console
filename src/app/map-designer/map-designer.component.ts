@@ -137,6 +137,33 @@ export class MapDesignerComponent implements OnInit, OnChanges {
 
     joint.shapes.devs.PMStartPointView = joint.shapes.devs.ModelView;
 
+    joint.shapes.devs.PMDragModel = joint.shapes.devs.Model.extend({
+
+      markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
+      portMarkup: '<g class="port port<%= id %>"><circle class="port-body"/><text class="port-label"/></g>',
+
+      defaults: joint.util.deepSupplement({
+
+        type: 'devs.PMDragModel',
+        size: { width: 110, height: 84 },
+        inPorts: [''],
+        outPorts: [''],
+        attrs: {
+          '.body': { stroke: '#3c3e41', fill: '#2c2c2c', 'rx': 6, 'ry': 6 },
+          '.label': { text: 'Command Line', 'ref-y': 0.83, 'y-alignment': 'middle', fill: '#f1f1f1', 'font-size': 13 },
+          '.port-body': { r: 7.5, stroke: 'gray', fill: '#2c2c2c', magnet: 'active' },
+          'image': {
+            'ref-x': 34, 'ref-y': 30, ref: 'rect',
+            width: 46, height: 34, 'y-alignment': 'middle',
+            'x-alignment': 'middle', 'xlink:href': 'assets/img/agents-small-01.png'
+          }
+        }
+
+      }, joint.shapes.devs.Model.prototype.defaults)
+    });
+
+    joint.shapes.devs.PMDragModelView = joint.shapes.devs.ModelView;
+
     let startShape = new joint.shapes.devs.PMStartPoint({
       position: { x: 40, y: 30 },
     });
