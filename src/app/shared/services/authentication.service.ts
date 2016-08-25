@@ -7,8 +7,9 @@ import { LocalStorageService } from 'angular-2-local-storage';
 @Injectable()
 export class AuthenticationService {
 
-    public currentUser: any;
 
+    private currentUser: any;
+    private userKeyName: string = 'pm-user';
     private serverUrl: string = 'http://localhost:8080/';
 
     constructor(private http: Http, public options: RequestOptions, private localStorageService: LocalStorageService) {
@@ -18,8 +19,9 @@ export class AuthenticationService {
 
 
     isLoggedIn() {
-        return this.http.get(this.serverUrl + 'isLoggedIn').map(this.extractData).map((result) => {
-            this.currentUser = { id: '5732cd1d60a8d7b815c3416b' };
+        return this.http.get(this.serverUrl + 'isLoggedIn').map((result) => {
+            this.currentUser = this.localStorageService.get(this.userKeyName);
+            this.currentUser = JSON.parse(this.currentUser);
             console.log(this.currentUser);
             if (_.isEmpty(this.currentUser)) {
                 return false;
@@ -34,24 +36,28 @@ export class AuthenticationService {
             password: password
         }).map(this.extractData).map((result) => {
             this.currentUser = result;
-            //localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
+            this.localStorageService.set(this.userKeyName, JSON.stringify(this.currentUser));
             return this.currentUser;
         });
     }
 
     logout() {
         this.currentUser = {};
-        // localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
+        this.localStorageService.set(this.userKeyName, JSON.stringify(this.currentUser));
     }
 
     register(user) {
         return this.http.post(this.serverUrl + 'auth/local/register', user).map(this.extractData).map((result) => {
             this.currentUser = result;
-            // localStorage.setItem('pm-user', JSON.stringify(this.currentUser));
+            this.localStorageService.set(this.userKeyName, JSON.stringify(this.currentUser));
             return this.currentUser;
         });
     }
 
+    getCurrentUser() {
+        console.log(this.currentUser);
+        return this.currentUser;
+    }
     private extractData(res: Response) {
         let body = res.json();
         return body || {};

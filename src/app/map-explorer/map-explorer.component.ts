@@ -27,7 +27,7 @@ export class MapExplorerComponent implements OnInit {
       console.log(node.data);
       if (!node.data.versions) {
         return;
-      }  
+      }
       this.onMapSelect.emit(node.data);
     }
   }

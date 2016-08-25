@@ -23,6 +23,8 @@ export class App {
     this.authenticationService.isLoggedIn().subscribe((result) => {
       if (!result) {
         this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['']);
       }
     },
     (error) => {

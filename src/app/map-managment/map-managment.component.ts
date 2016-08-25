@@ -29,13 +29,15 @@ export class MapManagmentComponent implements OnInit {
   public messages:any [];
 
   constructor(private projectService: ProjectService, private authenticationService: AuthenticationService) {
+
   }
 
   ngOnInit() {
-    let user = this.authenticationService.currentUser;
-    if(!user) {
+    let user = this.authenticationService.getCurrentUser();
+    if(!user || !user.id) {
       return;
     }
+    console.log(`map explorer: ${user.id}`);
     this.projectService.getJstreeProjectsByUser(user.id).subscribe((projects) => {
       console.log('Got Projects');
       this.projectsTree = projects;
