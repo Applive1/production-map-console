@@ -37,9 +37,7 @@ export class MapManagmentComponent implements OnInit {
     if(!user || !user.id) {
       return;
     }
-    console.log(`map explorer: ${user.id}`);
     this.projectService.getJstreeProjectsByUser(user.id).subscribe((projects) => {
-      console.log('Got Projects');
       this.projectsTree = projects;
     },
     (error) => {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   moduleId: module.id,
@@ -8,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() {}
+  public user: any = {};
+
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
+    this.user = this.authenticationService.getCurrentUser();
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }

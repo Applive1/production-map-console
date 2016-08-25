@@ -39,7 +39,6 @@ export class MapLeftPanelComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        console.log('load left panel');
         this.selectPanel(0);
     }
 

@@ -22,7 +22,6 @@ export class AuthenticationService {
         return this.http.get(this.serverUrl + 'isLoggedIn').map((result) => {
             this.currentUser = this.localStorageService.get(this.userKeyName);
             this.currentUser = JSON.parse(this.currentUser);
-            console.log(this.currentUser);
             if (_.isEmpty(this.currentUser)) {
                 return false;
             }
@@ -55,7 +54,6 @@ export class AuthenticationService {
     }
 
     getCurrentUser() {
-        console.log(this.currentUser);
         return this.currentUser;
     }
     private extractData(res: Response) {
