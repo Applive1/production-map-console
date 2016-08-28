@@ -15,6 +15,15 @@ export class AuthenticationService {
     constructor(private http: Http, public options: RequestOptions, private localStorageService: LocalStorageService) {
         let headers = new Headers({ 'Content-Type': 'application/json', withCredentials: true });
         this.options = new RequestOptions({ headers: headers });
+
+        // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
+        let _build = (<any>http)._backend._browserXHR.build;
+        (<any>http)._backend._browserXHR.build = () => {
+            let _xhr = _build();
+            _xhr.withCredentials = true;
+            return _xhr;
+        };
+
     }
 
 
