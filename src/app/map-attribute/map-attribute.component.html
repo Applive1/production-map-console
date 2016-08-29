@@ -1,0 +1,34 @@
+<div [ngSwitch]="editMode">
+    <!--on edit show this snippet-->
+    <div *ngSwitchCase="true" class="row">
+        <div class="cell">
+            <input type="text" class="form-control" [(ngModel)]="editableAttribute.name" />
+        </div>
+        <div class="cell">
+            <!-- TODO:the option values should be changed to dynamic list from enum optionss-->
+            <select class="form-control" [(ngModel)]="editableAttribute.type">
+                <option>-- select method --</option>
+				<option value="List">List</option>
+                <option value="String">String</option>
+			</select>
+        </div>
+        <div class="cell">
+            <input type="text" class="form-control" [(ngModel)]="editableAttribute.value" />
+        </div>
+        <div class="cell"><button type="button" (click)="save()"><i class="pmap-36"></i></button></div>
+        <div class="cell"><button type="button" (click)="cancel()"><i class="pmap-15"></i></button></div>
+    </div>
+
+    <!-- on view show this snippet-->
+    <div *ngSwitchCase="false" class="row">
+        <span class="cell">{{ attribute.name }}</span>
+        <div [ngSwitch]="attribute.type">
+            <span class="cell" *ngSwitchCase="'String'">“{{attribute.value}}“</span>
+            <span class="cell" *ngSwitchCase="'List'">[{{attribute.value}}]</span>
+        </div>
+        <span class="cell"><button type="button" (click)="edit()"><i class="pmap-35"></i></button></span>
+        <span class="cell"><button type="button" (click)="delete()"><i class="pmap-27"></i></button></span>
+    </div>
+
+
+</div>
