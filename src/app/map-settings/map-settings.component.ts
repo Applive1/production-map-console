@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {MapAttributesComponent} from "../map-attributes/map-attributes.component";
 import {MapServersComponent} from "../map-servers/map-servers.component";
 import {NgSwitch, NgSwitchCase} from "@angular/common";
@@ -13,6 +13,7 @@ import {NgSwitch, NgSwitchCase} from "@angular/common";
 export class MapSettingsComponent implements OnInit {
 
   public currentPanel: number = 1;
+  @Input() map: any = {};
 
   constructor() {}
 

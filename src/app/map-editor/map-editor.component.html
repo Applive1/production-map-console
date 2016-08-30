@@ -3,8 +3,8 @@
 </header>
 <section [ngSwitch]="currentPanel">
   <pm-map-designer (paperInit)="updateManagmentPanel($event)" *ngSwitchCase="0" [map]="map"></pm-map-designer>
-  <pm-map-markup *ngSwitchCase="1" [map]="map.mapView"></pm-map-markup>
-  <pm-map-code-editor *ngSwitchCase="2" [map]="map.mapView"></pm-map-code-editor>
+  <pm-map-markup *ngSwitchCase="1" [map]="map"></pm-map-markup>
+  <pm-map-code-editor *ngSwitchCase="2" [map]="map"></pm-map-code-editor>
 </section>
 <footer>
   <div role="left-tabs">

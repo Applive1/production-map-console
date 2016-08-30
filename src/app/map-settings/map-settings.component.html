@@ -6,6 +6,6 @@
   </div>
 </header>
 <section [ngSwitch]="currentPanel">
-  <pm-map-attributes *ngSwitchCase="0"></pm-map-attributes>
+  <pm-map-attributes [map]="map" *ngSwitchCase="0"></pm-map-attributes>
   <pm-map-servers *ngSwitchCase="1"></pm-map-servers>
 </section>

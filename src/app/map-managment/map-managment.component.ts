@@ -5,6 +5,8 @@ import { MapEditorComponent } from '../map-editor/map-editor.component';
 import { MapLeftPanelComponent } from '../map-left-panel/map-left-panel.component';
 import { ProjectService } from '../shared/services/project.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { MapService } from '../shared/services/map.service';
+
 import * as _ from 'lodash';
 import * as jsonpatch from 'jsonpatch';
 
@@ -18,7 +20,7 @@ import * as jsonpatch from 'jsonpatch';
                 MessagesComponent, MapSettingsComponent,
                 MapEditorComponent, MapLeftPanelComponent
   ],
-  providers: [ProjectService]
+  providers: [ProjectService, MapService] /* user Map service onlly here as a provider because we want to save the map state for all users */
 })
 export class MapManagmentComponent implements OnInit {
 
@@ -28,7 +30,7 @@ export class MapManagmentComponent implements OnInit {
   public currentMap: any = {};
   public messages:any [];
 
-  constructor(private projectService: ProjectService, private authenticationService: AuthenticationService) {
+  constructor(private projectService: ProjectService, private authenticationService: AuthenticationService, private mapService: MapService) {
 
   }
 
@@ -59,30 +61,10 @@ export class MapManagmentComponent implements OnInit {
     });
   }
 
-  loadMapVersion(index) {
-    let mapView = _.cloneDeep(this.currentMap.structure);
-    this.currentMap.versionIndex = index;
-
-    let versions = _.cloneDeep(this.currentMap.versions);
-    for (let i = 0; i <= index; i++) {
-      if (versions[i].patches) {
-        try {
-          mapView = jsonpatch.apply_patch(mapView, versions[i].patches);
-        } catch (ex) {
-          console.log(ex);
-          console.log(i);
-          console.log(versions[i]);
-          console.log(mapView);
-        }
-      }
-    }
-    this.currentMap.mapView = mapView;
-  }
-
   selectMap($event) {
     this.currentMap = $event;
     this.currentMap.versionIndex = this.currentMap.versions.length - 1;
-    this.loadMapVersion(this.currentMap.versionIndex);
+    this.mapService.loadMapVersion(this.currentMap, this.currentMap.versionIndex);
   }
 
 }

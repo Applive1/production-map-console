@@ -17,7 +17,7 @@ import * as _ from 'lodash';
   templateUrl: 'map-editor.component.html',
   styleUrls: ['map-editor.component.css'],
   directives: [MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, NgSwitch, NgSwitchCase],
-  providers: [LibPMService, MapService]
+  providers: [LibPMService]
 })
 export class MapEditorComponent implements OnInit {
 
