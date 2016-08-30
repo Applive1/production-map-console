@@ -613,3 +613,57 @@ textarea.form-control {
 .form-checkbox input:checked + i:before {
   color: #929292;
 }
+.tree {
+	color: #bbb;
+    font-size: 14px;
+    line-height: 23px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tree-node-collapsed>.node-content-wrapper:before, .tree-node-expanded>.node-content-wrapper:before {
+	    display: inline-block;
+    content: '\e912';
+    font-family: 'productionmap';
+    color: #d4b64f;
+    font-style: normal;
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 17px;
+}
+
+.tree-node-leaf>.node-content-wrapper:before {
+	    display: inline-block;
+    content: '\e916';
+    font-family: 'productionmap';
+    color: #d4b64f;
+    font-style: normal;
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 15px;
+    color: #86ccfe;
+}
+
+
+button.action-add-btn{
+  border: 1px solid #696f70;
+  border-radius: 1px;
+  background-color: #3c3e41;
+  height: 28px;
+  line-height: 22px;
+  padding: 0 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  color: #f1f1f1;
+  font-size: 12px;
+}
+
+button.action-add-btn i {
+  padding-right: 6px;
+  font-size: 13px;
+  padding-bottom: 3px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #3aac59;
+}
+

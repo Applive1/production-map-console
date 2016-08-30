@@ -3,6 +3,12 @@
     <Tree #tree [nodes]="projectsTree" (onActiveChanged)="selectMap($event)"></Tree>
 </div>
 <div>
-    <button (click)="addProject()"> add project</button>
-    <button (click)="addMap()"> add Map</button>
+<div class="side-bar-left-btn">
+      <button class="action-add-btn" type="button" (click)="addProject()">
+        <i class="pmap-25"></i>Add Project
+      </button>
+      <button class="action-add-btn" (click)="addMap()">
+        <i class="pmap-25"></i> Add Map
+      </button>
+    </div>
 </div>
