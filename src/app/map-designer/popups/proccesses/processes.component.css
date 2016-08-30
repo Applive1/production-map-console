@@ -89,7 +89,7 @@
 }
 
 .small-popup-processes[role="small-popup-processes"] section .form-group {
-  width: 378px;
+  width: 330px;
   margin-bottom: 18px;
 }
 
@@ -164,7 +164,7 @@
 }
 
 .small-popup-processes[role="small-popup-processes"] section .form-horizontal .form-group .col:first-child {
-  width: 378px;
+  width: 330px;
 }
 
 .small-popup-processes[role="small-popup-processes"] section .form-horizontal .form-group .col:first-child + .col {
@@ -268,4 +268,7 @@
 
 .small-popup-processes[role="small-popup-add-trigger"] section:last-of-type h2 + table tbody tr:last-child td {
   border-bottom: none;
+}
+.procces-section {
+  padding: 25px 50px !important;
 }
