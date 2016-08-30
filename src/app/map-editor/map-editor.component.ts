@@ -7,6 +7,7 @@ import { MapService } from '../shared/services/map.service';
 import { Response } from '@angular/http';
 import { MapReportComponentWindowData, MapReportComponentWindow } from '../map-report';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { LibPMService } from '../shared/services/libpm.service';
 
 import * as _ from 'lodash';
 
@@ -16,7 +17,7 @@ import * as _ from 'lodash';
   templateUrl: 'map-editor.component.html',
   styleUrls: ['map-editor.component.css'],
   directives: [MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, NgSwitch, NgSwitchCase],
-  providers: [MapService]
+  providers: [LibPMService, MapService]
 })
 export class MapEditorComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class MapEditorComponent implements OnInit {
 
   public currentPanel: number = 0;
 
-  constructor(public modal: Modal, private mapService: MapService) {
+  constructor(public modal: Modal, private mapService: MapService, private libpmService: LibPMService) {
   }
 
   ngOnInit() {

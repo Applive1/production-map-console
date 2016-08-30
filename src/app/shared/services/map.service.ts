@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Response } from '@angular/http';
+import * as jsonpatch from 'jsonpatch';
 
 @Injectable()
 export class MapService {
@@ -48,6 +49,31 @@ export class MapService {
   duplicateMap(mapName, projectId, dmapId) {
     return this.http.post(this.serverUrl + 'map/duplicate/' + dmapId, { name: mapName, Project: projectId }, this.options).map(this.extractData);
   }
+
+  /* offline Services */
+  loadMapVersion(map, index) {
+    let mapView = _.cloneDeep(map.structure);
+    map.versionIndex = index;
+
+    let versions = _.cloneDeep(map.versions);
+    for (let i = 0; i <= index; i++) {
+      if (versions[i].patches) {
+        try {
+          mapView = jsonpatch.apply_patch(mapView, versions[i].patches);
+        } catch (ex) {
+          console.log(ex);
+          console.log(i);
+          console.log(versions[i]);
+          console.log(mapView);
+        }
+      }
+    }
+    map.mapView = mapView;
+    if (!map.mapView.attributes) {
+      map.mapView.attributes = [];
+    }
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || {};
