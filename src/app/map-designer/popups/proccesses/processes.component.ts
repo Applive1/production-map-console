@@ -10,7 +10,7 @@ import { ActionsComponentWindowData, ActionsComponentWindow } from '../actions';
 import * as _ from 'lodash';
 
 export class ProcessesComponentWindowData extends BSModalContext {
-    constructor(public link: any, public src: any, public dest: any) {
+    constructor(public link: any, public src: any, public dest: any, public currProcess?: any) {
         super();
         this.size = 'lg';
         this.isBlocking = true;
@@ -39,16 +39,21 @@ export class ProcessesComponentWindow implements ModalComponent<ProcessesCompone
         this.link = this.context.link;
         this.src = this.context.src;
         this.dest = this.context.dest;
-        this.currentProcess = {
-            name: '',
-            description: '',
-            order: 0,
-            default_execution: false,
-            mandatory: false,
-            actions: [],
-            result: '',
-            condition: false
-        };
+        if (this.context.currProcess) {
+            this.currentProcess = this.context.currProcess;
+        }
+        else {
+            this.currentProcess = {
+              name: '',
+              description: '',
+              order: 0,
+              default_execution: false,
+              mandatory: false,
+              actions: [],
+              result: '',
+              condition: false
+            };
+        }
     }
 
     closeWindow() {

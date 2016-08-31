@@ -6,7 +6,9 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { MapService } from '../shared/services/map.service';
 import { Response } from '@angular/http';
 
-import { ProcessesComponentWindowData, ProcessesComponentWindow } from './popups/proccesses';
+import { ProcessesComponentWindowData, ProcessesComponentWindow,
+          NewProcessComponentWindowData, NewProcessComponentWindow
+} from './popups/proccesses';
 
 
 @Component({
@@ -35,6 +37,10 @@ export class MapDesignerComponent implements OnInit, OnChanges {
 
   openProcessesModal(link: any, src: any, dest: any) {
     this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(link, src, dest));
+  }
+
+  openNewProcessModal(link: any, src: any, dest: any) {
+    this.modal.open(NewProcessComponentWindow, new NewProcessComponentWindowData(link, src, dest));
   }
 
   getLink(linkId: any) {
@@ -69,7 +75,7 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     let sourceBlock = this.getNode(sourceId);
     let targetBlock = this.getNode(targetId);
 
-    this.openProcessesModal(mapLink, sourceBlock, targetBlock);
+    this.openNewProcessModal(mapLink, sourceBlock, targetBlock);
 
   }
 
