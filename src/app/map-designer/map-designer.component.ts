@@ -80,7 +80,8 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   }
 
   addNode(id, name, type, node) {
-    this.map.mapView.nodes[id] = {
+     let truncatedName = _.replace(name, ' ', ''); /* TODO: replace all unallowed charcters */
+    this.map.mapView.nodes[truncatedName] = {
       id: id,
       type: type,
       name: name,
@@ -222,6 +223,8 @@ export class MapDesignerComponent implements OnInit, OnChanges {
         designerOps: this
       });
     }, 100);
+
+    this.loadMap();
   }
 
   ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
@@ -234,6 +237,8 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   loadMap() {
     // Clear the graph (Genius .__.)
     this.graph.clear();
+    this.mapService.loadMapVersion(this.map, this.map.versionIndex);
+
     try {
 
       // Wait 1s and add the cells

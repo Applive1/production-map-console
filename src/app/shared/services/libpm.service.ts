@@ -51,16 +51,19 @@ export class LibPMService {
         if (this.libs[this.mapLibPath]) {
             this.libs[this.mapLibPath].dispose();
         }
-        let mapDefinition = "let map = ";
+        let mapDefinition = 'let map = ';
         let mapContent: string = [mapDefinition, JSON.stringify({
             attributes: map.attributes,
             nodes: map.nodes,
             links: map.links
         }), ';'].join('');
 
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(mapContent, this.mapLibPath).dispose();
         this.libs[this.mapLibPath] = monaco.languages.typescript.javascriptDefaults.addExtraLib(mapContent, this.mapLibPath);
-        console.log("bla");
+    }
+
+    removeAllLibs() {
+        this.libs[this.mapLibPath].dispose();
+        console.log("deleted libs");
     }
 
     private extractData(res: Response) {

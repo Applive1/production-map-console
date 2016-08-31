@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 import { MapAttributeComponent } from '../map-attribute/map-attribute.component';
 
 @Component({
@@ -8,13 +8,26 @@ import { MapAttributeComponent } from '../map-attribute/map-attribute.component'
   styleUrls: ['map-attributes.component.css'],
   directives: [MapAttributeComponent]
 })
-export class MapAttributesComponent implements OnInit {
+export class MapAttributesComponent implements OnInit, OnChanges {
 
-  @Input() map: any = {};
+  @Input() map: any;
 
-  constructor() {}
+  constructor() {
+    this.map = {
+      mapView: {
+        attributes: []
+      }
+    };
+  }
 
   ngOnInit() {
+    if (!this.map || !this.map.mapView || !this.map.attributes) {
+      this.map = {
+        mapView: {
+          attributes: []
+        }
+      };
+    }
   }
 
   addAttribute() {
@@ -27,6 +40,16 @@ export class MapAttributesComponent implements OnInit {
       this.map.mapView.attributes = [];
     }
     this.map.mapView.attributes.push(attribute);
+  }
+
+  ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
+    if (changes['map'].currentValue != null) {
+      this.map = {
+        mapView: {
+          attributes: []
+        }
+      };
+    }
   }
 
   deleteAttribute($event, index) {

@@ -28,7 +28,8 @@ export class MapManagmentComponent implements OnInit {
   public sideBarState: boolean = true;
   public projectsTree: any = [];
   public currentMap: any = {};
-  public messages:any [];
+  public messages:any = [];
+  public mapLoaded: boolean = false;
 
   constructor(private projectService: ProjectService, private authenticationService: AuthenticationService, private mapService: MapService) {
 
@@ -45,6 +46,7 @@ export class MapManagmentComponent implements OnInit {
     (error) => {
       console.log(error);
     });
+    this.mapLoaded = false;
   }
 
   setSideBarState(state: boolean) {
@@ -62,6 +64,7 @@ export class MapManagmentComponent implements OnInit {
   }
 
   selectMap($event) {
+    this.mapLoaded = true;
     this.currentMap = $event;
     this.currentMap.versionIndex = this.currentMap.versions.length - 1;
     this.mapService.loadMapVersion(this.currentMap, this.currentMap.versionIndex);

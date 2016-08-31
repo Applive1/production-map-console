@@ -3,10 +3,10 @@
         <aside role="left-bar" style="width:238px;" [ngSwitch]="leftPanelState">
             <pm-map-left-panel (onMapSelect)="selectMap($event)" [projectsTree]="projectsTree" [graphProps]="designerOps"></pm-map-left-panel>
         </aside>
-        <section>
+        <section [hidden]="!mapLoaded">
             <pm-map-editor [map]="currentMap" (informOuterLayer)="updateToolBox($event)" (onExecution)="mapExecuted($event)"></pm-map-editor>
         </section>
-        <aside role="right-bar" style="width:317px;" >
+        <aside role="right-bar" style="width:317px;" [hidden]="!mapLoaded" >
             <pm-map-settings [map]="currentMap"></pm-map-settings>
         </aside>
     </div>

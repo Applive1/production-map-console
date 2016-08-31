@@ -50,15 +50,14 @@ export class MapEditorComponent implements OnInit {
       if (result.date) {
         map.versions.push(result);
         map.versionIndex++;
-
-        /* execute the map */
-        this.mapService.executeMap(map, []).subscribe((mapResult) => {
-          this.onExecution.emit(mapResult.res);
-          map.versions[map.versionIndex].executions.push(result.resObj);
-          //map.versions[map.versionIndex].status = consts.MapRunStatuses.Done;
-        });
       }
-      console.log(result);
+      /* execute the map */
+      this.mapService.executeMap(map, []).subscribe((mapResult) => {
+        map.versions[map.versionIndex].executions.push(result.resObj);
+        this.onExecution.emit(mapResult.res);
+        /* map.versions[map.versionIndex].status = consts.MapRunStatuses.Done; */
+        console.log(mapResult);
+      });
     });
   }
 

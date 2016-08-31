@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input, OnDestroy } from '@angular/core';
 import { COMMON_DIRECTIVES  } from '@angular/common';
 
 import { LibPMService } from '../shared/services/libpm.service';
@@ -12,7 +12,7 @@ import * as _ from 'lodash';
   styleUrls: ['map-code-editor.component.css'],
   directives: [COMMON_DIRECTIVES]
 })
-export class MapCodeEditorComponent implements OnInit{
+export class MapCodeEditorComponent implements OnInit, OnDestroy {
 
   @ViewChild('editor') editorContent: ElementRef;
   @Input() map: any = {};
@@ -51,5 +51,13 @@ export class MapCodeEditorComponent implements OnInit{
       language: 'javascript',
       allowNonTsExtensions: true
     });
+  }
+
+  ngOnDestroy() {
+    try {
+      this.libpmService.removeAllLibs();
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 }

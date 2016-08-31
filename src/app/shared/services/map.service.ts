@@ -52,6 +52,9 @@ export class MapService {
 
   /* offline Services */
   loadMapVersion(map, index) {
+    if(!map || !index) {
+      return;
+    }
     let mapView = _.cloneDeep(map.structure);
     map.versionIndex = index;
 
