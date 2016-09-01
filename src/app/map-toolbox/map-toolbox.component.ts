@@ -19,7 +19,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
 
   private stencilGraph: any;
   private stencilPaper: any;
-  
+
   constructor(private agentsService: AgentsService) {
   }
 
@@ -168,7 +168,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
             x: x - pos.x,
             y: y - pos.y
           };
-  
+
         flyShape.position(0, 0);
         flyGraph.addCell(flyShape);
         $("#flyPaper").offset({
@@ -189,7 +189,6 @@ export class MapToolboxComponent implements OnInit, OnChanges {
           if (x > target.left && x < target.left + paper.$el.width() && y > target.top && y < target.top + paper.$el.height()) {
             let s = flyShape.clone();
             s.position(x - target.left - offset.x, y - target.top - offset.y);
-            graph.addCell(s);
             this.designerOps.addNode(s.id, cellView.model.attr('text/text'), cellView.model.attr('text/text'), s);
           }
           $('body').off('mousemove.fly').off('mouseup.fly');

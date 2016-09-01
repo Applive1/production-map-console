@@ -14,6 +14,10 @@
   </div>
   <div role="right-btns">
     <button type="button" (click)="saveMap(map)"><i class="pmap-28"></i>Save</button>
-    <button type="button"><i class="pmap-26" (click)="executeMap(map)"></i>Execute</button>
+    <button type="button" [disabled]="executingMap" (click)="executeMap(map)">
+      <i class="pmap-26"></i>
+      <span [hidden]="executingMap">Execute</span>
+      <span [hidden]="!executingMap">Executing...</span>
+    </button>
   </div>
 </footer>

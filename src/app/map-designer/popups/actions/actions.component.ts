@@ -27,7 +27,9 @@ export class ActionsComponentWindow implements ModalComponent<ActionsComponentWi
     context: ActionsComponentWindowData;
     action: any = {};
 
-    constructor(public dialog: DialogRef<ActionsComponentWindowData>, public modal: Modal, private agentsService: AgentsService) {
+    constructor(public dialog: DialogRef<ActionsComponentWindowData>,
+                public modal: Modal,
+                private agentsService: AgentsService) {
         this.context = dialog.context;
         this.action = this.context.action;
     }
@@ -36,10 +38,12 @@ export class ActionsComponentWindow implements ModalComponent<ActionsComponentWi
         console.log("action on init");
         console.log(this.action);
         console.log(this.context.serverType);
-        if (_.isEmpty(this.action.server)) {
-            this.action.server = _.cloneDeep(this.agentsService.get(this.context.serverType));
-            console.log(this.action.server);
-        }
+        this.agentsService.all(false).subscribe((res) => {
+            if (_.isEmpty(this.action.server)) {
+                this.action.server = _.cloneDeep(this.agentsService.get(this.context.serverType));
+                console.log(this.action.server);
+            }
+        });
     }
 
     closeWindow() {

@@ -26,11 +26,13 @@ export class MapEditorComponent implements OnInit {
   @Input() map: any = {};
 
   public currentPanel: number = 0;
+  public executingMap: boolean = false;
 
   constructor(public modal: Modal, private mapService: MapService, private libpmService: LibPMService) {
   }
 
   ngOnInit() {
+    this.executingMap = false;
   }
 
   openReport() {
@@ -46,6 +48,10 @@ export class MapEditorComponent implements OnInit {
   }
 
   executeMap(map) {
+    if (this.executingMap) {
+      return;
+    }
+    this.executingMap = true;
     this.mapService.saveMap(map).subscribe((result) => {
       if (result.date) {
         map.versions.push(result);
@@ -57,6 +63,7 @@ export class MapEditorComponent implements OnInit {
         this.onExecution.emit(mapResult.res);
         /* map.versions[map.versionIndex].status = consts.MapRunStatuses.Done; */
         console.log(mapResult);
+        this.executingMap = false;
       });
     });
   }
