@@ -80,7 +80,9 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   }
 
   addNode(id, name, type, node) {
-     let truncatedName = _.replace(name, ' ', ''); /* TODO: replace all unallowed charcters */
+    let truncatedName = _.replace(name, ' ', ''); /* TODO: replace all unallowed charcters */
+    let nameIndex = _.keys(this.map.mapView.nodes).length;
+    truncatedName = truncatedName + nameIndex;
     this.map.mapView.nodes[truncatedName] = {
       id: id,
       type: type,
@@ -88,6 +90,8 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       serverUrl: "localhost:8100", /* Default address */
       attributes: {}
     };
+    node.attributes.attrs['.label'].text = name + '-' + nameIndex;
+    this.graph.addCell(node);
     let model = JSON.parse(this.map.mapView.content);
     model.nodes.push(node);
     this.map.mapView.content = JSON.stringify(model);
