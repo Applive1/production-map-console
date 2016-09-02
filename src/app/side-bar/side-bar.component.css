@@ -5,7 +5,6 @@ a {
   text-align: center;
   border-left: 3px solid transparent;
   font-size: 26px;
-  color: #2d2f30;
 }
 
 a.active, a:active, a:hover {
@@ -13,3 +12,4 @@ a.active, a:active, a:hover {
   border-left-color: #02a7c7;
   background-color: #2d2f30;
 }
+

@@ -1,21 +1,24 @@
 import { WebpackAsyncRoute } from '@angularclass/webpack-toolkit';
 import { RouterConfig } from '@angular/router';
-import { Home } from './home'; 
+
+import { DataResolver } from './app.resolver';
+import { MapManagmentComponent } from "./map-managment/map-managment.component";
+import { Home } from './home';
 import { NoContent } from './no-content';
 import { LoginComponent } from './login/login.component';
 import { MainAppComponent } from './main-app/main-app.component';
-
-
-import { DataResolver } from './app.resolver';
+import { AdminPanelComponent } from "./admin-panel/admin-panel.component";
 
 export const routes: RouterConfig = [
+
+  { path: '',  redirectTo: '/app/map', pathMatch: 'full' },
+  { path: 'login',  component: LoginComponent },
   {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: '',
-    component: MainAppComponent
+    path: 'app',    component: MainAppComponent,
+    children: [
+      { path: 'map',    component: MapManagmentComponent },
+      { path: 'admin',  component: AdminPanelComponent },
+    ]
   },
   // { path: 'home',  component: Home },
   // // make sure you match the component type string to the require in asyncRoutes

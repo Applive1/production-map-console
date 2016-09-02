@@ -1,0 +1,59 @@
+  <div region="calendar">
+    <h2><i class="pmap-39"></i>Calendar</h2>
+    <div role="new-scheduled-job">
+      <aside>
+        <h3>Add a New Scheduled Job</h3>
+        <div role="form-scheduled-job">
+          <div class="form-group">
+            <label class="form-label" for="shj-project">Project</label>
+            <select id="shj-project" class="form-control">
+              <option value="1">1</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="shj-map">Map</label>
+            <select id="shj-map" class="form-control">
+              <option value="1">1</option>
+            </select>
+          </div>
+          <form action="">
+            <div class="form-group">
+              <label for="shj-radio" class="form-radio">
+                <input type="radio" [(ngModel)]="job.type" name="type" value="repeated" id="shj-radio">
+                <i></i><span class="form-label">Repeated</span>
+              </label>
+              <label for="shj-radio-2" class="form-radio">
+                <input type="radio" [(ngModel)]="job.type" name="type" value="once" id="shj-radio-2">
+                <i></i><span class="form-label">Once</span>
+              </label>
+            </div>
+          </form>
+          {{job.type | json}}
+          <div class="form-group">
+            <div class="form-label">Date</div>
+            <div class="form-date">
+              <input type="text" class="form-control">
+              <i class="pmap-39"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="form-label">Time</label>
+            <div class="form-time">
+							<span>
+								<span><i class="pmap-222"></i></span><input type="text" class="form-control"><span><i class="pmap-22"></i></span>
+							</span>
+              <i>:</i>
+							<span>
+								<span><i class="pmap-222"></i></span><input type="text" class="form-control"><span><i class="pmap-22"></i></span>
+							</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn-event"><i class="pmap-28"></i>Create</button>
+          </div>
+        </div>
+      </aside>
+      <section>
+      </section>
+    </div>
+  </div>

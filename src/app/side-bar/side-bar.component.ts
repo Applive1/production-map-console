@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -8,7 +8,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
 
-  @Output() updatePanel = new EventEmitter();
   currentPanel: number;
 
   constructor() {}
@@ -19,9 +18,6 @@ export class SideBarComponent implements OnInit {
 
   changePanel(panelId) {
     this.currentPanel = panelId;
-    this.updatePanel.emit({
-      'panelId': panelId
-    });
   }
 
 }
