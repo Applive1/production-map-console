@@ -20,14 +20,18 @@ export class MapAttributesComponent implements OnInit, OnChanges {
     };
   }
 
-  ngOnInit() {
-    if (!this.map || !this.map.mapView || !this.map.attributes) {
+  initAttributes() {
+    if (!this.map || !this.map.mapView || !this.map.mapView.attributes) {
       this.map = {
         mapView: {
           attributes: []
         }
       };
     }
+  }
+
+  ngOnInit() {
+    this.initAttributes();
   }
 
   addAttribute() {
@@ -44,11 +48,7 @@ export class MapAttributesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
     if (changes['map'].currentValue != null) {
-      this.map = {
-        mapView: {
-          attributes: []
-        }
-      };
+      this.initAttributes();
     }
   }
 

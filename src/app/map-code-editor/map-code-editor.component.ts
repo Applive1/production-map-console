@@ -51,6 +51,9 @@ export class MapCodeEditorComponent implements OnInit, OnDestroy {
       language: 'javascript',
       allowNonTsExtensions: true
     });
+    editor.onDidChangeModelContent(($event) => {
+      this.map.mapView.code = editor.getValue();
+    });
   }
 
   ngOnDestroy() {

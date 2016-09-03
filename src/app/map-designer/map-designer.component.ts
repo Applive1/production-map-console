@@ -241,7 +241,6 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   loadMap() {
     // Clear the graph (Genius .__.)
     this.graph.clear();
-    this.mapService.loadMapVersion(this.map, this.map.versionIndex);
 
     try {
 

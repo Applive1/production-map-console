@@ -9,16 +9,21 @@ import * as _ from 'lodash';
 })
 export class MapAttributeComponent implements OnInit {
 
-    @Input() attribute: any = {};
+    @Input() attribute: any;
     editableAttribute: any = {};
     @Output() deleteAttribute = new EventEmitter();
     editMode: boolean;
 
     constructor() {
-        this.editMode = true;
     }
 
     ngOnInit() {
+        console.log(this.attribute);
+        if (!this.attribute.name) {
+            this.editMode = true;
+        } else {
+            this.editMode = false;
+        }
     }
 
     edit() {

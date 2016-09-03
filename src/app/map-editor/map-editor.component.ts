@@ -56,6 +56,7 @@ export class MapEditorComponent implements OnInit {
       if (result.date) {
         map.versions.push(result);
         map.versionIndex++;
+        this.mapService.loadMapVersion(this.map, this.map.versionIndex);
       }
       /* execute the map */
       this.mapService.executeMap(map, []).subscribe((mapResult) => {
@@ -73,6 +74,7 @@ export class MapEditorComponent implements OnInit {
         if (result.date) {
           map.versions.push(result);
           map.versionIndex++;
+          this.mapService.loadMapVersion(this.map, this.map.versionIndex);
         }
         console.log(result);
       });

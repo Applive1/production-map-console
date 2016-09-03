@@ -24,7 +24,7 @@
         <span class="cell">{{ attribute.name }}</span>
         <div [ngSwitch]="attribute.type">
             <span class="cell" *ngSwitchCase="'String'">“{{attribute.value}}“</span>
-            <span class="cell" *ngSwitchCase="'List'">[{{attribute.value}}]</span>
+            <span class="cell" *ngSwitchCase="'List'">{{attribute.value}}</span>
         </div>
         <span class="cell"><button type="button" (click)="edit()"><i class="pmap-35"></i></button></span>
         <span class="cell"><button type="button" (click)="delete()"><i class="pmap-27"></i></button></span>

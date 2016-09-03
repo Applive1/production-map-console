@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MapAttributesComponent} from "../map-attributes/map-attributes.component";
 import {MapServersComponent} from "../map-servers/map-servers.component";
-import {NgSwitch, NgSwitchCase} from "@angular/common";
+import { NgSwitch, NgSwitchCase } from "@angular/common";
 
 @Component({
   moduleId: module.id,
