@@ -131,7 +131,11 @@ export class AgentsService {
         }
     }
     private extractData(res: Response) {
-        let body = res.json();
-        return body || {};
+        try {
+            let body = res.json();
+            return body || {};
+        } catch (ex) {
+            return {};
+        }
     }
 }

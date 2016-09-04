@@ -26,8 +26,16 @@ export class ProjectService {
         return this.http.post(this.serverUrl + 'project/createProject', { name: projectName }, this.options ).map(this.extractData);
     }
 
+    updateProject(project) {
+        //TODO: create rename function for projects at the server
+    }
+
     private extractData(res: Response) {
-        let body = res.json();
-        return body || {};
+        try {
+            let body = res.json();
+            return body || {};
+        } catch (ex) {
+            return {};
+        }
     }
 }
