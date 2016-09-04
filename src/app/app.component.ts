@@ -10,10 +10,11 @@ import * as  _ from 'lodash';
   selector: 'app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
+  encapsulation: ViewEncapsulation.None,
   viewProviders: [...BS_MODAL_PROVIDERS],
   providers: [AuthenticationService]
 })
-export class App {
+export class App implements OnInit{
   constructor(public modal: Modal, viewContainer: ViewContainerRef, private http: Http,
               private authenticationService: AuthenticationService, private router: Router) {
     modal.defaultViewContainer = viewContainer;

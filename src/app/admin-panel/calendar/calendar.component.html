@@ -19,11 +19,11 @@
           <form action="">
             <div class="form-group">
               <label for="shj-radio" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" value="repeated" id="shj-radio">
+                <input type="radio" [(ngModel)]="job.type" name="type" [value]="repeated" id="shj-radio">
                 <i></i><span class="form-label">Repeated</span>
               </label>
               <label for="shj-radio-2" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" value="once" id="shj-radio-2">
+                <input type="radio" [(ngModel)]="job.type" name="type" [value]="once" id="shj-radio-2">
                 <i></i><span class="form-label">Once</span>
               </label>
             </div>
