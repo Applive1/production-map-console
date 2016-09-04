@@ -1,9 +1,10 @@
-import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewQuery, OnInit, Input, OnDestroy, OnChanges, SimpleChange } from '@angular/core';
 import { COMMON_DIRECTIVES  } from '@angular/common';
 
 import { LibPMService } from '../shared/services/libpm.service';
 
 import * as _ from 'lodash';
+
 
 @Component({
   moduleId: module.id,
@@ -12,11 +13,13 @@ import * as _ from 'lodash';
   styleUrls: ['map-code-editor.component.css'],
   directives: [COMMON_DIRECTIVES]
 })
-export class MapCodeEditorComponent implements OnInit, OnDestroy {
+export class MapCodeEditorComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('editor') editorContent: ElementRef;
   @Input() map: any = {};
+  public editor: any;
   private monaco: any;
+
 
 
   constructor(private libpmService: LibPMService) {
@@ -45,14 +48,14 @@ export class MapCodeEditorComponent implements OnInit, OnDestroy {
       console.log(ex);
     }
 
-    let editor = this.monaco.editor.create(myDiv, {
+    this.editor = this.monaco.editor.create(myDiv, {
       value: this.map.mapView.code,
       theme: 'vs-dark',
       language: 'javascript',
       allowNonTsExtensions: true
     });
-    editor.onDidChangeModelContent(($event) => {
-      this.map.mapView.code = editor.getValue();
+    this.editor.onDidChangeModelContent(($event) => {
+      this.map.mapView.code = this.editor.getValue();
     });
   }
 
@@ -61,6 +64,12 @@ export class MapCodeEditorComponent implements OnInit, OnDestroy {
       this.libpmService.removeAllLibs();
     } catch (ex) {
       console.log(ex);
+    }
+  }
+
+  ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
+    if (changes['map'].currentValue != null && this.editor) {
+      this.editor.setValue(this.map.mapView.code);
     }
   }
 }
