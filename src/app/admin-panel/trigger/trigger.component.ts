@@ -2,17 +2,13 @@ import { Component } from '@angular/core';
 import { FORM_DIRECTIVES } from "@angular/common";
 
 @Component({
-    selector: 'pm-calendar',
-    templateUrl: 'calendar.component.html',
-    styleUrls: ['calendar.component.css'],
+    selector: 'pm-trigger',
+    templateUrl: 'trigger.component.html',
+    styleUrls: ['trigger.component.css'],
     directives: [FORM_DIRECTIVES]
 })
-export class CalendarComponent {
+export class TriggerComponent {
 
-    job = {
-      type: "repeated"
-    };
-  
     constructor() {
     }
 

@@ -8,6 +8,10 @@ import { NoContent } from './no-content';
 import { LoginComponent } from './login/login.component';
 import { MainAppComponent } from './main-app/main-app.component';
 import { AdminPanelComponent } from "./admin-panel/admin-panel.component";
+import { CalendarComponent } from "./admin-panel/calendar/calendar.component";
+import { ServersComponent } from "./admin-panel/servers/servers.component";
+import { AgentsComponent } from "./admin-panel/agents/agents.component";
+import { TriggerComponent } from "./admin-panel/trigger/trigger.component";
 
 export const routes: RouterConfig = [
 
@@ -17,7 +21,15 @@ export const routes: RouterConfig = [
     path: 'app',    component: MainAppComponent,
     children: [
       { path: 'map',    component: MapManagmentComponent },
-      { path: 'admin',  component: AdminPanelComponent },
+      { path: 'admin',  component: AdminPanelComponent,
+        children: [
+          { path: '',  redirectTo: 'calendar', pathMatch: 'full' },
+          { path: 'calendar', component: CalendarComponent },
+          { path: 'servers',  component: ServersComponent },
+          { path: 'agents',   component: AgentsComponent },
+          { path: 'trigger',  component: TriggerComponent }
+        ]
+      },
     ]
   },
   // { path: 'home',  component: Home },

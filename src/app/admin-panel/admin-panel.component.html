@@ -3,14 +3,14 @@
     <nav role="left-menu">
       <h2>Admin</h2>
       <ul>
-        <li class="active"><a href="">Calendar</a></li>
-        <li><a href="">Servers</a></li>
-        <li><a href="">Dedicated Agents</a></li>
-        <li><a href="">Trigger</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['calendar']">Calendar</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['servers']">Servers</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['agents']">Dedicated Agents</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['trigger']">Trigger</a></li>
       </ul>
     </nav>
     <section>
-      <pm-calendar></pm-calendar>
+      <router-outlet></router-outlet>
     </section>
   </div>
 </section>

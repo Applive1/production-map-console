@@ -2,17 +2,13 @@ import { Component } from '@angular/core';
 import { FORM_DIRECTIVES } from "@angular/common";
 
 @Component({
-    selector: 'pm-calendar',
-    templateUrl: 'calendar.component.html',
-    styleUrls: ['calendar.component.css'],
+    selector: 'pm-agents',
+    templateUrl: 'agents.component.html',
+    styleUrls: ['agents.component.css'],
     directives: [FORM_DIRECTIVES]
 })
-export class CalendarComponent {
+export class AgentsComponent {
 
-    job = {
-      type: "repeated"
-    };
-  
     constructor() {
     }
 
