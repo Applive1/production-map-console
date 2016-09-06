@@ -1,3 +1,7 @@
+.form-time .ng-invalid {
+  border-color: #b10000;
+}
+
 [region="calendar"] > h2 {
   font-size: 20px;
   color: #f1f1f1;

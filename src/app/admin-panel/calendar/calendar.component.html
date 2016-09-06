@@ -1,9 +1,10 @@
-  <div region="calendar">
-    <h2><i class="pmap-39"></i>Calendar</h2>
-    <div role="new-scheduled-job">
-      <aside>
-        <h3>Add a New Scheduled Job</h3>
-        <div role="form-scheduled-job">
+<div region="calendar">
+  <h2><i class="pmap-39"></i>Calendar</h2>
+  <div role="new-scheduled-job">
+    <aside>
+      <h3>Add a New Scheduled Job</h3>
+      <div role="form-scheduled-job">
+        <form name="Form" action="">
           <div class="form-group">
             <label class="form-label" for="shj-project">Project</label>
             <select id="shj-project" class="form-control">
@@ -16,23 +17,21 @@
               <option value="1">1</option>
             </select>
           </div>
-          <form action="">
-            <div class="form-group">
-              <label for="shj-radio" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" [value]="repeated" id="shj-radio">
-                <i></i><span class="form-label">Repeated</span>
-              </label>
-              <label for="shj-radio-2" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" [value]="once" id="shj-radio-2">
-                <i></i><span class="form-label">Once</span>
-              </label>
-            </div>
-          </form>
+          <div class="form-group">
+            <label for="shj-radio" class="form-radio">
+              <input type="radio" [(ngModel)]="job.type" name="type" [value]="repeated" id="shj-radio">
+              <i></i><span class="form-label">Repeated</span>
+            </label>
+            <label for="shj-radio-2" class="form-radio">
+              <input type="radio" [(ngModel)]="job.type" name="type" [value]="once" id="shj-radio-2">
+              <i></i><span class="form-label">Once</span>
+            </label>
+          </div>
           {{job.type | json}}
           <div class="form-group">
             <div class="form-label">Date</div>
             <div class="form-date">
-              <input type="text" class="form-control">
+              <!--<p-calendar name="date" [(ngModel)]="job.date"></p-calendar>-->
               <i class="pmap-39"></i>
             </div>
           </div>
@@ -40,20 +39,74 @@
             <label for="" class="form-label">Time</label>
             <div class="form-time">
 							<span>
-								<span><i class="pmap-222"></i></span><input type="text" class="form-control"><span><i class="pmap-22"></i></span>
+								<span><i class="pmap-222" (click)="incHours()"></i></span>
+                <input name="hours" type="text" [ngModel]="job.hours" pattern="([01]?[0-9]|2[0-3])"
+                       class="form-control text-center" maxlength="2">
+                <span><i class="pmap-22" (click)="decHours()"></i></span>
 							</span>
               <i>:</i>
 							<span>
-								<span><i class="pmap-222"></i></span><input type="text" class="form-control"><span><i class="pmap-22"></i></span>
+								<span><i class="pmap-222" (click)="incMinutes()"></i></span>
+                <input name="minutes" type="text" [(ngModel)]="job.minutes" pattern="[0-5][0-9]"
+                       class="form-control text-center" maxlength="2">
+                <span><i class="pmap-22" (click)="decMinutes()"></i></span>
 							</span>
             </div>
           </div>
           <div class="form-group">
             <button type="button" class="btn-event"><i class="pmap-28"></i>Create</button>
           </div>
+        </form>
+      </div>
+    </aside>
+    <section>
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" (click)="decrement()">
+                Previous
+              </div>
+              <div class="btn btn-default" (click)="today()">
+                Today
+              </div>
+              <div class="btn btn-primary" (click)="increment()">
+                Next
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">Month</div>
+              <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">Week</div>
+              <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">Day</div>
+            </div>
+          </div>
         </div>
-      </aside>
-      <section>
-      </section>
-    </div>
+        <br>
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view
+            *ngSwitchCase="'month'"
+            [viewDate]="viewDate"
+            [events]="events"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)">
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            *ngSwitchCase="'week'"
+            [viewDate]="viewDate"
+            [events]="events">
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            *ngSwitchCase="'day'"
+            [viewDate]="viewDate"
+            [events]="events">
+          </mwl-calendar-day-view>
+        </div>
+      </div>
+    </section>
   </div>
+</div>
