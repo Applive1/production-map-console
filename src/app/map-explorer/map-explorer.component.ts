@@ -3,8 +3,11 @@ import { TreeComponent, TreeNode, TREE_ACTIONS, IActionMapping, KEYS } from 'ang
 import { ProjectService } from '../shared/services/project.service';
 import { MapService } from '../shared/services/map.service';
 import { ContextMenuComponent, ContextMenuService } from 'angular2-contextmenu';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import * as _ from 'lodash';
+import { NewProjectComponentWindow, NewProjectComponentWindowData } from "./popups/new-project/new-project.component";
+import { NewMapComponentWindow, NewMapComponentWindowData } from "./popups/new-map/new-map.component";
 
 @Component({
   moduleId: module.id,
@@ -32,7 +35,7 @@ export class MapExplorerComponent implements OnInit {
         $event.shiftKey
           ? TREE_ACTIONS.TOGGLE_SELECTED_MULTI(tree, node, $event)
           : TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
-          this.selectMap(node);
+        this.selectMap(node);
       }
       // ,
       // dragStart: (tree, node) => console.log('start drag', node),
@@ -53,7 +56,10 @@ export class MapExplorerComponent implements OnInit {
     }
   };
 
-  constructor(private projectService: ProjectService, private mapService: MapService, private contextMenuService: ContextMenuService) {
+  constructor(private projectService: ProjectService,
+              private mapService: MapService,
+              private contextMenuService: ContextMenuService,
+              public modal: Modal) {
   }
 
   selectMap(node: TreeNode) {
@@ -68,19 +74,33 @@ export class MapExplorerComponent implements OnInit {
   }
 
   addMap(node: TreeNode) {
+    console.log(node);
+    
     let project = node.data;
-    this.mapService.createMap('exampleMap', project.id).subscribe((map) => {
-      this.mapToItem(map);
-      node.data.children.push(map);
-      this.tree.treeModel.update();
-    });
+    var dialog = this.modal.open(NewMapComponentWindow, new NewMapComponentWindowData(project));
+
+    dialog.then((d) => d.result)
+      .then((map) => {
+          if (!map) return;
+
+          this.mapToItem(map);
+          node.data.children.push(map);
+          this.tree.treeModel.update();
+        },
+        (error) => { console.log(error); });
   }
 
   addProject() {
-    this.projectService.createProject('exampleProject').subscribe((project) => {
-      this.projectsTree.push(project);
-      this.tree.treeModel.update();
-    });
+    var dialog = this.modal.open(NewProjectComponentWindow, new NewProjectComponentWindowData());
+
+    dialog.then((d) => d.result)
+      .then((project) => {
+        if (!project) return;
+
+        this.projectsTree.push(project);
+        this.tree.treeModel.update();
+      },
+        (error) => { console.log(error); });
   }
 
   deleteProject(node: TreeNode) {
