@@ -74,8 +74,6 @@ export class MapExplorerComponent implements OnInit {
   }
 
   addMap(node: TreeNode) {
-    console.log(node);
-    
     let project = node.data;
     var dialog = this.modal.open(NewMapComponentWindow, new NewMapComponentWindowData(project));
 

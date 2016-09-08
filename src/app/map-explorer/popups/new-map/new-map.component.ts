@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DialogRef, ModalComponent } from '../../../../../node_modules/angular2-modal';
 import { BSModalContext } from '../../../../../node_modules/angular2-modal/plugins/bootstrap/index';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
-import { ProjectService } from "../../../shared/services/project.service";
+import { MapService } from "../../../shared/services/map.service";
 
 import * as _ from 'lodash';
-import {MapService} from "../../../shared/services/map.service";
 
 export class NewMapComponentWindowData extends BSModalContext {
   constructor(public project: any) {
@@ -25,26 +24,21 @@ export class NewMapComponentWindowData extends BSModalContext {
   selector: 'modal-content',
   styleUrls: ['new-map.component.css'],
   templateUrl: 'new-map.component.html',
-  providers: [ProjectService, MapService]
+  providers: [MapService]
 
 })
-export class NewMapComponentWindow implements OnInit, ModalComponent<NewMapComponentWindowData> {
+export class NewMapComponentWindow implements ModalComponent<NewMapComponentWindowData> {
   context: NewMapComponentWindowData;
-  public project: any;
-  public map: any;
+  public currProject: any;
+  public mapName: any;
 
-  constructor(private projectService: ProjectService,
-              private mapService: MapService,
+  constructor(private mapService: MapService,
               public dialog: DialogRef<NewMapComponentWindowData>,
               public modal: Modal) {
-    this.context = dialog.context;
-    this.project = this.context.project;
-    this.map = {
-      name: '',
-    };
-  }
 
-  ngOnInit() {
+    this.context = dialog.context;
+    this.currProject = this.context.project;
+    this.mapName = '';
   }
 
   closeWindow() {
@@ -52,7 +46,7 @@ export class NewMapComponentWindow implements OnInit, ModalComponent<NewMapCompo
   }
 
   create() {
-    this.mapService.createMap(this.map.name, this.project.id).subscribe((map) => {
+    this.mapService.createMap(this.mapName, this.currProject.id).subscribe((map) => {
       this.dialog.close(map);
     });
   };
