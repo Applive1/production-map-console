@@ -1,4 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {
+  msgContentComponentWindowData,
+  msgContentComponentWindow
+} from "./msg-content-popup/msg-content-popup.component";
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 declare const io: any;
 
@@ -13,7 +18,7 @@ export class MessagesComponent implements OnInit {
   socket: any;
   SERVER_URL: string = 'http://localhost:8080/';
 
-  constructor() {}
+  constructor(public modal: Modal) {}
 
   ngOnInit() {
     this.socket = io.sails.connect(this.SERVER_URL);
@@ -30,6 +35,10 @@ export class MessagesComponent implements OnInit {
         content: msg
       });
     });
+  }
+
+  openMsgPopup(msg) {
+    this.modal.open(msgContentComponentWindow, new msgContentComponentWindowData(msg));
   }
 
   clearMessages() {

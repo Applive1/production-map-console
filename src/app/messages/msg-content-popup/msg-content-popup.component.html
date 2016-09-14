@@ -1,0 +1,19 @@
+<div role="small-popup-processes" class="small-popup-processes">
+  <header>
+    <h2> Message</h2>
+    <i role="closing" class="pmap-15" (click)="closeWindow()"></i>
+  </header>
+  <section>
+    <div class="form-group has-form-label">
+      <label for="pr-date" class="form-label">Date:</label>
+      <span id="pr-date" class="form-content">{{msg.date}}</span>
+    </div>
+    <div class="form-group has-form-label">
+      <label for="pr-content" class="form-label">Content:</label>
+      <textarea id="pr-content" rows="8" class="form-control" [(ngModel)]="msg.content"></textarea>
+    </div>
+  </section>
+  <footer>
+    <button class="btn-event btn-no-icon" (click)="closeWindow()" type="button">Close</button>
+  </footer>
+</div>
