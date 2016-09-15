@@ -8,24 +8,27 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 
+import { AuthenticationService } from './shared/authentication.service';
+import { routing, appRoutingProviders } from './app.routing';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
-
-import { AuthenticationService } from './shared/authentication.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MapsRootComponent } from './maps-root/maps-root.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { MapManagmentComponent } from './map-managment/map-managment.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
-import { routing, appRoutingProviders } from './app.routing';
-
+/* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
   prefix: 'pm-app',
   storageType: 'sessionStorage'
 };
 
-
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent
   ],
   imports: [
     BrowserModule,
