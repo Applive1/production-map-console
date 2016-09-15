@@ -19,6 +19,7 @@ import { MapsRootComponent } from './maps-root/maps-root.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { MapManagmentComponent } from './map-managment/map-managment.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CalendarComponent } from './admin-panel/calendar/calendar.component';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -28,7 +29,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent
   ],
   imports: [
     BrowserModule,
