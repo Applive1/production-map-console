@@ -1,0 +1,173 @@
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+
+import { TreeComponent, TreeModel, TreeNode, TREE_ACTIONS, IActionMapping, KEYS } from 'angular2-tree-component';
+import { ContextMenuService } from 'angular2-contextmenu';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+
+import { ProjectService } from '../../../shared/services/project.service';
+import { MapService } from '../../../shared/services/map.service';
+import { ExecutionReportComponent, ExecutionReportComponentWindowData } from './execution-report/execution-report.component';
+
+@Component({
+  selector: 'app-map-explorer',
+  templateUrl: './map-explorer.component.html',
+  styleUrls: ['./map-explorer.component.css']
+})
+export class MapExplorerComponent implements OnInit {
+
+  @Input() projectsTree: any = [];
+  @Output() onMapSelect: EventEmitter<any> = new EventEmitter();
+  @ViewChild(TreeComponent) tree: TreeComponent;
+  treeOptions: any;
+
+  actionMapping: IActionMapping = {
+    mouse: {
+      contextMenu: (tree, node, $event) => {
+        $event.preventDefault();
+        this.openContextMenu($event, node);
+      },
+      dblClick: (tree: TreeModel, node: TreeNode, $event: any) => {
+        if (this.isProject(node)) {
+          return TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
+        } else {
+          /* add code for opening new map tab */
+        }
+      },
+      click: (tree, node, $event) => {
+        $event.shiftKey
+          ? TREE_ACTIONS.TOGGLE_SELECTED_MULTI(tree, node, $event)
+          : TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
+        this.selectMap(node);
+      }
+      // ,
+      // dragStart: (tree, node) => console.log('start drag', node),
+      // drag: (tree, node) => console.log('drag', node),
+      // dragEnd: (tree, node, $event, ...rest) => console.log('drag end', node, rest[0]),
+      // dragOver: (tree, node) => console.log('drag over', node),
+      // drop: (tree, node) => console.log('drop', node),
+    },
+    keys: {
+      [KEYS.ENTER]: (tree, node, $event) => {
+        node.data.editMode = false;
+        if (this.isProject(node)) {
+          this.projectService.updateProject(node.data);
+        } else {
+          this.mapService.updateMap(node.data);
+        }
+      }
+    }
+  };
+
+  constructor(private projectService: ProjectService, private mapService: MapService, private contextMenuService: ContextMenuService, private modal: Modal) {
+
+  }
+
+  selectMap(node: TreeNode) {
+    if (!this.isProject(node)) {
+      this.onMapSelect.emit(node.data);
+    }
+  }
+
+  mapToItem(map) {
+    map.text = '';
+    map.type = 'map';
+  }
+
+  addMap(node: TreeNode) {
+    let project = node.data;
+    this.mapService.createMap('exampleMap', project.id).subscribe((map) => {
+      this.mapToItem(map);
+      map.editMode = true;
+      node.data.children.push(map);
+      this.tree.treeModel.update();
+    });
+  }
+
+  addProject() {
+    this.projectService.createProject('exampleProject').subscribe((project) => {
+      this.projectsTree.push(project);
+      project.text = '';
+      project.editMode = true;
+      this.tree.treeModel.update();
+    });
+  }
+
+  deleteProject(node: TreeNode) {
+    let project: any = node.data;
+    this.projectService.deleteProject(project.id).subscribe((res) => {
+      _.remove(this.projectsTree, (proj: any) => { return proj.id === project.id; });
+      this.tree.treeModel.update();
+    });
+  }
+
+  openContextMenu($event, node: TreeNode) {
+    if (this.isProject(node)) {
+      this.contextMenuService.show.next({
+        actions: [
+          {
+            html: () => `Add map`,
+            click: (item) => this.addMap(item)
+          },
+          {
+            html: () => `rename`,
+            click: (item) => this.renameNode(item)
+          },
+          {
+            html: () => `Delete Project`,
+            click: (item) => this.deleteProject(item)
+          },
+        ],
+        event: $event,
+        item: node,
+      });
+    } else {
+      this.contextMenuService.show.next({
+        actions: [
+          {
+            html: () => `rename`,
+            click: (item) => this.renameNode(item)
+          },
+          {
+            html: () => `delete map`,
+            click: (item) => this.deleteMap(item)
+          },
+          {
+            html: () => `executions`,
+            click: (item) => this.showExecutions(item)
+          },
+        ],
+        event: $event,
+        item: node,
+      });
+    }
+  }
+
+  renameNode(node: TreeNode) {
+    node.data.editMode = true;
+  }
+
+  deleteMap(node: TreeNode) {
+    this.mapService.deleteMap(node.data.id).subscribe((res) => {
+      _.remove(node.parent.data.children, (map: any) => { return map.id === node.data.id; });
+      this.tree.treeModel.update();
+    });
+  }
+
+  isProject(node: TreeNode) {
+    return !node.data.structure;
+  }
+
+  ngOnInit() {
+    let actionMapping = this.actionMapping;
+    this.treeOptions = {
+      hasCustomContextMenu: true,
+      actionMapping
+    };
+  }
+
+  showExecutions(node: TreeNode) {
+    let map = node.data;
+    this.modal.open(ExecutionReportComponent, new ExecutionReportComponentWindowData(map));
+  }
+
+}

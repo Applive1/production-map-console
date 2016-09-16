@@ -1,3 +1,16 @@
-<p>
-  map-managment works!
-</p>
+<div role="vertical-canvas" style="padding-bottom:200px">
+  <div role="horizontal-canvas" style="padding: 0 317px 0 238px">
+    <aside role="left-bar" style="width:238px;" [ngSwitch]="leftPanelState">
+      <app-left-panel (onMapSelect)="selectMap($event)" [projectsTree]="projectsTree" [graphProps]="designerOps"></app-left-panel>
+    </aside>
+    <section [hidden]="!mapLoaded">
+      <app-map-editor [map]="currentMap" (informOuterLayer)="updateToolBox($event)" (onExecution)="mapExecuted($event)"></app-map-editor>
+    </section>
+    <aside role="right-bar" style="width:317px;" [hidden]="!mapLoaded">
+      <app-map-settings [map]="currentMap"></app-map-settings>
+    </aside>
+  </div>
+  <footer style="height:200px;">
+    <app-messages role="messages" [messages]="messages"></app-messages>
+  </footer>
+</div>

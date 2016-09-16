@@ -6,14 +6,14 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import * as  _ from 'lodash';
 
-import { AuthenticationService } from './shared/authentication.service';
+import { AuthenticationService } from './shared/services/authentication.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works!';
 
   constructor(overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, private http: Http,

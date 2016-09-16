@@ -1,0 +1,6 @@
+{
+  "name": "pm-console",
+  "dependencies": {
+    "jointjs": "registry:npm/jointjs#0.9.10+20160728120838"
+  }
+}

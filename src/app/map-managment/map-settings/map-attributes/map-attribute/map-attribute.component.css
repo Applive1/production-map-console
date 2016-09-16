@@ -1,0 +1,74 @@
+.row {
+  display: table-row;
+}
+
+.row .cell {
+  height: 31px;
+  vertical-align: middle;
+  display: table-cell;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  border-bottom: 1px solid #4a4e50;
+  color: #bbb;
+}
+
+.row .cell::selection {
+  color: #FFF;
+  background-color: #02a7c6;
+}
+
+.row .cell::-moz-selection {
+  color: #FFF;
+  background-color: #02a7c6;
+}
+
+.row .cell:first-child {
+  width: 124px;
+  padding-right: 14px;
+}
+
+.row .cell:nth-child(3) {
+  padding-right: 2px;
+}
+
+.row .cell:nth-child(3) i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.row .cell:nth-child(3) i.green {
+  background-color: #28b671;
+}
+
+.row .cell:nth-child(3) i.red {
+  background-color: #f93815;
+}
+
+.row .cell:last-child {
+  width: 1%;
+}
+
+.row .cell:last-child button {
+  font-size: 14px;
+  color: #6f6f6f;
+  cursor: pointer;
+  height: 30px;
+  display: block;
+  line-height: 30px;
+  padding-left: 5px;
+}
+
+.row .cell:last-child button:hover, .row .cell:last-child button:active {
+  color: #bbb;
+}
+
+.row .cell.orange:first-letter {
+  background-color: #e67259;
+}
+
+.row:last-child .cell {
+  border-bottom: none;
+}
