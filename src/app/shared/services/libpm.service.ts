@@ -17,6 +17,7 @@ export class LibPMService {
         this.libs = {};
         let onGotAmdLoader = () => {
             // Load monaco
+            (<any>window).require.config({ paths: { 'vs': 'assets/vs' } });
             (<any>window).require(['vs/editor/editor.main'], () => {
                 monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
                     target: monaco.languages.typescript.ScriptTarget.ES6,
@@ -30,7 +31,7 @@ export class LibPMService {
         if (!(<any>window).require) {
             let loaderScript = document.createElement('script');
             loaderScript.type = 'text/javascript';
-            loaderScript.src = 'vs/loader.js';
+            loaderScript.src = 'assets/vs/loader.js';
             loaderScript.addEventListener('load', onGotAmdLoader);
             document.body.appendChild(loaderScript);
         } else {
@@ -63,7 +64,7 @@ export class LibPMService {
 
     removeAllLibs() {
         this.libs[this.mapLibPath].dispose();
-        console.log("deleted libs");
+        console.log('deleted libs');
     }
 
     private extractData(res: Response) {

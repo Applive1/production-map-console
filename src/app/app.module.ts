@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -54,6 +55,7 @@ let localStorageServiceConfig = {
     BootstrapModalModule,
     TreeModule,
     ContextMenuModule,
+    CommonModule,
     routing
   ],
   providers: [
