@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 
 import { TreeComponent, TreeModel, TreeNode, TREE_ACTIONS, IActionMapping, KEYS } from 'angular2-tree-component';
 import { ContextMenuService } from 'angular2-contextmenu';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 
 import { ProjectService } from '../../../shared/services/project.service';
 import { MapService } from '../../../shared/services/map.service';
@@ -167,7 +168,7 @@ export class MapExplorerComponent implements OnInit {
 
   showExecutions(node: TreeNode) {
     let map = node.data;
-    this.modal.open(ExecutionReportComponent, new ExecutionReportComponentWindowData(map));
+    this.modal.open(ExecutionReportComponent, overlayConfigFactory(new ExecutionReportComponentWindowData(map), BSModalContext));
   }
 
 }

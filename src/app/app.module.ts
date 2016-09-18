@@ -36,6 +36,9 @@ import { MapMarkupComponent } from './map-managment/map-editor/map-markup/map-ma
 import { MapCodeEditorComponent } from './map-managment/map-editor/map-code-editor/map-code-editor.component';
 import { MapServersComponent } from './map-managment/map-settings/map-servers/map-servers.component';
 import { MapAttributeComponent } from './map-managment/map-settings/map-attributes/map-attribute/map-attribute.component';
+import { ProcessesComponentWindow } from './map-managment/map-editor/map-designer/processes/processes.component';
+import { NewProcessComponentWindow } from './map-managment/map-editor/map-designer/new-process/new-process.component';
+import { ActionsComponentWindow } from './map-managment/map-editor/map-designer/action/action.component';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -45,7 +48,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,7 @@ let localStorageServiceConfig = {
     },
     appRoutingProviders
   ],
-
+  entryComponents: [ExecutionReportComponent, ProcessesComponentWindow, NewProcessComponentWindow, ActionsComponentWindow],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

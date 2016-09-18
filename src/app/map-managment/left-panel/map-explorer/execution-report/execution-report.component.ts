@@ -4,8 +4,6 @@ import { DialogRef, ModalComponent } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
-import { AgentsService } from '../../../../shared/services/agents.service';
-
 import * as _ from 'lodash';
 
 export class ExecutionReportComponentWindowData extends BSModalContext {
@@ -21,7 +19,8 @@ export class ExecutionReportComponentWindowData extends BSModalContext {
 @Component({
   selector: 'app-execution-report',
   templateUrl: './execution-report.component.html',
-  styleUrls: ['./execution-report.component.css']
+  styleUrls: ['./execution-report.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExecutionReportComponent implements OnInit {
 
@@ -35,7 +34,7 @@ export class ExecutionReportComponent implements OnInit {
 
   user: any = { username: 'test' }
 
-  constructor(public dialog: DialogRef<ExecutionReportComponentWindowData>, public modal: Modal, private agentsService: AgentsService) {
+  constructor(public dialog: DialogRef<ExecutionReportComponentWindowData>, public modal: Modal) {
     this.context = dialog.context;
     this.map = this.context.map;
   }

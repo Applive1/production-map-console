@@ -1,8 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { DialogRef, ModalComponent } from 'angular2-modal';
-import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 
 import { ActionsComponentWindowData, ActionsComponentWindow } from '../action/action.component';
 
@@ -84,12 +83,12 @@ export class ProcessesComponentWindow implements ModalComponent<ProcessesCompone
       suspend: false,
       result: ''
     };
-    this.modal.open(ActionsComponentWindow, new ActionsComponentWindowData(action, this.dest.type));
+    this.modal.open(ActionsComponentWindow, overlayConfigFactory(new ActionsComponentWindowData(action, this.dest.type), BSModalContext));
     this.currentProcess.actions.push(action);
   }
 
   editAction(action) {
-    this.modal.open(ActionsComponentWindow, new ActionsComponentWindowData(action, this.dest.type));
+    this.modal.open(ActionsComponentWindow, overlayConfigFactory(new ActionsComponentWindowData(action, this.dest.type), BSModalContext));
   }
 
   addProcess() {

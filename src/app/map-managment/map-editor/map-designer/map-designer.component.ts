@@ -4,7 +4,8 @@ import * as $ from 'jquery';
 import * as _ from 'lodash';
 import * as joint from 'jointjs';
 
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { ContextMenuService } from 'angular2-contextmenu';
 
 import { MapService } from '../../../shared/services/map.service';
@@ -36,11 +37,11 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   }
 
   openProcessesModal(link: any, src: any, dest: any) {
-    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(link, src, dest));
+    this.modal.open(ProcessesComponentWindow, overlayConfigFactory(new ProcessesComponentWindowData(link, src, dest), BSModalContext));
   }
 
   openNewProcessModal(link: any, src: any, dest: any) {
-    this.modal.open(NewProcessComponentWindow, new NewProcessComponentWindowData(link, src, dest));
+    this.modal.open(NewProcessComponentWindow, overlayConfigFactory(new NewProcessComponentWindowData(link, src, dest), BSModalContext));
   }
 
   getLink(linkId: any) {

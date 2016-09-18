@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 import { DialogRef, ModalComponent } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
-
+import { overlayConfigFactory } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 // import { ProcessesComponentWindowData, ProcessesComponentWindow } from '/';
@@ -60,7 +60,7 @@ export class NewProcessComponentWindow implements ModalComponent<NewProcessCompo
   createProcess() {
     this.link.processes.push(this.process);
     this.closeWindow();
-    this.modal.open(ProcessesComponentWindow, new ProcessesComponentWindowData(this.link, this.src, this.dest, this.process));
+    this.modal.open(ProcessesComponentWindow, overlayConfigFactory(new ProcessesComponentWindowData(this.link, this.src, this.dest), BSModalContext));
   };
 
 }

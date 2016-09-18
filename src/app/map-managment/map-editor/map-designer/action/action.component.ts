@@ -21,7 +21,9 @@ export class ActionsComponentWindowData extends BSModalContext {
 @Component({
   selector: 'modal-content',
   styleUrls: ['action.component.css'],
-  templateUrl: 'action.component.html'
+  templateUrl: 'action.component.html',
+  encapsulation: ViewEncapsulation.None,
+  providers: [AgentsService]
 })
 export class ActionsComponentWindow implements ModalComponent<ActionsComponentWindowData>, OnInit {
   context: ActionsComponentWindowData;
