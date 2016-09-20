@@ -1,3 +1,8 @@
+[role*="popup-"] {
+  position: absolute;
+  z-index: 2000;
+  background-color: #404345;
+}
 
 [role*="popup-"] > header {
   text-align: center;
@@ -346,4 +351,32 @@
 
 [role*="popup-"][role="popup-execution-dashboard"] > section .section-actions {
   padding-top: 0;
+}
+
+.label-icon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+
+.green {
+  background-color: #44bb75;
+}
+
+.yellow {
+  background-color: #eab839;
+}
+
+.blue {
+  background-color: #00a8e9;
+}
+
+.red {
+  background-color: #f85656;
+}
+
+.label {
+  margin-right: 7px;
 }

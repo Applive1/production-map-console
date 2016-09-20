@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   job: any;
+  // Doughnut
+  public doughnutChartLabels: string[] = ['Fail', 'Partial', 'Succes'];
+  public doughnutChartData: number[] = [350, 450, 100];
+  public doughnutChartType: string = 'doughnut';
 
   constructor() {
     this.job = {
@@ -15,6 +19,14 @@ export class CalendarComponent implements OnInit {
     };
   }
 
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
   ngOnInit() {
   }
 

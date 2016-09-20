@@ -9,6 +9,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { TreeModule } from 'angular2-tree-component';
 import { ContextMenuModule } from 'angular2-contextmenu';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AuthenticationService } from './shared/services/authentication.service';
 import { routing, appRoutingProviders } from './app.routing';
@@ -39,6 +40,7 @@ import { MapAttributeComponent } from './map-managment/map-settings/map-attribut
 import { ProcessesComponentWindow } from './map-managment/map-editor/map-designer/processes/processes.component';
 import { NewProcessComponentWindow } from './map-managment/map-editor/map-designer/new-process/new-process.component';
 import { ActionsComponentWindow } from './map-managment/map-editor/map-designer/action/action.component';
+import { ExecutionChartComponent } from './map-managment/left-panel/map-explorer/execution-report/item-execution-result/execution-chart/execution-chart.component';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -48,7 +50,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ let localStorageServiceConfig = {
     ModalModule.forRoot(),
     BootstrapModalModule,
     TreeModule,
+    ChartsModule,
     ContextMenuModule,
     CommonModule,
     routing

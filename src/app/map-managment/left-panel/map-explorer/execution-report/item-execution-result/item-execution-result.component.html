@@ -1,10 +1,10 @@
 <div role="info-box">
   <header>
     <ul>
-      <li (click)="tab = 1" class="active"><a href="#" role="tab" data-toggle="tab">Summary</a></li>
-      <li (click)="tab = 2"><a href="#" role="tab" data-toggle="tab">Ag. Status</a></li>
-      <li (click)="tab = 3" class="{{response}}"><a href="#" role="tab" data-toggle="tab">Ag. Response</a></li>
-      <li (click)="tab = 4"><a href="#" role="tab" data-toggle="tab">Servers</a></li>
+      <li (click)="tab = 1" class="active"><a role="tab" data-toggle="tab">Summary</a></li>
+      <li (click)="tab = 2"><a role="tab" data-toggle="tab">Ag. Status</a></li>
+      <li (click)="tab = 3" class="{{response}}"><a role="tab" data-toggle="tab">Ag. Response</a></li>
+      <li (click)="tab = 4"><a role="tab" data-toggle="tab">Servers</a></li>
     </ul>
     <div class="search hide">
       <input type="text">
@@ -12,14 +12,13 @@
     </div>
   </header>
   <section>
-    <div class="tab-content" [ngSwitch]="tab">
-      <div role="tabpanel" [class.active]="tab == 1" [class.active]="tab == 1" *ngSwitchCase="1" class="tab-pane tab-summary" id="tab-summary">
+    <div class="tab-content">
+      <div role="tabpanel" [hidden]="tab !== 1" [class.active]="tab == 1" class="tab-pane tab-summary" id="tab-summary">
         <section>
           <h3> {{ process.name }} </h3>
           <div class="str">
-            <span class="label">Status:</span>
-            <div [hidden]="process.status < 0"><span role="status" class="success"><i class="pmap-40"></i></span></div>
-            <div [hidden]="process.status >= 0"><span role="status" class="danger"><i class="pmap-40"></i></span></div>
+            <div [hidden]="process.status < 0"><span class="label">Status:</span><span role="status" class="success"><i class="pmap-40"></i></span></div>
+            <div [hidden]="process.status >= 0"><span class="label">Status:</span><span role="status" class="danger"><i class="pmap-40"></i></span></div>
           </div>
           <div class="str">
             <span class="label">Node Type:</span>Short Text
@@ -35,27 +34,46 @@
           <button type="button"><i class="pmap-42"></i></button>
         </footer>
       </div>
-      <div role="tabpanel" [class.active]="tab == 2" *ngSwitchCase="2" class="tab-pane tab-status" id="tab-status">
+      <div role="tabpanel" [class.active]="tab == 2" [hidden]="tab !== 2" class="tab-pane tab-status" id="tab-status">
         <section>
-          <h3> {{ process.name }}</h3>
-          <!--<base-chart class="chart" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></base-chart>-->
-          <div class="gchart" data-width="100%" data-height="100%"></div>
+          <h3>{{ process.name }}</h3>
+          <div class="grid">
+            <div class="row">
+              <div class="cell" [style.width.px]="100">
+                <div><span class="label"><i class="green"></i>Server Success</span></div>
+                <div><span class="label"><i class="yellow"></i>Server Partial</span></div>
+                <div><span class="label"><i class="red"></i>Server Failed</span></div>
+                <div><span class="label"><i class="blue"></i>Server didn't run</span></div>
+              </div>
+              <div class="cell">
+                <canvas #aggStatusChart class="chart-cell" width="150" height="150"></canvas>
+              </div>
+            </div>
+          </div>
         </section>
         <footer role="btn-menu">
           <button type="button"><i class="pmap-42"></i></button>
         </footer>
       </div>
-      <div role="tabpanel" [class.active]="tab == 3" *ngSwitchCase="3" class="tab-pane tab-response" id="tab-response">
+      <div role="tabpanel" [class.active]="tab == 3" [hidden]="tab !== 3" class="tab-pane tab-status" id="tab-response">
         <section>
           <h3> {{ process.name }} </h3>
-          <div class="gchart" data-width="100%" data-height="100%"></div>
+          <div class="grid">
+            <div class="row">
+              <div class="cell" [style.width.px]="100">
+                <div *ngFor="let labelItem of aggregatedResulsLabels" ><span class="label"><i [style.background-color]="labelItem.color"></i>{{labelItem.text}}</span></div>
+              </div>
+              <div class="cell gchart">
+                <canvas #aggResultsChart class="chart-cell gchart" width="150" height="150"></canvas>
+              </div>
+            </div>
+          </div>
         </section>
         <footer role="btn-menu">
           <button type="button"><i class="pmap-42"></i></button>
         </footer>
       </div>
-      <div role="tabpanel" [class.active]="tab == 4" *ngSwitchCase="4" class="tab-pane tab-servers" id="tab-servers">
+      <div role="tabpanel" [class.active]="tab == 4" [hidden]="tab !== 4" class="tab-pane tab-servers" id="tab-servers">
         <section>
           <h3>{{process.name}}</h3>
           <div class="pmap-table">
@@ -71,12 +89,12 @@
             </div>
             <div class="tbody-wrapper">
               <div class="tbody">
-                <div class="tr" *ngFor="let server of servers">
+                <div class="tr" *ngFor="let server of agents">
                   <div class="cell">{{ server.name }}</div>
-                  <div [hidden]="!server.isAlive" class="cell"><i role="status-round" class="success"></i></div>
-                  <div [hidden]="server.isAlive" class="cell"><i role="status-round" class="danger"></i></div>
-                  <div class="cell"><span class="date">01/09/16 12:58</span></div>
-                  <div class="cell"><span class="date">01/09/16 12:58</span></div>
+                  <div [hidden]="server.status < 0"><span role="status" class="success"><i class="pmap-40"></i></span></div>
+                  <div [hidden]="server.status >= 0"><span role="status" class="danger"><i class="pmap-40"></i></span></div>
+                  <div class="cell"><span class="date">{{ server.startTime | date:'short' }}</span></div>
+                  <div class="cell"><span class="date">{{ server.endTime   | date:'short' }}</span></div>
                   <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
                 </div>
               </div>

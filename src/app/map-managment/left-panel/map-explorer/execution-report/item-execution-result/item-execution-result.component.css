@@ -12,6 +12,7 @@
 
 h3 {
   margin: 10px 0 8px;
+  margin-left: 7px;
   font-size: 12px;
   font-weight: normal;
 }
@@ -237,4 +238,87 @@ header ul li:hover a {
 
 .tab-content .tab-servers .pmap-table .tbody-wrapper .tbody .cell i {
   font-size: 12px;
+}
+
+.green {
+  background-color: #44bb75;
+}
+
+.yellow {
+  background-color: #eab839;
+}
+
+.blue {
+  background-color: #00a8e9;
+}
+
+.grid {
+  display: table;
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+  padding: 0;
+  margin: 0;
+}
+
+.grid .row {
+  display: table-row;
+}
+
+.grid .row .cell {
+  display: table-cell;
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  margin: 0;
+  padding: 0 10px;
+  vertical-align: middle;
+  color: #bbb;
+  white-space: nowrap;
+  text-overflow: clip;
+  height: 28px;
+}
+
+.grid .row .cell::selection {
+  background-color: #02a7c6;
+  color: #FFF;
+}
+
+.grid .row .cell::-moz-selection {
+  background-color: #02a7c6;
+  color: #FFF;
+}
+
+.grid .row .cell i {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.grid .row .cell i.red {
+  background-color: #f85656;
+}
+
+.grid .row .cell:first-child {
+  padding-left: 0;
+}
+
+.grid .row .cell:last-child {
+  padding-right: 0;
+}
+
+.grid .row .cell:last-child i {
+  font-size: 3px;
+}
+
+.chart-cell {
+  margin-left: -50px;
+  height: 100px;
+  width: 100px;
+}
+
+.grid .row .cell .label i {
+  margin-right: 5px;
 }
