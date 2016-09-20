@@ -49,7 +49,7 @@ export class MapEditorComponent implements OnInit {
       }
       /* execute the map */
       this.mapService.executeMap(map, []).subscribe((mapResult) => {
-        map.versions[map.versionIndex].executions.push(result.resObj);
+        map.versions[map.versionIndex].executions.push(mapResult.resObj);
         this.onExecution.emit(mapResult.res);
         /* map.versions[map.versionIndex].status = consts.MapRunStatuses.Done; */
         console.log(mapResult);
