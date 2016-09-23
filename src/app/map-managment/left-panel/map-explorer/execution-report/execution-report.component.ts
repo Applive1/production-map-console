@@ -44,14 +44,23 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
 
   user: any = { username: 'test' }
 
+  private processesChunks: any;
+  private procIndex = 0;
+  private actionsChunks: any;
+  private actionIndex = 0;
+  private executions = [];
+
   constructor(public dialog: DialogRef<ExecutionReportComponentWindowData>, public modal: Modal) {
     this.context = dialog.context;
     this.map = this.context.map;
   }
 
   ngOnInit() {
-    this.execIndex = this.map.versions[this.map.versionIndex].executions.length - 1;
-    this.execution = this.map.versions[this.map.versionIndex].executions[this.execIndex]; /* get last element from execution array */
+    this.executions = _.flatMap(this.map.versions, (version: any) => {
+      return version.executions;
+    });
+    this.execIndex = this.executions.length - 1;
+    this.execution = this.executions[this.execIndex]; /* get last element from execution array */
     this.parseExecutionData(this.execution.resObj);
   }
 
@@ -120,15 +129,62 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
     });
   }
 
+  groupByChunks(data: any[]) {
+    return this.groupBy(data, (element, index) => {
+      let n = 3;
+      return Math.floor(index / n);
+    });
+  }
+
   parseExecutionData(execution) {
     this.actions = [];
     this.processes = [];
-    this.processes = _.map(execution.links, (link: any) => { return this.first(link.processes); });
+    let allProcesses = _.map(execution.links, (link: any) => { return this.first(link.processes); });
+    this.processesChunks = this.groupByChunks(allProcesses);
+    this.procIndex = 0;
+    this.processes = this.processesChunks[this.procIndex];
     this.initStatusChart();
   }
 
+  nextProcesses() {
+    if ((this.procIndex + 1) >= this.processesChunks.length ) {
+      return;
+    }
+    this.procIndex++;
+    this.processes = this.processesChunks[this.procIndex];
+  }
+
+  previousProcesses() {
+    if ((this.procIndex - 1) < 0) {
+      return;
+    }
+    this.procIndex--;
+    this.processes = this.processesChunks[this.procIndex];
+  }
+
+  nextActions() {
+    if ((this.actionIndex + 1) >= this.actionsChunks.length) {
+      return;
+    }
+    this.actionIndex++;
+    this.actions = this.actionsChunks[this.actionIndex];
+  }
+
+  previousActions() {
+    if ((this.actionIndex - 1) < 0) {
+      return;
+    }
+    this.procIndex--;
+    this.actions = this.actionsChunks[this.actionIndex];
+  }
+
+
   chooseProcess(process) {
-    this.actions = _.map(process.actions, (action) => { return action; });
+    this.actions = [];
+    let allActions = _.map(process.actions, (action) => { return action; });
+    this.actionsChunks = this.groupByChunks(allActions);
+    this.actionIndex = 0;
+    this.actions = this.actionsChunks[this.actionIndex];
   }
 
   closeWindow() {
@@ -136,12 +192,12 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
   }
 
   chooseNextExecution() {
-    if ((this.execIndex + 1) > (this.map.versions[this.map.versionIndex].executions.length - 1)) {
+    if ((this.execIndex + 1) > (this.executions.length - 1)) {
       return;
     }
 
     this.execIndex++;
-    this.execution = this.map.versions[this.map.versionIndex].executions[this.execIndex]; /* get last element from execution array */
+    this.execution = this.executions[this.execIndex]; /* get last element from execution array */
     this.parseExecutionData(this.execution.resObj);
   }
 
@@ -151,7 +207,7 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
     }
 
     this.execIndex--;
-    this.execution = this.map.versions[this.map.versionIndex].executions[this.execIndex]; /* get last element from execution array */
+    this.execution = this.executions[this.execIndex]; /* get last element from execution array */
     this.parseExecutionData(this.execution.resObj);
   }
 
@@ -161,6 +217,18 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private groupBy(arr: any[], func) {
+    let groupObj: any = {};
+    _.forEach(arr, (data, index) => {
+      let grpIndex = func(data, index);
+      if (!groupObj[grpIndex]) {
+        groupObj[grpIndex] = [];
+      }
+      groupObj[grpIndex].push(data);
+    });
+    return _.toArray(groupObj);
+
+  }
 
 }
 
