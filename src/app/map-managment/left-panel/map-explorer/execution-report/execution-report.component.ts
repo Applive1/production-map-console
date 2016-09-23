@@ -174,7 +174,7 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
     if ((this.actionIndex - 1) < 0) {
       return;
     }
-    this.procIndex--;
+    this.actionIndex--;
     this.actions = this.actionsChunks[this.actionIndex];
   }
 
