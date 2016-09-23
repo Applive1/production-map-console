@@ -61,7 +61,14 @@
           <div class="grid">
             <div class="row">
               <div class="cell" [style.width.px]="100">
-                <div *ngFor="let labelItem of aggregatedResulsLabels" ><span class="label"><i [style.background-color]="labelItem.color"></i>{{labelItem.text}}</span></div>
+                <div *ngFor="let labelItem of aggregatedResulsLabels" >
+                  <div [hidden]="labelItem.text.length <= 10">
+                    <span class="label"><i [style.background-color]="labelItem.color"></i>{{ labelItem.text | slice:0:30 }}...</span>
+                  </div>
+                  <div [hidden]="labelItem.text.length > 10">
+                    <span class="label"><i [style.background-color]="labelItem.color"></i>{{ labelItem.text }}</span>
+                  </div>
+                </div>
               </div>
               <div class="cell gchart">
                 <canvas #aggResultsChart class="chart-cell gchart" width="150" height="150"></canvas>
