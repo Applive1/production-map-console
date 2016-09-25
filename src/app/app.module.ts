@@ -41,6 +41,9 @@ import { ProcessesComponentWindow } from './map-managment/map-editor/map-designe
 import { NewProcessComponentWindow } from './map-managment/map-editor/map-designer/new-process/new-process.component';
 import { ActionsComponentWindow } from './map-managment/map-editor/map-designer/action/action.component';
 import { ExecutionChartComponent } from './map-managment/left-panel/map-explorer/execution-report/item-execution-result/execution-chart/execution-chart.component';
+import { DedicatedAgentsComponent } from './admin-panel/dedicated-agents/dedicated-agents.component';
+import { AddDedicatedAgentComponent } from './admin-panel/dedicated-agents/add-dedicated-agent/add-dedicated-agent.component';
+import { ShowDedicatedAgentComponent } from './admin-panel/dedicated-agents/show-dedicated-agent/show-dedicated-agent.component';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -50,7 +53,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponent, ShowDedicatedAgentComponent
   ],
   imports: [
     BrowserModule,
