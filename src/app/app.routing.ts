@@ -8,6 +8,7 @@ import { MapManagmentComponent } from './map-managment/map-managment.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CalendarComponent } from './admin-panel/calendar/calendar.component';
 import { DedicatedAgentsComponent } from './admin-panel/dedicated-agents/dedicated-agents.component';
+import { ServersComponent } from './admin-panel/servers/servers.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/app/map', pathMatch: 'full' },
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
                 component: AdminPanelComponent,
                 children: [
                     { path: 'calendar', component: CalendarComponent },
-                    { path: 'dedicatedAgents', component: DedicatedAgentsComponent }
+                    { path: 'dedicatedAgents', component: DedicatedAgentsComponent },
+                    { path: 'servers', component: ServersComponent }
                 ]
             },
         ]

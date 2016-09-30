@@ -1,0 +1,64 @@
+<section>
+  <h2><i class="pmap-1"></i>Servers</h2>
+
+  <div class="pmap-table search-bar">
+    <div class="tbody-wrapper">
+      <div class="tbody">
+        <div class="tr">
+          <div class="cell">
+            <div>
+              <span>
+                Filter by
+              </span>
+            </div>
+            <div>
+              <select class="form-control" [(ngModel)]="search.type">
+                <option>-- select method --</option>
+                <option [ngValue]="1">Name</option>
+                <option [ngValue]="2">Architecture</option>
+              </select>
+            </div>
+          </div>
+          <div class="cell">
+            <div>
+              <span></span>
+            </div>
+          </div>
+          <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pmap-table">
+    <div class="thead-wrapper">
+      <div class="thead">
+        <div class="tr">
+          <div class="cell">Status</div>
+          <div class="cell">Name</div>
+          <div class="cell">IP</div>
+          <div class="cell">HostName</div>
+          <div class="cell">Architecture</div>
+          <div class="cell">Free Disk Space</div>
+          <div class="cell">Response Time</div>
+        </div>
+      </div>
+    </div>
+    <div class="tbody-wrapper">
+      <div class="tbody">
+        <div class="tr" *ngFor="let server of agents">
+          <div class="cell" [hidden]="agentsArray[server.key].alive === true"><span role="status" class="success"><i class="pmap-27"></i></span></div>
+          <div class="cell" [hidden]="!agentsArray[server.key].alive"><span role="status" class="danger"><i class="pmap-27"></i></span></div>
+          <td>{{server.name}}</td>
+          <td>{{server.url}}</td>
+          <div class="cell"><span>{{ server.name }}</span></div>
+          <div class="cell"><span>{{ server.url }}</span></div>
+          <div class="cell"><span> {{agentsArray[server.key].hostname}} </span></div>
+          <div class="cell"><span> {{agentsArray[server.key].arch}}</span></div>
+          <div class="cell"><span> {{agentsArray[server.key].freeSpace}}</span></div>
+          <div class="cell"><span> {{agentsArray[server.key].respTime}}</span></div>
+          <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

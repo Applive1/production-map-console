@@ -1,0 +1,23 @@
+h2 {
+  font-size: 20px;
+  color: #f1f1f1;
+  font-weight: normal;
+  margin: 0 0 24px;
+}
+
+h2 i {
+  display: inline-block;
+  width: 32px;
+  margin-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 25px;
+}
+
+h2 i {
+  vertical-align: top !important;
+}
+
+.search-bar {
+  margin-bottom: 10px;
+}
