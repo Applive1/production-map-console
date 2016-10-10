@@ -20,9 +20,7 @@
             </div>
           </div>
           <div class="cell">
-            <div>
-              <span></span>
-            </div>
+              <input type="text" class="form-control" [(ngModel)]="search.text" />
           </div>
           <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
         </div>
@@ -33,30 +31,27 @@
     <div class="thead-wrapper">
       <div class="thead">
         <div class="tr">
-          <div class="cell">Status</div>
-          <div class="cell">Name</div>
-          <div class="cell">IP</div>
-          <div class="cell">HostName</div>
-          <div class="cell">Architecture</div>
-          <div class="cell">Free Disk Space</div>
-          <div class="cell">Response Time</div>
+          <div class="cell"><span>Status</span></div>
+          <div class="cell"><span class="header-name">Name</span></div>
+          <div class="cell"><span class="header-url">IP</span></div>
+          <div class="cell"><span class="header-hostname">HostName</span></div>
+          <div class="cell"><span class="header-arch">Architecture</span></div>
+          <div class="cell"><span class="header-freeSpace">Free Disk Space</span></div>
+          <div class="cell"><span class="header-respTime">Response Time</span></div>
         </div>
       </div>
     </div>
     <div class="tbody-wrapper">
       <div class="tbody">
-        <div class="tr" *ngFor="let server of agents">
-          <div class="cell" [hidden]="agentsArray[server.key].alive === true"><span role="status" class="success"><i class="pmap-27"></i></span></div>
-          <div class="cell" [hidden]="!agentsArray[server.key].alive"><span role="status" class="danger"><i class="pmap-27"></i></span></div>
-          <td>{{server.name}}</td>
-          <td>{{server.url}}</td>
-          <div class="cell"><span>{{ server.name }}</span></div>
-          <div class="cell"><span>{{ server.url }}</span></div>
-          <div class="cell"><span> {{agentsArray[server.key].hostname}} </span></div>
-          <div class="cell"><span> {{agentsArray[server.key].arch}}</span></div>
-          <div class="cell"><span> {{agentsArray[server.key].freeSpace}}</span></div>
-          <div class="cell"><span> {{agentsArray[server.key].respTime}}</span></div>
-          <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
+        <div class="tr" *ngFor="let agent of agents">
+          <div [hidden]="!agent.alive"><span class="cell"><i class="green server-status"></i></span></div>
+          <div [hidden]="agent.alive"><span class="cell"><i class="red server-status"></i></span></div>
+          <div class="cell"><span class="server-name">{{ agent.name }}</span></div>
+          <div class="cell"><span class="server-url">{{ agent.url }}</span></div>
+          <div class="cell"><span class="server-hostname">{{ agent.hostname }}</span></div>
+          <div class="cell"><span class="server-arch">{{ agent.arch }}</span></div>
+          <div class="cell"><span class="server-freeSpace">{{ agent.freeSpace }}</span></div>
+          <div class="cell"><span class="server-respTime">{{ agent.respTime }}</span></div>
         </div>
       </div>
     </div>

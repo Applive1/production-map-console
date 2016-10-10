@@ -9,7 +9,6 @@ import { ServersService } from '../../shared/services/servers.service';
 })
 export class ServersComponent implements OnInit, OnDestroy {
 
-  agentsArray: any[] = [];
   agents: any[] = [];
   search: any;
   interval: any;
@@ -28,10 +27,17 @@ export class ServersComponent implements OnInit, OnDestroy {
 
   getAgents(serversComponent) {
     return () => {
+      let agentsArray = [];
       serversComponent.serverService.getAgents().subscribe((res) => {
-        serversComponent.agents = res;
+        let agents = res;
         serversComponent.serverService.getStatus().subscribe((resp) => {
-          serversComponent.agentsArray = resp;
+          agentsArray = resp;
+          _.each(agents, (agent: any) => {
+            for(let key in agentsArray[agent.key]) {
+              agent[key] = agentsArray[agent.key][key];
+            }
+          });
+          serversComponent.agents = agents;
         }, (err) => {
           console.log(err);
         });

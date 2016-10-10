@@ -21,3 +21,76 @@ h2 i {
 .search-bar {
   margin-bottom: 10px;
 }
+
+i.green {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #28b671;
+}
+
+i.red {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #f93815;
+}
+
+.cell {
+  width: 400px !important;
+}
+
+.server-status {
+  margin-left: 13px;
+}
+
+.server-name {
+  padding-left: 23px;
+}
+
+.server-url {
+  margin-left: 10px;
+}
+
+.server-hostname {
+  margin-left: -30px;
+}
+
+.server-arch {
+  margin-left: -25px;
+}
+
+.server-freeSpace {
+  margin-left: 20px;
+}
+
+.server-respTime {
+  margin-left:30px;
+}
+
+
+.header-name {
+  margin-left: -30px;
+}
+
+.header-url {
+  margin-left: 10px;
+}
+
+.header-hostname {
+  margin-left: 10px;
+}
+
+.header-arch {
+  margin-left: 10px;
+}
+
+.header-freeSpace {
+  margin-left: 10px;
+}
+
+.header-respTime {
+  margin-left: 20px;
+}

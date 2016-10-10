@@ -8,6 +8,7 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { TreeModule } from 'angular2-tree-component';
+import { CalendarModule } from 'angular2-calendar';
 import { ContextMenuModule } from 'angular2-contextmenu';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -46,6 +47,7 @@ import { DedicatedAgentsComponent } from './admin-panel/dedicated-agents/dedicat
 import { AddDedicatedAgentComponentWindow } from './admin-panel/dedicated-agents/add-dedicated-agent/add-dedicated-agent.component';
 import { ShowDedicatedAgentComponent } from './admin-panel/dedicated-agents/show-dedicated-agent/show-dedicated-agent.component';
 import { ServersComponent } from './admin-panel/servers/servers.component';
+import { EventsSchedulerComponent } from './admin-panel/calendar/events-scheduler/events-scheduler.component';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -55,10 +57,11 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent, EventsSchedulerComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpModule,
     ModalModule.forRoot(),
@@ -66,7 +69,7 @@ let localStorageServiceConfig = {
     TreeModule,
     ChartsModule,
     ContextMenuModule,
-    CommonModule,
+    CalendarModule.forRoot(),
     FileUploadModule,
     routing
   ],
