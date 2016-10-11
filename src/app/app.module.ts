@@ -8,10 +8,10 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { TreeModule } from 'angular2-tree-component';
-import { CalendarModule } from 'angular2-calendar';
 import { ContextMenuModule } from 'angular2-contextmenu';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FileUploadModule } from 'ng2-file-upload';
+import { CalendarModule } from 'angular2-calendar';
 
 import { AuthenticationService } from './shared/services/authentication.service';
 import { routing, appRoutingProviders } from './app.routing';

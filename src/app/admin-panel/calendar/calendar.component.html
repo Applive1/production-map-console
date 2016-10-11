@@ -6,33 +6,34 @@
       <div role="form-scheduled-job">
         <div class="form-group">
           <label class="form-label" for="shj-project">Project</label>
-          <select id="shj-project" class="form-control">
-              <option value="1">1</option>
-            </select>
+          <select id="shj-project" class="form-control" [(ngModel)]="job.selectedProject">
+            <option>-- select project --</option>
+            <option *ngFor="let project of projects" [ngValue]="project.id">{{ project.name }}</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label" for="shj-map">Map</label>
-          <select id="shj-map" class="form-control">
-              <option value="1">1</option>
+          <select id="shj-map" class="form-control" [(ngModel)]="job.Map">
+              <option>-- select map --</option>
+              <option *ngFor="let map of job.selectedProject.maps" [ngValue]="map.id">{{ map.name }}</option>
             </select>
         </div>
         <form action="">
           <div class="form-group">
             <label for="shj-radio" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" value="repeated" id="shj-radio">
+                <input type="radio" [(ngModel)]="job.isCron" name="type" value="true" id="shj-radio">
                 <i></i><span class="form-label">Repeated</span>
               </label>
             <label for="shj-radio-2" class="form-radio">
-                <input type="radio" [(ngModel)]="job.type" name="type" value="once" id="shj-radio-2">
+                <input type="radio" [(ngModel)]="job.isCron" name="type" value="false" id="shj-radio-2">
                 <i></i><span class="form-label">Once</span>
               </label>
           </div>
         </form>
-        {{job.type | json}}
         <div class="form-group">
           <div class="form-label">Date</div>
           <div class="form-date">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="job.startAt">
             <i class="pmap-39"></i>
           </div>
         </div>
@@ -49,12 +50,12 @@
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn-event"><i class="pmap-28"></i>Create</button>
+          <button type="button" class="btn-event" (click)="createJob()"><i class="pmap-28"></i>Create</button>
         </div>
       </div>
     </aside>
     <section>
-      <app-events-scheduler></app-events-scheduler>
+      <app-events-scheduler [events]="calendar.events"></app-events-scheduler>
     </section>
   </div>
 </div>
