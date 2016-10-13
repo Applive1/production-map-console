@@ -15,6 +15,7 @@ import { CalendarModule } from 'angular2-calendar';
 
 import { AuthenticationService } from './shared/services/authentication.service';
 import { routing, appRoutingProviders } from './app.routing';
+import { ConstsService } from './shared/services/consts.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -79,7 +80,8 @@ let localStorageServiceConfig = {
     {
       provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
     },
-    appRoutingProviders
+    appRoutingProviders,
+    ConstsService
   ],
   entryComponents: [ExecutionReportComponent, ProcessesComponentWindow, NewProcessComponentWindow, ActionsComponentWindow, AddDedicatedAgentComponentWindow],
   bootstrap: [AppComponent]

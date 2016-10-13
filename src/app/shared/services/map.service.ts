@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Response } from '@angular/http';
 import * as jsonpatch from 'jsonpatch';
+import { ConstsService } from './consts.service';
 
 @Injectable()
 export class MapService {
-  private serverUrl: string = 'http://localhost:8080/';
+  private serverUrl: string;
 
-  constructor(private http: Http, public options: RequestOptions) {
+  constructor(private http: Http, public options: RequestOptions, private constsService: ConstsService) {
     let headers = new Headers({ 'Content-Type': 'application/json', withCredentials: true });
     this.options.headers = headers;
+    this.serverUrl = this.constsService.getServerUrl();
   }
   connectTest() {
     let username = 'test';
     let password = 'asdfasdf';
-    return this.http.post('http://localhost:8080/auth/local', {
+    return this.http.post(this.serverUrl + 'auth/local', {
       identifier: username,
       password: password
     }).map(this.extractData);

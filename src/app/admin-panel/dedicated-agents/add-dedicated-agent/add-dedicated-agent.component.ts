@@ -3,6 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { DialogRef, ModalComponent } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { ConstsService } from '../../../shared/services/consts.service';
 
 import * as _ from 'lodash';
 
@@ -16,8 +17,6 @@ export class AddDedicatedAgentComponentWindowData extends BSModalContext {
   }
 }
 
-const URL = 'http://localhost:8080';
-
 @Component({
   selector: 'modal-content',
   templateUrl: './add-dedicated-agent.component.html',
@@ -27,14 +26,15 @@ export class AddDedicatedAgentComponentWindow implements ModalComponent<AddDedic
   context: AddDedicatedAgentComponentWindowData;
   error: string;
   dedicateAgents: any[];
-  uploader: FileUploader = new FileUploader({ url: URL });
+  uploader: FileUploader;
   hasBaseDropZoneOver: boolean = false;
   hasAnotherDropZoneOver: boolean = false;
 
-  constructor(public dialog: DialogRef<AddDedicatedAgentComponentWindowData>, public modal: Modal) {
+  constructor(public dialog: DialogRef<AddDedicatedAgentComponentWindowData>, public modal: Modal, private constsService: ConstsService) {
     this.context = dialog.context;
     this.dedicateAgents = [];
     this.error = '';
+    this.uploader = new FileUploader({ url: this.constsService.getServerUrl() });
   }
 
   fileOverBase(e: any): void {

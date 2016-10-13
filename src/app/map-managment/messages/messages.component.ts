@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ConstsService } from '../../shared/services/consts.service';
 
 declare const io: any;
 
@@ -11,12 +12,11 @@ export class MessagesComponent implements OnInit {
 
   @Input() messages: any = [];
   socket: any;
-  SERVER_URL: string = 'http://localhost:8080/';
 
-  constructor() { }
+  constructor(private constsService: ConstsService) { }
 
   ngOnInit() {
-    this.socket = io.sails.connect(this.SERVER_URL);
+    this.socket = io.sails.connect(this.constsService.getServerUrl());
     this.socket.on('update', (msg) => {
       this.messages.push({
         data: new Date(),

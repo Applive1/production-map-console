@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { ConstsService } from './consts.service';
 
 @Injectable()
 export class JobsService {
 
-  private serverUrl: string = 'http://localhost:8080/';
+  private serverUrl: string;
 
-  constructor(private http: Http, public options: RequestOptions) {
+  constructor(private http: Http, public options: RequestOptions, private constsService: ConstsService) {
     let headers = new Headers({ 'Content-Type': 'application/json', withCredentials: true });
     this.options.headers = headers;
+    this.serverUrl = this.constsService.getServerUrl();
   }
 
   deleteJob(jobId) {
