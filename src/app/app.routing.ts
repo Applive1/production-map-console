@@ -9,11 +9,13 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CalendarComponent } from './admin-panel/calendar/calendar.component';
 import { DedicatedAgentsComponent } from './admin-panel/dedicated-agents/dedicated-agents.component';
 import { ServersComponent } from './admin-panel/servers/servers.component';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/app/map', pathMatch: 'full' },
     { path: 'app/admin', redirectTo: '/app/admin/calendar', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     {
         path: 'app', component: MapsRootComponent,
         children: [

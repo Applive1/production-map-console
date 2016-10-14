@@ -4,7 +4,7 @@
 			<div class="login-box">
 				<div class="box-wrap">
 					<div class="box-header">
-						<h1>Log In</h1>
+						<h1>Register</h1>
 						<div class="login-box-img">
 							<img src="/assets/img/logo.png" alt="">
 						</div>
@@ -16,21 +16,19 @@
 						<div class="form-elem-group">
 							<input #password type="password" name="password" value="" placeholder="Password">
 						</div>
-						<div class="form-group">
-							<label class="form-checkbox">
-                            <input type="checkbox">
-                            <i></i>
-                            <span class="form-label">Remember Me</span>
-                        </label>
+            <div class="form-elem-group">
+              <input #passwordrepeated type="password" name="password" value="" placeholder="Password">
+            </div>
+						<div class="form-elem-group">
+							<input #email type="text" name="email" value="" placeholder="email">
 						</div>
 						<div class="box-buttom-row">
-              			<div [hidden]="error.length == 0"><span>{{ err }}</span></div>
-							<div class="left-row">
-								<button (click)="login(username.value, password.value)" class="login-btn" type="button">Log In</button>
+							<div [hidden]="error.length == 0"><span>{{ err }}</span></div>
+              <div class="left-row">
+								<button (click)="register(username.value, password.value, passwordrepeated.value, email.value)" class="login-btn" type="button">Register</button>
 							</div>
 							<div class="right-row login-bottom-right-pane">
-								<span class="form-label block pointer">New User?</span>
-								<span class="form-label block pointer" (click)="gotoRegister()">Create an Account</span>
+								<span class="form-label block pointer" (click)="gotoLogin()">Allready have an account? sign in</span>
 							</div>
 						</div>
 					</div>
