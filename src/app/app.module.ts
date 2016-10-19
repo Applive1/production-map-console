@@ -50,6 +50,8 @@ import { ShowDedicatedAgentComponent } from './admin-panel/dedicated-agents/show
 import { ServersComponent } from './admin-panel/servers/servers.component';
 import { EventsSchedulerComponent } from './admin-panel/calendar/events-scheduler/events-scheduler.component';
 import { RegisterComponent } from './register/register.component';
+import {NewMapComponentWindow} from "./map-managment/left-panel/map-explorer/popups/new-map/new-map.component";
+import {NewProjectComponentWindow} from "./map-managment/left-panel/map-explorer/popups/new-project/new-project.component";
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -59,7 +61,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent, EventsSchedulerComponent, RegisterComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent, EventsSchedulerComponent, RegisterComponent, NewProjectComponentWindow, NewMapComponentWindow
   ],
   imports: [
     BrowserModule,
@@ -84,7 +86,7 @@ let localStorageServiceConfig = {
     appRoutingProviders,
     ConstsService
   ],
-  entryComponents: [ExecutionReportComponent, ProcessesComponentWindow, NewProcessComponentWindow, ActionsComponentWindow, AddDedicatedAgentComponentWindow],
+  entryComponents: [NewProjectComponentWindow, NewMapComponentWindow, ExecutionReportComponent, ProcessesComponentWindow, NewProcessComponentWindow, ActionsComponentWindow, AddDedicatedAgentComponentWindow],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,8 @@ import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { ProjectService } from '../../../shared/services/project.service';
 import { MapService } from '../../../shared/services/map.service';
 import { ExecutionReportComponent, ExecutionReportComponentWindowData } from './execution-report/execution-report.component';
+import {NewMapComponentWindow, NewMapComponentWindowData} from "./popups/new-map/new-map.component";
+import {NewProjectComponentWindow, NewProjectComponentWindowData} from "./popups/new-project/new-project.component";
 
 @Component({
   selector: 'app-map-explorer',
@@ -59,7 +61,7 @@ export class MapExplorerComponent implements OnInit {
     }
   };
 
-  constructor(private projectService: ProjectService, private mapService: MapService, private contextMenuService: ContextMenuService, private modal: Modal) {
+  constructor(private projectService: ProjectService, private mapService: MapService, private contextMenuService: ContextMenuService, public modal: Modal) {
 
   }
 
@@ -76,21 +78,37 @@ export class MapExplorerComponent implements OnInit {
 
   addMap(node: TreeNode) {
     let project = node.data;
-    this.mapService.createMap('exampleMap', project.id).subscribe((map) => {
-      this.mapToItem(map);
-      map.editMode = true;
-      node.data.children.push(map);
-      this.tree.treeModel.update();
-    });
+    let dialog = this.modal.open(NewMapComponentWindow, overlayConfigFactory(new NewMapComponentWindowData(project), BSModalContext));
+
+    dialog
+      .then(function(data){
+        return data.result;
+      })
+      .then((map) => {
+          if (!map) return;
+          console.log('created');
+          map.editMode = true;
+          this.mapToItem(map);
+          node.data.children.push(map);
+          this.tree.treeModel.update();
+        },
+        (error) => { console.log(error); });
   }
 
   addProject() {
-    this.projectService.createProject('exampleProject').subscribe((project) => {
-      this.projectsTree.push(project);
-      project.text = '';
-      project.editMode = true;
-      this.tree.treeModel.update();
-    });
+    let dialog = this.modal.open(NewProjectComponentWindow, overlayConfigFactory(new NewProjectComponentWindowData(), BSModalContext));
+    dialog
+      .then(function(data){
+        return data.result;
+      })
+      .then((project) => {
+          if (!project) return;
+          console.log('created');
+          project.editMode = true;
+          this.projectsTree.push(project);
+          this.tree.treeModel.update();
+        },
+        (error) => { console.log(error); });
   }
 
   deleteProject(node: TreeNode) {
