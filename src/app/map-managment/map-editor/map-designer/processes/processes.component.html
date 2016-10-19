@@ -9,8 +9,7 @@
         <div class="col has-form-label">
           <label for="pr-process" class="form-label">Process</label>
           <select id="pr-process" class="form-control" [(ngModel)]="currentProcess">
-						<option>-- select process --</option>
-						<option *ngFor="let process of link.processes" [ngValue]="process">{{process.name}}</option>
+						<option *ngFor="let process of link.processes;" [ngValue]="process">{{process.name}}</option>
 					</select>
         </div>
         <div class="col">

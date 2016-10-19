@@ -37,20 +37,28 @@ export class ProcessesComponentWindow implements ModalComponent<ProcessesCompone
     this.link = this.context.link;
     this.src = this.context.src;
     this.dest = this.context.dest;
+
+    // in case of created process from previous pop us
     if (this.context.currProcess) {
       this.currentProcess = this.context.currProcess;
     }
+    // new link
     else {
-      this.currentProcess = {
-        name: '',
-        description: '',
-        order: 0,
-        default_execution: false,
-        mandatory: false,
-        actions: [],
-        result: '',
-        condition: false
-      };
+      if(this.link.processes) {
+        this.currentProcess = this.link.processes[0];
+      } else {
+        // no processes - this is a placeholder
+        this.currentProcess = {
+          name: '',
+          description: '',
+          order: 0,
+          default_execution: false,
+          mandatory: false,
+          actions: [],
+          result: '',
+          condition: false
+        };
+      }
     }
   }
 
