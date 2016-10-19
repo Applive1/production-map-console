@@ -97,9 +97,10 @@
   line-height: 37px;
 }
 
-[role*="popup-"][role="popup-execution-dashboard"] .label {
+[role*="popup-"][role="popup-execution-dashboard"] .execution-label {
   font-size: 12px;
   color: #7a7a7a;
+  padding-right: 10px;
 }
 
 [role*="popup-"][role="popup-execution-dashboard"] > section {
@@ -240,6 +241,19 @@
 
 [role*="popup-"][role="popup-execution-dashboard"] > section .header .container .col:last-child .gchart {
   height: 100px;
+}
+
+[role*="popup-"][role="popup-execution-dashboard"] > section .header .container .col:last-child .gchart .chart-block {
+  display: inline-block;
+  float: left;
+}
+
+[role*="popup-"][role="popup-execution-dashboard"] > section .header .container .col:last-child .gchart .chart-block-right {
+  display: inline-block;
+  height: 100px;
+  margin-top: 40px;
+  margin-left: 20px;
+  font-size: 14px;
 }
 
 [role*="popup-"][role="popup-execution-dashboard"] > section .header .container [role="box-summary"] {

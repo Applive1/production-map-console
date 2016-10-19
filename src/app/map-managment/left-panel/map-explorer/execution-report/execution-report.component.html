@@ -14,14 +14,14 @@
             <div role="box-summary">
               <div class="cell">
                 <div>
-                  <div class="str"><span class="label cell">Start Time</span><span class="cell">{{ execution.resObj.startDate | date:'short' }}</span></div>
-                  <div class="str"><span class="label cell">End Time</span><span class="cell">{{ execution.resObj.finishDate | date:'short' }}</span></div>
+                  <div class="str"><span class="execution-label cell">Start Time</span><span class="cell">{{ execution.resObj.startDate | date:'short' }}</span></div>
+                  <div class="str"><span class="execution-label cell">End Time</span><span class="cell">{{ execution.resObj.finishDate | date:'short' }}</span></div>
                 </div>
               </div>
               <div class="cell">
                 <div>
-                  <div class="str"><span class="label cell">Total Time</span><span class="cell">{{ execution.resObj.finishDate - execution.resObj.startDate }}</span></div>
-                  <div class="str"><span class="label cell">Status</span>
+                  <div class="str"><span class="execution-label cell">Total Time</span><span class="cell">{{ execution.resObj.finishDate - execution.resObj.startDate }}</span></div>
+                  <div class="str"><span class="execution-label cell">Status</span>
                     <div [hidden]="execution.resObj.status < 0"><span role="status" class="success cell"><i class="pmap-40"></i></span></div>
                     <div [hidden]="execution.resObj.status >= 0"><span role="status" class="danger cell"><i class="pmap-40"></i></span></div>
                   </div>
@@ -29,27 +29,27 @@
               </div>
               <div class="cell">
                 <div>
-                  <div class="str"><span class="label cell">User</span><span class="cell">{{ user.username }}</span></div>
-                  <div class="str"><span class="label cell">Run</span><span class="cell"> {{ execution.number }} </span></div>
+                  <div class="str"><span class="execution-label cell">User</span><span class="cell">{{ user.username }}</span></div>
+                  <div class="str"><span class="execution-label cell">Run</span><span class="cell"> {{ execution.number }} </span></div>
                 </div>
               </div>
               <div class="cell">
                 <div>
-                  <div class="str"><span class="label cell">Version</span><span class="cell">  </span></div>
+                  <div class="str"><span class="execution-label cell">Version</span><span class="cell">  </span></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="col">
             <div class="gchart" data-height="100%" data-position="right" data-width="100%">
-              <div class="cell" [style.width.px]="100">
+              <div class="cell chart-block" [style.width.px]="100">
                 <canvas #aggStatusChart width="150" height="150"></canvas>
               </div>
-              <div class="cell" [style.width.px]="100" >
-                <div><span class="label"><i class="green label-icon"></i>Server Success</span></div>
-                <div><span class="label"><i class="yellow label-icon"></i>Server Partial</span></div>
-                <div><span class="label"><i class="red label-icon"></i>Server Failed</span></div>
-                <div><span class="label"><i class="blue label-icon"></i>Server didn't run</span></div>
+              <div class="cell chart-block-right">
+                <div><span><i class="green label-icon"></i>Server Success</span></div>
+                <div><span><i class="yellow label-icon"></i>Server Partial</span></div>
+                <div><span><i class="red label-icon"></i>Server Failed</span></div>
+                <div><span><i class="blue label-icon"></i>Server didn't run</span></div>
               </div>
             </div>
             <button type="button"><i class="pmap-42"></i></button>

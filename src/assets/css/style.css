@@ -667,3 +667,12 @@ button.action-add-btn i {
   color: #3aac59;
 }
 
+.pm-font {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.label {
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+}

@@ -111,6 +111,7 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
         {
           data: this.aggeregatedStatusData,
           backgroundColor: backColors,
+          borderWidth: 0,
           hoverBackgroundColor: backColors
         }]
     };

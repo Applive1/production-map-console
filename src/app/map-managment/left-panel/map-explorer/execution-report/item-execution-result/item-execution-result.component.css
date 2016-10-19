@@ -185,6 +185,10 @@ header ul li:hover a {
   padding-left: 0;
 }
 
+.date-cell {
+  text-align: center;
+}
+
 .tab-content .tab-servers .pmap-table .cell:first-child {
   width: 120px;
 }

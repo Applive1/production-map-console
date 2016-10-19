@@ -43,7 +43,8 @@ export class ExecutionChartComponent implements OnInit, AfterViewInit {
             this.green,
             this.yellow,
             this.blue
-          ]
+          ],
+          borderWidth: 0,
         }]
     };
 

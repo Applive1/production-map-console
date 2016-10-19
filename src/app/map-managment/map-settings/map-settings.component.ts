@@ -8,7 +8,7 @@ import { NgSwitch, NgSwitchCase } from "@angular/common";
 })
 export class MapSettingsComponent implements OnInit {
 
-  public currentPanel: number = 1;
+  public currentPanel: number = 0;
   @Input() map: any = {};
 
   constructor() { }

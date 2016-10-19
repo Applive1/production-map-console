@@ -85,7 +85,7 @@
           <h3>{{process.name}}</h3>
           <div class="pmap-table">
             <div class="thead-wrapper">
-              <div class="thead">
+              <div class="thead pm-font">
                 <div class="tr">
                   <div class="cell">Server</div>
                   <div class="cell">Status</div>
@@ -95,13 +95,13 @@
               </div>
             </div>
             <div class="tbody-wrapper">
-              <div class="tbody">
+              <div class="tbody pm-font ">
                 <div class="tr" *ngFor="let server of agents">
                   <div class="cell">{{ server.name }}</div>
                   <div [hidden]="server.status < 0"><span role="status" class="success"><i class="pmap-40"></i></span></div>
                   <div [hidden]="server.status >= 0"><span role="status" class="danger"><i class="pmap-40"></i></span></div>
-                  <div class="cell"><span class="date">{{ server.startTime | date:'short' }}</span></div>
-                  <div class="cell"><span class="date">{{ server.endTime   | date:'short' }}</span></div>
+                  <div class="cell"><span class="date date-cell">{{ server.startTime | date:'short' }}</span></div>
+                  <div class="cell"><span class="date date-cell">{{ server.endTime   | date:'short' }}</span></div>
                   <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
                 </div>
               </div>

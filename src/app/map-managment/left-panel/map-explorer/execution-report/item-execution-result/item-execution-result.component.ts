@@ -120,6 +120,7 @@ export class ItemExecutionResultComponent implements OnInit, AfterViewInit, OnCh
         {
           data: this.aggeregatedStatusData,
           backgroundColor: backColors,
+          borderWidth: 0,
           hoverBackgroundColor: backColors
         }]
     };
@@ -148,6 +149,7 @@ export class ItemExecutionResultComponent implements OnInit, AfterViewInit, OnCh
         {
           data: this.aggregatedResultsData,
           backgroundColor: backColors,
+          borderWidth: 0,
           hoverBackgroundColor: backColors
         }]
     };
