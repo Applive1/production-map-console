@@ -174,3 +174,8 @@
   background-color: #4b4f51;
   color: #bbb;
 }
+
+pre.msg-pre {
+  background-color: rgb(64, 67, 69) !important;
+  color: #ffffff !important;
+}
