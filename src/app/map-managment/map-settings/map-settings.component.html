@@ -7,5 +7,5 @@
 </header>
 <section [ngSwitch]="currentPanel">
   <app-map-attributes [map]="map" *ngSwitchCase="0"></app-map-attributes>
-  <!--<app-map-servers *ngSwitchCase="1"></app-map-servers>-->
+  <app-map-servers [map]="map" *ngSwitchCase="1"></app-map-servers>
 </section>

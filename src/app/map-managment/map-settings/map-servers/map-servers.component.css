@@ -89,22 +89,22 @@
   padding-right: 14px;
 }
 
-[region="data-table"] section .grid .row .cell:nth-child(3) {
+[region="data-table"] section .grid .row .cell:nth-child(2) {
   padding-right: 2px;
 }
 
-[region="data-table"] section .grid .row .cell:nth-child(3) i {
+[region="data-table"] section .grid .row .cell i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   display: inline-block;
 }
 
-[region="data-table"] section .grid .row .cell:nth-child(3) i.green {
+[region="data-table"] section .grid .row .cell i.green {
   background-color: #28b671;
 }
 
-[region="data-table"] section .grid .row .cell:nth-child(3) i.red {
+[region="data-table"] section .grid .row .cell i.red {
   background-color: #f93815;
 }
 
