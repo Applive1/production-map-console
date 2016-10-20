@@ -8,13 +8,14 @@
 </header>
 <section>
   <div class="grid">
-    <div class="row" *ngFor="let msg of messages">
+    <div class="row" *ngFor="let msg of messages" (dblclick)="openMessage(msg)">
       <span class="cell">{{msg.date | date:'shortDate'}}</span>
       <!--<span class="cell">15:47</span>-->
       <span class="cell"><i class="red"></i></span>
       <!--<span class="cell">Map name</span>
       <span class="cell">Agent Name</span>-->
-      <span class="cell">{{msg.content}}</span>
+      <div [hidden]="msg.content.length < 150"><span class="cell">{{msg.content | slice:0:150}}...</span></div>
+      <div [hidden]="msg.content.length >= 150"><span class="cell">{{msg.content}}</span></div>
       <span class="cell"><a><i class="pmap-23"></i></a></span>
     </div>
   </div>
