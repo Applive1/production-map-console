@@ -4,7 +4,7 @@ import { overlayConfigFactory } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 
 import { ActionsComponentWindowData, ActionsComponentWindow } from '../action/action.component';
-
+import { NewProcessComponentWindowData, NewProcessComponentWindow } from '../new-process/new-process.component';
 import * as _ from 'lodash';
 
 export class ProcessesComponentWindowData extends BSModalContext {
@@ -99,9 +99,13 @@ export class ProcessesComponentWindow implements ModalComponent<ProcessesCompone
     this.modal.open(ActionsComponentWindow, overlayConfigFactory(new ActionsComponentWindowData(action, this.dest.type), BSModalContext));
   }
 
+  openNewProcessModal(link: any, src: any, dest: any) {
+    this.closeWindow();
+    this.modal.open(NewProcessComponentWindow, overlayConfigFactory(new NewProcessComponentWindowData(link, src, dest), BSModalContext));
+  }
+
   addProcess() {
-    this.link.processes.push(_.cloneDeep(this.currentProcess));
-    this.newProc();
+    this.openNewProcessModal(this.link, this.src, this.dest);
   };
 
   moveActionUp(actionIndex) {
