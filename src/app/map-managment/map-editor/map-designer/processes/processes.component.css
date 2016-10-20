@@ -89,7 +89,6 @@
 }
 
 .small-popup-processes[role="small-popup-processes"] section .form-group {
-  width: 330px;
   margin-bottom: 18px;
 }
 
@@ -99,6 +98,10 @@
 
 .small-popup-processes[role="small-popup-processes"] section .has-checkbox {
   padding-left: 158px;
+}
+
+.small-popup-processes[role="small-popup-processes"] section .condition-input {
+  margin-bottom: 3px !important;
 }
 
 .small-popup-processes[role="small-popup-processes"] section .has-checkbox:before, .small-popup-processes[role="small-popup-processes"] section .has-checkbox:after {
