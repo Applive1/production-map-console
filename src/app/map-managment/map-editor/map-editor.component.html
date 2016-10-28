@@ -13,7 +13,7 @@
     <span role="tab" [class.active]="currentPanel == 2" (click)="selectPanel(2)" style="border-right: 1px solid #1f2122;"><i class="pmap-18"></i>Code</span>
   </div>
   <div role="right-btns">
-    <button type="button" (click)="saveMap(map)"><i class="pmap-28"></i>Save</button>
+    <button type="button" [disabled]="executingMap" (click)="saveMap(map)"><i class="pmap-28"></i>Save</button>
     <button type="button" [disabled]="executingMap" (click)="executeMap(map)">
       <i class="pmap-26"></i>
       <span [hidden]="executingMap">Execute</span>

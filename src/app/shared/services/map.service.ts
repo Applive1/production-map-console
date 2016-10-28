@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Response } from '@angular/http';
-import * as jsonpatch from 'jsonpatch';
 import { ConstsService } from './consts.service';
 
 @Injectable()
@@ -57,23 +56,10 @@ export class MapService {
     if (!map || !index) {
       return;
     }
-    let mapView = _.cloneDeep(map.structure);
+    let mapView = JSON.parse(JSON.stringify(map.structure));
     map.versionIndex = index;
 
-    let versions = _.cloneDeep(map.versions);
-    for (let i = 0; i <= index; i++) {
-      if (versions[i].patches) {
-        try {
-          mapView = jsonpatch.apply_patch(mapView, versions[i].patches);
-        } catch (ex) {
-          console.log(ex);
-          console.log(i);
-          console.log(versions[i]);
-          console.log(mapView);
-        }
-      }
-    }
-    map.mapView = mapView;
+    map.mapView = _.cloneDeep(map.versions[index].structure);
     if (!map.mapView.attributes) {
       map.mapView.attributes = [];
     }

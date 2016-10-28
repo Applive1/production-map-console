@@ -59,6 +59,7 @@ export class MapEditorComponent implements OnInit {
   }
 
   saveMap(map) {
+    this.executingMap = true;
     this.mapService.saveMap(map).subscribe((result) => {
       if (result.date) {
         map.versions.push(result);
@@ -66,6 +67,7 @@ export class MapEditorComponent implements OnInit {
         this.mapService.loadMapVersion(this.map, this.map.versionIndex);
       }
       console.log(result);
+      this.executingMap = false;
     });
   }
 

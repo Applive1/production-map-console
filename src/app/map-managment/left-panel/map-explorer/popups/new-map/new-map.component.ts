@@ -25,7 +25,6 @@ export class NewMapComponentWindowData extends BSModalContext {
   styleUrls: ['new-map.component.css'],
   templateUrl: 'new-map.component.html',
   providers: [MapService]
-
 })
 export class NewMapComponentWindow implements ModalComponent<NewMapComponentWindowData> {
   context: NewMapComponentWindowData;
