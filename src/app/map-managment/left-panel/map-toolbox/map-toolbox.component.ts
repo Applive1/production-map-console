@@ -68,7 +68,7 @@ export class MapToolboxComponent implements OnInit, OnChanges {
     this.stencilGraph = new joint.dia.Graph;
     this.stencilPaper = new joint.dia.Paper({
       el: $('#stencil'),
-      height: 248,
+      height: 434,
       width: 238,
       model: this.stencilGraph,
       interactive: false

@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 import { DialogRef, ModalComponent } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
-import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader, ParsedResponseHeaders } from 'ng2-file-upload/ng2-file-upload';
 import { ConstsService } from '../../../shared/services/consts.service';
 
 import * as _ from 'lodash';
@@ -34,7 +34,8 @@ export class AddDedicatedAgentComponentWindow implements ModalComponent<AddDedic
     this.context = dialog.context;
     this.dedicateAgents = [];
     this.error = '';
-    this.uploader = new FileUploader({ url: this.constsService.getServerUrl() });
+    this.uploader = new FileUploader({ url: this.constsService.getServerUrl() + 'installAgents' });
+    this.uploader.onCompleteAll = this.closeAfterComplete(this);
   }
 
   fileOverBase(e: any): void {
@@ -45,6 +46,11 @@ export class AddDedicatedAgentComponentWindow implements ModalComponent<AddDedic
     this.hasAnotherDropZoneOver = e;
   }
 
+  closeAfterComplete(agentWindow: AddDedicatedAgentComponentWindow) {
+    return () => {
+      agentWindow.closeWindow();
+    };
+  }
 
   closeWindow() {
     this.dialog.close();

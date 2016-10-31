@@ -80,7 +80,7 @@ export class AgentsService {
             });
 
             /* remove from server */
-            return this.http.delete(this.serverUrl + 'dedicatedAgent/' + agent.id);
+            return this.http.delete(this.serverUrl + 'dedicatedAgent/' + agent.id).map(this.extractData);
         }
     get(type) {
         console.log(this.blocks);
@@ -107,7 +107,9 @@ export class AgentsService {
         return this.http.get(this.serverUrl + 'dedicatedAgent/' + server.id).map(this.extractData);
     }
 
+    /* deprecated don't use this function */
     add(type, methods, imgUrl, file, agents) {
+        console.log('DEPRECATED: this function is no longer usable! use the appropriate upload object instead.');
         let server = {
             type: type,
             methods: methods,
