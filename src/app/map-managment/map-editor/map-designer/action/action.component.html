@@ -93,8 +93,8 @@
               <div class="cell">{{param.name}}</div>
               <div class="cell">
                 <label class="form-checkbox">
-                                    <input type="checkbox" [(ngModel)]="param.code"><i></i>
-                                </label>
+                    <input type="checkbox" [(ngModel)]="param.code"><i></i>
+                </label>
               </div>
               <div class="cell"></div>
               <div class="cell">
@@ -107,14 +107,14 @@
                   <!-- Input type text area -->
                   <textarea rows="4" cols="50" placeholder="enter value..." [(ngModel)]="param.text"> </textarea>
                 </div>
-                <!--
-                                <div [hidden]="!showCollection(param)">
-                                     Input type collection
-                                    <select class="form-control" ng-options="opt.id as opt.name for opt in param.options"
-                                        data-ng-model="param.text" ng-change="getMethods(action.server.type)">
-                                        <option value=""> ---select option ---</option>
-                                    </select>
-                                </div>-->
+
+                <div [hidden]="!(param.type === 'collection')">
+                      <!--Input type collection-->
+                    <select class="form-control" [(ngModel)]="param.text">
+                              <option>-- select option --</option>
+                      <option *ngFor="let opt of param.options" [ngValue]="opt.id">{{ opt.name }}</option>
+                    </select>
+                </div>
 
                 <div [hidden]="!(param.type === 'file' && (!param.code || param.code === false))">
                   <!-- Input type file -->
