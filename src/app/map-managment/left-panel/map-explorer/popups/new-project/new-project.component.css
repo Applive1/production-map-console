@@ -1,5 +1,5 @@
 .small-popup-processes {
-  position: absolute;
+  position: absolute !important;
   z-index: 2000;
   background-color: #404345;
   width: 540px;

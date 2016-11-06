@@ -53,6 +53,7 @@ import { RegisterComponent } from './register/register.component';
 import { NewMapComponentWindow } from "./map-managment/left-panel/map-explorer/popups/new-map/new-map.component";
 import { NewProjectComponentWindow } from "./map-managment/left-panel/map-explorer/popups/new-project/new-project.component";
 import { MessagePopupComponent } from './map-managment/messages/message-popup/message-popup.component';
+import { DraggableDirective } from './directives/draggable.directive';
 
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
@@ -62,7 +63,7 @@ let localStorageServiceConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent, EventsSchedulerComponent, RegisterComponent, NewProjectComponentWindow, NewMapComponentWindow, MessagePopupComponent
+    AppComponent, HeaderComponent, LoginComponent, PageNotFoundComponent, MapsRootComponent, SideBarComponent, MapManagmentComponent, AdminPanelComponent, CalendarComponent, LeftPanelComponent, MapEditorComponent, MapSettingsComponent, MessagesComponent, MapExplorerComponent, MapToolboxComponent, ExecutionReportComponent, ProcessesComponentWindow, ActionsComponentWindow, NewProcessComponentWindow, ItemExecutionResultComponent, MapAttributesComponent, MapDesignerComponent, MapMarkupComponent, MapCodeEditorComponent, MapServersComponent, MapAttributeComponent, ExecutionChartComponent, DedicatedAgentsComponent, AddDedicatedAgentComponentWindow, ShowDedicatedAgentComponent, ServersComponent, EventsSchedulerComponent, RegisterComponent, NewProjectComponentWindow, NewMapComponentWindow, MessagePopupComponent, DraggableDirective
   ],
   imports: [
     BrowserModule,
