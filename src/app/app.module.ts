@@ -12,6 +12,7 @@ import { ContextMenuModule } from 'angular2-contextmenu';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CalendarModule } from 'angular2-calendar';
+import { ResizableModule } from 'angular2-resizable';
 
 import { AuthenticationService } from './shared/services/authentication.service';
 import { routing, appRoutingProviders } from './app.routing';
@@ -55,6 +56,7 @@ import { NewProjectComponentWindow } from "./map-managment/left-panel/map-explor
 import { MessagePopupComponent } from './map-managment/messages/message-popup/message-popup.component';
 import { DraggableDirective } from './directives/draggable.directive';
 
+
 /* define the prefix for localstoraget when user add key value the prefix pm-app is added to the key */
 let localStorageServiceConfig = {
   prefix: 'pm-app',
@@ -77,6 +79,7 @@ let localStorageServiceConfig = {
     ContextMenuModule,
     CalendarModule.forRoot(),
     FileUploadModule,
+    ResizableModule,
     routing
   ],
   providers: [

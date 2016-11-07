@@ -3,6 +3,8 @@ import { ProjectService } from '../shared/services/project.service';
 import { MapService } from '../shared/services/map.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
+import { ResizeEvent } from 'angular2-resizable';
+
 @Component({
   selector: 'app-map-managment',
   templateUrl: './map-managment.component.html',
@@ -56,6 +58,15 @@ export class MapManagmentComponent implements OnInit {
     this.currentMap = $event;
     this.currentMap.versionIndex = this.currentMap.versions.length - 1;
     this.mapService.loadMapVersion(this.currentMap, this.currentMap.versionIndex);
+  }
+
+  /* resizeable functions */
+  validate(event: ResizeEvent): boolean {
+    // const MIN_DIMENSIONS_PX: number = 50;
+    // if (event.rectangle.width < MIN_DIMENSIONS_PX || event.rectangle.height < MIN_DIMENSIONS_PX) {
+    //   return false;
+    // }
+    return true;
   }
 
 }

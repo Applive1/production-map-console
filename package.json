@@ -26,6 +26,7 @@
     "angular2-calendar": "^0.3.4",
     "angular2-contextmenu": "^0.4.1",
     "angular2-modal": "^2.0.1",
+    "angular2-resizable": "^0.4.1",
     "angular2-tree-component": "^1.2.1",
     "chart.js": "^2.2.2",
     "core-js": "^2.4.1",

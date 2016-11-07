@@ -1,16 +1,36 @@
 <div role="vertical-canvas" style="padding-bottom:200px">
   <div role="horizontal-canvas" style="padding: 0 317px 0 238px">
-    <aside role="left-bar" style="width:238px;" [ngSwitch]="leftPanelState">
+    <aside role="left-bar" style="width:238px;" [ngSwitch]="leftPanelState"
+        mwlResizable
+        [validateResize]="validate"
+        [resizeEdges]="{bottom: false, right: true, top: false, left: false}"
+        [enableGhostResize]="true"
+        >
       <app-left-panel (onMapSelect)="selectMap($event)" [projectsTree]="projectsTree" [graphProps]="designerOps"></app-left-panel>
     </aside>
-    <section [hidden]="!mapLoaded">
+    <section [hidden]="!mapLoaded"
+        mwlResizable
+        [validateResize]="validate"
+        [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+        [enableGhostResize]="true"
+        >
       <app-map-editor [map]="currentMap" (informOuterLayer)="updateToolBox($event)" (onExecution)="mapExecuted($event)"></app-map-editor>
     </section>
-    <aside role="right-bar" style="width:317px;" [hidden]="!mapLoaded">
+    <aside role="right-bar" style="width:317px;" [hidden]="!mapLoaded"
+      mwlResizable
+      [validateResize]="validate"
+      [resizeEdges]="{bottom: false, right: false, top: false, left: true}"
+      [enableGhostResize]="true"
+      >
       <app-map-settings [map]="currentMap"></app-map-settings>
     </aside>
   </div>
-  <footer style="height:200px;">
+  <footer
+    mwlResizable
+    [validateResize]="validate"
+    [resizeEdges]="{bottom: false, right: false, top: true, left: false}"
+    [enableGhostResize]="true"
+    style="height:200px;">
     <app-messages role="messages" [messages]="messages"></app-messages>
   </footer>
 </div>
