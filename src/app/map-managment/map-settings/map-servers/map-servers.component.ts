@@ -28,20 +28,34 @@ export class MapServersComponent implements OnInit, OnDestroy {
 
   getServers(serversComponent: MapServersComponent) {
     return () => {
-      serversComponent.serverService.getAgents().subscribe((res) => {
-        let servers = res;
-        let serverList = [];
-        if (!serversComponent.map || !serversComponent.map.activeServers) {
+      let servers = [];
+      let serverList = [];
+
+      if (!serversComponent.map || !serversComponent.map.activeServers) {
           return;
-        }
-        _.each(servers, (server) => {
-          if (!serversComponent.map.activeServers[server.id]) {
-            server.active = false;
+      }
+      serversComponent.serverService.getAgents().subscribe((res) => {
+        servers = res;
+        serversComponent.serverService.getStatus().subscribe((resp) => {
+          let serversArray = resp;
+          _.each(servers, (server: any) => {
+            for(let key in serversArray[server.key]) {
+              server[key] = serversArray[server.key][key];
+            }
+          });
+          _.each(servers, (server: any) => {
+            if (!serversComponent.map.activeServers[server.id]) {
+              server.active = false;
+            }  else {
+              server.active = serversComponent.map.activeServers[server.id].active;
+            }
             serversComponent.map.activeServers[server.id] = server;
-          }
-          serverList.push(serversComponent.map.activeServers[server.id]);
+            serverList.push(serversComponent.map.activeServers[server.id]);
+          });
+          serversComponent.servers = serverList;
+        }, (err) => {
+          console.log(err);
         });
-        serversComponent.servers = serverList;
       });
     };
   }

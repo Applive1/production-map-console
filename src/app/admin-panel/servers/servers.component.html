@@ -2,27 +2,62 @@
   <h2><i class="pmap-1"></i>Servers</h2>
 
   <div class="pmap-table search-bar">
-    <div class="tbody-wrapper">
+    <div class="tbody-wrapper filter-bar">
       <div class="tbody">
         <div class="tr">
           <div class="cell">
-            <div>
+            <div class="filter-label">
               <span>
                 Filter by
               </span>
             </div>
-            <div>
+            <div class="filter-input">
               <select class="form-control" [(ngModel)]="search.type">
-                <option>-- select method --</option>
+                <option [ngValue]="0">-- select method --</option>
                 <option [ngValue]="1">Name</option>
                 <option [ngValue]="2">Architecture</option>
+                <option [ngValue]="3">Attribute</option>
               </select>
             </div>
           </div>
-          <div class="cell">
-              <input type="text" class="form-control" [(ngModel)]="search.text" />
+          <div [hidden]="search.type === 3 || search.type === 0">
+            <div class="cell">
+              <div class="filter-label">
+                <span>
+                  Search term:
+                </span>
+              </div>
+              <div class="filter-input">
+                <input type="text" class="form-control" [(ngModel)]="search.text" />
+              </div>
+            </div>
+            <div class="cell"><button type="button" class="btn-event filter-button" (click)="filterServers(search)"><i class="pmap-25"></i> filter </button></div>
+            <div class="cell"><button type="button" class="btn-event filter-button" (click)="clearFilter(search)"><i class="pmap-25"></i> clear filter </button></div>
           </div>
-          <div class="cell"><button type="button"><i class="pmap-42"></i></button></div>
+          <div [hidden]="search.type !== 3">
+            <div class="cell">
+              <div class="filter-label">
+                <span>
+                  Attribute:
+                </span>
+              </div>
+              <div class="filter-input">
+                <input type="text" class="form-control" [(ngModel)]="search.attrName" />
+              </div>
+            </div>
+            <div class="cell">
+                <div class="filter-label">
+                  <span>
+                    Value:
+                  </span>
+                </div>
+                <div class="filter-input">
+                  <input type="text" class="form-control" [(ngModel)]="search.text" />
+                </div>
+            </div>
+            <div class="cell"><button type="button" class="btn-event filter-button" (click)="filterServers(search)"><i class="pmap-25"></i> filter </button></div>
+            <div class="cell"><button type="button" class="btn-event filter-button" (click)="clearFilter(search)"><i class="pmap-25"></i> clear filter </button></div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,6 +73,7 @@
           <div class="cell"><span class="header-arch">Architecture</span></div>
           <div class="cell"><span class="header-freeSpace">Free Disk Space</span></div>
           <div class="cell"><span class="header-respTime">Response Time</span></div>
+          <div class="cell"></div>
         </div>
       </div>
     </div>
@@ -52,6 +88,8 @@
           <div class="cell"><span class="server-arch">{{ agent.arch }}</span></div>
           <div class="cell"><span class="server-freeSpace">{{ agent.freeSpace }}</span></div>
           <div class="cell"><span class="server-respTime">{{ agent.respTime }}</span></div>
+          <div class="cell"><button type="button" (click)="editAgent(agent)"><i class="pmap-3"></i></button></div>
+          <!--<div class="cell"><button type="button" (click)="deleteAgent(agentIndex)"><i class="pmap-27"></i></button></div>-->
         </div>
       </div>
     </div>

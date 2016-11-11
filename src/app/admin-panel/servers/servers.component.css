@@ -18,6 +18,23 @@ h2 i {
   vertical-align: top !important;
 }
 
+.filter-bar {
+  height: 80px;
+  overflow-y: hidden;
+}
+
+.filter-label {
+  margin: 5px;
+}
+
+.filter-input {
+  margin: 10px;
+}
+
+.filter-button {
+  margin: 10px;
+}
+
 .search-bar {
   margin-bottom: 10px;
 }
@@ -59,7 +76,7 @@ i.red {
 }
 
 .server-arch {
-  margin-left: -25px;
+  margin-left: 10px;
 }
 
 .server-freeSpace {
@@ -70,6 +87,9 @@ i.red {
   margin-left:30px;
 }
 
+.server-buttons {
+  margin-left:60px;
+}
 
 .header-name {
   margin-left: -30px;
