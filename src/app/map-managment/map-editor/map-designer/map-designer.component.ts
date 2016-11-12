@@ -116,6 +116,13 @@ export class MapDesignerComponent implements OnInit, OnChanges {
         // Prevent loop linking and input to output
         return (cellViewS.id !== cellViewT.id) && this.svgCheckPort('in', magnetT) && this.svgCheckPort('out', magnetS);
       },
+      interactive: (cellView: any): any => {
+          if (cellView.model instanceof joint.dia.Link) {
+              // Disable the default vertex add functionality on pointerdown.
+              return { vertexAdd: false };
+          }
+          return true;
+      }
     });
 
     /* TODO: add support for hovering on output port, when user mouse hovers above output show the relevant inputs for that node
