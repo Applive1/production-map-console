@@ -8,8 +8,9 @@ import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { ProjectService } from '../../../shared/services/project.service';
 import { MapService } from '../../../shared/services/map.service';
 import { ExecutionReportComponent, ExecutionReportComponentWindowData } from './execution-report/execution-report.component';
-import {NewMapComponentWindow, NewMapComponentWindowData} from "./popups/new-map/new-map.component";
-import {NewProjectComponentWindow, NewProjectComponentWindowData} from "./popups/new-project/new-project.component";
+import {NewMapComponentWindow, NewMapComponentWindowData} from './popups/new-map/new-map.component';
+import {UpdateMapComponentWindow, UpdateMapComponentWindowData} from './popups/update-map/update-map.component';
+import {NewProjectComponentWindow, NewProjectComponentWindowData} from './popups/new-project/new-project.component';
 
 @Component({
   selector: 'app-map-explorer',
@@ -51,12 +52,15 @@ export class MapExplorerComponent implements OnInit {
     },
     keys: {
       [KEYS.ENTER]: (tree, node, $event) => {
-        node.data.editMode = false;
+        if (node.data.editMode === false) {
+          return;
+        }
         if (this.isProject(node)) {
           this.projectService.updateProject(node.data);
         } else {
           this.mapService.updateMap(node.data);
         }
+        node.data.editMode = false;
       }
     }
   };
@@ -162,7 +166,22 @@ export class MapExplorerComponent implements OnInit {
   }
 
   renameNode(node: TreeNode) {
-    node.data.editMode = true;
+    let map = node.data;
+    let dialog = this.modal.open(UpdateMapComponentWindow, overlayConfigFactory(new UpdateMapComponentWindowData(map.name), BSModalContext));
+
+    dialog
+      .then(function(data){
+        return data.result;
+      })
+      .then((mapName) => {
+          if (!mapName) return;
+          map.name = mapName;
+          this.mapService.updateMap(map).subscribe((res)=> {
+            this.tree.treeModel.update();
+          });
+        },
+        (error) => { console.log(error);
+      });
   }
 
   deleteMap(node: TreeNode) {
