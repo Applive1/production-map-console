@@ -14,7 +14,10 @@
         [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
         [enableGhostResize]="true"
         >
-      <app-map-editor [map]="currentMap" (informOuterLayer)="updateToolBox($event)" (onExecution)="mapExecuted($event)"></app-map-editor>
+      <header>
+        <span *ngFor="let mapItem of openMaps; let mapIndex = index" (click)="changeMap(mapItem)" role="tab" [class.active]="mapItem.active"><span>{{ mapItem.name }} ({{ mapItem.versionIndex }})</span><i class="pmap-8 orange"></i><i (click)="closeMap(mapIndex)" class="pmap-9"></i></span>
+      </header>
+      <app-map-editor [map]="currentMap" (informOuterLayer)="updateToolBox($event)" (onExecution)="mapExecuted($event)" (onMapSelection)="selectMap($event)"></app-map-editor>
     </section>
     <aside role="right-bar" style="width:317px;" [hidden]="!mapLoaded"
       mwlResizable

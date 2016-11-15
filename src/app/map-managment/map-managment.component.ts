@@ -19,13 +19,15 @@ export class MapManagmentComponent implements OnInit {
   public projectsTree: any = [];
   public currentMap: any = {};
   public messages: any = [];
-  public mapLoaded: boolean = false;
+  public mapLoaded: boolean = false
+  public openMaps: any[] = [];
+  private maxOpenMaps: number = 4;
 
   constructor(private projectService: ProjectService, private authenticationService: AuthenticationService, private mapService: MapService) {
-
   }
 
   ngOnInit() {
+    this.openMaps = [];
     let user = this.authenticationService.getCurrentUser();
     if (!user || !user.id) {
       return;
@@ -54,10 +56,43 @@ export class MapManagmentComponent implements OnInit {
   }
 
   selectMap($event) {
-    this.mapLoaded = true;
+    this.currentMap.active = false;
+    let mapIndex = _.findIndex(this.openMaps, (map) => { return map.name === $event.name; });
+    if (mapIndex < 0) {
+      this.mapLoaded = true;
+      this.currentMap = $event;
+      this.currentMap.versionIndex = this.currentMap.versions.length - 1;
+      this.mapService.loadMapVersion(this.currentMap, this.currentMap.versionIndex);
+
+      if (this.openMaps.length < this.maxOpenMaps) {
+        this.openMaps.push(this.currentMap);
+      } else {
+        this.openMaps[this.maxOpenMaps - 1] = this.currentMap;
+      }
+    } else {
+      this.currentMap = this.openMaps[mapIndex];
+    }
+    this.currentMap.active = true;
+  }
+
+  changeMap($event) {
+    this.currentMap.active = false;
     this.currentMap = $event;
-    this.currentMap.versionIndex = this.currentMap.versions.length - 1;
-    this.mapService.loadMapVersion(this.currentMap, this.currentMap.versionIndex);
+    this.currentMap.active = true;
+  }
+
+  closeMap(ind) {
+    let mapIndex = _.findIndex(this.openMaps, (map) => { return map.name === this.currentMap.name; });
+    this.openMaps.splice(ind, 1);
+    if (this.openMaps.length > 0) {
+      if (mapIndex === ind) {
+        this.currentMap = this.openMaps[0];
+        this.currentMap.active = true;
+      }
+    } else {
+      this.currentMap = {};
+      this.mapLoaded = false;
+    }
   }
 
   /* resizeable functions */

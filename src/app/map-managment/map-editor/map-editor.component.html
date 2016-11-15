@@ -1,6 +1,3 @@
-<header>
-  <span role="tab" class="active"><span>{{ map.name }} ({{ map.versionIndex }})</span><i class="pmap-8 orange"></i><i class="pmap-9"></i></span>
-</header>
 <section [ngSwitch]="currentPanel">
   <app-map-designer (paperInit)="updateManagmentPanel($event)" *ngSwitchCase="0" [map]="map" [width]="800" [height]="500" [gridSize]="10"></app-map-designer>
   <app-map-markup *ngSwitchCase="1" [map]="map"></app-map-markup>
