@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { DialogRef, ModalComponent } from 'angular2-modal';
+import { overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import * as _ from 'lodash';
+
+import { AttributeWindow, AttributeWindowData } from '../../../../shared/popups/attribute-window/attribute-window.component';
 
 @Component({
   selector: 'app-map-attribute',
@@ -9,37 +15,22 @@ import * as _ from 'lodash';
 export class MapAttributeComponent implements OnInit {
 
   @Input() attribute: any;
-  editableAttribute: any = {};
   @Output() deleteAttribute = new EventEmitter();
-  editMode: boolean;
 
-  constructor() {
+  constructor(public modal: Modal) {
   }
 
   ngOnInit() {
-    console.log(this.attribute);
-    if (!this.attribute.name) {
-      this.editMode = true;
-    } else {
-      this.editMode = false;
-    }
   }
 
   edit() {
-    this.editableAttribute = _.cloneDeep(this.attribute);
-    this.editMode = true;
-  }
-
-  save() {
-    this.editMode = false;
-    /* clone without creating new object */
-    this.attribute.name = this.editableAttribute.name;
-    this.attribute.type = this.editableAttribute.type;
-    this.attribute.value = this.editableAttribute.value;
-  }
-
-  cancel() {
-    this.editMode = false;
+    this.modal.open(AttributeWindow, overlayConfigFactory(new AttributeWindowData(this.attribute), BSModalContext))
+    .then((data) => {
+      return data.result;
+    })
+    .then((attr) => {
+      this.attribute = _.cloneDeep(attr);
+    });
   }
 
   delete() {

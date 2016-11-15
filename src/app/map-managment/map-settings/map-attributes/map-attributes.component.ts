@@ -1,4 +1,10 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+import { DialogRef, ModalComponent } from 'angular2-modal';
+import { overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
+
+import { AttributeWindow, AttributeWindowData } from '../../../shared/popups/attribute-window/attribute-window.component';
+
 
 @Component({
   selector: 'app-map-attributes',
@@ -9,7 +15,7 @@ export class MapAttributesComponent implements OnInit, OnChanges {
 
   @Input() map: any;
 
-  constructor() {
+  constructor(public modal: Modal) {
     this.map = {
       mapView: {
         attributes: []
@@ -40,7 +46,13 @@ export class MapAttributesComponent implements OnInit, OnChanges {
     if (!this.map.mapView.attributes) {
       this.map.mapView.attributes = [];
     }
-    this.map.mapView.attributes.push(attribute);
+    this.modal.open(AttributeWindow, overlayConfigFactory(new AttributeWindowData(attribute), BSModalContext))
+    .then((data) => {
+      return data.result;
+    })
+    .then((attr) => {
+      this.map.mapView.attributes.push(attr);
+    });
   }
 
   ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {

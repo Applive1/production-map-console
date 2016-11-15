@@ -24,12 +24,18 @@ export class MapDesignerComponent implements OnInit, OnChanges {
 
   @Output() paperInit = new EventEmitter();
   @Input() map: any = {};
+  @Input() width: number = 0;
+  @Input() height: number = 0;
+  @Input() gridSize: number = 0;
 
   public graph: any;
   public paper: any;
   private _currentLink: any;
   private _map: any;
   private reconnectingLink: boolean = false;
+  private graphScale: number = 1;
+  private innerWidth: number;
+  private innerHeight: number;
 
   constructor(public modal: Modal, private mapService: MapService, private contextMenuService: ContextMenuService) {
     this._currentLink = null;
@@ -99,10 +105,16 @@ export class MapDesignerComponent implements OnInit, OnChanges {
   ngOnInit() {
     this._currentLink = null;
     this.reconnectingLink = false;
+    this.graphScale = 1;
+    this.innerWidth = this.width;
+    this.innerHeight = this.height;
     // Canvas where sape are dropped
     this.graph = new joint.dia.Graph;
     this.paper = new joint.dia.Paper({
       el: $('#paper'),
+      width: this.innerWidth,
+      height: this.innerHeight,
+      gridSize: this.gridSize,
       model: this.graph,
       snapLinks: { radius: 75 },
       linkPinning: false,
@@ -125,8 +137,6 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       }
     });
 
-    /* TODO: add support for hovering on output port, when user mouse hovers above output show the relevant inputs for that node
-        use Marking available magnets example from jointjs website*/
     joint.shapes.devs.PMStartPoint = joint.shapes.devs.Model.extend({
 
       markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image/><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
@@ -186,6 +196,15 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     let startShape = new joint.shapes.devs.PMStartPoint({
       position: { x: 40, y: 30 },
     });
+
+    // let zoomInShape = new joint.shapes.devs.PMStartPoint({
+    //   position: { x: 40, y: 30 },
+    //   attrs: {
+    //     'image': {
+    //       'xlink:href': 'assets/img/zoom-in.png';
+    //     }
+    //   }
+    // });
 
     this.graph.addCells([startShape]);
 
@@ -349,5 +368,26 @@ export class MapDesignerComponent implements OnInit, OnChanges {
     }
     return true;
   }
+
+  zoomIn() {
+    this.graphScale += 0.1;
+    this.paperScale(this.graphScale, this.graphScale);
+    this.innerWidth += this.gridSize;
+    this.innerHeight += this.gridSize;
+  }
+
+  zoomOut() {
+    this.graphScale -= 0.1;
+    this.innerWidth -= this.gridSize;
+    this.innerHeight -= this.gridSize;
+    this.paperScale(this.graphScale, this.graphScale);
+  }
+
+  private paperScale(sx, sy) {
+    this.paper.scale(sx, sy);
+    var newSize = joint.V(this.paper.viewport).bbox();
+    $(this.paper.svg).width(newSize.x + newSize.width + 100);
+    $(this.paper.svg).height(newSize.y + newSize.height + 100);
+  };
 
 }

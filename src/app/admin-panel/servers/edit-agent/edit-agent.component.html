@@ -15,7 +15,7 @@
     <div>
       <h3>Attributes</h3>
       <app-map-attribute *ngFor="let attribute of agent.attributes; let attributeIndex = index" [attribute]="attribute" (deleteAttribute)="deleteAttribute($event, attributeIndex)"></app-map-attribute>
-      <button type="button" (click)="addAttribute()"><i class="pmap-25"></i> Add attribute</button>
+      <button class="btn-event" type="button" (click)="addAttribute()"><i class="pmap-25"></i> Add attribute</button>
     </div>
   </section>
   <footer>
