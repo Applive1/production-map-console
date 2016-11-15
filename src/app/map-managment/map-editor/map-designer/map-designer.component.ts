@@ -197,15 +197,6 @@ export class MapDesignerComponent implements OnInit, OnChanges {
       position: { x: 40, y: 30 },
     });
 
-    // let zoomInShape = new joint.shapes.devs.PMStartPoint({
-    //   position: { x: 40, y: 30 },
-    //   attrs: {
-    //     'image': {
-    //       'xlink:href': 'assets/img/zoom-in.png';
-    //     }
-    //   }
-    // });
-
     this.graph.addCells([startShape]);
 
     this.paper.on('cell:pointerup', (cellView, evt, x, y) => {
