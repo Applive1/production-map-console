@@ -10,7 +10,7 @@ import 'chart.js';
 export class ExecutionReportComponentWindowData extends BSModalContext {
   map: any;
 
-  constructor(map: any) {
+  constructor(map: any, public execution: string) {
     super();
     this.size = 'lg';
     this.map = map;
@@ -53,15 +53,26 @@ export class ExecutionReportComponent implements OnInit, AfterViewInit {
   constructor(public dialog: DialogRef<ExecutionReportComponentWindowData>, public modal: Modal) {
     this.context = dialog.context;
     this.map = this.context.map;
+    this.execution = this.context.execution;
   }
 
   ngOnInit() {
     this.executions = _.flatMap(this.map.versions, (version: any) => {
       return version.executions;
     });
-    this.execIndex = this.executions.length - 1;
-    this.execution = this.executions[this.execIndex]; /* get last element from execution array */
-    this.parseExecutionData(this.execution.resObj);
+    if (this.execution === null) {
+      this.execIndex = this.executions.length - 1;
+      this.execution = this.executions[this.execIndex]; /* get last element from execution array */
+      this.parseExecutionData(this.execution.resObj);
+    } else {
+      this.execIndex = _.findIndex(this.executions, (ei) => {
+        return ei.date === this.execution.date;
+      });
+      if (this.execIndex > 0) {
+        this.execution = this.executions[this.execIndex]; /* get last element from execution array */
+        this.parseExecutionData(this.execution.resObj);
+      }
+    }
   }
 
   ngAfterViewInit() {

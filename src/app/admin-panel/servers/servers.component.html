@@ -79,7 +79,7 @@
     </div>
     <div class="tbody-wrapper">
       <div class="tbody">
-        <div class="tr" *ngFor="let agent of agents">
+        <div class="tr" *ngFor="let agent of agents | serverFilter:search">
           <div [hidden]="!agent.alive"><span class="cell"><i class="green server-status"></i></span></div>
           <div [hidden]="agent.alive"><span class="cell"><i class="red server-status"></i></span></div>
           <div class="cell"><span class="server-name">{{ agent.name }}</span></div>

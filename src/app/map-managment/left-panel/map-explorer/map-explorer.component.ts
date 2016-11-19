@@ -11,6 +11,8 @@ import { ExecutionReportComponent, ExecutionReportComponentWindowData } from './
 import {NewMapComponentWindow, NewMapComponentWindowData} from './popups/new-map/new-map.component';
 import {UpdateMapComponentWindow, UpdateMapComponentWindowData} from './popups/update-map/update-map.component';
 import {NewProjectComponentWindow, NewProjectComponentWindowData} from './popups/new-project/new-project.component';
+import { MapVersionsComponent, MapVersionsComponentData } from './popups/map-versions/map-versions.component';
+
 
 @Component({
   selector: 'app-map-explorer',
@@ -158,6 +160,10 @@ export class MapExplorerComponent implements OnInit {
             html: () => `executions`,
             click: (item) => this.showExecutions(item)
           },
+          {
+            html: () => `versions`,
+            click: (item) => this.showVersions(item)
+          },
         ],
         event: $event,
         item: node,
@@ -206,6 +212,11 @@ export class MapExplorerComponent implements OnInit {
   showExecutions(node: TreeNode) {
     let map = node.data;
     this.modal.open(ExecutionReportComponent, overlayConfigFactory(new ExecutionReportComponentWindowData(map), BSModalContext));
+  }
+
+  showVersions(node: TreeNode) {
+    let map = node.data;
+    this.modal.open(MapVersionsComponent, overlayConfigFactory(new MapVersionsComponentData(map), BSModalContext));
   }
 
 }
